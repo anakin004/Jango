@@ -1,0 +1,3 @@
+[submodule "Crimson/vendor/spdlog"]
+	path = Crimson/vendor/spdlog
+	url = https://github.com/gabime/spdlog

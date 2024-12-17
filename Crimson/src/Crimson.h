@@ -3,6 +3,7 @@
 
 // Used by Crimson applications
 #include "Crimson/Application.h"
+#include "Crimson/Log.h"
 
 
 //  ------------------------------ +
