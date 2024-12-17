@@ -23,6 +23,17 @@ namespace Crimson {
 
 }
 
+
+// add define for distro build vs prod
+/*
+ like #ifdef CN_DST
+			#define CN_...(...) ::Crimson::Log::GetCoreLogger...
+					...
+	  #else
+			#define CN_...(...) 
+*/
+
+
 // core logging macros
 #define CN_CORE_TRACE(...)   ::Crimson::Log::GetCoreLogger()->trace(__VA_ARGS__);
 #define CN_CORE_INFO(...)    ::Crimson::Log::GetCoreLogger()->info(__VA_ARGS__);
