@@ -6,7 +6,7 @@ namespace Crimson {
 
 	Application::~Application()
 	{
-	}
+	} 
 
 	void Application::Run()
 	{
