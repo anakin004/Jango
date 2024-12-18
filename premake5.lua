@@ -21,6 +21,9 @@ project "Crimson"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "cnpch.h"
+	pchsource "Crimson/src/cnpch.cpp"
+
 	files
 	{
 		"%{prj.name}/src/**.h",
@@ -29,7 +32,8 @@ project "Crimson"
 
 	includedirs
 	{
-		"Crimson/vendor/spdlog/include"
+		"Crimson/vendor/spdlog/include",
+		"Crimson/src"
 	}
 
 	filter "system:windows"

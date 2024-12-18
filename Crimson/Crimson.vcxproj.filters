@@ -4,6 +4,9 @@
     <Filter Include="Crimson">
       <UniqueIdentifier>{C065D33A-2C45-52D6-355D-DDACA1BBB837}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Crimson\Events">
+      <UniqueIdentifier>{A4194565-90E7-386B-797B-A99165E814D0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Crimson.h" />
@@ -16,9 +19,22 @@
     <ClInclude Include="src\Crimson\EntryPoint.h">
       <Filter>Crimson</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crimson\Events\ApplicationEvent.h">
+      <Filter>Crimson\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Events\Event.h">
+      <Filter>Crimson\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Events\KeyEvent.h">
+      <Filter>Crimson\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Events\MouseEvent.h">
+      <Filter>Crimson\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crimson\Log.h">
       <Filter>Crimson</Filter>
     </ClInclude>
+    <ClInclude Include="src\cnpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp">
@@ -27,5 +43,6 @@
     <ClCompile Include="src\Crimson\Log.cpp">
       <Filter>Crimson</Filter>
     </ClCompile>
+    <ClCompile Include="src\cnpch.cpp" />
   </ItemGroup>
 </Project>

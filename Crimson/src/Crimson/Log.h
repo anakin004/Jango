@@ -3,7 +3,15 @@
 #include "Core.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/fmt/ostr.h"
 
+// Logger for Crimson 
+   /*
+
+   Rather than just using prints, its way better to have colors and
+   formatting for logging and debugging, setting loglevels, etc
+
+   */
 namespace Crimson {
 
 	class CRIMSON_API Log
@@ -33,6 +41,9 @@ namespace Crimson {
 			#define CN_...(...) 
 */
 
+/*
+We dont neccesarrily need these wrappers, but using them makes the api more Crimson-Engine specific
+*/
 
 // core logging macros
 #define CN_CORE_TRACE(...)   ::Crimson::Log::GetCoreLogger()->trace(__VA_ARGS__);
