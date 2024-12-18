@@ -1,4 +1,5 @@
 # Crimson
-![Crimson](https://github.com/user-attachments/assets/e97048a8-e091-4e0a-a16d-04804529b165)
+
+![Crimson](https://github.com/user-attachments/assets/98d28dcd-90af-47fc-bce6-0f9f80035d13)
 
 Crimson Engine
