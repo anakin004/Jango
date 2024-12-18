@@ -63,5 +63,4 @@ namespace Crimson {
 		EVENT_CLASS_TYPE(KeyReleased)
 
 	};
-
 }

@@ -1,0 +1,6 @@
+Regarding glfw init - I want to end up seperating that from window creation
+                    - currently I just want to get stuff appearing 
+
+currently working on window:
+
+-- handle events for closing and resizing

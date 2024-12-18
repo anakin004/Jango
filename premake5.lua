@@ -9,9 +9,16 @@ workspace "Crimson"
 		"Dist"
 	}
 
+buildoptions { "/utf-8" }
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-buildoptions { "/utf-8" }
+-- include dirs relative to solution dir
+IncludeDir = {}
+IncludeDir["GLFW"] = "Crimson/vendor/GLFW/include"
+
+include "Crimson/vendor/GLFW"
+
 
 project "Crimson"
 	location "Crimson"	
@@ -25,15 +32,26 @@ project "Crimson"
 	pchsource "Crimson/src/cnpch.cpp"
 
 	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
-	}
+    {
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/src/Events/**.h",
+        "%{prj.name}/src/Events/**.cpp",
+        "%{prj.name}/Platform/Windows/**.h",
+        "%{prj.name}/Platform/Windows/**.cpp"
+    }
 
 	includedirs
 	{
 		"Crimson/vendor/spdlog/include",
-		"Crimson/src"
+		"Crimson/src",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
@@ -53,7 +71,7 @@ project "Crimson"
 		}
 
 	filter "configurations:Debug"
-		defines "CN_DEBUG"
+		defines {"CN_DEBUG", "CN_ENABLE_ASSERTS"}
 		symbols "On"
 
 	filter "configurations:Release"
@@ -75,10 +93,12 @@ project "Sandbox"
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
-	}
+    {
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.cpp",
+    }
+
+
 
 	includedirs
 	{
@@ -102,7 +122,7 @@ project "Sandbox"
 		}
 
 	filter "configurations:Debug"
-		defines "CN_DEBUG"
+		defines {"CN_DEBUG", "CN_ENABLE_ASSERTS"}
 		symbols "On"
 
 	filter "configurations:Release"

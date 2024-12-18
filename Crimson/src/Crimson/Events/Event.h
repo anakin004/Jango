@@ -1,8 +1,8 @@
 #pragma once
 
+#include "cnpch.h"
+
 #include "Crimson/Core.h"
-
-
 
 
 namespace Crimson {

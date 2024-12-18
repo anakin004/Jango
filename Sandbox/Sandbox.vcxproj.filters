@@ -1,22 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Crimson">
+      <UniqueIdentifier>{C065D33A-2C45-52D6-355D-DDACA1BBB837}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Crimson\vendor">
+      <UniqueIdentifier>{1D0463D6-09D2-56DC-F265-C702DED23241}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Crimson\vendor\GLFW">
+      <UniqueIdentifier>{7CD905E8-E83A-E3F5-71A8-29A8DD081AB5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Crimson\vendor\GLFW\include">
+      <UniqueIdentifier>{EFBCA2FF-5BCA-D0E5-E4B0-CCD050BD9C9C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Crimson\vendor\GLFW\include\GLFW">
+      <UniqueIdentifier>{8EE5B3CF-7A36-9F11-A39A-8DD38F4A327B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Crimson\vendor\GLFW\src">
+      <UniqueIdentifier>{93F529C2-FF2C-7259-0837-D67C74ED9852}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Crimson\vendor\GLFW\include\GLFW\glfw3.h">
+      <Filter>Crimson\vendor\GLFW\include\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Crimson\vendor\GLFW\include\GLFW\glfw3native.h">
+      <Filter>Crimson\vendor\GLFW\include\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Crimson\vendor\GLFW\src\glfw_config.h">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\context.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\egl_context.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\init.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\input.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\monitor.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\osmesa_context.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\vulkan.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\wgl_context.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\win32_init.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\win32_joystick.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\win32_monitor.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\win32_thread.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\win32_time.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\win32_window.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Crimson\vendor\GLFW\src\window.c">
+      <Filter>Crimson\vendor\GLFW\src</Filter>
+    </ClCompile>
     <ClCompile Include="src\SandboxApp.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

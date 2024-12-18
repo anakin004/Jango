@@ -1,5 +1,6 @@
 #pragma once
 
+
 #ifdef CN_PLATFORM_WINDOWS
 
 extern Crimson::Application* Crimson::CreateApplication();
@@ -13,10 +14,6 @@ int main(int argc, char** argv)
 {
 
 	Crimson::Log::Init();
-
-	int a = 1;
-	CN_CORE_INFO("Var = {0}", a);
-	CN_CORE_CRITICAL("melvin");
 
 	auto app = Crimson::CreateApplication();
 	app->Run();

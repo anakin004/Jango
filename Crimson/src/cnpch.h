@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "Crimson/Log.h"
 
 #ifdef CN_PLATFORM_WINDOWS
 	#include <Windows.h>

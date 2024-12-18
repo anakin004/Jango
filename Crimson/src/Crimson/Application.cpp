@@ -1,12 +1,18 @@
 #include "cnpch.h"
 #include "Application.h"
+
 #include "Crimson/Events/ApplicationEvent.h"
 #include "Crimson/Events/KeyEvent.h"
 #include "Crimson/Events/MouseEvent.h"
-#include "Crimson/Log.h"
+
+#include <GLFW/glfw3.h>
 
 namespace Crimson {
 
+	Application::Application()
+	{
+		m_Window = std::unique_ptr<Window>(Window::Create());
+	}
 
 	Application::~Application()
 	{
@@ -17,20 +23,13 @@ namespace Crimson {
 		WindowResizeEvent e(1280, 720);
 		KeyReleasedEvent k(1);
 
-		if (e.IsInCategory(EventCategoryApplication)) {
-			CN_TRACE(e.ToString());
-		}
-		if (e.IsInCategory(EventCategoryInput)) {
-			CN_TRACE(k.ToString());
-		}
+		CN_CORE_CRITICAL("HELLLOOO CRIMSON ENGINE !!>><<!!!!");
 
-		while (true) {
-
+		while (m_Running) {
+			glClearColor(0, 1, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
+			m_Window->OnUpdate();
 		}
-	}
-
-	Application::Application()
-	{
 	}
 
 }

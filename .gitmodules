@@ -1,3 +1,6 @@
 [submodule "Crimson/vendor/spdlog"]
 	path = Crimson/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "Crimson/vendor/GLFW"]
+	path = Crimson/vendor/GLFW
+	url = https://github.com/anakin004/glfw
