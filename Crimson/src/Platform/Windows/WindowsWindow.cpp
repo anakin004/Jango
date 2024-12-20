@@ -2,6 +2,10 @@
 #include "WindowsWindow.h"
 #include "Crimson/Core.h"
 #include "Crimson/Log.h"
+#include "Crimson/Events/ApplicationEvent.h"
+#include "Crimson/Events/MouseEvent.h"
+#include "Crimson/Events/KeyEvent.h"
+#include "Crimson/Events/Event.h"
 
 namespace Crimson {
 	
@@ -54,6 +58,19 @@ namespace Crimson {
 
 		//vsync true default 
 		SetVSync(true);
+
+
+		//glfw callbacks
+		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) 
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				data.Width = width;
+				data.Height = height;
+
+				WindowResizeEvent event(width, height);
+				data.EventCallback(event);
+
+			});
 	}
 
 	void WindowsWindow::Shutdown()

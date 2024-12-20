@@ -1,6 +1,15 @@
 Regarding glfw init - I want to end up seperating that from window creation
                     - currently I just want to get stuff appearing 
 
+-- to add, look at returning raw ptr from create-factory function (dangerous)
+-- let user know its raw ptr, properly take over ownership to destroy
+-- probably make unique ptr
+-- as long as user doesnt missue unique ptr, window destruction garunteed
+-- transfer stuff to initliazlier list ( its easy but im tired )
+
+
 currently working on window:
 
--- handle events for closing and resizing
+-- got logic for callbacks using glfw
+-- able to make callbacks for window resizing
+-- utilized 

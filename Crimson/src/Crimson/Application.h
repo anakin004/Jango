@@ -19,6 +19,8 @@ namespace Crimson {
 		virtual ~Application();
 
 		void Run();
+
+		void OnEvent(Event& e);
 	private:
 		bool m_Running = true;
 		std::unique_ptr<Window> m_Window;

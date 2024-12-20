@@ -9,9 +9,12 @@
 
 namespace Crimson {
 
+#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+
 	Application::Application()
 	{
 		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 	}
 
 	Application::~Application()
@@ -30,6 +33,11 @@ namespace Crimson {
 			glClear(GL_COLOR_BUFFER_BIT);
 			m_Window->OnUpdate();
 		}
+	}
+
+	void Application::OnEvent(Event& e)
+	{
+		CN_CORE_INFO(e.ToString());
 	}
 
 }
