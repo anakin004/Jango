@@ -165,7 +165,9 @@ namespace Crimson {
 
 	void WindowsWindow::OnUpdate()
 	{
+		// proccessing callbacks 
 		glfwPollEvents();
+
 		glfwSwapBuffers(m_Window);
 	}
 

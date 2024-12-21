@@ -11,12 +11,12 @@ public:
 	
 	void OnUpdate() override
 	{
-		CN_INFO("ExampleLayer::Update");
+		//CN_INFO("ExampleLayer::Update");
 	}
 
 	void OnEvent(Crimson::Event& event) override
 	{
-		CN_INFO("{0}", event.ToString());
+		//CN_INFO("{0}", event.ToString());
 	}
 };
 
@@ -27,6 +27,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer);
+		PushOverlay(new Crimson::ImGuiLayer());
 	}
 
 	~Sandbox()

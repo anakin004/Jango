@@ -17,9 +17,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Crimson/vendor/GLFW/include"
 IncludeDir["Glad"] = "Crimson/vendor/Glad/include"
+IncludeDir["ImGui"] = "Crimson/vendor/imgui"
 
 include "Crimson/vendor/GLFW"
 include "Crimson/vendor/Glad"
+include "Crimson/vendor/imgui"
 
 
 project "Crimson"
@@ -48,13 +50,15 @@ project "Crimson"
 		"Crimson/vendor/spdlog/include",
 		"Crimson/src",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}"
 	}
 
 	links
 	{
 		"GLFW",
 		"Glad",
+		"ImGui",
 		"opengl32.lib"
 	}
 
