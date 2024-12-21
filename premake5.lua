@@ -16,8 +16,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- include dirs relative to solution dir
 IncludeDir = {}
 IncludeDir["GLFW"] = "Crimson/vendor/GLFW/include"
+IncludeDir["Glad"] = "Crimson/vendor/Glad/include"
 
 include "Crimson/vendor/GLFW"
+include "Crimson/vendor/Glad"
 
 
 project "Crimson"
@@ -45,12 +47,14 @@ project "Crimson"
 	{
 		"Crimson/vendor/spdlog/include",
 		"Crimson/src",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.GLAD}"
 	}
 
 	links
 	{
 		"GLFW",
+		"GLAD",
 		"opengl32.lib"
 	}
 

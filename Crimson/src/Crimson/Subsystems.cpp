@@ -15,7 +15,7 @@ namespace Crimson {
 		{
 			// need to terminate glfw, but not when we destruct window
 			// we may have multiple windows
-			int success = !glfwInit();
+			int success = glfwInit();
 			CN_CORE_ASSERT(success, "GLFW Failed To Initalized!");
 			CN_CORE_INFO("GLFW Initialized");
 			glfwSetErrorCallback(GLFWErrorCallBack);
