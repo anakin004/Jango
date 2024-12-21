@@ -26,7 +26,7 @@ namespace Crimson {
 
 		// even though these are simply called in destructor and constructor 
 		// I want to be able to have explicit functions for naming and seperation
-		virtual void Init(const WindowAttribs& attribs);
+		virtual void InitWindow(const WindowAttribs& attribs);
 		virtual void Shutdown();
 
 

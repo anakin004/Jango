@@ -6,10 +6,9 @@
 #include "Crimson/Events/MouseEvent.h"
 #include "Crimson/Events/KeyEvent.h"
 #include "Crimson/Events/Event.h"
+#include "Crimson/Subsystems.h"
 
 namespace Crimson {
-	
-	static bool s_GLFWBooted = false;
 
 	Window* Window::Create(const WindowAttribs& attribs)
 	{
@@ -18,7 +17,11 @@ namespace Crimson {
 
 	WindowsWindow::WindowsWindow(const WindowAttribs& attribs)
 	{
-		Init(attribs);
+		// currently calling inside of constructor, we might want to call
+		// other things during construction of windows
+		// want to keep them all seperate
+		Subsystems::InitGL();
+		InitWindow(attribs);
 	}
 
 	WindowsWindow::~WindowsWindow()
@@ -26,7 +29,9 @@ namespace Crimson {
 		Shutdown();
 	}
 
-	void WindowsWindow::Init(const WindowAttribs& attribs)
+	
+
+	void WindowsWindow::InitWindow(const WindowAttribs& attribs)
 	{
 		m_Data.Title = attribs.Title;
 		m_Data.Width = attribs.Width;
@@ -34,16 +39,7 @@ namespace Crimson {
 
 		CN_CORE_INFO("Creating Window {0} ({1}, {2})", attribs.Title, attribs.Width, attribs.Height);
 
-		if (s_GLFWBooted == false)
-		{
-			// need to terminate glfw, but not when we destruct window
-			// we may have multiple windows
-			int success = glfwInit();
-			CN_CORE_ASSERT(success, "GLFW Failed To Initalized!");
-
-			s_GLFWBooted = true;
-		}
-
+		// gl intialized before we init attribs
 		
 		m_Window = glfwCreateWindow((int)attribs.Width, (int)attribs.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		
@@ -68,6 +64,90 @@ namespace Crimson {
 				data.Height = height;
 
 				WindowResizeEvent event(width, height);
+				data.EventCallback(event);
+
+			});
+
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) 
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				data.Width = 0;
+				data.Height = 0;
+				
+				WindowCloseEvent event;
+				data.EventCallback(event);
+
+			});
+
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				
+				switch (action)
+				{
+
+					case GLFW_PRESS:
+					{
+						KeyPressedEvent event(key, 0);
+						data.EventCallback(event);
+						break;
+					}
+					case GLFW_RELEASE:
+					{
+						KeyReleasedEvent event(key);
+						data.EventCallback(event);
+						break;
+					}
+					case GLFW_REPEAT:
+					{
+						KeyPressedEvent event(key, 1);
+						data.EventCallback(event);
+						break;
+					}
+
+				}
+				
+
+			});
+
+		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+				switch (action)
+				{
+
+					case GLFW_PRESS:
+					{
+						MouseButtonPressedEvent event(button);
+						data.EventCallback(event);
+						break;
+					}
+					case GLFW_RELEASE:
+					{
+						MouseButtonReleasedEvent event(button);
+						data.EventCallback(event);
+						break;
+					}
+
+				}
+
+			});
+
+		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+				MouseScrolledEvent event((float)xOffset, (float)yOffset);
+				data.EventCallback(event);
+
+			});
+
+		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+				MouseMovedEvent event((float)xPos, (float)yPos);
 				data.EventCallback(event);
 
 			});

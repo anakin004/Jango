@@ -68,6 +68,7 @@ namespace Crimson {
 		virtual int GetCategoryFlags() const = 0;
 		virtual std::string ToString() const { return GetName(); }
 
+		inline bool GetHandled() const { return m_Handled; }
 		inline bool IsInCategory(EventCategory category)
 		{
 			// bitwise & to check flags, refer to EventCategory BIT and #define BIT in Core.h

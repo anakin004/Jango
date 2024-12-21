@@ -1,20 +1,39 @@
 #include <Crimson.h>
 
 
-class Sandbox : public Crimson::Application
+class ExampleLayer : public Crimson::Layer
 {
 public:
-	Sandbox() 
+	ExampleLayer()
+		: Layer("Example")
 	{
-
+	}
+	
+	void OnUpdate() override
+	{
+		CN_INFO("ExampleLayer::Update");
 	}
 
-	~Sandbox() 
+	void OnEvent(Crimson::Event& event) override
 	{
-
+		CN_INFO("{0}", event.ToString());
 	}
 };
 
+
+class Sandbox : public Crimson::Application
+{
+public:
+	Sandbox()
+	{
+		PushLayer(new ExampleLayer);
+	}
+
+	~Sandbox()
+	{
+	}
+
+};
 
 Crimson::Application* Crimson::CreateApplication()
 {

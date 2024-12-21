@@ -23,21 +23,54 @@ namespace Crimson {
 
 	void Application::Run()
 	{
-		WindowResizeEvent e(1280, 720);
-		KeyReleasedEvent k(1);
-
-		CN_CORE_CRITICAL("HELLLOOO CRIMSON ENGINE !!>><<!!!!");
-
 		while (m_Running) {
 			glClearColor(0, 1, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			// we can use range based for loop because we implimented begin and end
+			for (Layer* layer : m_LayerStack)
+			{
+				layer->OnUpdate();
+			}
+
 			m_Window->OnUpdate();
 		}
 	}
 
 	void Application::OnEvent(Event& e)
 	{
-		CN_CORE_INFO(e.ToString());
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch < WindowCloseEvent >(BIND_EVENT_FN(OnWindowClosed));
+		
+		//CN_CORE_TRACE(e.ToString());
+
+		// going backwards since if an overlay with some button handles event
+		// we are done, we dont propogate
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+		{
+			// we need to decrement first since it points one past pos
+			(*(--it))->OnEvent(e);
+			if (e.GetHandled())
+				break;
+		}
+
+
+	}
+
+	void Application::PushLayer(Layer* layer)
+	{
+		m_LayerStack.PushLayer(layer);
+	}
+
+	void Application::PushOverlay(Layer* overlay)
+	{
+		m_LayerStack.PushOverlay(overlay);
+	}
+
+	bool Application::OnWindowClosed(WindowCloseEvent& e)
+	{
+		m_Running = false;
+		return true;
 	}
 
 }

@@ -46,16 +46,34 @@ namespace Crimson {
 We dont neccesarrily need these wrappers, but using them makes the api more Crimson-Engine specific
 */
 
-// core logging macros
-#define CN_CORE_TRACE(...)   ::Crimson::Log::GetCoreLogger()->trace(__VA_ARGS__);
-#define CN_CORE_INFO(...)    ::Crimson::Log::GetCoreLogger()->info(__VA_ARGS__);
-#define CN_CORE_WARN(...)    ::Crimson::Log::GetCoreLogger()->warn(__VA_ARGS__);
-#define CN_CORE_ERROR(...)   ::Crimson::Log::GetCoreLogger()->error(__VA_ARGS__);
-#define CN_CORE_CRITICAL(...)   ::Crimson::Log::GetCoreLogger()->critical(__VA_ARGS__);
+#ifdef CN_DIST
 
-// client logging macros
-#define CN_TRACE(...)   ::Crimson::Log::GetClientLogger()->trace(__VA_ARGS__);
-#define CN_INFO(...)    ::Crimson::Log::GetClientLogger()->info(__VA_ARGS__);
-#define CN_WARN(...)    ::Crimson::Log::GetClientLogger()->warn(__VA_ARGS__);
-#define CN_ERROR(...)   ::Crimson::Log::GetClientLogger()->error(__VA_ARGS__);
-#define CN_CRITICAL(...)   ::Crimson::Log::GetClientLogger()->critical(__VA_ARGS__);
+	#define CN_CORE_TRACE(...)
+	#define CN_CORE_INFO(...)
+	#define CN_CORE_WARN(...)
+	#define CN_CORE_ERROR(...) 
+	#define CN_CORE_CRITICAL(...)   
+
+	#define CN_TRACE(...)   
+	#define CN_INFO(...)   
+	#define CN_WARN(...)   
+	#define CN_ERROR(...)  
+	#define CN_CRITICAL(...)   
+
+#else
+
+	// core logging macros
+	#define CN_CORE_TRACE(...)   ::Crimson::Log::GetCoreLogger()->trace(__VA_ARGS__);
+	#define CN_CORE_INFO(...)    ::Crimson::Log::GetCoreLogger()->info(__VA_ARGS__);
+	#define CN_CORE_WARN(...)    ::Crimson::Log::GetCoreLogger()->warn(__VA_ARGS__);
+	#define CN_CORE_ERROR(...)   ::Crimson::Log::GetCoreLogger()->error(__VA_ARGS__);
+	#define CN_CORE_CRITICAL(...)   ::Crimson::Log::GetCoreLogger()->critical(__VA_ARGS__);
+
+	// client logging macros
+	#define CN_TRACE(...)   ::Crimson::Log::GetClientLogger()->trace(__VA_ARGS__);
+	#define CN_INFO(...)    ::Crimson::Log::GetClientLogger()->info(__VA_ARGS__);
+	#define CN_WARN(...)    ::Crimson::Log::GetClientLogger()->warn(__VA_ARGS__);
+	#define CN_ERROR(...)   ::Crimson::Log::GetClientLogger()->error(__VA_ARGS__);
+	#define CN_CRITICAL(...)   ::Crimson::Log::GetClientLogger()->critical(__VA_ARGS__);
+
+#endif

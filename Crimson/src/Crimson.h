@@ -4,6 +4,7 @@
 // Used by Crimson applications
 #include "Crimson/Application.h"
 #include "Crimson/Log.h"
+#include "Crimson/Layer.h"
 
 
 //  ------------------------------ +

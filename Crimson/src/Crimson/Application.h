@@ -2,8 +2,10 @@
 
 #include "cnpch.h"
 
+#include "Crimson/LayerStack.h"
 #include "Core.h"
 #include "Events/Event.h"
+#include "Events/ApplicationEvent.h"
 #include "Window.h"
 
 namespace Crimson {
@@ -21,9 +23,18 @@ namespace Crimson {
 		void Run();
 
 		void OnEvent(Event& e);
+
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* overlay);
+
 	private:
+
+		bool OnWindowClosed(WindowCloseEvent& e);
+
 		bool m_Running = true;
 		std::unique_ptr<Window> m_Window;
+
+		LayerStack m_LayerStack;
 	};
 
 

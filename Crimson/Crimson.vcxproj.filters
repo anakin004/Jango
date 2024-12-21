@@ -37,7 +37,16 @@
     <ClInclude Include="src\Crimson\Events\MouseEvent.h">
       <Filter>Crimson\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crimson\Layer.h">
+      <Filter>Crimson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\LayerStack.h">
+      <Filter>Crimson</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crimson\Log.h">
+      <Filter>Crimson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Subsystems.h">
       <Filter>Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Window.h">
@@ -52,7 +61,16 @@
     <ClCompile Include="src\Crimson\Application.cpp">
       <Filter>Crimson</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crimson\Layer.cpp">
+      <Filter>Crimson</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\LayerStack.cpp">
+      <Filter>Crimson</Filter>
+    </ClCompile>
     <ClCompile Include="src\Crimson\Log.cpp">
+      <Filter>Crimson</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Subsystems.cpp">
       <Filter>Crimson</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">

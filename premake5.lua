@@ -72,14 +72,17 @@ project "Crimson"
 
 	filter "configurations:Debug"
 		defines {"CN_DEBUG", "CN_ENABLE_ASSERTS"}
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "CN_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "CN_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 
@@ -123,12 +126,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines {"CN_DEBUG", "CN_ENABLE_ASSERTS"}
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "CN_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "CN_DIST"
+		buildoptions "/MD"
 		optimize "On"

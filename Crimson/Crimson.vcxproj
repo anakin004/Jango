@@ -84,7 +84,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -111,7 +111,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -139,7 +139,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -163,14 +163,20 @@
     <ClInclude Include="src\Crimson\Events\Event.h" />
     <ClInclude Include="src\Crimson\Events\KeyEvent.h" />
     <ClInclude Include="src\Crimson\Events\MouseEvent.h" />
+    <ClInclude Include="src\Crimson\Layer.h" />
+    <ClInclude Include="src\Crimson\LayerStack.h" />
     <ClInclude Include="src\Crimson\Log.h" />
+    <ClInclude Include="src\Crimson\Subsystems.h" />
     <ClInclude Include="src\Crimson\Window.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\cnpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp" />
+    <ClCompile Include="src\Crimson\Layer.cpp" />
+    <ClCompile Include="src\Crimson\LayerStack.cpp" />
     <ClCompile Include="src\Crimson\Log.cpp" />
+    <ClCompile Include="src\Crimson\Subsystems.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\cnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
