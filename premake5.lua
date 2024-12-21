@@ -48,13 +48,13 @@ project "Crimson"
 		"Crimson/vendor/spdlog/include",
 		"Crimson/src",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.GLAD}"
+		"%{IncludeDir.Glad}"
 	}
 
 	links
 	{
 		"GLFW",
-		"GLAD",
+		"Glad",
 		"opengl32.lib"
 	}
 
@@ -66,7 +66,8 @@ project "Crimson"
 		defines
 		{
 			"CN_PLATFORM_WINDOWS",
-			"CN_BUILD_DLL"
+			"CN_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands

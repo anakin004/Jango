@@ -8,6 +8,8 @@
 #include "Crimson/Events/Event.h"
 #include "Crimson/Subsystems.h"
 
+#include <Glad/glad.h>
+
 namespace Crimson {
 
 	Window* Window::Create(const WindowAttribs& attribs)
@@ -50,6 +52,9 @@ namespace Crimson {
 		
 
 		glfwMakeContextCurrent(m_Window);
+		// init glad after creating context
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		CN_CORE_ASSERT(status, "Failed to initialize GLAD!");
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		//vsync true default 

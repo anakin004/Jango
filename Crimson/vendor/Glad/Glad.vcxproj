@@ -114,8 +114,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Glad\glad.h" />
     <ClInclude Include="include\KHR\khrplatform.h" />
-    <ClInclude Include="include\glad\glad.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\glad.c" />
