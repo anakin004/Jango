@@ -36,6 +36,9 @@ namespace Crimson {
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
+		// void* allows us to cast to any other type of window depending on platform
+		virtual void* GetNativeWindow() const = 0;
+
 		static Window* Create(const WindowAttribs& attribs = WindowAttribs());
 	};
 }

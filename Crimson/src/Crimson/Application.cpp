@@ -1,5 +1,6 @@
 #include "cnpch.h"
 #include "Application.h"
+#include "Input.h"
 
 #include "Crimson/Events/ApplicationEvent.h"
 #include "Crimson/Events/KeyEvent.h"
@@ -19,7 +20,6 @@ namespace Crimson {
 		s_Instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
-
 	}
 
 	Application::~Application()
@@ -38,6 +38,16 @@ namespace Crimson {
 				layer->OnUpdate();
 			}
 
+			// testing ... 
+			
+			// glfw key space is keycode 32
+			//bool state = Input::IsKeyPressed(32);
+			//CN_CORE_TRACE("{0}", state);
+
+			// glfw mb0 is left
+			bool mouse = Input::IsMouseButtonPressed(0);
+			CN_CORE_TRACE("{0}", mouse);
+
 			m_Window->OnUpdate();
 		}
 	}
@@ -46,7 +56,9 @@ namespace Crimson {
 	{
 		EventDispatcher dispatcher(e);
 
-		dispatcher.Dispatch < WindowCloseEvent >(BIND_EVENT_FN(OnWindowClosed));
+		// even though we dispatch starting from top layer, on windows closed we dont check other layers
+		// we simply terminate
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClosed));
 		
 		//CN_CORE_TRACE(e.ToString());
 

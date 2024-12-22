@@ -1,6 +1,7 @@
 	
 tasks:
 
+-- make own key codes
 -- copy and paste in imgui layer (in progress)
 
 
@@ -12,6 +13,3 @@ general:
  
 
 
--- ideas
--- multiplayer for people to collaborate on same game
-   : using valve api possibly

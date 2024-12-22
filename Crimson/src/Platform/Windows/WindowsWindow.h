@@ -31,6 +31,8 @@ namespace Crimson {
 		virtual void InitWindow(const WindowAttribs& attribs);
 		virtual void Shutdown();
 
+		inline virtual void* GetNativeWindow() const override { return (void*)m_Window; }
+
 
 	private:
 

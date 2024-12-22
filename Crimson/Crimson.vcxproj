@@ -164,6 +164,7 @@
     <ClInclude Include="src\Crimson\Events\KeyEvent.h" />
     <ClInclude Include="src\Crimson\Events\MouseEvent.h" />
     <ClInclude Include="src\Crimson\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Crimson\Input.h" />
     <ClInclude Include="src\Crimson\Layer.h" />
     <ClInclude Include="src\Crimson\LayerStack.h" />
     <ClInclude Include="src\Crimson\Log.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="src\Crimson\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiGLFW.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiGLRenderer.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\cnpch.h" />
   </ItemGroup>
@@ -183,6 +185,7 @@
     <ClCompile Include="src\Crimson\Subsystems.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiGLFW.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\cnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

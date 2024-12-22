@@ -141,7 +141,6 @@ namespace Crimson {
 // 				m_InputBuffer[IM_ARRAYSIZE(m_InputBuffer) - 1] = '\0'; 
 // 			}
 // 		}
-// 		CN_INFO(m_InputBuffer);
 
 		return false;
 	}
