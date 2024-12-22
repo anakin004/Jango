@@ -1,14 +1,12 @@
 	
 tasks:
 
--- make own key codes
 -- copy and paste in imgui layer (in progress)
 
 
 general:
 
--- input polling 					(current in progress)
--- math							(soon in progress)	
+-- own math lib						(in progress)	
 -- rendering architecture 				( not started yet ) -> planning
  
 
