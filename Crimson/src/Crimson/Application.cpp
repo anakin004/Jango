@@ -9,8 +9,6 @@
 
 #include <Glad/glad.h>
 
-// dont really want this here
-#include <GLFW/glfw3.h>
 
 namespace Crimson {
 
@@ -53,12 +51,12 @@ namespace Crimson {
 			// testing ... 
 			
 			// glfw key space is keycode 32
-			//bool state = Input::IsKeyPressed(32);
+			//bool state = Input::IsKeyPressed();
 			//CN_CORE_TRACE("{0}", state);
 
 			// glfw mb0 is left
-// 			bool mouse = Input::IsMouseButtonPressed(0);
-// 			CN_CORE_TRACE("{0}", mouse);
+ 			//bool mouse = Input::IsMouseButtonPressed(0);
+ 			//CN_CORE_TRACE("{0}", mouse);
 
 			m_Window->OnUpdate();
 		}

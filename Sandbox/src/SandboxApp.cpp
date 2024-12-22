@@ -11,12 +11,13 @@ public:
 	
 	void OnUpdate() override
 	{
+		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_SPACE))
+			CN_TRACE("Space Is Pressed");
 		//CN_INFO("ExampleLayer::Update");
 	}
 
 	void OnEvent(Crimson::Event& event) override
 	{
-		//CN_INFO("{0}", event.ToString());
 	}
 };
 

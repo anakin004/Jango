@@ -73,6 +73,8 @@
     <ClInclude Include="src\cnpch.h" />
     <ClInclude Include="src\Crimson\Input.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Crimson\KeyCodes.h" />
+    <ClInclude Include="src\Crimson\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp">
