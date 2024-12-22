@@ -31,6 +31,9 @@ namespace Crimson {
 	private:
 		float m_Time = 0.f;
 
+		// for copy and paste
+		char m_InputBuffer[256] = "Hello";
+	
 	};
 
 }

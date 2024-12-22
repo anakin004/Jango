@@ -61,6 +61,9 @@
     <ClInclude Include="src\Crimson\Window.h">
       <Filter>Crimson</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\ImGuiGLFW.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\ImGuiGLRenderer.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
@@ -68,8 +71,6 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\cnpch.h" />
-    <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
-    <ClInclude Include="src\Platform\OpenGL\ImGuiGLFW.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp">
@@ -90,6 +91,9 @@
     <ClCompile Include="src\Crimson\Subsystems.cpp">
       <Filter>Crimson</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\ImGuiGLFW.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\ImGuiGLRenderer.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
@@ -97,6 +101,5 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\cnpch.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\ImGuiGLFW.cpp" />
   </ItemGroup>
 </Project>

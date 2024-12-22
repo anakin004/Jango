@@ -1,5 +1,5 @@
 workspace "Crimson"
-	
+	startproject "Sandbox"
 	architecture "x64"
 
 	configurations
@@ -19,15 +19,19 @@ IncludeDir["GLFW"] = "Crimson/vendor/GLFW/include"
 IncludeDir["Glad"] = "Crimson/vendor/Glad/include"
 IncludeDir["ImGui"] = "Crimson/vendor/imgui"
 
-include "Crimson/vendor/GLFW"
-include "Crimson/vendor/Glad"
-include "Crimson/vendor/imgui"
+
+group "Dependencies"
+	include "Crimson/vendor/GLFW"
+	include "Crimson/vendor/imgui"
+	include "Crimson/vendor/Glad"
+group ""
 
 
 project "Crimson"
 	location "Crimson"	
 	kind "SharedLib"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -64,7 +68,6 @@ project "Crimson"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -76,22 +79,22 @@ project "Crimson"
 
 		postbuildcommands
 		{
-			"{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"
+			"{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\""
 		}
 
 	filter "configurations:Debug"
 		defines {"CN_DEBUG", "CN_ENABLE_ASSERTS"}
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "CN_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "CN_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 
@@ -100,6 +103,7 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -125,7 +129,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -135,15 +138,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines {"CN_DEBUG", "CN_ENABLE_ASSERTS"}
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "CN_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "CN_DIST"
-		buildoptions "/MD"
+		buildoptions "Release"
 		optimize "On"

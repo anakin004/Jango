@@ -13,6 +13,7 @@
 
 namespace Crimson {
 
+
 	ImGuiLayer::ImGuiLayer()
 		: Layer("ImGuiLayer")
 	{
@@ -41,8 +42,15 @@ namespace Crimson {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
 
-		static bool show = true;
+		bool show = true;
 		ImGui::ShowDemoWindow(&show);
+
+		// coming back to this regarding copy and paste
+// 		ImGui::Begin("Input Window"); 
+// 		ImGui::InputText("Input", m_InputBuffer, IM_ARRAYSIZE(m_InputBuffer));  
+// 		ImGui::Text("You entered: %s", m_InputBuffer);  
+// 		ImGui::End(); 
+
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -105,18 +113,35 @@ namespace Crimson {
 		// the scancode not used, we dont need it so set to 0
 		// refer to ImGuiGLFW.h for more info
 		ImGuiKey imguiKey = ImGui_ImplGlfw_KeyToImGuiKey(e.GetKeyCode(), 0);
+		io.AddKeyEvent(imguiKey, true);
 		
-		// dont know if i need these
-		
-// 		io.KeyCtrl = ImGui::IsKeyPressed(ImGuiKey_LeftCtrl) || ImGui::IsKeyPressed(ImGuiKey_RightCtrl);
-// 		io.KeyShift = ImGui::IsKeyPressed(ImGuiKey_LeftShift) || ImGui::IsKeyPressed(ImGuiKey_RightShift);
-// 		io.KeyAlt = ImGui::IsKeyPressed(ImGuiKey_LeftAlt) || ImGui::IsKeyPressed(ImGuiKey_RightAlt);
-// 		io.KeySuper = ImGui::IsKeyPressed(ImGuiKey_LeftSuper) || ImGui::IsKeyPressed(ImGuiKey_RightSuper);
+		io.KeyCtrl = ImGui::IsKeyPressed(ImGuiKey_LeftCtrl) || ImGui::IsKeyPressed(ImGuiKey_RightCtrl);
+		io.KeyShift = ImGui::IsKeyPressed(ImGuiKey_LeftShift) || ImGui::IsKeyPressed(ImGuiKey_RightShift);
+		io.KeyAlt = ImGui::IsKeyPressed(ImGuiKey_LeftAlt) || ImGui::IsKeyPressed(ImGuiKey_RightAlt);
+		io.KeySuper = ImGui::IsKeyPressed(ImGuiKey_LeftSuper) || ImGui::IsKeyPressed(ImGuiKey_RightSuper);
 
 
-		// also check for event key press
- 		io.AddKeyEvent(imguiKey, true);
-
+		// need to return back to this
+// 		ImGui::InputText("Input", m_InputBuffer, IM_ARRAYSIZE(m_InputBuffer));
+// 		ImGui::Text("Clipboard Content: %s", ImGui::GetClipboardText() ? ImGui::GetClipboardText() : "Empty");
+// 
+// 
+// 
+// 		// ctrl c
+// 		if (io.KeyCtrl && imguiKey == ImGuiKey_C) {
+// 			const char* inputText = m_InputBuffer;
+// 			ImGui::SetClipboardText(inputText);  
+// 		}
+// 
+// 		// ctrl v
+// 		if (io.KeyCtrl && imguiKey == ImGuiKey_V) {
+// 			const char* clipboardText = ImGui::GetClipboardText();
+// 			if (clipboardText) {
+// 				strncpy(m_InputBuffer, clipboardText, IM_ARRAYSIZE(m_InputBuffer) - 1);
+// 				m_InputBuffer[IM_ARRAYSIZE(m_InputBuffer) - 1] = '\0'; 
+// 			}
+// 		}
+// 		CN_INFO(m_InputBuffer);
 
 		return false;
 	}

@@ -1,3 +1,9 @@
+	
+tasks:
+
+-- copy and paste in imgui layer (in progress)
+
+general:
 
 -- math							(soon in progress)	
 -- rendering architecture 				( not started yet ) -> planning
