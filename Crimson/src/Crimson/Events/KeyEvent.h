@@ -14,7 +14,7 @@ namespace Crimson {
 
 	protected:
 		// so we cant make this an instance of the KeyEvent base class
-		KeyEvent(int keycode) 
+		KeyEvent(int keycode)
 			: m_KeyCode(keycode) {}
 
 		int m_KeyCode;
@@ -61,6 +61,26 @@ namespace Crimson {
 		}
 
 		EVENT_CLASS_TYPE(KeyReleased)
+
+	};
+
+	class CRIMSON_API KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(int keycode)
+			: KeyEvent(keycode) {
+		}
+
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyTypedEvent: " << m_KeyCode;
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
+
+	private:
 
 	};
 }

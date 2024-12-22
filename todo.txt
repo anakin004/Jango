@@ -1,9 +1,4 @@
 
--- work on adding layer classes for layers and overlays (in progress)
--- imgui for debugging 					(in progress)		
--- imgui events						(soon in progress)	
--- input polling					(soon in progress)	
--- key and mouse codes					(soon in progress)	
 -- math							(soon in progress)	
 -- rendering architecture 				( not started yet ) -> planning
  

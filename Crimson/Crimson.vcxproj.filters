@@ -68,6 +68,8 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\cnpch.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="src\Platform\OpenGL\ImGuiGLFW.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp">
@@ -95,5 +97,6 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\cnpch.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\ImGuiGLFW.cpp" />
   </ItemGroup>
 </Project>

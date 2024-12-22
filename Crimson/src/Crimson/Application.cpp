@@ -45,6 +45,7 @@ namespace Crimson {
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
+
 		dispatcher.Dispatch < WindowCloseEvent >(BIND_EVENT_FN(OnWindowClosed));
 		
 		//CN_CORE_TRACE(e.ToString());

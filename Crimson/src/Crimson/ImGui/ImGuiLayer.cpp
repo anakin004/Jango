@@ -3,8 +3,13 @@
 
 #include "imgui.h"
 #include "Platform/OpenGL/ImGuiGLRenderer.h"
+#include "Platform/OpenGL/ImGuiGLFW.h"
 #include "Crimson/Application.h"
+
+
+// temp
 #include <GLFW/glfw3.h>
+#include <Glad/glad.h>
 
 namespace Crimson {
 
@@ -52,6 +57,7 @@ namespace Crimson {
 		dispatcher.Dispatch<MouseScrolledEvent>(CN_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
 		dispatcher.Dispatch<KeyPressedEvent>(CN_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
 		dispatcher.Dispatch<KeyReleasedEvent>(CN_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
+		dispatcher.Dispatch<KeyTypedEvent>(CN_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
 		dispatcher.Dispatch<WindowResizeEvent>(CN_BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
 	}
 
@@ -66,8 +72,9 @@ namespace Crimson {
 
 	bool ImGuiLayer::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e)
 	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[e.GetMouseButton()] = false;
+		ImGuiIO& io = ImGui::GetIO();            // not held down
+		io.AddMouseButtonEvent(e.GetMouseButton(), false );
+		//io.MouseDown[e.GetMouseButton()] = false;
 
 		return false;
 	}
@@ -75,7 +82,8 @@ namespace Crimson {
 	bool ImGuiLayer::OnMouseMovedEvent(MouseMovedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		io.MousePos = ImVec2(e.GetX(), e.GetY());
+		io.AddMousePosEvent(e.GetX(), e.GetY());
+		//io.MousePos = ImVec2(e.GetX(), e.GetY());
 
 		return false;
 	}
@@ -83,6 +91,7 @@ namespace Crimson {
 	bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
+		io.AddMouseWheelEvent(e.GetXOffset(), e.GetYOffset());
 		io.MouseWheelH += e.GetXOffset();
 		io.MouseWheel += e.GetYOffset();
 
@@ -91,16 +100,51 @@ namespace Crimson {
 
 	bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& e)
 	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		// the scancode not used, we dont need it so set to 0
+		// refer to ImGuiGLFW.h for more info
+		ImGuiKey imguiKey = ImGui_ImplGlfw_KeyToImGuiKey(e.GetKeyCode(), 0);
+		
+		// dont know if i need these
+		
+// 		io.KeyCtrl = ImGui::IsKeyPressed(ImGuiKey_LeftCtrl) || ImGui::IsKeyPressed(ImGuiKey_RightCtrl);
+// 		io.KeyShift = ImGui::IsKeyPressed(ImGuiKey_LeftShift) || ImGui::IsKeyPressed(ImGuiKey_RightShift);
+// 		io.KeyAlt = ImGui::IsKeyPressed(ImGuiKey_LeftAlt) || ImGui::IsKeyPressed(ImGuiKey_RightAlt);
+// 		io.KeySuper = ImGui::IsKeyPressed(ImGuiKey_LeftSuper) || ImGui::IsKeyPressed(ImGuiKey_RightSuper);
+
+
+		// also check for event key press
+ 		io.AddKeyEvent(imguiKey, true);
+
+
 		return false;
 	}
 
 	bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& e)
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		ImGuiKey imguiKey = ImGui_ImplGlfw_KeyToImGuiKey(e.GetKeyCode(), 0);
+
+
+		io.AddKeyEvent(imguiKey, false);
+		return false;
+	}
+
+	bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.AddInputCharacter(static_cast<unsigned int>(e.GetKeyCode()));
+
 		return false;
 	}
 
 	bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent& e)
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.DisplaySize = ImVec2(e.GetWidth(), e.GetHeight());
+		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+		glViewport(0, 0, e.GetWidth(), e.GetHeight());
 		return false;
 	}
 

@@ -16,7 +16,7 @@ namespace Crimson {
 		None = 0,
 		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
 		AppTick, AppUpdate, AppRender,
-		KeyPressed, KeyReleased,
+		KeyPressed, KeyReleased, KeyTyped,
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 	};
 
@@ -69,7 +69,7 @@ namespace Crimson {
 		virtual std::string ToString() const { return GetName(); }
 
 		inline bool GetHandled() const { return m_Handled; }
-		inline bool IsInCategory(EventCategory category)
+		inline bool IsInCategory(EventCategory category) const
 		{
 			// bitwise & to check flags, refer to EventCategory BIT and #define BIT in Core.h
 			// simply to check if the category flag exists in the event's category flags
