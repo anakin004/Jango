@@ -27,8 +27,11 @@ namespace Crimson {
 
 	// will figure out handling destruction of textures, buffers, etc elsewhere
 	void Subsystems::ShutDownGL() {
-		if(!s_GLFWTerminated)
+		if (!s_GLFWTerminated) {
 			glfwTerminate();
+			CN_CORE_INFO("GLFW Terminated!");
+			s_GLFWTerminated = true;
+		}
 	}
 
 	void Subsystems::GLFWErrorCallBack(int error, const char* description) {

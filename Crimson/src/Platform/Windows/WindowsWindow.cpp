@@ -169,6 +169,7 @@ namespace Crimson {
 
 	void WindowsWindow::Shutdown()
 	{
+		CN_CORE_INFO("Destroying Window");
 		glfwDestroyWindow(m_Window);
 	}
 

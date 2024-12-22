@@ -5,8 +5,12 @@
 #include "Crimson/Events/ApplicationEvent.h"
 #include "Crimson/Events/KeyEvent.h"
 #include "Crimson/Events/MouseEvent.h"
+#include "Subsystems.h"
 
 #include <Glad/glad.h>
+
+// dont really want this here
+#include <GLFW/glfw3.h>
 
 namespace Crimson {
 
@@ -24,6 +28,14 @@ namespace Crimson {
 
 	Application::~Application()
 	{
+
+		// dont really like this, will probably do a cleanup function outside of app to shutdown gl
+		// and others if needed
+		// we call reset on the unique pointer so its released before we call shutdowngl
+		// and we arent shutting down opengl before freeing window
+
+		m_Window.reset();
+		Subsystems::ShutDownGL();
 	} 
 
 	void Application::Run()
@@ -45,8 +57,8 @@ namespace Crimson {
 			//CN_CORE_TRACE("{0}", state);
 
 			// glfw mb0 is left
-			bool mouse = Input::IsMouseButtonPressed(0);
-			CN_CORE_TRACE("{0}", mouse);
+// 			bool mouse = Input::IsMouseButtonPressed(0);
+// 			CN_CORE_TRACE("{0}", mouse);
 
 			m_Window->OnUpdate();
 		}
