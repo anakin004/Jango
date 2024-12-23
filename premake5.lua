@@ -18,12 +18,14 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Crimson/vendor/GLFW/include"
 IncludeDir["Glad"] = "Crimson/vendor/Glad/include"
 IncludeDir["ImGui"] = "Crimson/vendor/imgui"
+IncludeDir["Chroma"] = "Crimson/vendor/Chroma"
 
 
 group "Dependencies"
 	include "Crimson/vendor/GLFW"
 	include "Crimson/vendor/imgui"
 	include "Crimson/vendor/Glad"
+	include "Crimson/vendor/Chroma"
 group ""
 
 
@@ -55,7 +57,8 @@ project "Crimson"
 		"Crimson/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.Chroma}"
 	}
 
 	links
@@ -63,6 +66,7 @@ project "Crimson"
 		"GLFW",
 		"Glad",
 		"ImGui",
+		"Chroma",
 		"opengl32.lib"
 	}
 
@@ -81,6 +85,13 @@ project "Crimson"
 		{
 			"{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\""
 		}
+	
+	filter "toolset:gcc or toolset:clang"  -- For GCC and Clang
+		buildoptions { "-msse", "-mavx" }  --  SSE and AVX support
+
+	filter "toolset:msc"  -- For MSVC
+		buildoptions { "/arch:SSE", "/arch:AVX" }  -- SSE and AVX support
+	
 
 	filter "configurations:Debug"
 		defines {"CN_DEBUG", "CN_ENABLE_ASSERTS"}
@@ -135,6 +146,13 @@ project "Sandbox"
 		{
 			"CN_PLATFORM_WINDOWS"
 		}
+
+	filter "toolset:gcc or toolset:clang"  
+		buildoptions { "-msse", "-mavx" }  
+
+	filter "toolset:msc"  
+		buildoptions { "/arch:SSE", "/arch:AVX" } 
+	
 
 	filter "configurations:Debug"
 		defines {"CN_DEBUG", "CN_ENABLE_ASSERTS"}

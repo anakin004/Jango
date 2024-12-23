@@ -46,6 +46,12 @@
     <ClInclude Include="src\Crimson\ImGui\ImGuiLayer.h">
       <Filter>Crimson\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crimson\Input.h">
+      <Filter>Crimson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\KeyCodes.h">
+      <Filter>Crimson</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crimson\Layer.h">
       <Filter>Crimson</Filter>
     </ClInclude>
@@ -53,6 +59,9 @@
       <Filter>Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Log.h">
+      <Filter>Crimson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\MouseButtonCodes.h">
       <Filter>Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Subsystems.h">
@@ -67,14 +76,13 @@
     <ClInclude Include="src\Platform\OpenGL\ImGuiGLRenderer.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\cnpch.h" />
-    <ClInclude Include="src\Crimson\Input.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
-    <ClInclude Include="src\Crimson\KeyCodes.h" />
-    <ClInclude Include="src\Crimson\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp">
@@ -101,10 +109,12 @@
     <ClCompile Include="src\Platform\OpenGL\ImGuiGLRenderer.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\cnpch.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,9 @@
 #include "Crimson/Events/MouseEvent.h"
 #include "Subsystems.h"
 
+// testing chroma math
+#include <crm_mth.h>
+
 #include <Glad/glad.h>
 
 
@@ -50,6 +53,11 @@ namespace Crimson {
 
 			// testing ... 
 			
+			crm::vec3 a = crm::MakeVec3(1.f, 1.f, 1.f);
+			crm::vec3 b = crm::MakeVec3(1.f, 1.f, 1.f);
+			crm::vec3 c = crm::Add(a, b);
+			std::cout << c.data[0] << " " << c.data[1] << " " << c.data[2] << "\n";
+
 			// glfw key space is keycode 32
 			//bool state = Input::IsKeyPressed();
 			//CN_CORE_TRACE("{0}", state);

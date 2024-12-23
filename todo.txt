@@ -6,7 +6,10 @@ tasks:
 
 general:
 
--- own math lib						(in progress)	
+-- own math lib						(implimented)
+   -- work on configurations with different compilers
+	
+
 -- rendering architecture 				( not started yet ) -> planning
  
 

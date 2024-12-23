@@ -7,3 +7,6 @@
 [submodule "Crimson/vendor/imgui"]
 	path = Crimson/vendor/imgui
 	url = https://github.com/anakin004/imgui
+[submodule "Crimson/vendor/Chroma"]
+	path = Crimson/vendor/Chroma
+	url = https://github.com/anakin004/Chroma
