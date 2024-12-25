@@ -53,10 +53,16 @@ namespace Crimson {
 
 			// testing ... 
 			
-			crm::vec3 a = crm::MakeVec3(1.f, 1.f, 1.f);
-			crm::vec3 b = crm::MakeVec3(1.f, 1.f, 1.f);
-			crm::vec3 c = crm::Add(a, b);
-			std::cout << c.data[0] << " " << c.data[1] << " " << c.data[2] << "\n";
+
+			crm::mat4 mat = crm::Translation({ -1.f,-1.f,5.f });
+			mat = crm::Translation(mat,{ 1.f,1.f,1.f });
+
+			// should be 0, 0, 6, 1
+			CN_CORE_INFO("{0},{1},{2},{3}", mat.column_vector[3].x, mat.column_vector[3].y, mat.column_vector[3].z, mat.column_vector[3].w);
+
+			 //should be 1, 0, -1
+			// there is some precision 
+			//CN_CORE_INFO("{0}, {1}, {2}", mat.column_vector[0].x, mat.column_vector[1].y, mat.column_vector[2].y);
 
 			// glfw key space is keycode 32
 			//bool state = Input::IsKeyPressed();

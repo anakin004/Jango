@@ -127,4 +127,19 @@ namespace Crimson {
 		Event& m_Event;
 	};
 
+
+	inline std::ostream& operator <<(std::ostream & os, const Event & e)
+	{
+		return os << e.ToString();
+	}
+
+	/* 
+	to add
+
+	inline std::ostream& operator <<(std::ostream& os, const crm::mat4& e)
+	{
+		return os << e.ToString();
+	}
+	*/
+
 }
