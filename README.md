@@ -16,7 +16,7 @@ imported tools used are found in the Crimson/vendor directory
 - **ImGui**: UI for runtime testing
 - **GLFW**: Used to create windows, contexts, receiving input, and call-backs
 - **Glad**: loading OpenGL functions into Crimson
-- **Math Library**: Developed my own math library, Chroma.
+- **Math Library**: Developed my own math library, Chroma(https://github.com/anakin004/Chroma)
   relevant snipets and inspiration accredited to the YouTube channel GetIntoGameDev
 - **Compiler Support (Work in Progress)**: 
   - GCC, Cmake, MSVC support SIMD operations
