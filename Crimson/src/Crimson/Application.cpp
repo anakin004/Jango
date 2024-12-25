@@ -54,11 +54,11 @@ namespace Crimson {
 			// testing ... 
 			
 
-			crm::mat4 mat = crm::Translation({ -1.f,-1.f,5.f });
-			mat = crm::Translation(mat,{ 1.f,1.f,1.f });
+			//crm::mat4 mat = crm::Translation({ -1.f,-1.f,5.f });
+			//mat = crm::Translation(mat,{ 1.f,1.f,1.f });
 
 			// should be 0, 0, 6, 1
-			CN_CORE_INFO("{0},{1},{2},{3}", mat.column_vector[3].x, mat.column_vector[3].y, mat.column_vector[3].z, mat.column_vector[3].w);
+			//CN_CORE_INFO("{0},{1},{2},{3}", mat.column_vector[3].x, mat.column_vector[3].y, mat.column_vector[3].z, mat.column_vector[3].w);
 
 			 //should be 1, 0, -1
 			// there is some precision 
