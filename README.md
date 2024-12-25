@@ -4,15 +4,16 @@
 
 # Crimson Engine
 
-Crimson is an open-source game engine currently under development. It focuses on modular architecture, cross-platform compatibility, and real-time rendering to empower developers to create robust games and applications.
+Crimson is an open-source game engine currently under development including 2D and 3D environments
 
 ---
 
-## 🚀 Features
+## 🚀 Features (so far)
 
 - **Modular Architecture**: Built for easy integration and customization.
 - **Cross-Platform Support**: Designed to run on multiple platforms.
-- **Real-Time Rendering**: Leverages advanced techniques for high-performance graphics.
+- **Math Library**: Developed my own math library, Chroma,
+  relevant snipets and inspiration accredited to the YouTube channel GetIntoGameDev.
 - **Compiler Support (Work in Progress)**: 
   - GCC with CMake
   - MSVC with SIMD optimizations
