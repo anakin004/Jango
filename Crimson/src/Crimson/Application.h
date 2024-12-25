@@ -8,6 +8,8 @@
 #include "Events/ApplicationEvent.h"
 #include "Window.h"
 
+#include "Crimson/ImGui/ImGuiLayer.h"
+
 namespace Crimson {
 
 	/*
@@ -40,6 +42,8 @@ namespace Crimson {
 		bool m_Running = true;
 		std::unique_ptr<Window> m_Window;
 
+		// there will now be an explicit imgui layer since its pretty intrinsic to the engine
+		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
 
 	private:

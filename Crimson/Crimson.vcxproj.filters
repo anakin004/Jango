@@ -13,9 +13,6 @@
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\OpenGL">
-      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
     </Filter>
@@ -70,12 +67,6 @@
     <ClInclude Include="src\Crimson\Window.h">
       <Filter>Crimson</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\ImGuiGLFW.h">
-      <Filter>Platform\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\ImGuiGLRenderer.h">
-      <Filter>Platform\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -87,6 +78,9 @@
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp">
       <Filter>Crimson</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\ImGui\ImGuiBuild.cpp">
+      <Filter>Crimson\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\ImGui\ImGuiLayer.cpp">
       <Filter>Crimson\ImGui</Filter>
@@ -102,12 +96,6 @@
     </ClCompile>
     <ClCompile Include="src\Crimson\Subsystems.cpp">
       <Filter>Crimson</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\ImGuiGLFW.cpp">
-      <Filter>Platform\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\ImGuiGLRenderer.cpp">
-      <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>Platform\Windows</Filter>

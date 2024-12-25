@@ -1,14 +1,5 @@
 	
-tasks:
-
--- copy and paste in imgui layer (in progress)
-
-
-general:
-
--- own math lib						(implimented)
-   -- work on configurations with different compilers
-	
+-- add compiler defines for math library	
 
 -- rendering architecture 				( not started yet ) -> planning
  

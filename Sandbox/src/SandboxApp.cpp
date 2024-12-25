@@ -1,5 +1,6 @@
 #include <Crimson.h>
 
+#include "imgui/imgui.h"
 
 class ExampleLayer : public Crimson::Layer
 {
@@ -11,9 +12,13 @@ public:
 	
 	void OnUpdate() override
 	{
-		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_SPACE))
-			CN_TRACE("Space Is Pressed");
-		//CN_INFO("ExampleLayer::Update");
+	}
+
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello!");
+		ImGui::End();
 	}
 
 	void OnEvent(Crimson::Event& event) override
@@ -28,7 +33,6 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer);
-		PushOverlay(new Crimson::ImGuiLayer());
 	}
 
 	~Sandbox()

@@ -130,7 +130,8 @@ project "Sandbox"
 	includedirs
 	{
 		"Crimson/vendor/spdlog/include",
-		"Crimson/src"
+		"Crimson/src",
+		"Crimson/vendor"
 	}
 
 	links

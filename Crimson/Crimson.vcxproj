@@ -172,21 +172,18 @@
     <ClInclude Include="src\Crimson\MouseButtonCodes.h" />
     <ClInclude Include="src\Crimson\Subsystems.h" />
     <ClInclude Include="src\Crimson\Window.h" />
-    <ClInclude Include="src\Platform\OpenGL\ImGuiGLFW.h" />
-    <ClInclude Include="src\Platform\OpenGL\ImGuiGLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\cnpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp" />
+    <ClCompile Include="src\Crimson\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Crimson\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Crimson\Layer.cpp" />
     <ClCompile Include="src\Crimson\LayerStack.cpp" />
     <ClCompile Include="src\Crimson\Log.cpp" />
     <ClCompile Include="src\Crimson\Subsystems.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\ImGuiGLFW.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\ImGuiGLRenderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\cnpch.cpp">
