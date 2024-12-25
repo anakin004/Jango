@@ -60,7 +60,7 @@ will soon include docs for cmake, gcc, etc
 
 ## 💻 Contributing
 
-We welcome contributions to Crimson! To contribute:  
+I welcome contributions to Crimson! To contribute:  
 1. Fork the repository 
 2. Create a new branch for your feature or fix
 3. Commit your changes with detailed messages
