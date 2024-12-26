@@ -2,10 +2,14 @@
 
 
 #ifdef CN_PLATFORM_WINDOWS
+#if CN_DYANMIC_LINK
 	#ifdef CN_BUILD_DLL
 		#define CRIMSON_API __declspec(dllexport)
 	#else
 		#define CRIMSON_API __declspec(dllimport)
+	#endif
+#else
+	#define CRIMSON_API 
 #endif 
 
 

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "cnpch.h"
+
 #include "Crimson/Window.h"
+#include "Crimson/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
-
 
 namespace Crimson {
 
@@ -37,6 +37,8 @@ namespace Crimson {
 	private:
 
 		GLFWwindow* m_Window;
+
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{

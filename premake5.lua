@@ -31,9 +31,10 @@ group ""
 
 project "Crimson"
 	location "Crimson"	
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -50,6 +51,11 @@ project "Crimson"
         "%{prj.name}/Platform/Windows/**.h",
         "%{prj.name}/Platform/Windows/**.cpp"
     }
+
+	defines 
+	{
+		"_CRT_SECURE_NO_WARNINGS"
+	}
 
 	includedirs
 	{
@@ -71,7 +77,6 @@ project "Crimson"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -81,12 +86,8 @@ project "Crimson"
 			"GLFW_INCLUDE_NONE"
 		}
 
-		postbuildcommands
-		{
-			"{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\""
-		}
 	
-	filter "toolset:gcc or toolset:clang"  -- For GCC and Clang
+	filter "toolset:gcc or toolset:clang" -- For GCC and Clang
 		buildoptions { "-msse", "-mavx" }  --  SSE and AVX support
 
 	filter "toolset:msc"  -- For MSVC
@@ -96,17 +97,17 @@ project "Crimson"
 	filter "configurations:Debug"
 		defines {"CN_DEBUG", "CN_ENABLE_ASSERTS"}
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "CN_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "CN_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 
 
@@ -114,7 +115,8 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -140,7 +142,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -148,24 +149,18 @@ project "Sandbox"
 			"CN_PLATFORM_WINDOWS"
 		}
 
-	filter "toolset:gcc or toolset:clang"  
-		buildoptions { "-msse", "-mavx" }  
-
-	filter "toolset:msc"  
-		buildoptions { "/arch:SSE", "/arch:AVX" } 
-	
 
 	filter "configurations:Debug"
 		defines {"CN_DEBUG", "CN_ENABLE_ASSERTS"}
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "CN_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "CN_DIST"
 		buildoptions "Release"
-		optimize "On"
+		optimize "on"

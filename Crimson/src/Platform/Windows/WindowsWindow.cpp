@@ -1,14 +1,13 @@
 #include "cnpch.h"
 #include "WindowsWindow.h"
-#include "Crimson/Core.h"
-#include "Crimson/Log.h"
+
 #include "Crimson/Events/ApplicationEvent.h"
 #include "Crimson/Events/MouseEvent.h"
 #include "Crimson/Events/KeyEvent.h"
-#include "Crimson/Events/Event.h"
 #include "Crimson/Subsystems.h"
 
-#include <Glad/glad.h>
+#include "Platform/OpenGL/OpenGLContext.h"
+
 
 namespace Crimson {
 
@@ -45,16 +44,9 @@ namespace Crimson {
 		
 		m_Window = glfwCreateWindow((int)attribs.Width, (int)attribs.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		
-		if (m_Window == NULL) 
-		{ 
-			CN_CORE_ASSERT(false, "Failed to Create Window") 
-		}
-		
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
 
-		glfwMakeContextCurrent(m_Window);
-		// init glad after creating context
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		CN_CORE_ASSERT(status, "Failed to initialize GLAD!");
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		//vsync true default 
@@ -177,8 +169,7 @@ namespace Crimson {
 	{
 		// proccessing callbacks 
 		glfwPollEvents();
-
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
