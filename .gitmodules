@@ -4,9 +4,12 @@
 [submodule "Crimson/vendor/GLFW"]
 	path = Crimson/vendor/GLFW
 	url = https://github.com/anakin004/glfw
+	branch = master
 [submodule "Crimson/vendor/imgui"]
 	path = Crimson/vendor/imgui
 	url = https://github.com/anakin004/imgui
+	branch = docking
 [submodule "Crimson/vendor/Chroma"]
 	path = Crimson/vendor/Chroma
 	url = https://github.com/anakin004/Chroma
+	branch = main
