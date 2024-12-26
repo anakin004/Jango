@@ -1,6 +1,7 @@
 	
 -- add compiler defines for math library	
 
+-- change crimson to static lib 
 -- rendering architecture 				( not started yet ) -> planning
  
 
