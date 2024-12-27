@@ -18,6 +18,10 @@ namespace Crimson {
 		// init glad after creating context
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		CN_CORE_ASSERT(status, "Failed to initialize GLAD!");
+
+		CN_CORE_INFO("	Vendor: {0}", (char*)glGetString(GL_VENDOR));
+		CN_CORE_INFO("	Renderer: {0}", (char*)glGetString(GL_RENDERER));
+		CN_CORE_INFO("	Version: {0}", (char*)glGetString(GL_VERSION));
 	}
 
 	void OpenGLContext::SwapBuffers()

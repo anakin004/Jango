@@ -10,8 +10,14 @@
     <Filter Include="Crimson\ImGui">
       <UniqueIdentifier>{EA2AC1B5-56EB-3CEC-1F26-86698BA581C8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Crimson\Renderer">
+      <UniqueIdentifier>{6621EDC1-521A-0C14-7B4C-F19867A4EB1F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\OpenGL">
+      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
@@ -61,11 +67,35 @@
     <ClInclude Include="src\Crimson\MouseButtonCodes.h">
       <Filter>Crimson</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\Buffer.h">
+      <Filter>Crimson\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\GraphicsContext.h">
+      <Filter>Crimson\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\Renderer.h">
+      <Filter>Crimson\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\Shader.h">
+      <Filter>Crimson\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\Texture.h">
+      <Filter>Crimson\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crimson\Subsystems.h">
       <Filter>Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Window.h">
       <Filter>Crimson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>Platform\Windows</Filter>
@@ -74,8 +104,6 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\cnpch.h" />
-    <ClInclude Include="src\Crimson\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp">
@@ -96,8 +124,26 @@
     <ClCompile Include="src\Crimson\Log.cpp">
       <Filter>Crimson</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crimson\Renderer\Buffer.cpp">
+      <Filter>Crimson\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Renderer\Renderer.cpp">
+      <Filter>Crimson\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Renderer\Shader.cpp">
+      <Filter>Crimson\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Crimson\Subsystems.cpp">
       <Filter>Crimson</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>Platform\Windows</Filter>
@@ -106,6 +152,5 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\cnpch.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
   </ItemGroup>
 </Project>

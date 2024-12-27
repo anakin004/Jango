@@ -7,10 +7,9 @@
 #include "Crimson/Events/MouseEvent.h"
 #include "Subsystems.h"
 
-// testing chroma math
-#include <crm_mth.h>
 
 #include <Glad/glad.h>
+#include <crm_mth.h>
 
 
 namespace Crimson {
@@ -18,6 +17,28 @@ namespace Crimson {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 	Application* Application::s_Instance = nullptr;
+
+
+	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+	{
+		switch (type) 
+		{
+		case ShaderDataType::Float:			return GL_FLOAT;
+		case ShaderDataType::Float2:		return GL_FLOAT;
+		case ShaderDataType::Float3:		return GL_FLOAT;
+		case ShaderDataType::Float4:		return GL_FLOAT;
+		case ShaderDataType::Mat3:			return GL_FLOAT;
+		case ShaderDataType::Mat4:			return GL_FLOAT;
+		case ShaderDataType::Int:			return GL_INT;
+		case ShaderDataType::Int2:			return GL_INT;
+		case ShaderDataType::Int3:			return GL_INT;
+		case ShaderDataType::Int4:			return GL_INT;
+		case ShaderDataType::Bool:			return GL_BOOL;
+		}
+
+		CN_CORE_ASSERT(false, "Unknown Shader Data Type!");
+		return 0;
+	}
 
 	Application::Application()
 	{
@@ -29,6 +50,53 @@ namespace Crimson {
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+
+		glGenVertexArrays(1, &m_VertexArray);
+		glBindVertexArray(m_VertexArray);
+
+		float vertices[7*3] = {
+			-0.5f, -0.5f, 0.0f, 0.9f, 0.1f, 0.3f, 1.0f,  
+			0.5f,  -0.5f, 0.0f, 0.5f, 0.7f, 0.3f, 1.0f,   
+			0.0f,   0.5f, 0.0f, 0.3f, 0.5f, 0.9f, 1.0f, 
+
+		}; 
+
+		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+
+
+ 		BufferLayout layout = {
+			{ShaderDataType::Float3, "a_Position"},
+			{ShaderDataType::Float4, "a_Color" }
+		};
+
+		int idx = 0;
+		for (const auto& element : layout)
+		{
+			glEnableVertexAttribArray(idx);
+			glVertexAttribPointer(idx, 
+				element.GetComponentCount(),
+				ShaderDataTypeToOpenGLBaseType(element.Type),
+				element.Normalized ? GL_TRUE : GL_FALSE,
+				layout.GetStride(),
+				(const void*)((uint64_t)(element.Offset)));
+			CN_CORE_INFO("{0}, {1}, {2}, {3}, {4}, {5}", idx, element.GetComponentCount(), ShaderDataTypeToOpenGLBaseType(element.Type), element.Normalized, layout.GetStride(), element.Offset);
+			idx++;
+		}
+
+
+
+
+		m_VertexBuffer->SetLayout(layout);
+
+		uint32_t indices[3] = {
+			0,1,2
+		};
+
+		m_IndexBuffer.reset(IndexBuffer::Create(indices, 3));
+		m_Shader.reset(Shader::Create("src/testing.shader"));
+		m_Shader->Bind();
+
+
 	}
 
 	Application::~Application()
@@ -46,8 +114,12 @@ namespace Crimson {
 	void Application::Run()
 	{
 		while (m_Running) {
-			glClearColor(0, 1, 1, 1);
+			glClearColor(0.1f, 0.1f, 0.1f, 1.f);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			m_Shader->Bind();
+			glBindVertexArray(m_VertexArray);
+			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			// we can use range based for loop because we implimented begin and end
 			for (Layer* layer : m_LayerStack)
@@ -61,27 +133,6 @@ namespace Crimson {
 				layer->OnImGuiRender();
 			}
 			m_ImGuiLayer->End();
-
-			// testing ... 
-			
-
-			//crm::mat4 mat = crm::Translation({ -1.f,-1.f,5.f });
-			//mat = crm::Translation(mat,{ 1.f,1.f,1.f });
-
-			// should be 0, 0, 6, 1
-			//CN_CORE_INFO("{0},{1},{2},{3}", mat.column_vector[3].x, mat.column_vector[3].y, mat.column_vector[3].z, mat.column_vector[3].w);
-
-			 //should be 1, 0, -1
-			// there is some precision 
-			//CN_CORE_INFO("{0}, {1}, {2}", mat.column_vector[0].x, mat.column_vector[1].y, mat.column_vector[2].y);
-
-			// glfw key space is keycode 32
-			//bool state = Input::IsKeyPressed();
-			//CN_CORE_TRACE("{0}", state);
-
-			// glfw mb0 is left
- 			//bool mouse = Input::IsMouseButtonPressed(0);
- 			//CN_CORE_TRACE("{0}", mouse);
 
 			m_Window->OnUpdate();
 		}

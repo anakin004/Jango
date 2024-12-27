@@ -133,7 +133,8 @@ project "Sandbox"
 	{
 		"Crimson/vendor/spdlog/include",
 		"Crimson/src",
-		"Crimson/vendor"
+		"Crimson/vendor",
+		"Crimson/vendor/Chroma"
 	}
 
 	links
