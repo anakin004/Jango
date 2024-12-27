@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Crimson/Renderer/Shader.h"
+#include <crm_mth.h>
 
 namespace Crimson {
 
@@ -22,7 +23,7 @@ namespace Crimson {
 		virtual void Unbind() const override;
 		virtual void compileErrors(unsigned int shader, const std::string& type) override;
 
-		virtual inline uint32_t GetID() const override { return m_RendererID; }
+		virtual void UploadUniformMat4(const std::string& name, crm::mat4& matrix) override;
 
 	private:
 		ShaderProgramSource get_file_contents(const std::string& filename);

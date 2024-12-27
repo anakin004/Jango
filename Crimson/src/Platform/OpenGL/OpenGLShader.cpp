@@ -156,4 +156,17 @@ namespace Crimson {
 			}
 		}
 	}
+
+	void OpenGLShader::UploadUniformMat4(const std::string& name, crm::mat4& matrix)
+	{
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		if (loc == -1) {
+			CN_CORE_ERROR("Could not find uniform: {0}", name);
+		}
+		else {
+			glUniformMatrix4fv(loc, 1, GL_FALSE, matrix.data);
+		}
+
+	}
+
 }

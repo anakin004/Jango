@@ -11,6 +11,9 @@
 #include "Crimson/ImGui/ImGuiLayer.h"
 #include "Crimson/Renderer/Shader.h"
 #include "Crimson/Renderer/Buffer.h"
+#include "Crimson/Renderer/VertexArray.h"
+#include "Crimson/Renderer/RendererAPI.h"
+#include "Crimson/Renderer/OrthographicCamera.h"
 
 namespace Crimson {
 
@@ -48,10 +51,16 @@ namespace Crimson {
 		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
 
-		unsigned int m_VertexArray;
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<Shader> m_Shader;
+
+		std::shared_ptr<VertexArray> m_VertexArray;
+		std::shared_ptr<VertexBuffer> m_VertexBuffer;
+		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		
+
+		std::shared_ptr<VertexArray> m_SquareVA;
+
+		OrthographicCamera m_Camera;
 
 	private:
 		// only one application -> Crimson Application

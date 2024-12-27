@@ -73,13 +73,22 @@
     <ClInclude Include="src\Crimson\Renderer\GraphicsContext.h">
       <Filter>Crimson\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\RenderCommand.h">
+      <Filter>Crimson\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Renderer.h">
+      <Filter>Crimson\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\RendererAPI.h">
       <Filter>Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Shader.h">
       <Filter>Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Texture.h">
+      <Filter>Crimson\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\VertexArray.h">
       <Filter>Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Subsystems.h">
@@ -94,7 +103,13 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
@@ -104,6 +119,7 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\cnpch.h" />
+    <ClInclude Include="src\Crimson\Renderer\OrthographicCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp">
@@ -127,10 +143,19 @@
     <ClCompile Include="src\Crimson\Renderer\Buffer.cpp">
       <Filter>Crimson\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crimson\Renderer\RenderCommand.cpp">
+      <Filter>Crimson\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\Renderer.cpp">
       <Filter>Crimson\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crimson\Renderer\RendererAPI.cpp">
+      <Filter>Crimson\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\Shader.cpp">
+      <Filter>Crimson\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Renderer\VertexArray.cpp">
       <Filter>Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Subsystems.cpp">
@@ -142,7 +167,13 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -152,5 +183,6 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\cnpch.cpp" />
+    <ClCompile Include="src\Crimson\Renderer\OrthographicCamera.cpp" />
   </ItemGroup>
 </Project>

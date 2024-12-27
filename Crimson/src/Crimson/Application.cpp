@@ -7,10 +7,15 @@
 #include "Crimson/Events/MouseEvent.h"
 #include "Subsystems.h"
 
+#include "Crimson/Renderer/RenderCommand.h"
+#include "Crimson/Renderer/Renderer.h"
 
-#include <Glad/glad.h>
+
+#include "Crimson/Renderer/OrthographicCamera.h"
+
 #include <crm_mth.h>
 
+#include <glad/glad.h>
 
 namespace Crimson {
 
@@ -19,28 +24,10 @@ namespace Crimson {
 	Application* Application::s_Instance = nullptr;
 
 
-	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
-	{
-		switch (type) 
-		{
-		case ShaderDataType::Float:			return GL_FLOAT;
-		case ShaderDataType::Float2:		return GL_FLOAT;
-		case ShaderDataType::Float3:		return GL_FLOAT;
-		case ShaderDataType::Float4:		return GL_FLOAT;
-		case ShaderDataType::Mat3:			return GL_FLOAT;
-		case ShaderDataType::Mat4:			return GL_FLOAT;
-		case ShaderDataType::Int:			return GL_INT;
-		case ShaderDataType::Int2:			return GL_INT;
-		case ShaderDataType::Int3:			return GL_INT;
-		case ShaderDataType::Int4:			return GL_INT;
-		case ShaderDataType::Bool:			return GL_BOOL;
-		}
-
-		CN_CORE_ASSERT(false, "Unknown Shader Data Type!");
-		return 0;
-	}
 
 	Application::Application()
+		  //        l,     r,    t,     b
+		: m_Camera(-1.6f, 1.6f, 0.9f, -0.9f)
 	{
 		CN_CORE_ASSERT(s_Instance == nullptr, "Already Created Application!");
 		s_Instance = this;
@@ -51,51 +38,76 @@ namespace Crimson {
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
-		glGenVertexArrays(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
+		m_VertexArray.reset(VertexArray::Create());
 
-		float vertices[7*3] = {
-			-0.5f, -0.5f, 0.0f, 0.9f, 0.1f, 0.3f, 1.0f,  
-			0.5f,  -0.5f, 0.0f, 0.5f, 0.7f, 0.3f, 1.0f,   
-			0.0f,   0.5f, 0.0f, 0.3f, 0.5f, 0.9f, 1.0f, 
-
-		}; 
-
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-
-
- 		BufferLayout layout = {
-			{ShaderDataType::Float3, "a_Position"},
-			{ShaderDataType::Float4, "a_Color" }
-		};
-
-		int idx = 0;
-		for (const auto& element : layout)
 		{
-			glEnableVertexAttribArray(idx);
-			glVertexAttribPointer(idx, 
-				element.GetComponentCount(),
-				ShaderDataTypeToOpenGLBaseType(element.Type),
-				element.Normalized ? GL_TRUE : GL_FALSE,
-				layout.GetStride(),
-				(const void*)((uint64_t)(element.Offset)));
-			CN_CORE_INFO("{0}, {1}, {2}, {3}, {4}, {5}", idx, element.GetComponentCount(), ShaderDataTypeToOpenGLBaseType(element.Type), element.Normalized, layout.GetStride(), element.Offset);
-			idx++;
+
+			float vertices[7 * 3] = {
+				-0.5f, -0.5f, 0.0f, 0.9f, 0.1f, 0.3f, 1.0f,
+				0.5f,  -0.5f, 0.0f, 0.5f, 0.7f, 0.3f, 1.0f,
+				0.0f,   0.5f, 0.0f, 0.3f, 0.5f, 0.9f, 1.0f,
+
+			};
+
+			m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+
+
+			BufferLayout layout = {
+				{ShaderDataType::Float3, "a_Position"},
+				{ShaderDataType::Float4, "a_Color" }
+			};
+
+			m_VertexBuffer->SetLayout(layout);
+			m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+
+
+			uint32_t indices[3] = {
+				0,1,2
+			};
+
+			m_IndexBuffer.reset(IndexBuffer::Create(indices, 3));
+			m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+
 		}
 
-
-
-
-		m_VertexBuffer->SetLayout(layout);
-
-		uint32_t indices[3] = {
-			0,1,2
-		};
-
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, 3));
 		m_Shader.reset(Shader::Create("src/testing.shader"));
 		m_Shader->Bind();
 
+
+		m_VertexArray->Unbind();
+
+
+		m_SquareVA.reset(VertexArray::Create());
+
+		{
+			float vertices[7 * 4] = {
+				-0.5f, -0.5f, 0.0f, 0.9f, 0.1f, 0.4f, 1.0f,
+				0.5f,  -0.5f, 0.0f, 0.5f, 0.2f, 0.6f, 1.0f,
+				-0.5f,  0.5f, 0.0f, 0.3f, 0.5f, 0.1f, 1.0f,
+				 0.5f,  0.5f, 0.0f, 0.3f, 0.5f, 0.1f, 1.0f,
+
+			};
+			std::shared_ptr<VertexBuffer> squareBuffer;
+			squareBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+			
+			BufferLayout layout = {
+				{ShaderDataType::Float3, "a_Position"},
+				{ShaderDataType::Float4, "a_Color" }
+			};
+
+			squareBuffer->SetLayout(layout);
+
+			m_SquareVA->AddVertexBuffer(squareBuffer);
+
+			uint32_t indices[6] = {
+				0,1,2,
+				2,1,3
+			};
+
+			std::shared_ptr<IndexBuffer> indexBuffer;
+			indexBuffer.reset(IndexBuffer::Create(indices, 6));
+			m_SquareVA->SetIndexBuffer(indexBuffer);
+		}
 
 	}
 
@@ -114,13 +126,15 @@ namespace Crimson {
 	void Application::Run()
 	{
 		while (m_Running) {
-			glClearColor(0.1f, 0.1f, 0.1f, 1.f);
-			glClear(GL_COLOR_BUFFER_BIT);
 
-			m_Shader->Bind();
-			glBindVertexArray(m_VertexArray);
-			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.f });
+			RenderCommand::Clear();
 
+			Renderer::BeginScene(m_Camera);
+			Renderer::Submit(m_Shader, m_SquareVA);
+			Renderer::Submit(m_Shader, m_VertexArray);
+			Renderer::EndScene();
+			
 			// we can use range based for loop because we implimented begin and end
 			for (Layer* layer : m_LayerStack)
 			{

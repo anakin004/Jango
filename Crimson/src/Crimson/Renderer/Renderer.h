@@ -1,18 +1,29 @@
 #pragma once
 
+#include "RenderCommand.h"
+#include "RendererAPI.h"
+#include "OrthographicCamera.h"
+#include "Shader.h"
+
 namespace Crimson {
 
-	enum class RendererAPI
-	{
-		None = 0,
-		OpenGL = 1
-	};
 
 	class Renderer {
 	public:
-		static inline void SetAPI(RendererAPI rendererAPI) { s_RendererAPI = rendererAPI; }
-		static inline RendererAPI GetAPI() { return s_RendererAPI; }
+
+		static void BeginScene(OrthographicCamera& camera); // add scene parameters
+		static void EndScene();
+
+		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
+
+		static inline RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:
-		static RendererAPI s_RendererAPI;
+
+		struct SceneData
+		{
+			crm::mat4 ViewProjectionMatrix;
+		};
+
+		static SceneData* m_SceneData;
 	};
 }
