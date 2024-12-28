@@ -120,6 +120,7 @@
     </ClInclude>
     <ClInclude Include="src\cnpch.h" />
     <ClInclude Include="src\Crimson\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Crimson\Core\TimeStep.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp">

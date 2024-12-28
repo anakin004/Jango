@@ -8,7 +8,7 @@ namespace Crimson {
 	class VertexArray
 	{
 	public:
-		virtual ~VertexArray() {};
+		virtual ~VertexArray() = default;
 
 
 		virtual void Bind() const = 0;

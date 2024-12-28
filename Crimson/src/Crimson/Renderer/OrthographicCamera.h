@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Crimson/Events/KeyEvent.h"
 #include <crm_mth.h>
 
 namespace Crimson {
@@ -9,7 +10,9 @@ namespace Crimson {
 	public:
 		OrthographicCamera(float left, float right, float top, float bottom);
 
-		inline void SetPosition(const crm::vec3& position) { m_Position = position; }
+		inline void SetPosition(const crm::vec3& position) {m_Position = position; RecalculateViewMatrix();}
+												
+
 		inline void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix (); }
 
 		inline const crm::vec3& GetPostition() const { return m_Position; }
@@ -18,6 +21,7 @@ namespace Crimson {
 		inline const crm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 		inline const crm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
 		inline const crm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+
 
 
 	private:

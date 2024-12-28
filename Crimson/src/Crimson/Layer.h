@@ -3,7 +3,7 @@
 
 #include "Crimson/Core.h"
 #include "Crimson/Events/Event.h"
-
+#include "Crimson/Core/TimeStep.h"
 
 namespace Crimson {
 
@@ -20,7 +20,7 @@ namespace Crimson {
 		// might make these pure virtual, but for example just made it so they dont need to be overiden
 		virtual void OnAttach()  {};
 		virtual void OnDetach()  {};
-		virtual void OnUpdate()  {};
+		virtual void OnUpdate(TimeStep timeStep) {};
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 		

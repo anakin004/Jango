@@ -149,6 +149,7 @@
     <ClInclude Include="src\Crimson.h" />
     <ClInclude Include="src\Crimson\Application.h" />
     <ClInclude Include="src\Crimson\Core.h" />
+    <ClInclude Include="src\Crimson\Core\TimeStep.h" />
     <ClInclude Include="src\Crimson\EntryPoint.h" />
     <ClInclude Include="src\Crimson\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Crimson\Events\Event.h" />

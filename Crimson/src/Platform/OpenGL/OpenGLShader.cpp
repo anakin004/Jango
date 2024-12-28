@@ -5,10 +5,12 @@
 #include <Glad/glad.h>
 
 
+
 namespace Crimson {
 
 
 	OpenGLShader::OpenGLShader(const std::string& filepath)
+		: m_UniformCache()
 	{
 
 		// Read vertexFile and fragmentFile 
@@ -71,7 +73,6 @@ namespace Crimson {
 	{
 		glUseProgram(0);
 	}
-
 
 	// Reads a text file and outputs a string with everything in the text file
 	ShaderProgramSource OpenGLShader::get_file_contents(const std::string& filename)
@@ -143,7 +144,7 @@ namespace Crimson {
 			if (hasCompiled == GL_FALSE)
 			{
 				glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-				CN_CORE_ERROR("Shader Compilation Error for {0}: {1}", type, infoLog);
+				CN_CORE_ERROR("Shader Compilation Error for {0}: {1}", type, infoLog)
 			}
 		}
 		else
@@ -152,21 +153,57 @@ namespace Crimson {
 			if (hasLinked == GL_FALSE)
 			{
 				glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-				CN_CORE_ERROR("Shader Linking Error for {0}: {1}", type, infoLog);
+				CN_CORE_ERROR("Shader Linking Error for {0}: {1}", type, infoLog)
 			}
 		}
 	}
 
-	void OpenGLShader::UploadUniformMat4(const std::string& name, crm::mat4& matrix)
+	int OpenGLShader::GetUniform(const std::string& name)
 	{
-		int loc = glGetUniformLocation(m_RendererID, name.c_str());
-		if (loc == -1) {
-			CN_CORE_ERROR("Could not find uniform: {0}", name);
-		}
-		else {
-			glUniformMatrix4fv(loc, 1, GL_FALSE, matrix.data);
-		}
+		if (m_UniformCache.find(name) != m_UniformCache.end())
+			return m_UniformCache[name];
 
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		if (loc == -1)
+			CN_CORE_ERROR("Uniform ( {0} ) does not exist!", name)
+		else
+			m_UniformCache[name] = loc;
+
+		return loc;
 	}
 
+	void OpenGLShader::UploadUniformInt(const std::string& name, int value)
+	{
+		glUniform1i(GetUniform(name), value);
+	}
+
+	void OpenGLShader::UploadUniformMat4(const std::string& name, const crm::mat4& matrix)
+	{
+		glUniformMatrix4fv(GetUniform(name), 1, GL_FALSE, matrix.data);
+	}
+
+	void OpenGLShader::UploadUniformMat3(const std::string& name, const crm::mat3& matrix)
+	{
+		glUniformMatrix3fv(GetUniform(name), 1, GL_FALSE, matrix.data);
+	}
+
+	void OpenGLShader::UploadUniformFloat(const std::string& name, float value) 
+	{
+		glUniform1f(GetUniform(name), value);
+	}
+
+	void OpenGLShader::UploadUniformFloat2(const std::string& name, const crm::vec2& v) 
+	{
+		glUniform2f(GetUniform(name),v.x, v.y);
+	}
+
+	void OpenGLShader::UploadUniformFloat3(const std::string& name, const crm::vec3& v) 
+	{
+		glUniform3f(GetUniform(name), v.x, v.y, v.z);
+	}
+
+	void OpenGLShader::UploadUniformFloat4(const std::string& name, const crm::vec4& vec)
+	{
+		glUniform4f(GetUniform(name), vec.x, vec.y, vec.z, vec.w);
+	}
 }

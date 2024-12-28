@@ -38,11 +38,11 @@ namespace Crimson {
 		static inline Application& Get() { return *s_Instance; }
 
 	private:
-	
-		
-		
+
 		bool OnWindowClosed(WindowCloseEvent& e);
-		
+	
+	private:
+
 		
 		bool m_Running = true;
 		std::unique_ptr<Window> m_Window;
@@ -51,16 +51,8 @@ namespace Crimson {
 		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
 
-		std::shared_ptr<Shader> m_Shader;
-
-		std::shared_ptr<VertexArray> m_VertexArray;
-		std::shared_ptr<VertexBuffer> m_VertexBuffer;
-		std::shared_ptr<IndexBuffer> m_IndexBuffer;
-		
-
-		std::shared_ptr<VertexArray> m_SquareVA;
-
-		OrthographicCamera m_Camera;
+		TimeStep m_TimeStep;
+		float m_PreviousFrameTime = 0.0f;
 
 	private:
 		// only one application -> Crimson Application
