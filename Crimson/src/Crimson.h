@@ -18,6 +18,8 @@
 #include "Crimson/Renderer/RenderCommand.h"
 #include "Crimson/Renderer/Renderer.h"
 
+#include "Crimson/Renderer/Texture.h"
+
 #include "Crimson/Renderer/Buffer.h"
 #include "Crimson/Renderer/VertexArray.h"
 #include "Crimson/Renderer/Shader.h"

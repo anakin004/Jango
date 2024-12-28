@@ -1,189 +1,228 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Crimson">
-      <UniqueIdentifier>{C065D33A-2C45-52D6-355D-DDACA1BBB837}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Crimson\Events">
-      <UniqueIdentifier>{A4194565-90E7-386B-797B-A99165E814D0}</UniqueIdentifier>
+    <Filter Include="src\Crimson">
+      <UniqueIdentifier>{D7650D44-431B-8639-CC0F-801038C47C3D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Crimson\ImGui">
-      <UniqueIdentifier>{EA2AC1B5-56EB-3CEC-1F26-86698BA581C8}</UniqueIdentifier>
+    <Filter Include="src\Crimson\Core">
+      <UniqueIdentifier>{8FC83266-7BC1-51B8-A4F3-363D904B31C4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Crimson\Renderer">
-      <UniqueIdentifier>{6621EDC1-521A-0C14-7B4C-F19867A4EB1F}</UniqueIdentifier>
+    <Filter Include="src\Crimson\Events">
+      <UniqueIdentifier>{DB3929C3-C71D-EA18-307E-E46B1C81D49A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform">
-      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    <Filter Include="src\Crimson\ImGui">
+      <UniqueIdentifier>{41A0F62C-ADB6-F4C2-F62D-80E46283C54A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\OpenGL">
-      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
+    <Filter Include="src\Crimson\Renderer">
+      <UniqueIdentifier>{5D2B5A29-49BA-E3F2-F2D8-F7EDDE46F498}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\Windows">
-      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    <Filter Include="src\Platform">
+      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\OpenGL">
+      <UniqueIdentifier>{35A49437-A105-7245-2A73-B8F796D3A804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows">
+      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor">
+      <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\stb">
+      <UniqueIdentifier>{8BD3C5A8-778B-07F6-E092-E051CC69A2E6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Crimson.h" />
+    <ClInclude Include="src\Crimson.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crimson\Application.h">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Core.h">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Core\TimeStep.h">
+      <Filter>src\Crimson\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\EntryPoint.h">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Events\ApplicationEvent.h">
-      <Filter>Crimson\Events</Filter>
+      <Filter>src\Crimson\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Events\Event.h">
-      <Filter>Crimson\Events</Filter>
+      <Filter>src\Crimson\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Events\KeyEvent.h">
-      <Filter>Crimson\Events</Filter>
+      <Filter>src\Crimson\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Events\MouseEvent.h">
-      <Filter>Crimson\Events</Filter>
+      <Filter>src\Crimson\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\ImGui\ImGuiLayer.h">
-      <Filter>Crimson\ImGui</Filter>
+      <Filter>src\Crimson\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Input.h">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\KeyCodes.h">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Layer.h">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\LayerStack.h">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Log.h">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\MouseButtonCodes.h">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Buffer.h">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\GraphicsContext.h">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\OrthographicCamera.h">
+      <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\RenderCommand.h">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Renderer.h">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\RendererAPI.h">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Shader.h">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Texture.h">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\VertexArray.h">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Subsystems.h">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Window.h">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\cnpch.h" />
-    <ClInclude Include="src\Crimson\Renderer\OrthographicCamera.h" />
-    <ClInclude Include="src\Crimson\Core\TimeStep.h" />
+    <ClInclude Include="src\cnpch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\stb\stb_image.h">
+      <Filter>vendor\stb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Application.cpp">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\ImGui\ImGuiBuild.cpp">
-      <Filter>Crimson\ImGui</Filter>
+      <Filter>src\Crimson\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\ImGui\ImGuiLayer.cpp">
-      <Filter>Crimson\ImGui</Filter>
+      <Filter>src\Crimson\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Layer.cpp">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\LayerStack.cpp">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Log.cpp">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\Buffer.cpp">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Renderer\OrthographicCamera.cpp">
+      <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\RenderCommand.cpp">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\Renderer.cpp">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\RendererAPI.cpp">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\Shader.cpp">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Renderer\Texture.cpp">
+      <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\VertexArray.cpp">
-      <Filter>Crimson\Renderer</Filter>
+      <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Subsystems.cpp">
-      <Filter>Crimson</Filter>
+      <Filter>src\Crimson</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
-      <Filter>Platform\OpenGL</Filter>
+      <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\cnpch.cpp" />
-    <ClCompile Include="src\Crimson\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\cnpch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\stb\stb.cpp">
+      <Filter>vendor\stb</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

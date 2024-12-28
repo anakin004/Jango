@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core.h"
 
 #ifdef CN_PLATFORM_WINDOWS
 

@@ -31,14 +31,14 @@ namespace Crimson {
 		virtual void InitWindow(const WindowAttribs& attribs);
 		virtual void Shutdown();
 
-		inline virtual void* GetNativeWindow() const override { return (void*)m_Window; }
+		inline virtual void* GetNativeWindow() const override { return static_cast<void*>(m_Window); }
 
 
 	private:
 
 		GLFWwindow* m_Window;
 
-		GraphicsContext* m_Context;
+		Scope<GraphicsContext> m_Context;
 
 		struct WindowData
 		{

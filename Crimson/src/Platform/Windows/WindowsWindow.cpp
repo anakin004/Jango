@@ -11,9 +11,9 @@
 
 namespace Crimson {
 
-	Window* Window::Create(const WindowAttribs& attribs)
+	Scope<Window> Window::Create(const WindowAttribs& attribs)
 	{
-		return new WindowsWindow(attribs);
+		return  MakeScope<WindowsWindow>(attribs);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowAttribs& attribs)
@@ -44,7 +44,7 @@ namespace Crimson {
 		
 		m_Window = glfwCreateWindow((int)attribs.Width, (int)attribs.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		
-		m_Context = new OpenGLContext(m_Window);
+		m_Context = MakeScope<OpenGLContext>(m_Window);
 		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -54,7 +54,7 @@ namespace Crimson {
 
 
 		//glfw callbacks
-		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) 
+		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 				data.Width = width;
@@ -65,7 +65,7 @@ namespace Crimson {
 
 			});
 
-		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) 
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 				data.Width = 0;
@@ -162,6 +162,8 @@ namespace Crimson {
 	void WindowsWindow::Shutdown()
 	{
 		CN_CORE_INFO("Destroying Window");
+
+		// calls glfwDestroyWindow
 		glfwDestroyWindow(m_Window);
 	}
 

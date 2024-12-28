@@ -14,7 +14,7 @@ namespace Crimson {
 		static void BeginScene(OrthographicCamera& camera); // add scene parameters
 		static void EndScene();
 
-		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const crm::mat4& transformMatrix = crm::mat4(1.0f));
+		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const crm::mat4& transformMatrix = crm::mat4(1.0f));
 
 		static inline RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:
@@ -23,7 +23,7 @@ namespace Crimson {
 		{
 			crm::mat4 ViewProjectionMatrix;
 		};
-
-		static SceneData* m_SceneData;
+		
+		static Scope<SceneData> m_SceneData;
 	};
 }

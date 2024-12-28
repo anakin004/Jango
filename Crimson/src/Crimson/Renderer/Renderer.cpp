@@ -5,7 +5,7 @@
 
 namespace Crimson {
 
-	Renderer::SceneData* Renderer::m_SceneData = new Renderer::SceneData;
+	Scope<Renderer::SceneData> Renderer::m_SceneData = MakeScope<Renderer::SceneData>();
 		
 	void Renderer::BeginScene(OrthographicCamera& camera)
 	{
@@ -17,7 +17,7 @@ namespace Crimson {
 
 	}
 
-	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const crm::mat4& transformMatrix)
+	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const crm::mat4& transformMatrix)
 	{
 		shader->Bind();
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);

@@ -45,9 +45,9 @@ namespace Crimson {
 
 		
 		bool m_Running = true;
-		std::unique_ptr<Window> m_Window;
+		Scope<Window> m_Window;
 
-		// there will now be an explicit imgui layer since its pretty intrinsic to the engine
+		// imguilayer is in the application class because its intrinsic to the engine
 		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
 

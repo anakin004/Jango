@@ -39,6 +39,6 @@ namespace Crimson {
 		// void* allows us to cast to any other type of window depending on platform
 		virtual void* GetNativeWindow() const = 0;
 
-		static Window* Create(const WindowAttribs& attribs = WindowAttribs());
+		static Scope<Window> Create(const WindowAttribs& attribs = WindowAttribs());
 	};
 }

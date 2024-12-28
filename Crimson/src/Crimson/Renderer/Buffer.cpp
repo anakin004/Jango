@@ -5,15 +5,17 @@
 #include "RendererAPI.h"
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
+#include "Crimson/Core.h"
+
 namespace Crimson {
 
 
-	VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size)
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
-		case RendererAPI::API::OpenGL:		return new OpenGLVertexBuffer(vertices, size);
+		case RendererAPI::API::OpenGL:			return   MakeRef<OpenGLVertexBuffer>(vertices, size);
 		}
 
 		CN_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -21,12 +23,12 @@ namespace Crimson {
 	}
 
 
-	IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t count)
+	Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t count)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
-		case RendererAPI::API::OpenGL:		return new OpenGLIndexBuffer(indices, count);
+		case RendererAPI::API::OpenGL:		return MakeRef<OpenGLIndexBuffer>(indices, count);
 		}
 
 		CN_CORE_ASSERT(false, "Unknown RendererAPI!");

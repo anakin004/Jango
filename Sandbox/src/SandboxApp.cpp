@@ -1,7 +1,10 @@
 #include <Crimson.h>
 
+#include "Crimson/Core.h"
+
 #include "imgui/imgui.h"
 #include "Platform/OpenGL/OpenGLShader.h"
+
 
 class ExampleLayer : public Crimson::Layer
 {
@@ -10,8 +13,8 @@ public:
 		: Layer("Example"), m_Camera(-1.6f, 1.6f, 0.9f, -0.9f), m_Rotation(0.0f), m_CameraSpeed(2.0f), m_RotationSpeed(45.0f)
 	{
 
-		m_VertexArray.reset(Crimson::VertexArray::Create());
 
+		m_VertexArray = Crimson::VertexArray::Create();
 		{
 
 			float vertices[7 * 3] = {
@@ -21,13 +24,15 @@ public:
 
 			};
 
-			m_VertexBuffer.reset(Crimson::VertexBuffer::Create(vertices, sizeof(vertices)));
+
+			m_VertexBuffer = Crimson::VertexBuffer::Create(vertices, sizeof(vertices));
 
 
 			Crimson::BufferLayout layout = {
 				{Crimson::ShaderDataType::Float3, "a_Position"},
 				{Crimson::ShaderDataType::Float4, "a_Color" }
 			};
+
 
 			m_VertexBuffer->SetLayout(layout);
 			m_VertexArray->AddVertexBuffer(m_VertexBuffer);
@@ -37,34 +42,31 @@ public:
 				0,1,2
 			};
 
-			m_IndexBuffer.reset(Crimson::IndexBuffer::Create(indices, 3));
+			m_IndexBuffer = Crimson::IndexBuffer::Create(indices, 3);
 			m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
 		}
 
-		m_Shader.reset(Crimson::Shader::Create("src/testing.shader"));
-		m_Shader->Bind();
-
+		m_Shader = Crimson::Shader::Create("assets/shaders/testing.shader");
 
 		m_VertexArray->Unbind();
 
 
-		m_SquareVA.reset(Crimson::VertexArray::Create());
+		m_SquareVA = Crimson::VertexArray::Create();
 
 		{
-			float vertices[7 * 4] = {
-				-0.5f, -0.5f, 0.0f, 0.9f, 0.1f, 0.4f, 1.0f,
-				 0.5f, -0.5f, 0.0f, 0.5f, 0.2f, 0.6f, 1.0f,
-				-0.5f,  0.5f, 0.0f, 0.3f, 0.5f, 0.1f, 1.0f,
-				 0.5f,  0.5f, 0.0f, 0.3f, 0.5f, 0.1f, 1.0f,
-
+			float vertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,   // bottom-left
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,   // bottom-right
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,   // top-right
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f    // top-left
 			};
-			std::shared_ptr<Crimson::VertexBuffer> squareBuffer;
-			squareBuffer.reset(Crimson::VertexBuffer::Create(vertices, sizeof(vertices)));
+			Crimson::Ref<Crimson::VertexBuffer> squareBuffer;
+			squareBuffer = Crimson::VertexBuffer::Create(vertices, sizeof(vertices));
 
 			Crimson::BufferLayout layout = {
 				{Crimson::ShaderDataType::Float3, "a_Position"},
-				{Crimson::ShaderDataType::Float4, "a_Color" }
+				{Crimson::ShaderDataType::Float2, "a_TexCoord" }
 			};
 
 			squareBuffer->SetLayout(layout);
@@ -73,12 +75,22 @@ public:
 
 			uint32_t indices[6] = {
 				0,1,2,
-				2,1,3
+				0,3,2
 			};
 
-			std::shared_ptr<Crimson::IndexBuffer> indexBuffer;
-			indexBuffer.reset(Crimson::IndexBuffer::Create(indices, 6));
+			Crimson::Ref<Crimson::IndexBuffer> indexBuffer;
+			indexBuffer=Crimson::IndexBuffer::Create(indices, 6);
 			m_SquareVA->SetIndexBuffer(indexBuffer);
+
+
+			m_TextureShader=Crimson::Shader::Create("assets/shaders/texture.shader");
+
+
+			m_Texture = Crimson::Texture2D::Create("assets/textures/linux.png");
+			m_Texture->Bind(0);
+			std::dynamic_pointer_cast<Crimson::OpenGLShader>(m_TextureShader)->Bind();
+			std::dynamic_pointer_cast<Crimson::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+
 		}
 	}
 	
@@ -125,19 +137,20 @@ public:
 		
 		crm::mat4 scale = crm::Scale(transformMat, crm::vec3(0.05f, 0.05f, 0.05f));
 
+		std::dynamic_pointer_cast<Crimson::OpenGLShader>(m_Shader)->Bind();
 		std::dynamic_pointer_cast<Crimson::OpenGLShader>(m_Shader)->UploadUniformFloat4("u_Color", m_Red);
 
 
-		int offset = 0;
-
 		for( int y = 0 ; y < 20 ; y++){
 			for (int x = 0; x < 20; x++) {
-				crm::vec3 pos(x * 0.11, y * 0.11, 0.0f);
+				crm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
 				crm::mat4 tMat = crm::Mul(crm::Translation(pos), scale);
 				Crimson::Renderer::Submit(m_Shader, m_SquareVA, tMat);
 			}
-			offset++;
 		}
+
+		Crimson::Renderer::Submit(m_TextureShader, m_SquareVA, crm::Scale(transformMat, crm::vec3(1.5f, 1.5f, 1.5f)));
+
 		
 		//Crimson::Renderer::Submit(m_Shader, m_VertexArray);
 		Crimson::Renderer::EndScene();
@@ -165,14 +178,17 @@ public:
 	}
 
 private:
-	std::shared_ptr<Crimson::Shader> m_Shader;
 
-	std::shared_ptr<Crimson::VertexArray> m_VertexArray;
-	std::shared_ptr<Crimson::VertexBuffer> m_VertexBuffer;
-	std::shared_ptr<Crimson::IndexBuffer> m_IndexBuffer;
+	Crimson::Ref<Crimson::Shader> m_Shader;
+	Crimson::Ref<Crimson::Shader> m_TextureShader;
+	Crimson::Ref<Crimson::Texture2D> m_Texture;
 
+	Crimson::Ref<Crimson::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Crimson::VertexArray> m_SquareVA;
+	Crimson::Ref<Crimson::VertexBuffer> m_VertexBuffer;
+	Crimson::Ref<Crimson::IndexBuffer> m_IndexBuffer;
+
+	Crimson::Ref<Crimson::VertexArray> m_SquareVA;
 
 	Crimson::OrthographicCamera m_Camera;
 
@@ -205,5 +221,5 @@ public:
 
 Crimson::Application* Crimson::CreateApplication()
 {
-	return new Sandbox();
+	return  new Sandbox;
 }

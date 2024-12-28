@@ -19,6 +19,7 @@ IncludeDir["GLFW"] = "Crimson/vendor/GLFW/include"
 IncludeDir["Glad"] = "Crimson/vendor/Glad/include"
 IncludeDir["ImGui"] = "Crimson/vendor/imgui"
 IncludeDir["Chroma"] = "Crimson/vendor/Chroma"
+IncludeDir["Stb"] = "Crimson/vendor/stb"
 
 
 group "Dependencies"
@@ -48,6 +49,8 @@ project "Crimson"
         "%{prj.name}/src/**.cpp",
         "%{prj.name}/src/Events/**.h",
         "%{prj.name}/src/Events/**.cpp",
+        "%{prj.name}/vendor/stb/**.cpp",
+        "%{prj.name}/vendor/stb/**.h",
         "%{prj.name}/Platform/Windows/**.h",
         "%{prj.name}/Platform/Windows/**.cpp"
     }
@@ -64,7 +67,8 @@ project "Crimson"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.Chroma}"
+		"%{IncludeDir.Chroma}",
+		"%{IncludeDir.Stb}"
 	}
 
 	links

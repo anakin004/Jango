@@ -3,29 +3,31 @@
 
 namespace Crimson {
 
-	Crimson::LayerStack::LayerStack()
+	LayerStack::LayerStack()
 		: m_LayerIteratorOffset(0)
 	{
 	}
 
-
-	Crimson::LayerStack::~LayerStack()
+	LayerStack::~LayerStack()
 	{
 		for (Layer* layer : m_Layers)
+		{
+			layer->OnDetach();
 			delete layer;
+		}
 	}
 	
-	void Crimson::LayerStack::PushLayer(Layer* layer)
+	void LayerStack::PushLayer(Layer* layer)
 	{
 		m_Layers.emplace(begin() + (m_LayerIteratorOffset++), layer);
 	}
 
-	void Crimson::LayerStack::PushOverlay(Layer* overlay)
+	void LayerStack::PushOverlay(Layer* overlay)
 	{
 		m_Layers.emplace_back(overlay);
 	}
 
-	void Crimson::LayerStack::PopLayer(Layer* layer)
+	void LayerStack::PopLayer(Layer* layer)
 	{
 		auto it = std::find(m_Layers.begin(), m_Layers.end(), layer);
 		if (it != m_Layers.end())
@@ -40,7 +42,7 @@ namespace Crimson {
 		}
 	}
 
-	void Crimson::LayerStack::PopOverlay(Layer* overlay)
+	void LayerStack::PopOverlay(Layer* overlay)
 	{
 		auto it = std::find(m_Layers.begin(), m_Layers.end(), overlay);
 		if (it != m_Layers.end())

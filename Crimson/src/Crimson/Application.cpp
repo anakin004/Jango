@@ -58,13 +58,13 @@ namespace Crimson {
 			m_PreviousFrameTime = time;
 
 			// we can use range based for loop because we implimented begin and end
-			for (Layer* layer : m_LayerStack)
+			for (const auto& layer : m_LayerStack)
 			{
 				layer->OnUpdate(m_TimeStep);
 			}
 
 			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
+			for (const auto& layer : m_LayerStack)
 			{
 				layer->OnImGuiRender();
 			}

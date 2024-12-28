@@ -28,7 +28,7 @@ namespace Crimson {
 
 	// also need to free this for good measure, there is no data but there is still v-table
 
-	Input* Input::s_Instance = new WindowsInput();
+	Input* Input::s_Instance = new WindowsInput;
 
 
 	bool WindowsInput::IsKeyPressedImpl(int keycode) const
