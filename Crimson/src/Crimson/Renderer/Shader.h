@@ -17,6 +17,7 @@ namespace Crimson {
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
+		virtual void SetInt(const std::string& name, int val) = 0;
 		virtual void SetFloat3(const std::string& name, const crm::vec3& v) = 0;
 		virtual void SetFloat4(const std::string& name, const crm::vec4& v) = 0;
 		virtual void SetMat4(const std::string& name, const crm::mat4& m) = 0;

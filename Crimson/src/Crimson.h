@@ -21,6 +21,7 @@
 #include "Crimson/Renderer/RenderCommand.h"
 #include "Crimson/Renderer/Renderer.h"
 #include "Crimson/Renderer/Renderer2D.h"
+#include "Crimson/Renderer/Renderer3D.h"
 
 #include "Crimson/Renderer/Texture.h"
 

@@ -9,12 +9,13 @@
 Sandbox2D::Sandbox2D()
 	: Layer("Sandbox2D"), m_CameraController(1280.f / 720.f)
 {
-
 }
 
 
 void Sandbox2D::OnAttach()
 {
+	m_Texture = Crimson::Texture2D::Create("assets/textures/linux.png");
+	m_Texture->Bind(0);
 }
 
 void Sandbox2D::OnDetach()
@@ -35,6 +36,8 @@ void Sandbox2D::OnUpdate(Crimson::TimeStep timeStep)
 	Crimson::Renderer2D::DrawQuad(crm::vec2{ 1.0f, 2.0f }, crm::vec2{ 2.0f,2.0f }, crm::vec4{ 0.2f,0.3f ,0.6f,1.0f });
 	Crimson::Renderer2D::DrawQuad(crm::vec2{ -2.0f, -2.0f }, crm::vec2{ 1.0f,2.0f }, crm::vec4{ 0.2f,0.9f ,0.6f,1.0f });
 	Crimson::Renderer2D::DrawQuad(crm::vec2{ -1.0f, -1.0f }, crm::vec2{ 0.5f,2.0f }, crm::vec4{ 0.5f,0.3f ,0.1f,1.0f });
+	Crimson::Renderer2D::DrawQuad(crm::vec3{ 0.0f, 0.0f, -0.5f }, crm::vec2{ 20.0f,20.0f }, m_Texture);
+
 
 	Crimson::Renderer2D::EndScene();
 

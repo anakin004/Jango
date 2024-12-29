@@ -108,7 +108,7 @@
     <ClInclude Include="src\Crimson\Renderer\RenderCommand.h">
       <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crimson\Renderer\Renderer.h">
+    <ClInclude Include="src\Crimson\Renderer\Renderer3D.h">
       <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\RendererAPI.h">
@@ -154,6 +154,7 @@
       <Filter>vendor\stb</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Renderer2D.h" />
+    <ClInclude Include="src\Crimson\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Controller\OrthographicCameraController.cpp">
@@ -189,7 +190,7 @@
     <ClCompile Include="src\Crimson\Renderer\RenderCommand.cpp">
       <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Crimson\Renderer\Renderer.cpp">
+    <ClCompile Include="src\Crimson\Renderer\Renderer3D.cpp">
       <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\RendererAPI.cpp">
@@ -235,5 +236,6 @@
       <Filter>vendor\stb</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="src\Crimson\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>

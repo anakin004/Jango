@@ -170,6 +170,7 @@
     <ClInclude Include="src\Crimson\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Crimson\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Crimson\Renderer\Renderer.h" />
+    <ClInclude Include="src\Crimson\Renderer\Renderer3D.h" />
     <ClInclude Include="src\Crimson\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Crimson\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Crimson\Renderer\Shader.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="src\Crimson\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Crimson\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Crimson\Renderer\Renderer3D.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Crimson\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Shader.cpp" />

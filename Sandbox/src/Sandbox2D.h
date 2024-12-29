@@ -20,6 +20,7 @@ private:
 	 
 	Crimson::Ref<Crimson::Shader> m_Shader;
 	Crimson::Ref<Crimson::VertexArray> m_SquareVA;
+	Crimson::Ref<Crimson::Texture2D> m_Texture;
 
 	crm::vec4 m_Red = { 0.8f, 0.2f, 0.3f, 1.0f };
 };

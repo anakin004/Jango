@@ -25,7 +25,7 @@ namespace Crimson {
 
 		virtual const std::string& GetName() const override { return m_Name; }
 		
-
+		virtual void SetInt(const std::string& name, int val) override;;
 		virtual void SetFloat3(const std::string& name, const crm::vec3& v) override;
 		virtual void SetFloat4(const std::string& name, const crm::vec4& v) override;
 		virtual void SetMat4(const std::string& name, const crm::mat4& m) override;

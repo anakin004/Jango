@@ -7,9 +7,7 @@
 #include "Crimson/Events/MouseEvent.h"
 #include "Subsystems.h"
 
-#include "Crimson/Renderer/RenderCommand.h"
 #include "Crimson/Renderer/Renderer.h"
-#include "Crimson/Renderer/Renderer2D.h"
 
 #include "Crimson/Core/TimeStep.h"
 
@@ -43,13 +41,8 @@ namespace Crimson {
 
 	Application::~Application()
 	{
-
-		// dont really like this, will probably do a cleanup function outside of app to shutdown gl
-		// and others if needed
-		// we call reset on the unique pointer so its released before we call shutdowngl
-		// and we arent shutting down opengl before freeing window
-
 		m_Window.reset();
+		Renderer::Shutdown();
 		Subsystems::ShutDownGL();
 	} 
 

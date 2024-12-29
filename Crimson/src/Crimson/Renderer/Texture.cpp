@@ -8,14 +8,15 @@
 #include "Platform/OpenGL/OpenGLTexture.h"
 
 #include "RendererAPI.h"
-#include "Renderer.h"
+#include "Renderer3D.h"
+#include "Renderer2D.h"
 
 namespace Crimson {
 
 	 Ref<Texture2D> Texture2D::Create(const std::string& path) 
 	{
 
-		switch (Renderer::GetAPI())
+		switch (Renderer2D::GetAPI())
 		{
 		case RendererAPI::API::None:		CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
 		case RendererAPI::API::OpenGL:		return  MakeRef<OpenGLTexture2D>(path);

@@ -87,8 +87,8 @@ public:
 
 			m_Texture = Crimson::Texture2D::Create("assets/textures/linux.png");
 			m_Texture->Bind(0);
-			std::dynamic_pointer_cast<Crimson::OpenGLShader>(textureShader)->Bind();
-			std::dynamic_pointer_cast<Crimson::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
+			textureShader->Bind();
+			textureShader->SetInt("u_Texture", 0);
 
 		}
 	}
@@ -104,30 +104,29 @@ public:
 		Crimson::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.f });
 		Crimson::RenderCommand::Clear();
 
-		Crimson::Renderer::BeginScene(m_CameraController.GetCamera());
-		//Crimson::Renderer2D::BeginScene(m_Camera);
+		Crimson::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
 		
 		crm::mat4 scale = crm::Scale(transformMat, crm::vec3(0.05f, 0.05f, 0.05f));
 
-		std::dynamic_pointer_cast<Crimson::OpenGLShader>(m_Shader)->Bind();
-		std::dynamic_pointer_cast<Crimson::OpenGLShader>(m_Shader)->UploadUniformFloat4("u_Color", m_Red);
+		m_Shader->Bind();
+		m_Shader->SetFloat4("u_Color", m_Red);
 
 
-		for( int y = 0 ; y < 20 ; y++){
-			for (int x = 0; x < 20; x++) {
-				crm::vec3 pos(x * 0.1f, y * 0.1f, 0.0f);
-				crm::mat4 tMat = crm::Mul(crm::Translation(pos), scale);
-				Crimson::Renderer::Submit(m_Shader, m_SquareVA, tMat);
-			}
-		}
-
-		auto& textureShader = m_ShaderLibrary.Get("texture");
-		Crimson::Renderer::Submit(textureShader, m_SquareVA, crm::Scale(transformMat, crm::vec3(1.5f, 1.5f, 1.5f)));
-
-		
-		//Crimson::Renderer::Submit(m_Shader, m_VertexArray);
-		Crimson::Renderer::EndScene();
+// 		for( int y = 0 ; y < 20 ; y++){
+// 			for (int x = 0; x < 20; x++) {
+// 				crm::vec3 pos(x * 0.1f, y * 0.1f, 0.0f);
+// 				crm::mat4 tMat = crm::Mul(crm::Translation(pos), scale);
+// 				Crimson::Renderer2D::DrawQuad(m_Shader, m_SquareVA, tMat);
+// 			}
+// 		}
+// 
+// 		auto& textureShader = m_ShaderLibrary.Get("texture");
+// 		Crimson::Renderer2D::Submit(textureShader, m_SquareVA, crm::Scale(transformMat, crm::vec3(1.5f, 1.5f, 1.5f)));
+// 
+// 		
+// 		//Crimson::Renderer::Submit(m_Shader, m_VertexArray);
+// 		Crimson::Renderer3D::EndScene();
 
 	}
 

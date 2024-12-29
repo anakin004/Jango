@@ -188,6 +188,12 @@ namespace Crimson {
 		glUseProgram(0);
 	}
 
+	void OpenGLShader::SetInt(const std::string& name, int val)
+	{
+		UploadUniformInt(name, val);
+
+	}
+
 	void OpenGLShader::SetFloat3(const std::string& name, const crm::vec3& v)
 	{
 		UploadUniformFloat3(name, v);

@@ -12,6 +12,7 @@ namespace Crimson {
 
 	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
 	{
+		// I will not be seperating
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
