@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Crimson/Core.h"
+#include "Crimson/Core/Core.h"
 
 namespace Crimson
 {

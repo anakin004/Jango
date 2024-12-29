@@ -4,14 +4,18 @@
 
 #include <Glad/glad.h>
 
+#include <filesystem>
+
 
 
 namespace Crimson {
 
 
 	OpenGLShader::OpenGLShader(const std::string& filepath)
-		: m_UniformCache()
+		: m_UniformCache(), m_RendererID(0)
 	{
+		std::filesystem::path path(filepath);
+		m_Name = path.stem().string();
 
 		// Read vertexFile and fragmentFile 
 		ShaderProgramSource shaderCode = get_file_contents(filepath);
@@ -39,24 +43,133 @@ namespace Crimson {
 		compileErrors(fragmentShader, "Fragment");
 
 		// Create Shader Program Object and get its reference
-		m_RendererID = glCreateProgram();
+		uint32_t program = glCreateProgram();
 
 		// Attach the Vertex and Fragment Shaders to the Shader Program
-		glAttachShader(m_RendererID, vertexShader);
-		glAttachShader(m_RendererID, fragmentShader);
+		glAttachShader(program, vertexShader);
+		glAttachShader(program, fragmentShader);
 
-		glLinkProgram(m_RendererID);
+		glLinkProgram(program);
 
 		// checking for link errors
-		compileErrors(m_RendererID, "Program");
+		compileErrors(program, "Program");
 
-		glValidateProgram(m_RendererID);
+		glValidateProgram(program);
 
 
 		// Delete the now useless Vertex and Fragment Shader objects
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);
 
+		//asign if no errors / asserts evaluated
+		m_RendererID = program;
+
+	}
+
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader)
+		: m_UniformCache(), m_RendererID(0), m_Name(name)
+	{
+
+		// Create an empty vertex shader handle
+		GLuint vertexShaderHandle = glCreateShader(GL_VERTEX_SHADER);
+
+		// Send the vertex shader source code to GL
+		// Note that std::string's .c_str is NULL character terminated.
+		const char *source = vertexShader.c_str();
+		glShaderSource(vertexShaderHandle, 1, &source, 0);
+
+		// Compile the vertex shader
+		glCompileShader(vertexShaderHandle);
+
+		GLint isCompiled = 0;
+		glGetShaderiv(vertexShaderHandle, GL_COMPILE_STATUS, &isCompiled);
+		if(isCompiled == GL_FALSE)
+		{
+			GLint maxLength = 0;
+			glGetShaderiv(vertexShaderHandle, GL_INFO_LOG_LENGTH, &maxLength);
+
+			// The maxLength includes the NULL character
+			std::vector<GLchar> infoLog(maxLength);
+			glGetShaderInfoLog(vertexShaderHandle, maxLength, &maxLength, &infoLog[0]);
+	
+			// We don't need the shader anymore.
+			glDeleteShader(vertexShaderHandle);
+
+			CN_CORE_ERROR("Error Compililing Vertex Shader!");
+			CN_CORE_ASSERT(false, "Error: {0}", &infoLog[0]);
+			return;
+		}
+
+		// Create an empty fragment shader handle
+		GLuint fragmentShaderHandle = glCreateShader(GL_FRAGMENT_SHADER);
+
+		// Send the fragment shader source code to GL
+		// Note that std::string's .c_str is NULL character terminated.
+		source = fragmentShader.c_str();
+		glShaderSource(fragmentShaderHandle, 1, &source, 0);
+
+		// Compile the fragment shader
+		glCompileShader(fragmentShaderHandle);
+
+		glGetShaderiv(fragmentShaderHandle, GL_COMPILE_STATUS, &isCompiled);
+		if (isCompiled == GL_FALSE)
+		{
+			GLint maxLength = 0;
+			glGetShaderiv(fragmentShaderHandle, GL_INFO_LOG_LENGTH, &maxLength);
+
+			// The maxLength includes the NULL character
+			std::vector<GLchar> infoLog(maxLength);
+			glGetShaderInfoLog(fragmentShaderHandle, maxLength, &maxLength, &infoLog[0]);
+	
+			// We don't need the shader anymore.
+			glDeleteShader(fragmentShaderHandle);
+			// Either of them. Don't leak shaders.
+			glDeleteShader(fragmentShaderHandle);
+
+			CN_CORE_ERROR("Error Compililing Fragment Shader!");
+			CN_CORE_ASSERT(false, "Error: {0}", &infoLog[0]);
+			return;
+		}
+
+		// Vertex and fragment shaders are successfully compiled.
+		// Now time to link them together into a program.
+		// Get a program object.
+		m_RendererID = glCreateProgram();
+		uint32_t program = m_RendererID;
+
+		// Attach our shaders to our program
+		glAttachShader(program, vertexShaderHandle);
+		glAttachShader(program, fragmentShaderHandle);
+
+		// Link our program
+		glLinkProgram(program);
+
+		// Note the different functions here: glGetProgram* instead of glGetShader*.
+		GLint isLinked = 0;
+		glGetProgramiv(program, GL_LINK_STATUS, (int *)&isLinked);
+		if (isLinked == GL_FALSE)
+		{
+			GLint maxLength = 0;
+			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+
+			// The maxLength includes the NULL character
+			std::vector<GLchar> infoLog(maxLength);
+			glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
+	
+			// We don't need the program anymore.
+			glDeleteProgram(program);
+			// Don't leak shaders either.
+			glDeleteShader(vertexShaderHandle);
+			glDeleteShader(fragmentShaderHandle);
+
+			CN_CORE_ERROR("Error Linking Vertex and Fragment Shader!");
+			CN_CORE_ASSERT(false, "Error: {0}", &infoLog[0]);
+			return;
+		}
+
+		// Always detach shaders after a successful link.
+		glDetachShader(program, vertexShaderHandle);
+		glDetachShader(program, fragmentShaderHandle);
 	}
 
 	OpenGLShader::~OpenGLShader()
@@ -77,11 +190,10 @@ namespace Crimson {
 	// Reads a text file and outputs a string with everything in the text file
 	ShaderProgramSource OpenGLShader::get_file_contents(const std::string& filename)
 	{
-		std::ifstream in(filename.c_str(), std::ios::binary);
+		std::ifstream in(filename.c_str(), std::ios::in, std::ios::binary);
 
-		if (!in) {
-			CN_CORE_ERROR("Failed to open filename: {0}", filename);
-		}
+	
+		CN_CORE_ASSERT(in, "Failed to open filename: {0}", filename);
 
 		enum class ShaderType
 		{
@@ -116,10 +228,12 @@ namespace Crimson {
 				}
 			}
 
-			else {
+			else if (type != ShaderType::NONE) {
 				ss[(int)type] << line << "\n";
 			}
 		}
+
+		// ifstream destructor calls close
 
 		return { ss[0].str() , ss[1].str() };
 
@@ -144,7 +258,8 @@ namespace Crimson {
 			if (hasCompiled == GL_FALSE)
 			{
 				glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-				CN_CORE_ERROR("Shader Compilation Error for {0}: {1}", type, infoLog)
+				CN_CORE_ERROR("------ SHADERCOMPILE ERROR -------")
+				CN_CORE_ASSERT(false,"Shader Compilation Error for {0}: {1}", type, infoLog)
 			}
 		}
 		else
@@ -153,7 +268,8 @@ namespace Crimson {
 			if (hasLinked == GL_FALSE)
 			{
 				glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-				CN_CORE_ERROR("Shader Linking Error for {0}: {1}", type, infoLog)
+				CN_CORE_ERROR("------ *SHADER LINK ERROR* ------")
+				CN_CORE_ASSERT(false, "Shader Linking Error for {0}: {1}", type, infoLog)
 			}
 		}
 	}

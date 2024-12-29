@@ -1,7 +1,7 @@
 #include "cnpch.h"
 
-#include "Crimson/Subsystems.h"
-#include "Crimson/Log.h"
+#include "Crimson/Core/Subsystems.h"
+#include "Crimson/Core/Log.h"
 #include <GLFW/glfw3.h>
 
 namespace Crimson {

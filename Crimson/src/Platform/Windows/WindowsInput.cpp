@@ -1,6 +1,6 @@
 #include "cnpch.h"
 #include "WindowsInput.h"
-#include "Crimson/Application.h"
+#include "Crimson/Core/Application.h"
 
 #include <GLFW/glfw3.h>
 

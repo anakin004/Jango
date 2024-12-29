@@ -2,10 +2,10 @@
 
 #include "cnpch.h"
 
-#include "Crimson/LayerStack.h"
+#include "Crimson/Core/LayerStack.h"
 #include "Core.h"
-#include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
+#include "Crimson/Events/Event.h"
+#include "Crimson/Events/ApplicationEvent.h"
 #include "Window.h"
 
 #include "Crimson/ImGui/ImGuiLayer.h"
@@ -40,6 +40,7 @@ namespace Crimson {
 	private:
 
 		bool OnWindowClosed(WindowCloseEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
 	
 	private:
 
@@ -57,6 +58,8 @@ namespace Crimson {
 	private:
 		// only one application -> Crimson Application
 		static Application* s_Instance;
+
+		bool m_Minimized = false;
 	};
 
 

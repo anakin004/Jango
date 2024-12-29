@@ -2,7 +2,7 @@
 
 #include "cnpch.h"
 
-#include "Crimson/Core.h"
+#include "Crimson/Core/Core.h"
 
 
 namespace Crimson {

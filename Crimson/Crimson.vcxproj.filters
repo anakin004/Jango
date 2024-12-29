@@ -7,6 +7,9 @@
     <Filter Include="src\Crimson">
       <UniqueIdentifier>{D7650D44-431B-8639-CC0F-801038C47C3D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Crimson\Controller">
+      <UniqueIdentifier>{0ABD9426-F6B6-BD78-DF23-5489CBBC23E5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Crimson\Core">
       <UniqueIdentifier>{8FC83266-7BC1-51B8-A4F3-363D904B31C4}</UniqueIdentifier>
     </Filter>
@@ -39,17 +42,44 @@
     <ClInclude Include="src\Crimson.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crimson\Application.h">
-      <Filter>src\Crimson</Filter>
+    <ClInclude Include="src\Crimson\Controller\OrthographicCameraController.h">
+      <Filter>src\Crimson\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crimson\Core.h">
-      <Filter>src\Crimson</Filter>
+    <ClInclude Include="src\Crimson\Core\Application.h">
+      <Filter>src\Crimson\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Core\Core.h">
+      <Filter>src\Crimson\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Core\EntryPoint.h">
+      <Filter>src\Crimson\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Core\Input.h">
+      <Filter>src\Crimson\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Core\KeyCodes.h">
+      <Filter>src\Crimson\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Core\Layer.h">
+      <Filter>src\Crimson\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Core\LayerStack.h">
+      <Filter>src\Crimson\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Core\Log.h">
+      <Filter>src\Crimson\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Core\MouseButtonCodes.h">
+      <Filter>src\Crimson\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Core\Subsystems.h">
+      <Filter>src\Crimson\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Core\TimeStep.h">
       <Filter>src\Crimson\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crimson\EntryPoint.h">
-      <Filter>src\Crimson</Filter>
+    <ClInclude Include="src\Crimson\Core\Window.h">
+      <Filter>src\Crimson\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Events\ApplicationEvent.h">
       <Filter>src\Crimson\Events</Filter>
@@ -65,24 +95,6 @@
     </ClInclude>
     <ClInclude Include="src\Crimson\ImGui\ImGuiLayer.h">
       <Filter>src\Crimson\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crimson\Input.h">
-      <Filter>src\Crimson</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crimson\KeyCodes.h">
-      <Filter>src\Crimson</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crimson\Layer.h">
-      <Filter>src\Crimson</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crimson\LayerStack.h">
-      <Filter>src\Crimson</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crimson\Log.h">
-      <Filter>src\Crimson</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crimson\MouseButtonCodes.h">
-      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Buffer.h">
       <Filter>src\Crimson\Renderer</Filter>
@@ -110,12 +122,6 @@
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\VertexArray.h">
       <Filter>src\Crimson\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crimson\Subsystems.h">
-      <Filter>src\Crimson</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crimson\Window.h">
-      <Filter>src\Crimson</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
@@ -149,23 +155,29 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Crimson\Application.cpp">
-      <Filter>src\Crimson</Filter>
+    <ClCompile Include="src\Crimson\Controller\OrthographicCameraController.cpp">
+      <Filter>src\Crimson\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Core\Application.cpp">
+      <Filter>src\Crimson\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Core\Layer.cpp">
+      <Filter>src\Crimson\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Core\LayerStack.cpp">
+      <Filter>src\Crimson\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Core\Log.cpp">
+      <Filter>src\Crimson\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Core\Subsystems.cpp">
+      <Filter>src\Crimson\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\ImGui\ImGuiBuild.cpp">
       <Filter>src\Crimson\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\ImGui\ImGuiLayer.cpp">
       <Filter>src\Crimson\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crimson\Layer.cpp">
-      <Filter>src\Crimson</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crimson\LayerStack.cpp">
-      <Filter>src\Crimson</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crimson\Log.cpp">
-      <Filter>src\Crimson</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\Buffer.cpp">
       <Filter>src\Crimson\Renderer</Filter>
@@ -190,9 +202,6 @@
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\VertexArray.cpp">
       <Filter>src\Crimson\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crimson\Subsystems.cpp">
-      <Filter>src\Crimson</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>

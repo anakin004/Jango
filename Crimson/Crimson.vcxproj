@@ -147,21 +147,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Crimson.h" />
-    <ClInclude Include="src\Crimson\Application.h" />
-    <ClInclude Include="src\Crimson\Core.h" />
+    <ClInclude Include="src\Crimson\Controller\OrthographicCameraController.h" />
+    <ClInclude Include="src\Crimson\Core\Application.h" />
+    <ClInclude Include="src\Crimson\Core\Core.h" />
+    <ClInclude Include="src\Crimson\Core\EntryPoint.h" />
+    <ClInclude Include="src\Crimson\Core\Input.h" />
+    <ClInclude Include="src\Crimson\Core\KeyCodes.h" />
+    <ClInclude Include="src\Crimson\Core\Layer.h" />
+    <ClInclude Include="src\Crimson\Core\LayerStack.h" />
+    <ClInclude Include="src\Crimson\Core\Log.h" />
+    <ClInclude Include="src\Crimson\Core\MouseButtonCodes.h" />
+    <ClInclude Include="src\Crimson\Core\Subsystems.h" />
     <ClInclude Include="src\Crimson\Core\TimeStep.h" />
-    <ClInclude Include="src\Crimson\EntryPoint.h" />
+    <ClInclude Include="src\Crimson\Core\Window.h" />
     <ClInclude Include="src\Crimson\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Crimson\Events\Event.h" />
     <ClInclude Include="src\Crimson\Events\KeyEvent.h" />
     <ClInclude Include="src\Crimson\Events\MouseEvent.h" />
     <ClInclude Include="src\Crimson\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Crimson\Input.h" />
-    <ClInclude Include="src\Crimson\KeyCodes.h" />
-    <ClInclude Include="src\Crimson\Layer.h" />
-    <ClInclude Include="src\Crimson\LayerStack.h" />
-    <ClInclude Include="src\Crimson\Log.h" />
-    <ClInclude Include="src\Crimson\MouseButtonCodes.h" />
     <ClInclude Include="src\Crimson\Renderer\Buffer.h" />
     <ClInclude Include="src\Crimson\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Crimson\Renderer\OrthographicCamera.h" />
@@ -171,8 +174,6 @@
     <ClInclude Include="src\Crimson\Renderer\Shader.h" />
     <ClInclude Include="src\Crimson\Renderer\Texture.h" />
     <ClInclude Include="src\Crimson\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Crimson\Subsystems.h" />
-    <ClInclude Include="src\Crimson\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
@@ -185,12 +186,14 @@
     <ClInclude Include="vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Crimson\Application.cpp" />
+    <ClCompile Include="src\Crimson\Controller\OrthographicCameraController.cpp" />
+    <ClCompile Include="src\Crimson\Core\Application.cpp" />
+    <ClCompile Include="src\Crimson\Core\Layer.cpp" />
+    <ClCompile Include="src\Crimson\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Crimson\Core\Log.cpp" />
+    <ClCompile Include="src\Crimson\Core\Subsystems.cpp" />
     <ClCompile Include="src\Crimson\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Crimson\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Crimson\Layer.cpp" />
-    <ClCompile Include="src\Crimson\LayerStack.cpp" />
-    <ClCompile Include="src\Crimson\Log.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Crimson\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Crimson\Renderer\RenderCommand.cpp" />
@@ -199,7 +202,6 @@
     <ClCompile Include="src\Crimson\Renderer\Shader.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Texture.cpp" />
     <ClCompile Include="src\Crimson\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\Crimson\Subsystems.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />

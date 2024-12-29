@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Crimson/Input.h"
+#include "Crimson/Core/Input.h"
 
 namespace Crimson {
 	class WindowsInput : public Input

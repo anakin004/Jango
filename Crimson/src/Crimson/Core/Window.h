@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "Crimson/Core.h"
+#include "Crimson/Core/Core.h"
 #include "Crimson/Events/Event.h"
 
 namespace Crimson {

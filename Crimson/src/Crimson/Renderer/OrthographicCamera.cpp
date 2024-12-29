@@ -1,17 +1,23 @@
 #include "cnpch.h"
 #include "OrthographicCamera.h"
-#include "Crimson/KeyCodes.h"
+#include "Crimson/Core/KeyCodes.h"
 
 namespace Crimson {
 
 	#define BIND_EVENT_FN(x) std::bind(&OrthographicCamera::x, this, std::placeholders::_1)
 
 	OrthographicCamera::OrthographicCamera(float left, float right, float top, float bottom)
-		: m_ProjectionMatrix(crm::Ortho(left, right, top, bottom))
+		: m_ProjectionMatrix(crm::Ortho(left, right, top, bottom)), m_Rotation(0.0f), m_Position(0.0f, 0.0f, 0.0f)
 	{
 		m_ViewProjectionMatrix = crm::Mul(m_ProjectionMatrix, m_ViewMatrix);
 	}
 
+
+	void OrthographicCamera::SetProjection(float left, float right, float top, float bottom)
+	{
+		m_ProjectionMatrix = crm::Ortho(left, right, top, bottom);
+		m_ViewProjectionMatrix = crm::Mul(m_ProjectionMatrix, m_ViewMatrix);
+	}
 
 	void OrthographicCamera::RecalculateViewMatrix()
 	{	

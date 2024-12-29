@@ -1,16 +1,15 @@
 #include <Crimson.h>
 
-#include "Crimson/Core.h"
-
 #include "imgui/imgui.h"
-#include "Platform/OpenGL/OpenGLShader.h"
+
+
 
 
 class ExampleLayer : public Crimson::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_Camera(-1.6f, 1.6f, 0.9f, -0.9f), m_Rotation(0.0f), m_CameraSpeed(2.0f), m_RotationSpeed(45.0f)
+		: Layer("Example"), m_CameraController(1.6f, true), m_Rotation(0.0f), m_CameraSpeed(2.0f), m_RotationSpeed(45.0f)
 	{
 
 
@@ -83,13 +82,13 @@ public:
 			m_SquareVA->SetIndexBuffer(indexBuffer);
 
 
-			m_TextureShader=Crimson::Shader::Create("assets/shaders/texture.shader");
+			auto& textureShader = m_ShaderLibrary.Load("assets/shaders/texture.shader");
 
 
 			m_Texture = Crimson::Texture2D::Create("assets/textures/linux.png");
 			m_Texture->Bind(0);
-			std::dynamic_pointer_cast<Crimson::OpenGLShader>(m_TextureShader)->Bind();
-			std::dynamic_pointer_cast<Crimson::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+			std::dynamic_pointer_cast<Crimson::OpenGLShader>(textureShader)->Bind();
+			std::dynamic_pointer_cast<Crimson::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 
 		}
 	}
@@ -97,35 +96,16 @@ public:
 	void OnUpdate(Crimson::TimeStep timeStep) override
 	{
 
-		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_W))
-			m_Position.y += m_CameraSpeed * timeStep;
-		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_A))
-			m_Position.x -= m_CameraSpeed * timeStep;
-		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_S))
-			m_Position.y -= m_CameraSpeed * timeStep;
-		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_D))
-			m_Position.x += m_CameraSpeed * timeStep;
-		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_V))
-			m_Rotation += m_RotationSpeed * timeStep;
-		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_B))
-			m_Rotation -= m_RotationSpeed * timeStep;
-
-		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_T))
-			m_SquarePosition.y += m_CameraSpeed * timeStep;
-		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_F))
-			m_SquarePosition.x -= m_CameraSpeed * timeStep;
-		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_G))
-			m_SquarePosition.y -= m_CameraSpeed * timeStep;
-		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_H))
-			m_SquarePosition.x += m_CameraSpeed * timeStep;
-// 		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_N))
-// 			m_Rotation += m_RotationSpeed * timeStep;
-// 		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_M))
-// 			m_Rotation -= m_RotationSpeed * timeStep;
+// 		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_T))
+// 			m_SquarePosition.y += m_CameraSpeed * timeStep;
+// 		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_F))
+// 			m_SquarePosition.x -= m_CameraSpeed * timeStep;
+// 		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_G))
+// 			m_SquarePosition.y -= m_CameraSpeed * timeStep;
+// 		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_H))
+// 			m_SquarePosition.x += m_CameraSpeed * timeStep;
 		
-
-		m_Camera.SetPosition(m_Position);
-		m_Camera.SetRotation(m_Rotation);
+		m_CameraController.OnUpdate(timeStep);
 
 		// translation defaults to transform a identity matrix if only a vec3 is input
 		crm::mat4 transformMat = crm::Translation(m_SquarePosition);
@@ -133,7 +113,9 @@ public:
 		Crimson::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.f });
 		Crimson::RenderCommand::Clear();
 
-		Crimson::Renderer::BeginScene(m_Camera);
+		Crimson::Renderer::BeginScene(m_CameraController.GetCamera());
+		//Crimson::Renderer2D::BeginScene(m_Camera);
+
 		
 		crm::mat4 scale = crm::Scale(transformMat, crm::vec3(0.05f, 0.05f, 0.05f));
 
@@ -143,13 +125,14 @@ public:
 
 		for( int y = 0 ; y < 20 ; y++){
 			for (int x = 0; x < 20; x++) {
-				crm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
+				crm::vec3 pos(x * 0.1f, y * 0.1f, 0.0f);
 				crm::mat4 tMat = crm::Mul(crm::Translation(pos), scale);
 				Crimson::Renderer::Submit(m_Shader, m_SquareVA, tMat);
 			}
 		}
 
-		Crimson::Renderer::Submit(m_TextureShader, m_SquareVA, crm::Scale(transformMat, crm::vec3(1.5f, 1.5f, 1.5f)));
+		auto& textureShader = m_ShaderLibrary.Get("texture");
+		Crimson::Renderer::Submit(textureShader, m_SquareVA, crm::Scale(transformMat, crm::vec3(1.5f, 1.5f, 1.5f)));
 
 		
 		//Crimson::Renderer::Submit(m_Shader, m_VertexArray);
@@ -166,10 +149,13 @@ public:
 		ImGui::End();
 	}
 
-	void OnEvent(Crimson::Event& event) override
+	void OnEvent(Crimson::Event& e) override
 	{
-		Crimson::EventDispatcher dispatcher(event);
+		Crimson::EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<Crimson::KeyPressedEvent>(CN_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
+
+		m_CameraController.OnEvent(e);
+
 	}
 
 	bool OnKeyPressedEvent(Crimson::KeyPressedEvent& event)
@@ -179,8 +165,9 @@ public:
 
 private:
 
+	Crimson::ShaderLibrary m_ShaderLibrary;
+
 	Crimson::Ref<Crimson::Shader> m_Shader;
-	Crimson::Ref<Crimson::Shader> m_TextureShader;
 	Crimson::Ref<Crimson::Texture2D> m_Texture;
 
 	Crimson::Ref<Crimson::VertexArray> m_VertexArray;
@@ -190,7 +177,7 @@ private:
 
 	Crimson::Ref<Crimson::VertexArray> m_SquareVA;
 
-	Crimson::OrthographicCamera m_Camera;
+	Crimson::OrthographicCameraController m_CameraController;
 
 	crm::vec3 m_Position;
 	float m_Rotation;

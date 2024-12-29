@@ -2,8 +2,8 @@
 
 #include "Texture.h"
 
-#include "Crimson/Log.h"
-#include "Crimson/Core.h"
+#include "Crimson/Core/Log.h"
+#include "Crimson/Core/Core.h"
 
 #include "Platform/OpenGL/OpenGLTexture.h"
 

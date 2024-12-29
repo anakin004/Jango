@@ -32,6 +32,8 @@ namespace Crimson {
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
+		Renderer::Init();
+
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
@@ -57,10 +59,15 @@ namespace Crimson {
 			m_TimeStep = time - m_PreviousFrameTime;
 			m_PreviousFrameTime = time;
 
-			// we can use range based for loop because we implimented begin and end
-			for (const auto& layer : m_LayerStack)
+			if (!m_Minimized)
 			{
-				layer->OnUpdate(m_TimeStep);
+
+				// we can use range based for loop because we implimented begin and end
+				for (const auto& layer : m_LayerStack)
+				{
+					layer->OnUpdate(m_TimeStep);
+				}
+
 			}
 
 			m_ImGuiLayer->Begin();
@@ -81,6 +88,7 @@ namespace Crimson {
 		// even though we dispatch starting from top layer, on windows closed we dont check other layers
 		// we simply terminate
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClosed));
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
 		
 		//CN_CORE_TRACE(e.ToString());
 
@@ -113,6 +121,18 @@ namespace Crimson {
 	{
 		m_Running = false;
 		return true;
+	}
+
+	bool Application::OnWindowResize(WindowResizeEvent& e)
+	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0){
+			m_Minimized = true;
+			return false;
+		}
+
+		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+		m_Minimized = false;
+		return false;
 	}
 
 }

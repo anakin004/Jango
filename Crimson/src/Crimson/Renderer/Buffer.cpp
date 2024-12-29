@@ -5,7 +5,7 @@
 #include "RendererAPI.h"
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
-#include "Crimson/Core.h"
+#include "Crimson/Core/Core.h"
 
 namespace Crimson {
 

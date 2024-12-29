@@ -9,11 +9,13 @@ namespace Crimson {
 	{
 	public:
 		OrthographicCamera(float left, float right, float top, float bottom);
+		void SetProjection(float left, float right, float top, float bottom);
 
 		inline void SetPosition(const crm::vec3& position) {m_Position = position; RecalculateViewMatrix();}
 												
 
 		inline void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix (); }
+
 
 		inline const crm::vec3& GetPostition() const { return m_Position; }
 		inline const float GetRotation() { return m_Rotation; RecalculateViewMatrix(); }
@@ -33,6 +35,8 @@ namespace Crimson {
 		crm::mat4 m_ViewProjectionMatrix;
 
 		crm::vec3 m_Position;
-		float m_Rotation = 0.0f;
+		float m_Rotation;
 	};
+
+
 }

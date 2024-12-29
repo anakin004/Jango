@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "Crimson/Window.h"
+#include "Crimson/Core/Window.h"
 #include "Crimson/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>

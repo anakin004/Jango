@@ -1,6 +1,9 @@
 #include "cnpch.h"
 
 #include "OpenGLVertexArray.h"
+
+#include "Crimson/Core/Log.h"
+
 #include <Glad/glad.h>
 
 namespace Crimson {
