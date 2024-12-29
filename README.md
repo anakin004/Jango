@@ -1,6 +1,7 @@
 # Crimson
 
-![Crimson](https://github.com/user-attachments/assets/98d28dcd-90af-47fc-bce6-0f9f80035d13)
+![Crimson](https://github.com/user-attachments/assets/1cdc9cfb-4fdc-4ad5-b972-340f3f2ede60)
+
 
 # Crimson Engine
 
