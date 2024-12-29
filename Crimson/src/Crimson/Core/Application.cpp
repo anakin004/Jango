@@ -9,6 +9,7 @@
 
 #include "Crimson/Renderer/RenderCommand.h"
 #include "Crimson/Renderer/Renderer.h"
+#include "Crimson/Renderer/Renderer2D.h"
 
 #include "Crimson/Core/TimeStep.h"
 
@@ -33,6 +34,7 @@ namespace Crimson {
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
 		Renderer::Init();
+
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);

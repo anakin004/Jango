@@ -20,20 +20,17 @@
 // rendering stuff
 #include "Crimson/Renderer/RenderCommand.h"
 #include "Crimson/Renderer/Renderer.h"
+#include "Crimson/Renderer/Renderer2D.h"
 
 #include "Crimson/Renderer/Texture.h"
 
 #include "Crimson/Renderer/Buffer.h"
 #include "Crimson/Renderer/VertexArray.h"
 #include "Crimson/Renderer/Shader.h"
+///////////////////////////////////
 
 
 #include "Crimson/Renderer/OrthographicCamera.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "Crimson/Controller/OrthographicCameraController.h"
 
-//  ------------------------------ +
-//       ~  Entry Point            |
-#include "Crimson/Core/EntryPoint.h"
-//                                 |
-//  ------------------------------ +

@@ -2,7 +2,7 @@
 
 #include "imgui/imgui.h"
 
-
+#include "Sandbox2D.h"
 
 
 class ExampleLayer : public Crimson::Layer
@@ -95,15 +95,6 @@ public:
 	
 	void OnUpdate(Crimson::TimeStep timeStep) override
 	{
-
-// 		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_T))
-// 			m_SquarePosition.y += m_CameraSpeed * timeStep;
-// 		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_F))
-// 			m_SquarePosition.x -= m_CameraSpeed * timeStep;
-// 		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_G))
-// 			m_SquarePosition.y -= m_CameraSpeed * timeStep;
-// 		if (Crimson::Input::IsKeyPressed(CRIMSON_KEY_H))
-// 			m_SquarePosition.x += m_CameraSpeed * timeStep;
 		
 		m_CameraController.OnUpdate(timeStep);
 
@@ -197,7 +188,8 @@ class Sandbox : public Crimson::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer);
+		//PushLayer(new ExampleLayer);
+		PushLayer(new Sandbox2D);
 	}
 
 	~Sandbox()
@@ -208,5 +200,5 @@ public:
 
 Crimson::Application* Crimson::CreateApplication()
 {
-	return  new Sandbox;
+	return new Sandbox;
 }

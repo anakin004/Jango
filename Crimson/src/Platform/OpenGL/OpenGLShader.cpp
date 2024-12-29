@@ -95,8 +95,8 @@ namespace Crimson {
 			// We don't need the shader anymore.
 			glDeleteShader(vertexShaderHandle);
 
-			CN_CORE_ERROR("Error Compililing Vertex Shader!");
-			CN_CORE_ASSERT(false, "Error: {0}", &infoLog[0]);
+			CN_CORE_ERROR("Error Compililing Vertex Shader!")
+			CN_CORE_ASSERT(false, "Error: {0}", &infoLog[0])
 			return;
 		}
 
@@ -126,8 +126,8 @@ namespace Crimson {
 			// Either of them. Don't leak shaders.
 			glDeleteShader(fragmentShaderHandle);
 
-			CN_CORE_ERROR("Error Compililing Fragment Shader!");
-			CN_CORE_ASSERT(false, "Error: {0}", &infoLog[0]);
+			CN_CORE_ERROR("Error Compililing Fragment Shader!")
+			CN_CORE_ASSERT(false, "Error: {0}", &infoLog[0])
 			return;
 		}
 
@@ -162,8 +162,8 @@ namespace Crimson {
 			glDeleteShader(vertexShaderHandle);
 			glDeleteShader(fragmentShaderHandle);
 
-			CN_CORE_ERROR("Error Linking Vertex and Fragment Shader!");
-			CN_CORE_ASSERT(false, "Error: {0}", &infoLog[0]);
+			CN_CORE_ERROR("Error Linking Vertex and Fragment Shader!")
+			CN_CORE_ASSERT(false, "Error: {0}", &infoLog[0])
 			return;
 		}
 
@@ -171,6 +171,7 @@ namespace Crimson {
 		glDetachShader(program, vertexShaderHandle);
 		glDetachShader(program, fragmentShaderHandle);
 	}
+
 
 	OpenGLShader::~OpenGLShader()
 	{
@@ -185,6 +186,21 @@ namespace Crimson {
 	void OpenGLShader::Unbind() const
 	{
 		glUseProgram(0);
+	}
+
+	void OpenGLShader::SetFloat3(const std::string& name, const crm::vec3& v)
+	{
+		UploadUniformFloat3(name, v);
+	}
+
+	void OpenGLShader::SetFloat4(const std::string& name, const crm::vec4& v)
+	{
+		UploadUniformFloat4(name, v);
+	}
+
+	void OpenGLShader::SetMat4(const std::string& name, const crm::mat4& m)
+	{
+		UploadUniformMat4(name, m);
 	}
 
 	// Reads a text file and outputs a string with everything in the text file
@@ -258,8 +274,8 @@ namespace Crimson {
 			if (hasCompiled == GL_FALSE)
 			{
 				glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-				CN_CORE_ERROR("------ SHADERCOMPILE ERROR -------")
-				CN_CORE_ASSERT(false,"Shader Compilation Error for {0}: {1}", type, infoLog)
+				CN_CORE_ERROR("Shader Compilation Error for {0}: {1}", type, infoLog)
+				CN_CORE_ASSERT(false, "Shader Compilation Error")
 			}
 		}
 		else
@@ -268,8 +284,8 @@ namespace Crimson {
 			if (hasLinked == GL_FALSE)
 			{
 				glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-				CN_CORE_ERROR("------ *SHADER LINK ERROR* ------")
-				CN_CORE_ASSERT(false, "Shader Linking Error for {0}: {1}", type, infoLog)
+				CN_CORE_ERROR("Shader Linking Error for {0}: {1}", type, infoLog)
+				CN_CORE_ASSERT(false, "Shader Linking Error")
 			}
 		}
 	}
@@ -280,11 +296,12 @@ namespace Crimson {
 			return m_UniformCache[name];
 
 		int loc = glGetUniformLocation(m_RendererID, name.c_str());
-		if (loc == -1)
+		if (loc == -1) {
 			CN_CORE_ERROR("Uniform ( {0} ) does not exist!", name)
-		else
+		}
+		else {
 			m_UniformCache[name] = loc;
-
+		}
 		return loc;
 	}
 
