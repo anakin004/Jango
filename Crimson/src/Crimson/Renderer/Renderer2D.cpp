@@ -12,8 +12,8 @@ namespace Crimson {
 	struct Renderer2DStorage
 	{
 		Ref<VertexArray> QuadVertexArray;
-		Ref<Shader> ColorShader;
 		Ref<Shader> TextureShader;
+		Ref<Texture2D> WhiteTexture;
 	};
 
 	static Renderer2DStorage* s_Storage = nullptr;
@@ -54,7 +54,10 @@ namespace Crimson {
 		s_Storage->QuadVertexArray->SetIndexBuffer(indexBuffer);
 
 
-		s_Storage->ColorShader = Shader::Create("assets/shaders/color.shader");
+		s_Storage->WhiteTexture = Texture2D::Create(1, 1);
+		uint32_t whiteTextureData = 0xffffffff;
+		s_Storage->WhiteTexture->SetData(&whiteTextureData, sizeof(whiteTextureData));
+
 		s_Storage->TextureShader = Shader::Create("assets/shaders/texture.shader");
 		s_Storage->TextureShader->Bind();
 		s_Storage->TextureShader->SetInt("u_Texture",0);
@@ -69,11 +72,9 @@ namespace Crimson {
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
-		s_Storage->ColorShader->Bind();
-		s_Storage->ColorShader->SetMat4("u_ViewProjection",camera.GetViewProjectionMatrix());
-
 		s_Storage->TextureShader->Bind();
-		s_Storage->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+		s_Storage->TextureShader->SetMat4("u_ViewProjection",camera.GetViewProjectionMatrix());
+
 	}
 
 	void Renderer2D::EndScene()
@@ -89,14 +90,14 @@ namespace Crimson {
 
 	void Renderer2D::DrawQuad(const crm::vec3& position, const crm::vec2& size, const crm::vec4& color)
 	{
-		s_Storage->ColorShader->Bind();
-		s_Storage->ColorShader->SetFloat4("u_Color", color);
+		s_Storage->WhiteTexture->Bind();
+		s_Storage->TextureShader->SetFloat4("u_Color", color);
 
 		crm::mat4 transform = crm::Mul(crm::Translation(crm::mat4(1.0f), position),
 									   crm::Scale(crm::mat4(1.0f), { size.x,size.y,1.0f })
 									  );
 
-		s_Storage->ColorShader->SetMat4("u_Transform", transform);
+		s_Storage->TextureShader->SetMat4("u_Transform", transform);
 		s_Storage->QuadVertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Storage->QuadVertexArray);
 	}
@@ -109,12 +110,16 @@ namespace Crimson {
 	void Renderer2D::DrawQuad(const crm::vec3& position, const crm::vec2& size, const Ref<Texture2D> texture)
 	{
 
+		s_Storage->TextureShader->SetFloat4("u_Color", {1.0f,1.0f,1.0f,1.0f});
+
+
+		texture->Bind();
+
 		crm::mat4 transform = crm::Mul(crm::Translation(crm::mat4(1.0f), position),
 			crm::Scale(crm::mat4(1.0f), { size.x,size.y,1.0f })
 		);
 
-		s_Storage->TextureShader->Bind();
-		texture->Bind();
+
 		s_Storage->TextureShader->SetMat4("u_Transform", transform);
 		s_Storage->QuadVertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Storage->QuadVertexArray);

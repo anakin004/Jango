@@ -48,6 +48,7 @@ namespace Crimson {
 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		m_ZoomLevel -= e.GetYOffset() * 0.5f;
+		CN_CORE_INFO("{0}", m_ZoomLevel);
 		m_ZoomLevel = std::max(m_ZoomLevel, 0.05f);
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, m_ZoomLevel, -m_ZoomLevel);
 		return false;
