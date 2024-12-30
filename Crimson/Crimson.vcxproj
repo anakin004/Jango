@@ -176,6 +176,7 @@
     <ClInclude Include="src\Crimson\Renderer\Shader.h" />
     <ClInclude Include="src\Crimson\Renderer\Texture.h" />
     <ClInclude Include="src\Crimson\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Crimson\Debug\Instrumentor.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />

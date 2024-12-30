@@ -10,6 +10,8 @@ namespace Crimson {
 
 	LayerStack::~LayerStack()
 	{
+		CN_PROFILE_FUNCTION()
+
 		for (Layer* layer : m_Layers)
 		{
 			layer->OnDetach();

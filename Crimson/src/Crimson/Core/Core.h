@@ -2,22 +2,6 @@
 
 #include <memory>
 
-#ifdef CN_PLATFORM_WINDOWS
-#if CN_DYANMIC_LINK
-	#ifdef CN_BUILD_DLL
-		#define CRIMSON_API __declspec(dllexport)
-	#else
-		#define CRIMSON_API __declspec(dllimport)
-	#endif
-#else
-	#define CRIMSON_API 
-#endif 
-
-
-#else 
-	#error Crimson only supports windows!
-#endif
-
 
 #ifdef CN_ENABLE_ASSERTS
 	#define CN_ASSERT(x, ...) {if(!(x)) { CN_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }

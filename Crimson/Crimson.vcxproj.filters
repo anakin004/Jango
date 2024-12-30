@@ -155,6 +155,7 @@
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Crimson\Renderer\Renderer.h" />
+    <ClInclude Include="src\Crimson\Debug\Instrumentor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Controller\OrthographicCameraController.cpp">

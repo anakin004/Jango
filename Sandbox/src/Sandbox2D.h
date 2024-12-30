@@ -2,6 +2,8 @@
 
 #include <Crimson.h>
 
+#include "Crimson/Renderer/Renderer2D.h"
+
 class Sandbox2D : public Crimson::Layer
 {
 public:
@@ -23,4 +25,17 @@ private:
 	Crimson::Ref<Crimson::Texture2D> m_Texture;
 
 	crm::vec4 m_Red = { 0.8f, 0.2f, 0.3f, 1.0f };
+
+	struct ProfileResult
+	{
+		const char* Name;
+		float Time;
+	};
+
+	std::vector<ProfileResult> m_ProfileResults;
+
+
+	// until I make an entity class, quad properties will apply to all quads for now
+
+	Crimson::Renderer2D::QuadProperties m_QuadProperties;
 };

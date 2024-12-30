@@ -22,13 +22,13 @@ void main() {
 #shader fragment
 #version 330 core
 
-
-uniform vec4 u_Color;
 in vec2 v_TexCoord;
 out vec4 FragColor;
 
+uniform float u_TilingFactor;
+uniform vec4 u_Color;
 uniform sampler2D u_Texture;
 
 void main() {
-    FragColor = texture(u_Texture, v_TexCoord) * u_Color;
+    FragColor = texture(u_Texture, v_TexCoord * u_TilingFactor) * u_Color;
 }

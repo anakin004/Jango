@@ -19,6 +19,7 @@ namespace Crimson {
 
 	WindowsWindow::WindowsWindow(const WindowAttribs& attribs)
 	{
+		CN_PROFILE_FUNCTION()
 		// currently calling inside of constructor, we might want to call
 		// other things during construction of windows
 		// want to keep them all seperate
@@ -43,8 +44,11 @@ namespace Crimson {
 
 		// gl intialized before we init attribs
 		
-		m_Window = glfwCreateWindow((int)attribs.Width, (int)attribs.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		
+		{
+			CN_PROFILE_SCOPE("glfwCreateWindow")
+			m_Window = glfwCreateWindow((int)attribs.Width, (int)attribs.Height, m_Data.Title.c_str(), nullptr, nullptr);
+		}
 		m_Context = MakeScope<OpenGLContext>(m_Window);
 		m_Context->Init();
 
@@ -162,6 +166,7 @@ namespace Crimson {
 
 	void WindowsWindow::Shutdown()
 	{
+		CN_PROFILE_FUNCTION()
 		CN_CORE_INFO("Destroying Window");
 
 		// calls glfwDestroyWindow
@@ -170,6 +175,7 @@ namespace Crimson {
 
 	void WindowsWindow::OnUpdate()
 	{
+		CN_PROFILE_FUNCTION()
 		// proccessing callbacks 
 		glfwPollEvents();
 		m_Context->SwapBuffers();
@@ -177,6 +183,7 @@ namespace Crimson {
 
 	void WindowsWindow::SetVSync(bool enabled)
 	{
+		CN_PROFILE_FUNCTION()
 		if (enabled)    
 		{
 			glfwSwapInterval(1);

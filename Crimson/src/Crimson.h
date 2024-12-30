@@ -17,6 +17,8 @@
 
 #include "Crimson/ImGui/ImGuiLayer.h"
 
+#include "Crimson/Debug/Instrumentor.h"
+
 // rendering stuff
 #include "Crimson/Renderer/RenderCommand.h"
 #include "Crimson/Renderer/Renderer.h"

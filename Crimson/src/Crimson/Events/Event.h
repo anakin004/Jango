@@ -57,7 +57,7 @@ namespace Crimson {
 
 	//Event class that will represent blueprints for all different types of Events in the engine relating
 	//to window resizing, key pressed, mouse presses, releases, etc.
-	class CRIMSON_API Event
+	class Event
 	{
 		// to access private and protected members of EventDispatcher class
 		friend class EventDispatcher;

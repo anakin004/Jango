@@ -25,6 +25,8 @@ namespace Crimson {
 
 	Application::Application()
 	{
+		CN_PROFILE_FUNCTION()
+
 		CN_CORE_ASSERT(s_Instance == nullptr, "Already Created Application!");
 		s_Instance = this;
 
@@ -41,13 +43,18 @@ namespace Crimson {
 
 	Application::~Application()
 	{
+		CN_PROFILE_FUNCTION()
 		m_Window.reset();
 		Renderer::Shutdown();
 		Subsystems::ShutDownGL();
+
 	} 
 
 	void Application::Run()
 	{
+		CN_PROFILE_FUNCTION()
+
+
 		while (m_Running) {
 
 			float time = (float)glfwGetTime(); // platform::gettime()
@@ -57,20 +64,32 @@ namespace Crimson {
 			if (!m_Minimized)
 			{
 
-				// we can use range based for loop because we implimented begin and end
-				for (const auto& layer : m_LayerStack)
 				{
-					layer->OnUpdate(m_TimeStep);
+					CN_PROFILE_SCOPE("Layer OnUpdates")
+
+
+					// we can use range based for loop because we implimented begin and end
+					for (const auto& layer : m_LayerStack)
+					{
+						layer->OnUpdate(m_TimeStep);
+					}
+
 				}
 
-			}
 
-			m_ImGuiLayer->Begin();
-			for (const auto& layer : m_LayerStack)
-			{
-				layer->OnImGuiRender();
+				m_ImGuiLayer->Begin();
+				{
+					CN_PROFILE_SCOPE("LayerStack OnImGuiRender")
+
+					for (const auto& layer : m_LayerStack)
+					{
+						layer->OnImGuiRender();
+					}
+				}
+				m_ImGuiLayer->End();
+
+				
 			}
-			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
 		}
@@ -78,6 +97,9 @@ namespace Crimson {
 
 	void Application::OnEvent(Event& e)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		EventDispatcher dispatcher(e);
 
 		// even though we dispatch starting from top layer, on windows closed we dont check other layers
@@ -102,14 +124,18 @@ namespace Crimson {
 
 	void Application::PushLayer(Layer* layer)
 	{
-		m_LayerStack.PushLayer(layer);
+		CN_PROFILE_FUNCTION()
+
 		layer->OnAttach();
+		m_LayerStack.PushLayer(layer);
 	}
 
 	void Application::PushOverlay(Layer* overlay)
 	{
-		m_LayerStack.PushOverlay(overlay);
+		CN_PROFILE_FUNCTION()
+
 		overlay->OnAttach();
+		m_LayerStack.PushOverlay(overlay);
 	}
 
 	bool Application::OnWindowClosed(WindowCloseEvent& e)
@@ -120,6 +146,8 @@ namespace Crimson {
 
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
+		CN_PROFILE_FUNCTION()
+
 		if (e.GetWidth() == 0 || e.GetHeight() == 0){
 			m_Minimized = true;
 			return false;

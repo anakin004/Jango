@@ -11,6 +11,8 @@ namespace Crimson {
 
 	void Subsystems::InitGL() {
 
+		CN_PROFILE_FUNCTION()
+
 		if (s_GLFWBooted == false)
 		{
 			// need to terminate glfw, but not when we destruct window

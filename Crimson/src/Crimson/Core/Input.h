@@ -5,7 +5,7 @@
 namespace Crimson
 {
 	// going to be singleton since there will be global input polling and key states
-	class CRIMSON_API Input
+	class Input
 	{
 	public:
 		inline static bool IsKeyPressed(int keycode) { return s_Instance->IsKeyPressedImpl(keycode); }

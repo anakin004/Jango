@@ -11,10 +11,15 @@ namespace Crimson {
 	subclass this class to make wanted layers
 	might have game layer, app layer, debug layer, etc
 	*/
-	class CRIMSON_API Layer
+	class Layer
 	{
 	public:
-		Layer(const std::string& name = "Layer");
+		
+		// using const char* avoids dyanmic allocation with std::string
+		// we dont need that since layer names will not change
+		// dyanmic layer names should be known at compile time, so if we can push and pop
+		// on the layer stack, we are only doing so with layers defined in the application
+		Layer(const char* name = "Layer");
 		virtual ~Layer();
 
 		// might make these pure virtual, but for example just made it so they dont need to be overiden
@@ -29,9 +34,9 @@ namespace Crimson {
 		//virtual void Disable() = 0;
 
 		// for debugging, not supposed to get the layer by name to find, update, etc
-		inline const std::string& GetName() const { return m_DebugName; }
+		inline const char* GetName() const { return m_DebugName; }
 
 	protected:
-		std::string m_DebugName;
+		const char* m_DebugName;
 	};
 }

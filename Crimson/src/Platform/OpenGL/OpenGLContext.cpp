@@ -13,6 +13,9 @@ namespace Crimson {
 
 	void OpenGLContext::Init()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		glfwMakeContextCurrent(m_WindowHandle);
 
 		// init glad after creating context

@@ -14,6 +14,9 @@ namespace Crimson {
 	OpenGLShader::OpenGLShader(const std::string& filepath)
 		: m_UniformCache(), m_RendererID(0)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		std::filesystem::path path(filepath);
 		m_Name = path.stem().string();
 
@@ -69,6 +72,7 @@ namespace Crimson {
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader)
 		: m_UniformCache(), m_RendererID(0), m_Name(name)
 	{
+		CN_PROFILE_FUNCTION()
 
 		// Create an empty vertex shader handle
 		GLuint vertexShaderHandle = glCreateShader(GL_VERTEX_SHADER);
@@ -175,23 +179,41 @@ namespace Crimson {
 
 	OpenGLShader::~OpenGLShader()
 	{
+		CN_PROFILE_FUNCTION()
+
 		glDeleteProgram(m_RendererID);
 	}
 
 	void OpenGLShader::Bind() const
 	{
+		CN_PROFILE_FUNCTION()
+
 		glUseProgram(m_RendererID);
 	}
 
 	void OpenGLShader::Unbind() const
 	{
+		CN_PROFILE_FUNCTION()
+
 		glUseProgram(0);
 	}
 
 	void OpenGLShader::SetInt(const std::string& name, int val)
 	{
+		CN_PROFILE_FUNCTION()
+
 		UploadUniformInt(name, val);
 
+	}
+
+	void OpenGLShader::SetFloat(const std::string& name, const float f)
+	{
+		UploadUniformFloat(name, f);
+	}
+
+	void OpenGLShader::SetFloat2(const std::string& name, const crm::vec2& v)
+	{
+		UploadUniformFloat2(name, v);
 	}
 
 	void OpenGLShader::SetFloat3(const std::string& name, const crm::vec3& v)
@@ -212,6 +234,8 @@ namespace Crimson {
 	// Reads a text file and outputs a string with everything in the text file
 	ShaderProgramSource OpenGLShader::get_file_contents(const std::string& filename)
 	{
+		CN_PROFILE_FUNCTION()
+
 		std::ifstream in(filename.c_str(), std::ios::in, std::ios::binary);
 
 	
@@ -266,6 +290,9 @@ namespace Crimson {
 	// Checks if the different Shaders have compiled properly
 	void OpenGLShader::compileErrors(unsigned int shader, const std::string& type)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		// Stores status of compilation
 		int hasCompiled;
 
@@ -298,6 +325,9 @@ namespace Crimson {
 
 	int OpenGLShader::GetUniform(const std::string& name)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		if (m_UniformCache.find(name) != m_UniformCache.end())
 			return m_UniformCache[name];
 

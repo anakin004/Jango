@@ -21,7 +21,7 @@ namespace Crimson {
 	    @brief Application is a singleton, since we will only have one application for the programs lifetime
 	    being one Crimson Engine application
 	*/
-	class CRIMSON_API Application
+	class Application
 	{
 	public:
 		Application();

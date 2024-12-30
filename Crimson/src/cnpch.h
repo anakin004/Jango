@@ -14,7 +14,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-
+#include "Crimson/Debug/Instrumentor.h"
 #include "Crimson/Core/Log.h"
 
 #ifdef CN_PLATFORM_WINDOWS

@@ -15,7 +15,7 @@
    */
 namespace Crimson {
 
-	class CRIMSON_API Log
+	class Log
 	{
 	public:
 		static void Init();

@@ -17,9 +17,18 @@ int main(int argc, char** argv)
 
 	Crimson::Log::Init();
 
+	CN_PROFILE_BEGIN_SESSION("Startup", "CrimsonProfile-Startup.json");
 	auto app = Crimson::CreateApplication();
+	CN_PROFILE_END_SESSION();
+
+	CN_PROFILE_BEGIN_SESSION("Runtime", "CrimsonProfile-Runtime.json");
 	app->Run();
+	CN_PROFILE_END_SESSION();
+
+	CN_PROFILE_BEGIN_SESSION("Shutdown", "CrimsonProfile-Shutdown.json");
 	delete app;
+	CN_PROFILE_END_SESSION();
+
 }
 
 #endif

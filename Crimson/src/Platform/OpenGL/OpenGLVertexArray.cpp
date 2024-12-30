@@ -32,28 +32,39 @@ namespace Crimson {
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
+		CN_PROFILE_FUNCTION()
+
 		glCreateVertexArrays(1, &m_RendererID);
 		glBindVertexArray(m_RendererID);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		CN_PROFILE_FUNCTION()
+
 		glDeleteVertexArrays(1, &m_RendererID);
 	}
 
 
 	void OpenGLVertexArray::Bind() const
 	{
+		CN_PROFILE_FUNCTION()
+
 		glBindVertexArray(m_RendererID);
 	}
 
 	void OpenGLVertexArray::Unbind() const
 	{
+		CN_PROFILE_FUNCTION()
+
 		glBindVertexArray(0);
 	}
 
 	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		glBindVertexArray(m_RendererID);
 		vertexBuffer->Bind();
 
@@ -80,6 +91,9 @@ namespace Crimson {
 
 	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		glBindVertexArray(m_RendererID);
 		indexBuffer->Bind();
 

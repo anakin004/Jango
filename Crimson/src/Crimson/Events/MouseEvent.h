@@ -5,7 +5,7 @@
 
 namespace Crimson {
 
-	class CRIMSON_API MouseMovedEvent : public Event
+	class MouseMovedEvent : public Event
 	{
 	public:
 		MouseMovedEvent(float x, float y)
@@ -32,7 +32,7 @@ namespace Crimson {
 
 	};
 
-	class CRIMSON_API MouseScrolledEvent : public Event
+	class  MouseScrolledEvent : public Event
 	{
 	public:
 		MouseScrolledEvent(float xOffset, float yOffset)
@@ -58,7 +58,7 @@ namespace Crimson {
 	};
 
 
-	class CRIMSON_API MouseButtonEvent : public Event
+	class MouseButtonEvent : public Event
 	{
 	public:
 		
@@ -73,7 +73,7 @@ namespace Crimson {
 		int m_Button;
 	};
 
-	class CRIMSON_API MouseButtonPressedEvent : public MouseButtonEvent
+	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(int button)
@@ -90,7 +90,7 @@ namespace Crimson {
 
 	};
 
-	class CRIMSON_API MouseButtonReleasedEvent : public MouseButtonEvent
+	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(int button)
