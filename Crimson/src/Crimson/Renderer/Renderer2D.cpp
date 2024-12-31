@@ -26,7 +26,7 @@ namespace Crimson {
 
 
 
-		s_Storage = new Renderer2DStorage();
+			s_Storage = new Renderer2DStorage();
 
 		s_Storage->QuadVertexArray = VertexArray::Create();
 
@@ -37,7 +37,7 @@ namespace Crimson {
 		0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
 		-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
-		
+
 		Ref<VertexBuffer> squareBuffer;
 		squareBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
 
@@ -66,7 +66,7 @@ namespace Crimson {
 
 		s_Storage->TextureShader = Shader::Create("assets/shaders/texture.shader");
 		s_Storage->TextureShader->Bind();
-		s_Storage->TextureShader->SetInt("u_Texture",0);
+		s_Storage->TextureShader->SetInt("u_Texture", 0);
 
 
 	}
@@ -77,7 +77,7 @@ namespace Crimson {
 		CN_PROFILE_FUNCTION()
 
 
-		delete s_Storage;
+			delete s_Storage;
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
@@ -85,8 +85,8 @@ namespace Crimson {
 		CN_PROFILE_FUNCTION()
 
 
-		s_Storage->TextureShader->Bind();
-		s_Storage->TextureShader->SetMat4("u_ViewProjection",camera.GetViewProjectionMatrix());
+			s_Storage->TextureShader->Bind();
+		s_Storage->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
 	}
 
@@ -107,11 +107,11 @@ namespace Crimson {
 
 		s_Storage->WhiteTexture->Bind();
 		s_Storage->TextureShader->SetFloat4("u_Color", color);
-		s_Storage->TextureShader->SetFloat("u_TilingFactor", 1.0f);
+
 
 		crm::mat4 transform = crm::Mul(crm::Translation(crm::mat4(1.0f), position),
-									   crm::Scale(crm::mat4(1.0f), { size.x,size.y,1.0f })
-									  );
+			crm::Mul(crm::ZRotation(qp.rotation), crm::Scale(crm::mat4(1.0f), { size.x,size.y,1.0f }))
+		);
 
 		s_Storage->TextureShader->SetMat4("u_Transform", transform);
 		s_Storage->QuadVertexArray->Bind();
@@ -128,75 +128,42 @@ namespace Crimson {
 
 		CN_PROFILE_FUNCTION()
 
-
-		s_Storage->TextureShader->SetFloat4("u_Color", {1.0f,1.0f,1.0f,1.0f});
-		s_Storage->TextureShader->SetFloat("u_TilingFactor", qp.tilingFactor); // todo :: pass in tiling factor
+		s_Storage->TextureShader->SetFloat4("u_Color", { 1.0f,1.0f,1.0f,1.0f });
 
 
 		texture->Bind();
 
-		crm::mat4 transform = crm::Mul(crm::Translation(crm::mat4(1.0f), position),
-			crm::Scale(crm::mat4(1.0f), { size.x,size.y,1.0f })
-		);
+ 		crm::mat4 transform = crm::Mul(crm::Translation(crm::mat4(1.0f), position)
+ 			, crm::Mul(crm::ZRotation(qp.rotation)
+ 				, crm::Scale(crm::mat4(1.0f), { size.x, size.y, 1.0f })));
+
+
+		s_Storage->TextureShader->SetMat4("u_Transform", transform);
 
 
 		s_Storage->TextureShader->SetMat4("u_Transform", transform);
 		s_Storage->QuadVertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Storage->QuadVertexArray);
 	}
-	
 
-	void Renderer2D::DrawRotatedQuad(const crm::vec2& position, const crm::vec2& size, const crm::vec4& color, QuadProperties& qp)
+	void Renderer2D::DrawQuad(const crm::vec2& position, const crm::vec2& size, const Ref<Texture2D>& texture, const crm::vec4& color, QuadProperties& qp)
 	{
-		DrawRotatedQuad({ position.x,position.y, 1.0f }, size, color, qp);
+		DrawQuad({ position.x, position.y, 0.0f }, size, texture, color, qp);
 	}
 
-	void Renderer2D::DrawRotatedQuad(const crm::vec3& position, const crm::vec2& size, const crm::vec4& color, QuadProperties& qp)
+	void Renderer2D::DrawQuad(const crm::vec3& position, const crm::vec2& size, const Ref<Texture2D>& texture, const crm::vec4& color, QuadProperties& qp)
 	{
-		CN_PROFILE_FUNCTION()
-
-
-		s_Storage->WhiteTexture->Bind();
 		s_Storage->TextureShader->SetFloat4("u_Color", color);
-		s_Storage->TextureShader->SetFloat("u_TilingFactor", 1.0f);
-
-
-
-		crm::mat4 transform = crm::Mul(crm::Translation(crm::mat4(1.0f), position),
-			crm::Mul(crm::ZRotation(qp.rotation), crm::Scale(crm::mat4(1.0f), { size.x,size.y,1.0f }))
-		);
-
-
-		s_Storage->TextureShader->SetMat4("u_Transform", transform);
-		s_Storage->QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Storage->QuadVertexArray);
-	}
-
-	void Renderer2D::DrawRotatedQuad(const crm::vec2& position, const crm::vec2& size, const Ref<Texture2D> texture, QuadProperties& qp)
-	{
-		DrawRotatedQuad({ position.x,position.y, 1.0f }, size, texture, qp);
-	}
-
-	void Renderer2D::DrawRotatedQuad(const crm::vec3& position, const crm::vec2& size, const Ref<Texture2D> texture, QuadProperties& qp)
-	{
-
-		CN_PROFILE_FUNCTION()
-
-
-		s_Storage->TextureShader->SetFloat4("u_Color", qp.textureTintColor);
-		s_Storage->TextureShader->SetFloat("u_TilingFactor", qp.tilingFactor);
-
-
 		texture->Bind();
 
-		crm::mat4 transform = crm::Mul(crm::Translation(crm::mat4(1.0f), position),
-			crm::Mul(crm::ZRotation(qp.rotation),crm::Scale(crm::mat4(1.0f), { size.x,size.y,1.0f }))
-		);
-
-
+		crm::mat4 transform = crm::Mul(crm::Translation(crm::mat4(1.0f), position)
+			, crm::Mul(crm::ZRotation(qp.rotation)
+			, crm::Scale(crm::mat4(1.0f), { size.x, size.y, 1.0f })));
 		s_Storage->TextureShader->SetMat4("u_Transform", transform);
+
 		s_Storage->QuadVertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Storage->QuadVertexArray);
 	}
+
 
 }

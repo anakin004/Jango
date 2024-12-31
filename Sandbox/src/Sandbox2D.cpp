@@ -13,7 +13,7 @@
 
 Sandbox2D::Sandbox2D()
 	: Layer("Sandbox2D"), m_CameraController(1280.f / 720.f), m_ProfileResults(),
-	m_QuadProperties(1.0f, 0.0f, crm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f } )
+	m_QuadProperties(0.0f)
 {
 }
 
@@ -50,7 +50,6 @@ void Sandbox2D::OnUpdate(Crimson::TimeStep timeStep)
 // 		Crimson::Renderer2D::DrawQuad(crm::vec2{ 1.0f, 2.0f }, crm::vec2{ 2.0f,2.0f }, crm::vec4{ 0.2f,0.3f ,0.6f,1.0f }, m_QuadProperties);
 // 		Crimson::Renderer2D::DrawQuad(crm::vec2{ -2.0f, -2.0f }, crm::vec2{ 1.0f,2.0f }, crm::vec4{ 0.2f,0.9f ,0.6f,1.0f }, m_QuadProperties);
 // 		Crimson::Renderer2D::DrawRotatedQuad(crm::vec2{ -1.0f, -1.0f }, crm::vec2{ 0.5f,2.0f }, crm::vec4{ 0.5f,0.3f ,0.1f,1.0f }, m_QuadProperties);
-		Crimson::Renderer2D::DrawRotatedQuad(crm::vec3{ 0.0f, 0.0f, -0.5f }, crm::vec2{ 5.0f,5.0f }, m_Texture, m_QuadProperties);
 	}
 
 	Crimson::Renderer2D::EndScene();
@@ -62,10 +61,8 @@ void Sandbox2D::OnImGuiRender()
 {
 	ImGui::Begin("Settings");
 
-	ImGui::ColorEdit4("Tint", m_QuadProperties.textureTintColor.data);
 
 	ImGui::SliderFloat("Rotation", &m_QuadProperties.rotation, 0.1f, 360.0f, "%.2f");
-	ImGui::SliderFloat("Tiling-Factor", &m_QuadProperties.tilingFactor, 1.0f, 60.0f, "%.2f");
 
 	ImGui::End();
 }
