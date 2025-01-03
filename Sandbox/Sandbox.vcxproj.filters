@@ -32,4 +32,7 @@
   <ItemGroup>
     <ClInclude Include="src\Sandbox2D.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\texture.shader" />
+  </ItemGroup>
 </Project>

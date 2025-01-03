@@ -12,8 +12,7 @@
 #define PROFILE_SCOPE(name) Crimson::Timer timer##__LINE__(name, [&](ProfileResult profileResult) { m_ProfileResults.push_back(profileResult); });
 
 Sandbox2D::Sandbox2D()
-	: Layer("Sandbox2D"), m_CameraController(1280.f / 720.f), m_ProfileResults(),
-	m_QuadProperties(0.0f)
+	: Layer("Sandbox2D"), m_CameraController(1280.f / 720.f), m_ProfileResults()
 {
 }
 
@@ -46,10 +45,8 @@ void Sandbox2D::OnUpdate(Crimson::TimeStep timeStep)
 	Crimson::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
 	{
-		CN_PROFILE_SCOPE("Sandbox2D::Render")
-// 		Crimson::Renderer2D::DrawQuad(crm::vec2{ 1.0f, 2.0f }, crm::vec2{ 2.0f,2.0f }, crm::vec4{ 0.2f,0.3f ,0.6f,1.0f }, m_QuadProperties);
-// 		Crimson::Renderer2D::DrawQuad(crm::vec2{ -2.0f, -2.0f }, crm::vec2{ 1.0f,2.0f }, crm::vec4{ 0.2f,0.9f ,0.6f,1.0f }, m_QuadProperties);
-// 		Crimson::Renderer2D::DrawRotatedQuad(crm::vec2{ -1.0f, -1.0f }, crm::vec2{ 0.5f,2.0f }, crm::vec4{ 0.5f,0.3f ,0.1f,1.0f }, m_QuadProperties);
+		CN_PROFILE_SCOPE("Sandbox2D::Render");
+		Crimson::Renderer2D::DrawQuad(crm::vec3{ 0.0f, 0.0f }, crm::vec2{ 1.0f,1.0f }, crm::vec4{ 0.2f,0.3f ,0.6f,1.0f });
 	}
 
 	Crimson::Renderer2D::EndScene();
@@ -60,9 +57,6 @@ void Sandbox2D::OnUpdate(Crimson::TimeStep timeStep)
 void Sandbox2D::OnImGuiRender()
 {
 	ImGui::Begin("Settings");
-
-
-	ImGui::SliderFloat("Rotation", &m_QuadProperties.rotation, 0.1f, 360.0f, "%.2f");
 
 	ImGui::End();
 }

@@ -43,8 +43,8 @@ namespace Crimson {
 		uint32_t Size;
 		bool Normalized;
 
-		BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
-			: Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
+		BufferElement(ShaderDataType type, const std::string& name, uint32_t offset, bool normalized = false)
+			: Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(offset), Normalized(normalized)
 		{
 		}
 
@@ -80,10 +80,9 @@ namespace Crimson {
 	public:
 
 
-		BufferLayout(const std::initializer_list<BufferElement>& elements)
-			: m_Elements(elements) 
+		BufferLayout(const std::initializer_list<BufferElement>& elements, uint32_t vertSize)
+			: m_Elements(elements), m_Stride(vertSize)
 		{
-			CalculateOffsetAndStride();
 		}
 
 		BufferLayout() {};
@@ -99,16 +98,17 @@ namespace Crimson {
 		inline const std::vector<BufferElement>& GetElements() const { return m_Elements; }
 
 	private:
+		// not used for now, this is not giving correct offset and stride if 
+		// a vert struct has padding for alginment
 		void CalculateOffsetAndStride()
 		{
 			uint32_t offset = 0;
 			m_Stride = 0;
 			for (auto& element : m_Elements)
 			{
-				element.Offset = offset;
-				offset += element.Size;
-				m_Stride += element.Size;
+				m_Stride += element.Offset;
 			}
+			m_Stride = 48;
 		}
 	private:
 		std::vector<BufferElement> m_Elements;
@@ -122,7 +122,7 @@ namespace Crimson {
 	public:
 		virtual ~VertexBuffer() = default;
 
-		//virtual void SetData() = 0;
+		virtual void SetData(const void* data, uint32_t size) = 0;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
@@ -130,6 +130,7 @@ namespace Crimson {
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 		virtual const BufferLayout& GetLayout() const = 0;
 
+		static Ref<VertexBuffer> Create(uint32_t size);
 		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
 	};
 

@@ -160,6 +160,7 @@
     <ClInclude Include="src\Crimson\Core\Subsystems.h" />
     <ClInclude Include="src\Crimson\Core\TimeStep.h" />
     <ClInclude Include="src\Crimson\Core\Window.h" />
+    <ClInclude Include="src\Crimson\Debug\Instrumentor.h" />
     <ClInclude Include="src\Crimson\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Crimson\Events\Event.h" />
     <ClInclude Include="src\Crimson\Events\KeyEvent.h" />
@@ -170,13 +171,12 @@
     <ClInclude Include="src\Crimson\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Crimson\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Crimson\Renderer\Renderer.h" />
-    <ClInclude Include="src\Crimson\Renderer\Renderer3D.h" />
     <ClInclude Include="src\Crimson\Renderer\Renderer2D.h" />
+    <ClInclude Include="src\Crimson\Renderer\Renderer3D.h" />
     <ClInclude Include="src\Crimson\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Crimson\Renderer\Shader.h" />
     <ClInclude Include="src\Crimson\Renderer\Texture.h" />
     <ClInclude Include="src\Crimson\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Crimson\Debug\Instrumentor.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
@@ -201,8 +201,8 @@
     <ClCompile Include="src\Crimson\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Crimson\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Crimson\Renderer\Renderer3D.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="src\Crimson\Renderer\Renderer3D.cpp" />
     <ClCompile Include="src\Crimson\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Shader.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Texture.cpp" />

@@ -13,6 +13,9 @@
     <Filter Include="src\Crimson\Core">
       <UniqueIdentifier>{8FC83266-7BC1-51B8-A4F3-363D904B31C4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Crimson\Debug">
+      <UniqueIdentifier>{8D35982C-F94B-96C2-42C3-21E4AE18674A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Crimson\Events">
       <UniqueIdentifier>{DB3929C3-C71D-EA18-307E-E46B1C81D49A}</UniqueIdentifier>
     </Filter>
@@ -81,6 +84,9 @@
     <ClInclude Include="src\Crimson\Core\Window.h">
       <Filter>src\Crimson\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crimson\Debug\Instrumentor.h">
+      <Filter>src\Crimson\Debug</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crimson\Events\ApplicationEvent.h">
       <Filter>src\Crimson\Events</Filter>
     </ClInclude>
@@ -106,6 +112,12 @@
       <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\RenderCommand.h">
+      <Filter>src\Crimson\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\Renderer.h">
+      <Filter>src\Crimson\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\Renderer2D.h">
       <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Renderer3D.h">
@@ -153,9 +165,6 @@
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crimson\Renderer\Renderer2D.h" />
-    <ClInclude Include="src\Crimson\Renderer\Renderer.h" />
-    <ClInclude Include="src\Crimson\Debug\Instrumentor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Controller\OrthographicCameraController.cpp">
@@ -189,6 +198,12 @@
       <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\RenderCommand.cpp">
+      <Filter>src\Crimson\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Renderer\Renderer.cpp">
+      <Filter>src\Crimson\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crimson\Renderer\Renderer2D.cpp">
       <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\Renderer3D.cpp">
@@ -236,7 +251,5 @@
     <ClCompile Include="vendor\stb\stb.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="src\Crimson\Renderer\Renderer2D.cpp" />
-    <ClCompile Include="src\Crimson\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>

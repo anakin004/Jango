@@ -1,13 +1,13 @@
 #include <Crimson.h>
 
-#include "GameLayer.h"
+#include "Sandbox2D.h"
 
 class Sandbox : public Crimson::Application
 {
 public:
 	Sandbox()
 	{
-		PushLayer(new GameLayer());
+		PushLayer(new Sandbox2D());
 	}
 
 	~Sandbox()

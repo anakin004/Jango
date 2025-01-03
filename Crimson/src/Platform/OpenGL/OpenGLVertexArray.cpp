@@ -68,7 +68,7 @@ namespace Crimson {
 		glBindVertexArray(m_RendererID);
 		vertexBuffer->Bind();
 
-		CN_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "No in the vertex buffer!");
+		CN_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "No elements in the vertex buffer!");
 
 		uint32_t idx = 0;
 		const auto& layout = vertexBuffer->GetLayout();

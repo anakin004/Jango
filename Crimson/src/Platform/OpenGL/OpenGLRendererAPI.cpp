@@ -1,6 +1,7 @@
 #include "cnpch.h"
 #include "OpenGLRendererAPI.h"
 
+
 #include <Glad/glad.h>
 
 namespace Crimson {
@@ -28,10 +29,12 @@ namespace Crimson {
 		glClearColor(color.r, color.b, color.g, color.a);
 	}
 
-	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray)
+	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount)
 	{
+
+		uint32_t count = !indexCount ? vertexArray->GetIndexBuffer()->GetCount() : indexCount;
 		vertexArray->Bind();
-		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 	}
 
 	

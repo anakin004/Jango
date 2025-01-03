@@ -35,7 +35,4 @@ private:
 	std::vector<ProfileResult> m_ProfileResults;
 
 
-	// until I make an entity class, quad properties will apply to all quads for now
-
-	Crimson::Renderer2D::QuadProperties m_QuadProperties;
 };

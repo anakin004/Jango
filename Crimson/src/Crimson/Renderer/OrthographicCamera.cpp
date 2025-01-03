@@ -32,15 +32,21 @@ namespace Crimson {
 	void OrthographicCamera::RecalculateViewMatrix()
 	{
 
-		CN_PROFILE_FUNCTION()
+		CN_PROFILE_FUNCTION();
 
 		crm::mat4 transformMatrix = crm::Mul(crm::Translation(crm::mat4(1.0f), m_Position),
 			crm::ZRotation(m_Rotation)
 		);
 
-		m_ViewMatrix = crm::Inverse(transformMatrix);
-		m_ViewProjectionMatrix = crm::Mul(m_ProjectionMatrix, m_ViewMatrix);
 
+		{
+			CN_PROFILE_SCOPE("OrthoGraphic Camera:: Inverse Matrix")
+			m_ViewMatrix = crm::Inverse(transformMatrix);
+		}
+		{
+			CN_PROFILE_SCOPE("OrthoGraphic Camera:: Mul Proj and View Matrix")
+			m_ViewProjectionMatrix = crm::Mul(m_ProjectionMatrix, m_ViewMatrix);
+		}
 	}
 
 }
