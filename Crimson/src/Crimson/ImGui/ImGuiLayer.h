@@ -4,6 +4,7 @@
 #include "Crimson/Events/KeyEvent.h"
 #include "Crimson/Events/MouseEvent.h"
 #include "Crimson/Events/ApplicationEvent.h"
+#include "imgui.h"
 
 namespace Crimson {
 
@@ -20,8 +21,13 @@ namespace Crimson {
 		void Begin();
 		void End();
 
+	private:
+		void SetDarkThemeColors();
 
 	private:
+
+		bool m_DispatchEvents = false;
+		static ImFont* m_Font;
 	};
 
 }

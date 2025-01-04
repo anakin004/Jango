@@ -5,7 +5,7 @@
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 #include "Crimson/Core/Application.h"
-
+#include "ImGuizmo.h"
 
 // temp
 #include <GLFW/glfw3.h>
@@ -13,16 +13,19 @@
 
 namespace Crimson {
 
+	#define BIND_FUNC(x) std::bind(&ImGuiLayer::x,this,std::placeholders::_1)
+
+
+	ImFont* ImGuiLayer::m_Font = nullptr;
 
 	ImGuiLayer::ImGuiLayer()
-		: Layer("ImGuiLayer")
+		:Layer("ImGuiLayer")
 	{
-
 	}
+
 
 	ImGuiLayer::~ImGuiLayer()
 	{
-
 	}
 
 	void ImGuiLayer::Begin()
@@ -34,6 +37,7 @@ namespace Crimson {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 	}
 
 	void ImGuiLayer::End()
@@ -59,23 +63,23 @@ namespace Crimson {
 
 	void ImGuiLayer::OnAttach()
 	{
-		CN_PROFILE_FUNCTION()
-
-
-		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 		//io.ConfigViewportsNoAutoMerge = true;
 		//io.ConfigViewportsNoTaskBarIcon = true;
 
+		io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Font/OpenSans-Bold.ttf", 18.0f);
+		m_Font = io.Fonts->AddFontFromFileTTF("Assets/Font/OpenSans-ExtraBold.ttf", 20.0f);
+
+
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
-		//ImGui::StyleColorsLight();
+		//ImGui::StyleColorsClassic();
 
 		// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 		ImGuiStyle& style = ImGui::GetStyle();
@@ -85,23 +89,54 @@ namespace Crimson {
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
 
-		Application &app = Application::Get();
-		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+		SetDarkThemeColors();
 
+		GLFWwindow* window = (GLFWwindow*)Application::Get().GetWindow().GetNativeWindow();
 		// Setup Platform/Renderer backends
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
-		ImGui_ImplOpenGL3_Init("#version 410");
 
+		ImGui_ImplOpenGL3_Init("#version 410");
 
 	}
 
 	void ImGuiLayer::OnDetach()
 	{
-
+		ImGui_ImplGlfw_Shutdown();
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui::DestroyContext();
 	}
 
 	void ImGuiLayer::OnImGuiRender()
 	{
 	}
+
+	void ImGuiLayer::SetDarkThemeColors()
+	{
+		auto& colors = ImGui::GetStyle().Colors;
+		colors[ImGuiCol_WindowBg] = { 0.1f ,0.105f ,0.1f ,1.0f };
+
+		colors[ImGuiCol_Header] = { 0.2f ,0.205f ,0.21f ,1.0f };
+		colors[ImGuiCol_HeaderHovered] = { 0.3f ,0.305f ,0.3f ,1.0f };
+		colors[ImGuiCol_HeaderActive] = { 0.1f ,0.105f ,0.1f ,1.0f };
+
+		colors[ImGuiCol_Button] = { 0.2f ,0.205f ,0.21f ,1.0f };
+		colors[ImGuiCol_ButtonHovered] = { 0.4f ,0.405f ,0.4f ,1.0f };
+		colors[ImGuiCol_ButtonActive] = { 0.1f ,0.105f ,0.1f ,1.0f };
+
+		colors[ImGuiCol_FrameBg] = { 0.2f ,0.205f ,0.21f ,1.0f };
+		colors[ImGuiCol_FrameBgHovered] = { 0.3f ,0.305f ,0.3f ,1.0f };
+		colors[ImGuiCol_FrameBgActive] = { 0.1f ,0.105f ,0.1f ,1.0f };
+
+		colors[ImGuiCol_Tab] = { 0.25f ,0.2505f ,0.251f ,1.0f };
+		colors[ImGuiCol_TabHovered] = { 0.78f ,0.7805f ,0.78f ,1.0f };
+		colors[ImGuiCol_TabActive] = { 0.681f ,0.6805f ,0.681f ,1.0f };
+		colors[ImGuiCol_TabUnfocused] = { 0.35f ,0.3505f ,0.351f ,1.0f };
+		colors[ImGuiCol_TabUnfocusedActive] = { 0.5f,0.505f,0.51f,1.0f };
+
+		colors[ImGuiCol_TitleBg] = { 0.15f,0.1505f,0.15f,1.0f };
+		colors[ImGuiCol_TitleBgActive] = { 0.15f,0.1505f,0.15f,1.0f };
+		colors[ImGuiCol_TitleBgCollapsed] = { 0.95f,0.1505f,0.951f,1.0f };
+	}
+
 
 }

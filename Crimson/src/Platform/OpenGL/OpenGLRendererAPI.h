@@ -1,20 +1,26 @@
 #pragma once
 
 #include "Crimson/Renderer/RendererAPI.h"
+#include <glm/glm.hpp>
 
 namespace Crimson {
 
 	class OpenGLRendererAPI : public RendererAPI
 	{
-		virtual void Init() override;
-
-		virtual void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) override;
-
-		virtual void Clear() override;
-		virtual void SetClearColor(const crm::vec4& color) override;
-
-		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0) override;
-
+	public:
+		OpenGLRendererAPI();
+		~OpenGLRendererAPI();
+		void ClearColor(const glm::vec4&)override;
+		void Clear()override;
+		void DrawIndex(VertexArray& vertexarray)override;
+		void DrawArrays(VertexArray& vertexarray, size_t count, int first = 0) override;
+		void DrawArrays(VertexArray& vertexarray, size_t count, unsigned int renderingMode, int first) override;
+		void DrawInstancedArrays(VertexArray& vertexarray, size_t count, size_t instance_count, int first = 0) override;
+		void DrawArraysIndirect(VertexArray& vertexarray, uint32_t& indirectBufferID) override;
+		void DrawLine(VertexArray& vertexarray, uint32_t count)override;
+		void Init() override;
+		void SetViewPort(unsigned int, unsigned int) override;
+		virtual glm::vec2 GetViewportSize() override;
 	};
 
 }

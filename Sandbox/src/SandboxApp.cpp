@@ -1,21 +1,20 @@
-#include <Crimson.h>
+#include <Hazel.h>
 
-#include "Sandbox2D.h"
+#include <Hazel/EntryPoint.h>
+#include "Sandbox2dApp.h"
+using namespace Hazel;
 
-class Sandbox : public Crimson::Application
+class Sandbox :public Hazel::Application
 {
 public:
-	Sandbox()
-	{
-		PushLayer(new Sandbox2D());
+	Sandbox(){
+		//PushLayer(new GameLayer());
+		//PushOverlay(new Hazel::ImGuiLayer());
+		PushLayer(new SandBox2dApp());
 	}
-
-	~Sandbox()
-	{
-	}
+	~Sandbox(){}
 };
 
-Crimson::Application* Crimson::CreateApplication()
-{
+Hazel::Application* Hazel::CreateApplication() {
 	return new Sandbox();
 }

@@ -1,33 +1,34 @@
 #pragma once
 
-#include "VertexArray.h"
+#include "Crimson/Renderer/Buffer.h"
+#include "Crimson/Core/Log.h"
+#include "glm/glm.hpp"
 
 #include <crm_mth.h>
 
 namespace Crimson {
 
-	class RendererAPI
+	enum class GraphicsAPI
 	{
+		None = 0,
+		OpenGL = 1
+	};
+	class RendererAPI {
 	public:
-		enum class API
-		{
-			None = 0,
-			OpenGL = 1
-		};
-
-	public:
-		virtual void Init() = 0;
-
-		virtual void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) = 0;
-
+		virtual void ClearColor(const glm::vec4&) = 0;
 		virtual void Clear() = 0;
-		virtual void SetClearColor(const crm::vec4& color) = 0;
+		virtual void DrawIndex(VertexArray& vertexarray) = 0;
+		virtual void DrawArrays(VertexArray& vertexarray, size_t count, int first = 0) = 0;
+		virtual void DrawArrays(VertexArray& vertexarray, size_t count, unsigned int renderingMode, int first) = 0;
+		virtual void DrawArraysIndirect(VertexArray& vertexarray, uint32_t& indirectBufferID) = 0;
 
-		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0) = 0;
-
-		static inline API GetAPI() { return s_API; }
-
+		virtual void DrawInstancedArrays(VertexArray& vertexarray, size_t count, size_t instance_count, int first = 0) = 0;
+		virtual void DrawLine(VertexArray& vertexarray, uint32_t count) = 0;
+		inline static GraphicsAPI GetAPI() { return m_API; }
+		virtual void Init() = 0;
+		virtual void SetViewPort(unsigned int, unsigned int) = 0;
+		virtual glm::vec2 GetViewportSize() = 0;
 	private:
-		static API s_API;
+		static GraphicsAPI m_API;
 	};
 }

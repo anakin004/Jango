@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CN_PLATFORM_WINDOWS;CN_DEBUG;CN_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;..\Crimson\vendor\imgui;..\Crimson\vendor\glm;..\Crimson\vendor\entt;..\Crimson\vendor\Curl\include;..\Crimson\vendor\jsoncpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -97,7 +97,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CN_PLATFORM_WINDOWS;CN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;..\Crimson\vendor\imgui;..\Crimson\vendor\glm;..\Crimson\vendor\entt;..\Crimson\vendor\Curl\include;..\Crimson\vendor\jsoncpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -119,7 +119,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CN_PLATFORM_WINDOWS;CN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;..\Crimson\vendor\imgui;..\Crimson\vendor\glm;..\Crimson\vendor\entt;..\Crimson\vendor\Curl\include;..\Crimson\vendor\jsoncpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -137,19 +137,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Sandbox2D.h" />
+    <ClInclude Include="src\DisplayNews.h" />
+    <ClInclude Include="src\ImGuiInputText.h" />
+    <ClInclude Include="src\MonteCarloSim.h" />
+    <ClInclude Include="src\Sandbox2dApp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Sandbox2D.cpp" />
+    <ClCompile Include="src\DisplayNews.cpp" />
+    <ClCompile Include="src\ImGuiInputText.cpp" />
+    <ClCompile Include="src\MonteCarloSim.cpp" />
+    <ClCompile Include="src\Sandbox2dApp.cpp" />
     <ClCompile Include="src\SandboxApp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vendor\glm\glm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\textures\Crimson.png" />
+    <Image Include="Assets\textures\Ship.png" />
+    <Image Include="Assets\textures\linux.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Crimson\Crimson.vcxproj">
       <Project>{C065D33A-2C45-52D6-355D-DDACA1BBB837}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\shaders\texture.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

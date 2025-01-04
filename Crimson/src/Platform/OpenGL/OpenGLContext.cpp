@@ -16,7 +16,7 @@ namespace Crimson {
 
 		CN_PROFILE_FUNCTION()
 
-		glfwMakeContextCurrent(m_WindowHandle);
+		glfwMakeContextCurrent(m_WindowHandle.get());
 
 		// init glad after creating context
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);

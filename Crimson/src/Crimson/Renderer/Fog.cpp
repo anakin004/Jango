@@ -1,0 +1,19 @@
+#include "cnpch.h"
+#include "Fog.h"
+#include "Platform/Opengl/OpenGlFog.h"
+
+namespace Crimson
+{
+	Ref<Fog> Fog::Create(float density, float fogStart, float fogEnd, float fogTop, float fogBottom, glm::vec2 ScreenSize)
+	{
+		switch (RendererAPI::GetAPI())
+		{
+		case GraphicsAPI::None:
+			return nullptr;
+		case GraphicsAPI::OpenGL:
+			return MakeRef<OpenGlFog>(density, fogStart, fogEnd, fogTop, fogBottom, ScreenSize);
+		default:
+			return nullptr;
+		}
+	}
+}

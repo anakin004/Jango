@@ -13,3 +13,15 @@
 	path = Crimson/vendor/Chroma
 	url = https://github.com/anakin004/Chroma
 	branch = main
+[submodule "Crimson/vendor/glm"]
+	path = Crimson/vendor/glm
+	url = https://github.com/g-truc/glm
+[submodule "Crimson/vendor/ImGuizmo"]
+	path = Crimson/vendor/ImGuizmo
+	url = https://github.com/CedricGuillemet/ImGuizmo
+[submodule "Crimson/vendor/yaml_cpp"]
+	path = Crimson/vendor/yaml_cpp
+	url = https://github.com/jbeder/yaml-cpp
+[submodule "Crimson/vendor/assimp"]
+	path = Crimson/vendor/assimp
+	url = https://github.com/assimp/assimp

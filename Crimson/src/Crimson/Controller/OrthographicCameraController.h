@@ -1,43 +1,41 @@
 #pragma once
 
 #include "Crimson/Renderer/OrthographicCamera.h"
-#include "Crimson/Core/TimeStep.h"
-
-#include "Crimson/Events/MouseEvent.h"
 #include "Crimson/Events/ApplicationEvent.h"
-
-#include <crm_mth.h>
+#include "Crimson/Events/MouseEvent.h"
+#include "Crimson/Core/TimeStep.h"
 
 namespace Crimson {
 
 	class OrthographicCameraController
 	{
 	public:
-		OrthographicCameraController(float aspectRatio, bool rotation = false); //defaults to 2 units of space * aspect ratio
-
-		
-		void OnUpdate(TimeStep timeStep);
+		OrthographicCameraController(float aspectratio);
+		void OnUpdate(TimeStep ts);
 		void OnEvent(Event& e);
-		
-		inline OrthographicCamera& GetCamera() { return m_Camera; }
-
-
-		inline void SetZoomLevel(float level) { m_ZoomLevel = level; }
+		inline OrthographicCamera GetCamera() { return m_Camera; }
+		void onResize(float width, float height);
+		glm::vec3 GetPosition() { return v3; }
+		void SetCameraPosition(const glm::vec3& pos) { v3 = pos; }
+		bool bCanBeRotated(bool val) {
+			bCanRotate = val;
+			return val;
+		}
+		inline void SetCameraSpeed(const float& val) { m_movespeed = val; }
 		inline float GetZoomLevel() { return m_ZoomLevel; }
 	private:
-		bool OnMouseScrolled(MouseScrolledEvent& e);
-		bool OnWindowResize(WindowResizeEvent& e);
+		bool ZoomEvent(MouseScrolledEvent& e);
+		bool WindowResize(WindowResizeEvent& e);
 	private:
+		float m_ZoomLevel = 3.0f;
 		float m_AspectRatio;
-		float m_ZoomLevel = 1.0f;
 		OrthographicCamera m_Camera;
 
-		float m_CameraSpeed = 3.0f;
-		float m_RotationSpeed = 45.0f;
-		float m_Rotation = 0.f;
-		crm::vec3 m_Position;
+		glm::vec3 v3 = { 0,0,0 };
 
-		bool m_RotationOn = false;
+		float m_movespeed = 80;
+		float r = 0;
+		bool bCanRotate = true;
 	};
 
 }

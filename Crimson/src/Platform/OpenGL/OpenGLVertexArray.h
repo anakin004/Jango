@@ -1,30 +1,26 @@
 #pragma once
 
-#include "Crimson/Renderer/VertexArray.h"
+#include "Crimson/Renderer/Buffer.h"
 
 namespace Crimson {
 
 	class OpenGLVertexArray : public VertexArray
 	{
 	public:
-		virtual ~OpenGLVertexArray();
 		OpenGLVertexArray();
+		~OpenGLVertexArray();
+		void Bind()const override;
+		void UnBind()const override;
+		void AddBuffer(std::shared_ptr<BufferLayout>& layout, std::shared_ptr<VertexBuffer>& vbo) override;
+		void SetIndexBuffer(std::shared_ptr<IndexBuffer> IndexBuffer)override;
 
-
-		virtual void Bind() const override;
-		virtual void Unbind() const override;
-
-		virtual void AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) override;
-		virtual void SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer) override;
-
-		virtual inline const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const override { return m_VertexBuffers; };
-		virtual inline const Ref<IndexBuffer>& GetIndexBuffer() const override {return m_IndexBuffer;};
-
+		const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const override { return m_IndexBuffer; }
+		const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() override { return m_VertexBuffer; }
+		unsigned int GetVertexArrayID() override { return m_Renderer; }
 	private:
-		std::vector<Ref<VertexBuffer>> m_VertexBuffers;
-		Ref<IndexBuffer> m_IndexBuffer;
-
-		uint32_t m_RendererID;
+		std::vector<std::shared_ptr<VertexBuffer>> m_VertexBuffer;
+		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		unsigned int m_Renderer;
 	};
 
 

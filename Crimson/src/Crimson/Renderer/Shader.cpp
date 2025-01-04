@@ -7,36 +7,36 @@
 namespace Crimson {
 
 
-	Ref<Shader> Shader::Create(const std::string& filename)
+	Ref<Shader> Shader::Create(const std::string& path)
 	{
-		switch (Renderer::GetAPI())
+		switch (RendererAPI::GetAPI())
 		{
-		case RendererAPI::API::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
-		case RendererAPI::API::OpenGL:			return   MakeRef<OpenGLShader>(filename);
+		case GraphicsAPI::None:
+			return nullptr;
+		case GraphicsAPI::OpenGL:
+			return std::make_shared<OpenGLShader>(path);
+		default:
+			return nullptr;
 		}
-
-		CN_CORE_ASSERT(false, "Unknown RendererAPI!");
-		return nullptr;
 	}
-
-
-	Ref<Shader> Shader::Create(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader)
+	Ref<Shader>  Shader::Create(std::string& vertexshader, std::string& fragmentshader)
 	{
-		switch (Renderer::GetAPI())
+		switch (RendererAPI::GetAPI())
 		{
-		case RendererAPI::API::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
-		case RendererAPI::API::OpenGL:			return   MakeRef<OpenGLShader>(name, vertexShader, fragmentShader);
+		case GraphicsAPI::None:
+			return nullptr;
+		case GraphicsAPI::OpenGL:
+			return std::make_shared<OpenGLShader>(vertexshader, fragmentshader);
+		default:
+			return nullptr;
 		}
-
-		CN_CORE_ASSERT(false, "Unknown RendererAPI!");
-		return nullptr;
 	}
 
 	void ShaderLibrary::Add(const Ref<Shader>& shader)
 	{
-		const std::string& name = shader->GetName();
-		CN_CORE_ASSERT(!Exists(name), "Shader Already Exists!");
-		m_Shaders[name] = shader;
+		//const std::string& name = shader->GetName();
+// 		CN_CORE_ASSERT(!Exists(name), "Shader Already Exists!");
+// 		m_Shaders[name] = shader;
 	}
 
 	void ShaderLibrary::Add(const Ref<Shader>& shader, const std::string& name)

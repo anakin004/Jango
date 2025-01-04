@@ -7,26 +7,27 @@
 
 namespace Crimson {
 
-
+	Renderer::data* Renderer::m_data = new Renderer::data;
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
-		Renderer2D::Init();
-		Renderer3D::Init();
-		CN_CORE_INFO("Renderer2D and Renderer3D Initialized!");
 	}
-
-	void Renderer::Shutdown()
+	void Renderer::WindowResize(unsigned int Width, unsigned int Height)
 	{
-		Renderer2D::Shutdown();
-		Renderer3D::Shutdown();
-		CN_CORE_INFO("Renderer2D and Renderer3D Shutdown!");
+		RenderCommand::SetViewport(Width, Height);
 	}
-
-	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
+	void Renderer::BeginScene(OrthographicCamera& camera)
 	{
-		RenderCommand::SetViewport(0, 0, width, height);
+		m_data->m_ProjectionViewMatrix = camera.GetViewProjectionMatrix();
 	}
+	void Renderer::Submit(Shader& shader, VertexArray& vertexarray, glm::mat4 ModelTransform)
+	{
+		shader.Bind();
+		shader.SetMat4("m_ProjectionView", Renderer::m_data->m_ProjectionViewMatrix);
+		shader.SetMat4("m_ModelTransform", ModelTransform);
 
+		vertexarray.Bind();
+		RenderCommand::DrawIndex(vertexarray);
+	}
 
 }

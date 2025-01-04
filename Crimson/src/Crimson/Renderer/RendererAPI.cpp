@@ -4,5 +4,6 @@
 
 namespace Crimson {
 
-	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
+	GraphicsAPI RendererAPI::m_API = GraphicsAPI::OpenGL;
+
 }
