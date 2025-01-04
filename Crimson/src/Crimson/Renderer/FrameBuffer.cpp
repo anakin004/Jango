@@ -11,7 +11,7 @@ namespace Crimson {
 		case GraphicsAPI::None:
 			return nullptr;
 		case GraphicsAPI::OpenGL:
-			return std::make_shared<OpenGlFrameBuffer>(spec);
+			return std::make_shared<OpenGLFrameBuffer>(spec);
 		default:
 			return nullptr;
 		}

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Crimson.h"
 #include <fstream>
 #include <sstream>

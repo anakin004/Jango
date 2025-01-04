@@ -2,7 +2,25 @@
 
 #include <string>
 
+#
+
 namespace Crimson {
+
+
+
+
+	enum class BufferStorageType : uint8_t {
+		MUTABLE, IMMUTABLE
+	};
+
+	enum class ShaderDataType : uint8_t
+	{
+		None = 0,
+		Float, Float2, Float3, Float4,
+		Mat2, Mat3, Mat4,
+		Int, Int2, Int3, Int4,
+		Bool
+	};
 	
 	static uint32_t ShaderDataTypeSize(ShaderDataType type)
 	{
@@ -28,22 +46,6 @@ namespace Crimson {
 	}
 
 
-
-
-
-
-	enum class BufferStorageType : uint8_t {
-		MUTABLE, IMMUTABLE
-	};
-
-	enum class ShaderDataType : uint8_t
-	{
-		None = 0, 
-		Float, Float2, Float3, Float4,
-		Mat2, Mat3, Mat4,
-		Int, Int2, Int3, Int4,
-		Bool
-	};
 
 
 	struct BufferElements {
@@ -83,8 +85,8 @@ namespace Crimson {
 		virtual void SetData(size_t size, const void* data) = 0;
 		virtual void* MapBuffer(size_t size) = 0;
 
-		static Ref<VertexBuffer> Create(float* data, uint32_t size);
-		static Ref<VertexBuffer> Create(uint32_t size, BufferStorageType Storage_Type = BufferStorageType::MUTABLE);
+		static Ref<VertexBuffer> Create(float* data, size_t size);
+		static Ref<VertexBuffer> Create(size_t size, BufferStorageType Storage_Type = BufferStorageType::MUTABLE);
 	};
 
 
@@ -93,7 +95,7 @@ namespace Crimson {
 		virtual void Bind()const = 0;
 		virtual void UnBind()const = 0;
 		virtual size_t GetCount() = 0;
-		static Ref<IndexBuffer> Create(uint32_t* data, uint32_t count);
+		static Ref<IndexBuffer> Create(uint32_t* data, size_t count);
 	};
 
 	class VertexArray {

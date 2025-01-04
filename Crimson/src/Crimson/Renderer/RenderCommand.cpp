@@ -10,7 +10,7 @@ namespace Crimson {
 	
 	void RenderCommand::SetViewport(unsigned int Width, unsigned int Height)
 	{
-		m_RendererAPI->SetViewPort(Width, Height);
+		s_RendererAPI->SetViewPort(Width, Height);
 	}
 
 	Ref<RendererAPI> RenderCommand::GetRendererAPI()
@@ -19,7 +19,7 @@ namespace Crimson {
 		case GraphicsAPI::None:
 			return nullptr;
 		case GraphicsAPI::OpenGL:
-			return std::make_shared<OpenGlRendererAPI>();
+			return std::make_shared<OpenGLRendererAPI>();
 		default:
 			CN_CORE_ERROR("No valid Graphics api");
 			return nullptr;

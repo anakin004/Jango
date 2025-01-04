@@ -145,7 +145,7 @@ namespace Crimson {
 	void Renderer2D::BeginScene(OrthographicCamera& camera)
 	{
 		m_data->shader->Bind();//bind the textureShader
-		m_data->shader->SetMat4("u_ProjectionView", camera.GetViewProjectionMatrix());
+		m_data->shader->SetMat4("u_ProjectionView", camera.GetProjectionViewMatix());
 
 		StartBatch();
 	}
@@ -174,7 +174,7 @@ namespace Crimson {
 	void Renderer2D::LineBeginScene(OrthographicCamera& camera)
 	{
 		m_data->Lineshader->Bind();
-		m_data->Lineshader->SetMat4("u_ProjectionView", camera.GetViewProjectionMatrix());
+		m_data->Lineshader->SetMat4("u_ProjectionView", camera.GetProjectionViewMatix());
 
 		StartBatch();
 	}

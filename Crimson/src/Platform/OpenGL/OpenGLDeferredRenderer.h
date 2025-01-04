@@ -1,8 +1,8 @@
 #include "Crimson.h"
 
-namespace Hazel
+namespace Crimson
 {
-	class OpenGlDeferredRenderer
+	class OpenGLDeferredRenderer
 	{
 	public:
 		static void Init(int width, int height);

@@ -28,7 +28,7 @@ namespace Crimson {
 			ID = UUID(path);
 			if (ResourceManager::allTextures.find(ID) == ResourceManager::allTextures.end())// load a texture only once
 			{
-				instance = std::make_shared<OpenGlTexture2D>(path, bUse16BitTexture);
+				instance = MakeRef<OpenGLTexture2D>(path, bUse16BitTexture);
 				ResourceManager::allTextures[instance->uuid] = instance;
 			}
 			else
@@ -44,7 +44,7 @@ namespace Crimson {
 		case GraphicsAPI::None:
 			return nullptr;
 		case GraphicsAPI::OpenGL:
-			return std::make_shared<OpenGlTexture2D>(Width, Height, data);
+			return MakeRef<OpenGLTexture2D>(Width, Height, data);
 		default:
 			return nullptr;
 		}
@@ -55,7 +55,7 @@ namespace Crimson {
 		case GraphicsAPI::None:
 			return nullptr;
 		case GraphicsAPI::OpenGL:
-			return std::make_shared<OpenGlTexture2DArray>(paths, numMaterials, numChannels, bUse16BitTexture);
+			return std::make_shared<OpenGLTexture2DArray>(paths, numMaterials, numChannels, bUse16BitTexture);
 		default:
 			return nullptr;
 		}

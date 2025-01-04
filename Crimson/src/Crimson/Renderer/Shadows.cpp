@@ -1,4 +1,5 @@
 #include "cnpch.h"
+#include "Crimson.h"
 #include "Shadows.h"
 #include "Platform/Opengl/OpenGlShadows.h"
 
@@ -30,7 +31,7 @@ namespace Crimson
 		case GraphicsAPI::None:
 			return nullptr;
 		case GraphicsAPI::OpenGL:
-			return MakeRef<OpenGLShadows>(2048, 2048);
+			return MakeRef<OpenGLShadows>(2048.f, 2048.f);
 		}
 	}
 }

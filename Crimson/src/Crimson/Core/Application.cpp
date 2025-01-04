@@ -44,7 +44,7 @@ namespace Crimson {
 			Renderer::WindowResize(e.GetWidth(), e.GetHeight());
 			return false; });
 
-		CN_CORE_TRACE(e);
+		CN_CORE_TRACE(e.GetName());
 		for (auto it = m_layerstack.end(); it != m_layerstack.begin();)
 		{
 			if (e.GetHandled())

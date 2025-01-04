@@ -6,22 +6,22 @@ namespace Crimson
 {
 	void DefferedRenderer::Init(int width, int height)
 	{
-		OpenGlDeferredRenderer::Init(width,height);
+		OpenGLDeferredRenderer::Init(width,height);
 	}
 	void DefferedRenderer::GenerateGBuffers(Scene* scene)
 	{
-		OpenGlDeferredRenderer::CreateBuffers(scene);
+		OpenGLDeferredRenderer::CreateBuffers(scene);
 	}
 	void DefferedRenderer::DeferredRenderPass()
 	{
-		OpenGlDeferredRenderer::DeferredPass();
+		OpenGLDeferredRenderer::DeferredPass();
 	}
 	Ref<Shader> DefferedRenderer::GetDeferredPassShader()
 	{
-		return OpenGlDeferredRenderer::GetDeferredShader();
+		return OpenGLDeferredRenderer::GetDeferredShader();
 	}
 	uint32_t DefferedRenderer::GetBuffers(int bufferInd)
 	{
-		return OpenGlDeferredRenderer::GetBuffers(bufferInd);
+		return OpenGLDeferredRenderer::GetBuffers(bufferInd);
 	}
 }

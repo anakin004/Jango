@@ -1,5 +1,5 @@
 #pragma once
-#include "Hazel.h"
+#include "Crimson.h"
 #include <chrono>
 #include <cmath>
 #include <cstdio>
@@ -10,7 +10,7 @@
 #include <random>
 #include <sstream>
 #include <string>
-using namespace Hazel;
+using namespace Crimson;
 
 class MonteCarloSim
 {

@@ -75,8 +75,8 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>cnpch.h</PrecompiledHeaderFile>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CN_PLATFORM_WINDOWS;CN_BUILD_DLL;GLFW_INCLUDE_NONE;NDEBUG;PX_PHYSX_STATIC_LIB;CN_DEBUG;CN_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CN_PLATFORM_WINDOWS;CN_BUILD_DLL;GLFW_INCLUDE_NONE;PX_PHYSX_STATIC_LIB;CN_DEBUG;CN_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\Chroma;vendor\glm;vendor\stb;vendor\Curl\include;vendor\jsoncpp;vendor\entt;vendor\assimp\include;vendor\physx_x64-windows\include;vendor\yaml_cpp\include;vendor\oidn\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -98,7 +98,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>cnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CN_PLATFORM_WINDOWS;CN_BUILD_DLL;GLFW_INCLUDE_NONE;NDEBUG;PX_PHYSX_STATIC_LIB;CN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CN_PLATFORM_WINDOWS;CN_BUILD_DLL;GLFW_INCLUDE_NONE;PX_PHYSX_STATIC_LIB;CN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\Chroma;vendor\glm;vendor\stb;vendor\Curl\include;vendor\jsoncpp;vendor\entt;vendor\assimp\include;vendor\physx_x64-windows\include;vendor\yaml_cpp\include;vendor\oidn\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -124,7 +124,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>cnpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CN_PLATFORM_WINDOWS;CN_BUILD_DLL;GLFW_INCLUDE_NONE;NDEBUG;PX_PHYSX_STATIC_LIB;CN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CN_PLATFORM_WINDOWS;CN_BUILD_DLL;GLFW_INCLUDE_NONE;PX_PHYSX_STATIC_LIB;CN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\Chroma;vendor\glm;vendor\stb;vendor\Curl\include;vendor\jsoncpp;vendor\entt;vendor\assimp\include;vendor\physx_x64-windows\include;vendor\yaml_cpp\include;vendor\oidn\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -312,6 +312,7 @@
     <ClInclude Include="vendor\assimp\include\assimp\cimport.h" />
     <ClInclude Include="vendor\assimp\include\assimp\color4.h" />
     <ClInclude Include="vendor\assimp\include\assimp\commonMetaData.h" />
+    <ClInclude Include="vendor\assimp\include\assimp\config.h" />
     <ClInclude Include="vendor\assimp\include\assimp\defs.h" />
     <ClInclude Include="vendor\assimp\include\assimp\fast_atof.h" />
     <ClInclude Include="vendor\assimp\include\assimp\importerdesc.h" />

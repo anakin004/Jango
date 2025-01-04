@@ -1,3 +1,4 @@
+
 #include "cnpch.h"
 #include "LoadMesh.h"
 #include "Crimson/Core/Log.h"
@@ -221,11 +222,11 @@ namespace Crimson
 
 			bl = std::make_shared<BufferLayout>(); //buffer layout
 
-			bl->push("position", DataType::Float4);
-			bl->push("TexCoord", DataType::Float2);
-			bl->push("Normal", DataType::Float3);
-			bl->push("Tangent", DataType::Float3);
-			bl->push("BiTangent", DataType::Float3);
+			bl->push("position", ShaderDataType::Float4);
+			bl->push("TexCoord", ShaderDataType::Float2);
+			bl->push("Normal", ShaderDataType::Float3);
+			bl->push("Tangent", ShaderDataType::Float3);
+			bl->push("BiTangent", ShaderDataType::Float3);
 
 			m_subMeshes[k].VertexArray->AddBuffer(bl, vb);
 		}

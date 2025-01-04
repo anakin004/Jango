@@ -25,14 +25,14 @@ namespace Crimson {
 		auto flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT;
 		switch (Storage_Type)
 		{
-		case BufferStorage_Type::MUTABLE:
+		case BufferStorageType::MUTABLE:
 			glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
 			break;
-		case BufferStorage_Type::IMMUTABLE:
+		case BufferStorageType::IMMUTABLE:
 			glBufferStorage(GL_ARRAY_BUFFER, size, 0, flags);
 			break;
 		default:
-			HAZEL_CORE_ERROR("Select correct storage type");
+			CN_CORE_ERROR("Select correct storage type");
 			glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
 			break;
 		}
@@ -70,26 +70,26 @@ namespace Crimson {
 	//////////////////////////////////////////////////////
 
 
-	OpenGlIndexBuffer::OpenGlIndexBuffer(unsigned int* data, size_t size)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(unsigned int* data, size_t size)
 	{
 		m_Elements = size / sizeof(unsigned int);
 		glGenBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 	}
-	OpenGlIndexBuffer::~OpenGlIndexBuffer()
+	OpenGLIndexBuffer::~OpenGLIndexBuffer()
 	{
 		glDeleteBuffers(1, &m_RendererID);
 	}
-	void OpenGlIndexBuffer::Bind() const
+	void OpenGLIndexBuffer::Bind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
 	}
-	void OpenGlIndexBuffer::UnBind() const
+	void OpenGLIndexBuffer::UnBind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-	size_t OpenGlIndexBuffer::GetCount()
+	size_t OpenGLIndexBuffer::GetCount()
 	{
 		return m_Elements;
 	}

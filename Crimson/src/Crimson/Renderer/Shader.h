@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 #include <crm_mth.h>
+#include <glm/glm.hpp>
 
 namespace Crimson {
 

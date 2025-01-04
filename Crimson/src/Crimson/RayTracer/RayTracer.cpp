@@ -209,7 +209,7 @@ namespace Crimson
 
 				const char* errorMessage;
 				if (device.getError(errorMessage) != oidn::Error::None)
-					HAZEL_CORE_ERROR(errorMessage);
+					CN_CORE_ERROR(errorMessage);
 
 				float* out_image = (float*)out_buff.getData();
 				glBindTexture(GL_TEXTURE_2D, m_Denoised_TextureID);
@@ -222,9 +222,9 @@ namespace Crimson
 
 		}
 		//if any if the buttons are pressed then re-initilize the frame
-		if (isViewportFocused && (Input::IsButtonPressed(HZ_MOUSE_BUTTON_1) || Input::IsButtonPressed(HZ_MOUSE_BUTTON_2) ||
-			Input::IsKeyPressed(HZ_KEY_W) || Input::IsKeyPressed(HZ_KEY_A) || Input::IsKeyPressed(HZ_KEY_S) ||
-			Input::IsKeyPressed(HZ_KEY_D) || Input::IsKeyPressed(HZ_KEY_Q) || Input::IsKeyPressed(HZ_KEY_E)))
+		if (isViewportFocused && (Input::IsMouseButtonPressed(CRIMSON_MOUSE_BUTTON_1) || Input::IsMouseButtonPressed(CRIMSON_MOUSE_BUTTON_2) ||
+			Input::IsKeyPressed(CRIMSON_KEY_W) || Input::IsKeyPressed(CRIMSON_KEY_A) || Input::IsKeyPressed(CRIMSON_KEY_S) ||
+			Input::IsKeyPressed(CRIMSON_KEY_D) || Input::IsKeyPressed(CRIMSON_KEY_Q) || Input::IsKeyPressed(CRIMSON_KEY_E)))
 		{
 			isMoved = true;
 		}
@@ -291,8 +291,8 @@ namespace Crimson
 
 		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
 
-		bl->push("position", DataType::Float4);
-		bl->push("direction", DataType::Float4);
+		bl->push("position", ShaderDataType::Float4);
+		bl->push("direction", ShaderDataType::Float4);
 
 		vao->AddBuffer(bl, vb);
 		vao->SetIndexBuffer(ib);

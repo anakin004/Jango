@@ -1,5 +1,5 @@
 #pragma once
-#include "Hazel.h"
+#include "Crimson.h"
 #include "MonteCarloSim.h" 
 #include <unordered_map>
 
@@ -7,7 +7,7 @@
 #define MONTHLY "Monthly Time Series"
 #define DAILY "Time Series (Daily)"
 
-using namespace Hazel;
+using namespace Crimson;
 
 enum APIInterval {
 	_WEEKLY,
@@ -86,11 +86,11 @@ private:
 	std::thread search_thread;
 	std::mutex m;//LOCK VARIABLE
 
-	ref<Scene> m_Scene;
-	ref<Shader> shader;
-	ref<VertexArray> vao;
-	ref<SubTexture2D> tree,land,mud,water;
-	ref<FrameBuffer> m_Framebuffer;
+	Ref<Scene> m_Scene;
+	Ref<Shader> shader;
+	Ref<VertexArray> vao;
+	Ref<SubTexture2D> tree,land,mud,water;
+	Ref<FrameBuffer> m_Framebuffer;
 
 private:
 	glm::vec2 normalize_data(const glm::vec2& arr_ele, const int& index);

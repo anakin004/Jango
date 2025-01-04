@@ -137,6 +137,9 @@ project "Crimson"
 		"Crimson/vendor/oidn/lib/OpenImageDenoise_core.lib",
 	}
 
+	filter "files:vendor/imguizmo/**.cpp"
+		flags{"NoPCH"}
+
 	filter "system:windows"
 		systemversion "latest"
 
@@ -145,16 +148,15 @@ project "Crimson"
 			"CN_PLATFORM_WINDOWS",
 			"CN_BUILD_DLL",
 			"GLFW_INCLUDE_NONE",
-			"NDEBUG",
+			--"NDEBUG",
 			"PX_PHYSX_STATIC_LIB"
 		}
 
 	
-	filter "toolset:gcc or toolset:clang" -- For GCC and Clang
-		buildoptions { "-msse", "-mavx" }  --  SSE and AVX support
-
-	filter "toolset:msc"  -- For MSVC
-		buildoptions { "/arch:SSE", "/arch:AVX" }  -- SSE and AVX support
+	filter "toolset:msc"
+		buildoptions { "/utf-8", "/arch:SSE", "/arch:AVX" }
+	filter "toolset:gcc or toolset:clang"
+		buildoptions { "-msse", "-mavx" }
 	
 
 	filter "configurations:Debug"
@@ -299,7 +301,7 @@ project "Crimson_Editor"
 	location "CameraProperties"
 		kind "ConsoleApp"
 		language "c++"
-		staticruntime "off"
+		staticruntime "on"
 		cppdialect "c++17"
 	
 		targetdir ("bin/"..outputdir.."/%{prj.name}")

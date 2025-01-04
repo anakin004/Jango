@@ -1,12 +1,13 @@
 #define CURL_STATICLIB
-#include "hzpch.h"
+#include "cnpch.h"
 #include "Sandbox2dApp.h"
 #include "DisplayNews.h"
 #include "ImGuiInputText.h"
 #include "curl/curl.h"
 #include "json/json.h"
+#include "Crimson/Core/KeyCodes.h"
 
-//#include "Hazel/Profiling.h"
+//#include "CN/Profiling.h"
 std::vector<float> SandBox2dApp::ClosingPrices;
 SandBox2dApp::SandBox2dApp()
 	:Layer("Renderer2D layer"), m_camera(1366 / 768)
@@ -101,8 +102,8 @@ void SandBox2dApp::FetchData()//fetch data from the server and push that data to
 			ClosingPrices.push_back(y);
 		}
 		
-		HAZEL_CORE_WARN(max_volume);
-		HAZEL_CORE_INFO(min_volume);
+		CN_CORE_WARN(max_volume);
+		CN_CORE_INFO(min_volume);
 
 		//if (JsonSize > NumPoints)
 		//{
@@ -114,7 +115,7 @@ void SandBox2dApp::FetchData()//fetch data from the server and push that data to
 	};
 	if (!lamda_fn("trading_data.json"))
 		lamda_fn("default_trading_data.json");
-	HAZEL_CORE_ERROR(result);
+	CN_CORE_ERROR(result);
 	if(m_Points.size()>0)
 	m_camera.SetCameraPosition({ normalize_data(m_Points[0],0),0 });
 }
@@ -165,7 +166,7 @@ void SandBox2dApp::AutoFill(const std::string& str)//this function is used for t
 			CompanyDescription.push_back(tmp);
 		}
 
-		HAZEL_CORE_INFO(jsondata["bestMatches"]);
+		CN_CORE_INFO(jsondata["bestMatches"]);
 	}
 };
 
@@ -335,7 +336,7 @@ void SandBox2dApp::OnUpdate(float deltatime)
 	//straight line parallel to y axis is x = k; where k= some constant(here mouse x position)
 	Renderer2D::LineBeginScene(m_camera.GetCamera());
 	{
-		auto MousePos = Input::GetCursorPosition();//get the mouse position
+		auto MousePos = Input::GetMousePos();//get the mouse position
 		auto Window_Size = RenderCommand::GetViewportSize();//get the view port dimensions
 
 		glm::mat4 invVP = glm::inverse(m_camera.GetCamera().GetProjectionViewMatix());//inverse the view projection matrix
@@ -488,19 +489,19 @@ void SandBox2dApp::OnImGuiRender()
 	{
 		ChangeInterval(APIInterval::_WEEKLY);
 		FetchData();
-		HAZEL_CORE_ERROR(m_Points.size());
+		CN_CORE_ERROR(m_Points.size());
 	}
 	if (ImGui::Button("MONTHLY", { 150,20 }))
 	{
 		ChangeInterval(APIInterval::_MONTHLY);
 		FetchData();
-		HAZEL_CORE_ERROR(m_Points.size());
+		CN_CORE_ERROR(m_Points.size());
 	}
 	if (ImGui::Button("DAILY", { 150,20 }))
 	{
 		ChangeInterval(APIInterval::_DAILY);
 		FetchData();
-		HAZEL_CORE_ERROR(m_Points.size());
+		CN_CORE_ERROR(m_Points.size());
 
 	}
 	if (ImGui::Button("5min Interval", { 150,20 }))
@@ -627,12 +628,12 @@ void SandBox2dApp::OnEvent(Event& e)
 	{
 		m_camera.OnEvent(e);
 		EventDispatcher dispatch(e);
-		dispatch.Dispatch<MouseButtonPressed>([&](MouseButtonPressed e) {
-			if(e.GetMouseButton() == HZ_MOUSE_BUTTON_2)
+		dispatch.Dispatch<MouseButtonPressedEvent>([&](MouseButtonPressedEvent e) {
+			if(e.GetMouseButton() == CRIMSON_MOUSE_BUTTON_2)
 			MoveCameraToNearestPoint();
 			return true;
 			});
-		dispatch.Dispatch<MouseScrollEvent>([&](MouseScrollEvent e) {
+		dispatch.Dispatch<MouseScrolledEvent>([&](MouseScrolledEvent e) {
 			auto zoom = m_camera.GetZoomLevel();
 			if (coordinate_scale > 1)
 			{
@@ -647,7 +648,7 @@ void SandBox2dApp::OnEvent(Event& e)
 				SkipCoordinate = 0;
 			return true; });
 		dispatch.Dispatch<KeyPressedEvent>([&](KeyPressedEvent e) {
-			if (e.GetKeyCode() == HZ_KEY_R)
+			if (e.GetKeyCode() == CRIMSON_KEY_R)
 				m_camera.SetCameraPosition(glm::vec3(m_Points.size(),normalize_data(m_Points[m_Points.size()-1],m_Points.size() - 1).y,0));
 			return true; });
 	}

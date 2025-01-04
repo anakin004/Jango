@@ -4,19 +4,20 @@
 #include "Renderer.h"
 #include "RendererAPI.h"
 #include "Platform/OpenGL/OpenGLBuffer.h"
+#include "Platform/OpenGL/OpenGLVertexArray.h"
 
 #include "Crimson/Core/Core.h"
 
 namespace Crimson {
 
 
-	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, size_t size)
 	{
 		// I will not be seperating
-		switch (Renderer::GetAPI())
+		switch (RendererAPI::GetAPI())
 		{
-		case RendererAPI::API::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
-		case RendererAPI::API::OpenGL:			return   MakeRef<OpenGLVertexBuffer>(vertices, size);
+		case GraphicsAPI::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
+		case GraphicsAPI::OpenGL:			return   MakeRef<OpenGLVertexBuffer>(vertices, size);
 		}
 
 		CN_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -24,24 +25,24 @@ namespace Crimson {
 	}
 
 
-	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size, BufferStorageType type)
+	Ref<VertexBuffer> VertexBuffer::Create(size_t size, BufferStorageType type)
 	{
-		switch (Renderer::GetAPI())
+		switch (RendererAPI::GetAPI())
 		{
-		case RendererAPI::API::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
-		case RendererAPI::API::OpenGL:			return   MakeRef<OpenGLVertexBuffer>(size, type);
+		case GraphicsAPI::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
+		case GraphicsAPI::OpenGL:			return   MakeRef<OpenGLVertexBuffer>(size, type);
 		}
 
 		CN_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
 
-	Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t count)
+	Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indices, size_t size)
 	{
-		switch (Renderer::GetAPI())
+		switch (RendererAPI::GetAPI())
 		{
-		case RendererAPI::API::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
-		case RendererAPI::API::OpenGL:		return MakeRef<OpenGLIndexBuffer>(indices, count);
+		case GraphicsAPI::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
+		case GraphicsAPI::OpenGL:		return MakeRef<OpenGLIndexBuffer>(indices, size);
 		}
 
 		CN_CORE_ASSERT(false, "Unknown RendererAPI!");

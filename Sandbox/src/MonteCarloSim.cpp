@@ -1,7 +1,7 @@
 #include "MonteCarloSim.h"
 #include "Sandbox2dApp.h"
 
-using namespace Hazel;
+using namespace Crimson;
 static std::vector<float> stockPrice;
 std::vector<float> MonteCarloSim::RunSimulation(int num_threads, int inLoops, int outLoops, int timeSteps )
 {
@@ -19,7 +19,7 @@ std::vector<float> MonteCarloSim::RunSimulation(int num_threads, int inLoops, in
     const float volatility = calculateVolatility(spotPrice, timeSteps);
 
     // Welcome message
-    HAZEL_CORE_INFO("{} Using market volatility: ", volatility);
+    CN_CORE_INFO("{} Using market volatility: ", volatility);
 
     int32_t i;
     // Parallel region with each thread having its own instance of variable 'i',

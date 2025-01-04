@@ -1,8 +1,5 @@
 #pragma once
 
-#ifdef HZ_PLATFORM_WINDOWS
-#include <windows.h>
-#endif // HZ_PLATFORM_WINDOWS
 
 //only used by Crimson applications
 
@@ -22,6 +19,8 @@
 #include "Crimson/Scene/ScriptableEntity.h"
 
 //-------Non Crimson api----------------
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"

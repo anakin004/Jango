@@ -1,4 +1,7 @@
 #pragma once
+
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include "Crimson/Core/Core.h"
 #include "Crimson/Renderer/Material.h"
 #include "Crimson/Renderer/Texture.h"

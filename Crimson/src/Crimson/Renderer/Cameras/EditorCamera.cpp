@@ -97,8 +97,8 @@ namespace Crimson {
 		//	m_verticalFOV = 45.0f;
 		//}
 
-		glm::vec2 NewMousePos = { Input::GetCursorPosition().first,Input::GetCursorPosition().second };
-		if (Input::IsButtonPressed(CRIMSON_MOUSE_BUTTON_2))//camera pan
+		glm::vec2 NewMousePos = { Input::GetMousePos().first,Input::GetMousePos().second };
+		if (Input::IsMouseButtonPressed(CRIMSON_MOUSE_BUTTON_2))//camera pan
 		{
 			auto delta = NewMousePos - OldMousePos;//get change in mouse position
 

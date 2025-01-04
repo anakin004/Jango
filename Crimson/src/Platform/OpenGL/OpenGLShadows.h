@@ -5,12 +5,12 @@
 
 #define MAX_CASCADES 4
 namespace Crimson {
-	class OpenGlShadows:public Shadows
+	class OpenGLShadows:public Shadows
 	{
 	public:
-		OpenGlShadows();
-		OpenGlShadows(const float& width, const float& height);
-		~OpenGlShadows();
+		OpenGLShadows();
+		OpenGLShadows(const float& width, const float& height);
+		~OpenGLShadows();
 		void RenderShadows(Scene& scene, const glm::vec3& LightPosition, Camera& cam) override;
 		void RenderTerrainShadows(Scene& scene, const glm::vec3& LightPosition, Camera& cam) override;
 		void RenderFoliageShadows(LoadMesh* mesh, uint32_t bufferID, int numMeshes, const glm::vec3& LightPosition, Camera& cam) override;

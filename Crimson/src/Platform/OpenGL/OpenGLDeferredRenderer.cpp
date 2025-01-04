@@ -11,8 +11,8 @@ namespace Crimson
 		OpenGLDeferredRenderer::m_NormalBufferID, OpenGLDeferredRenderer::m_AlbedoBufferID,
 		OpenGLDeferredRenderer::m_RoughnessMetallicBufferID, OpenGLDeferredRenderer::m_VelocityBufferID;
 
-	ref<Shader> OpenGLDeferredRenderer::m_ForwardPassShader;
-	ref<Shader> OpenGLDeferredRenderer::m_DefferedPassShader;
+	Ref<Shader> OpenGLDeferredRenderer::m_ForwardPassShader;
+	Ref<Shader> OpenGLDeferredRenderer::m_DefferedPassShader;
 	static int m_width, m_height;
 	void OpenGLDeferredRenderer::Init(int width, int height)
 	{
@@ -67,7 +67,7 @@ namespace Crimson
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_RenderBufferID, 0);
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-			HAZEL_CORE_TRACE("G-Buffer Framebuffer compleate -_- ");
+			CN_CORE_TRACE("G-Buffer Framebuffer complete")
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		glBindTextureUnit(G_NORMAL_TEXTURE_SLOT, m_NormalBufferID);
@@ -150,15 +150,15 @@ namespace Crimson
 		glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
 		};
 
-		ref<VertexArray> vao = VertexArray::Create();
-		ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
+		Ref<VertexArray> vao = VertexArray::Create();
+		Ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
 		unsigned int i_data[] = { 0,1,2,0,2,3 };
-		ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
+		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
 
-		ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
+		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
 
-		bl->push("position", DataType::Float4);
-		bl->push("coordinate", DataType::Float4);
+		bl->push("position", ShaderDataType::Float4);
+		bl->push("coordinate", ShaderDataType::Float4);
 
 		vao->AddBuffer(bl, vb);
 		vao->SetIndexBuffer(ib);

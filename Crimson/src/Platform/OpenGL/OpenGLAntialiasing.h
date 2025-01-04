@@ -1,6 +1,6 @@
 #pragma once
 #include "Crimson.h"
-#include "Crimson/Core.h"
+#include "Crimson/Core/Core.h"
 #include "Crimson/Renderer/Antialiasing.h"
 
 namespace Crimson

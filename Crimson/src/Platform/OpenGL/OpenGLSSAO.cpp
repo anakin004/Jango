@@ -53,7 +53,7 @@ namespace Crimson {
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, SSAOdepth_id);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, SSAOtexture_id, 0);
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-			HAZEL_CORE_TRACE("SSAO Framebuffer compleate -_- ");
+			CN_CORE_TRACE("SSAO Framebuffer compleate -_- ");
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		SSAOShader->Bind();
@@ -78,7 +78,7 @@ namespace Crimson {
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, SSAOdepth_id);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, SSAOblur_id, 0);
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-			HAZEL_CORE_TRACE("SSAO blur Framebuffer compleate ^_^ ");
+			CN_CORE_TRACE("SSAO blur Framebuffer compleate ^_^ ");
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		SSAOblurShader->Bind();
@@ -143,13 +143,13 @@ namespace Crimson {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		HAZEL_CORE_WARN(glGetError());
+		CN_CORE_WARN(glGetError());
 
 		glBindTextureUnit(NOISE_SLOT, noisetex_id);
 		glBindTextureUnit(SSAO_BLUR_SLOT, SSAOblur_id);
 		glBindTextureUnit(SSAO_SLOT, SSAOtexture_id);
 	}
-	void OpenGLSSAO::RenderScene(Scene& scene , ref<Shader>& current_shader)
+	void OpenGLSSAO::RenderScene(Scene& scene , Ref<Shader>& current_shader)
 	{
 		
 	}
@@ -168,15 +168,15 @@ namespace Crimson {
 		glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
 		};
 
-		ref<VertexArray> vao = VertexArray::Create();
-		ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
+		Ref<VertexArray> vao = VertexArray::Create();
+		Ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
 		unsigned int i_data[] = { 0,1,2,0,2,3 };
-		ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
+		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
 
-		ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
+		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
 
-		bl->push("position", DataType::Float4);
-		bl->push("coordinate", DataType::Float4);
+		bl->push("position", ShaderDataType::Float4);
+		bl->push("coordinate", ShaderDataType::Float4);
 
 		vao->AddBuffer(bl, vb);
 		vao->SetIndexBuffer(ib);
@@ -187,7 +187,7 @@ namespace Crimson {
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 	}
-	void OpenGLSSAO::RenderTerrain(Scene& scene, ref<Shader>& current_shader1, ref<Shader>& current_shader2)
+	void OpenGLSSAO::RenderTerrain(Scene& scene, Ref<Shader>& current_shader1, Ref<Shader>& current_shader2)
 	{			
 		GbufferPositionInstanced->Bind();
 		//Pass a alpha texture in the fragment shader to remove the depth values from the pixels that masked by alpha texture

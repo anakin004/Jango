@@ -7,7 +7,7 @@
 
 namespace Crimson {
 	Ref<Shader> CubeMapEnvironment::Cube_Shader, CubeMapEnvironment::equirectangularToCube_shader;
-	Ref<Shader> CubeMapEnvironment::irradiance_shader, CubeMapEnvironment::pRefilterShader, CubeMapEnvironment::BRDFSumShader;
+	Ref<Shader> CubeMapEnvironment::irradiance_shader, CubeMapEnvironment::prefilterShader, CubeMapEnvironment::BRDFSumShader;
 	uint32_t CubeMapEnvironment::irradiance_map_id = 0, CubeMapEnvironment::framebuffer_id = 0, CubeMapEnvironment::hdrMapID = 0,
 		CubeMapEnvironment::renderBuffer_id = 0, CubeMapEnvironment::framebuffer_id2 = 0, CubeMapEnvironment::tex_id = 0;
 	uint32_t CubeMapEnvironment::captureRes = 512;
@@ -367,8 +367,8 @@ namespace Crimson {
 
 		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
 
-		bl->push("position", DataType::Float4);
-		bl->push("coordinate", DataType::Float4);
+		bl->push("position", ShaderDataType::Float4);
+		bl->push("coordinate", ShaderDataType::Float4);
 
 		vao->AddBuffer(bl, vb);
 		vao->SetIndexBuffer(ib);
@@ -403,8 +403,8 @@ namespace Crimson {
 
 		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
 
-		bl->push("position", DataType::Float4);
-		bl->push("direction", DataType::Float4);
+		bl->push("position", ShaderDataType::Float4);
+		bl->push("direction", ShaderDataType::Float4);
 
 		vao->AddBuffer(bl, vb);
 		vao->SetIndexBuffer(ib);

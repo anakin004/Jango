@@ -24,8 +24,8 @@ namespace Crimson {
 	
 	bool Scene::TOGGLE_SHADOWS = true;
 	bool Scene::TOGGLE_SSAO = true;
-	float Scene::foliage_dist = 3000;
-	float Scene::num_foliage = 10000;
+	float Scene::foliage_dist = 3000.f;
+	float Scene::num_foliage = 10000.f;
 	//std::vector<PointLight*> Scene::m_PointLights;
 	EditorCamera editor_cam;
 	 LoadMesh* Scene::Sphere=nullptr, *Scene::Sphere_simple = nullptr, *Scene::Cube= nullptr, *Scene::Plane= nullptr
@@ -34,7 +34,7 @@ namespace Crimson {
 		 *Scene::Tree1, *Scene::Tree2, *Scene::Tree3, *Scene::Tree4, *Scene::Tree5,
 		 *Scene::Bush1, *Scene::Bush2, *Scene::Rock1, *Scene::Rock2, *Scene::Flower1, *Scene::Flower2;
 	 bool capture = false;
-	 glm::vec3 camloc = { 0,0,0 }, camrot = {0,0,0};
+	 glm::vec3 camloc = { 0.f,0.f,0.f }, camrot = {0.f,0.f,0.f};
 	Scene::Scene()
 	{
 		//framebuffer = FrameBuffer::Create({ 2048,2048 });
@@ -95,15 +95,15 @@ namespace Crimson {
 		Sponza = new LoadMesh("Assets/Meshes/Sponza.fbx", LoadMesh::IMPORT_MESH);
 		Renderer3D::SetUpCubeMapReflections(*this);
 		editor_cam.SetVerticalFOV(45.f);
-		editor_cam.SetPerspectiveFar(10000);
-		editor_cam.SetViewportSize(1920/1080);
-		m_Terrain = std::make_shared<Terrain>(2048,2048);
+		editor_cam.SetPerspectiveFar(10000.f);
+		editor_cam.SetViewportSize(1920.f/1080.f);
+		m_Terrain = std::make_shared<Terrain>(2048.f,2048.f);
 		//initilize Bloom
 		m_Bloom = Bloom::Create();
-		m_Bloom->GetFinalImage(0, { 1920,1080 });
+		m_Bloom->GetFinalImage(0, { 1920.f,1080.f });
 		m_Bloom->InitBloom();
 
-		m_Fog = Fog::Create(fogDensity,30, 5000, 100,10, { 1920,1080 });
+		m_Fog = Fog::Create(fogDensity,30.f, 5000.f, 100.f,10.f, { 1920.f,1080.f });
 		m_rayTracer = std::make_shared<RayTracer>();
 	}
 	Scene::~Scene()
@@ -228,7 +228,7 @@ namespace Crimson {
 		m_PointLights.push_back(light);
 	}
 
-	ref<Scene> Scene::Create()
+	Ref<Scene> Scene::Create()
 	{
 		return std::make_shared<Scene>();
 	}

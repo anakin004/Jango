@@ -8,16 +8,16 @@
 #include "glad/glad.h"
 #include "Crimson/Renderer/Shadows.h"
 #include "Crimson/Scene/PointLight.h"
-#include "Crimson/platform/Opengl/OpenGlSSAO.h"//temporary testing purpose
+#include "Platform/Opengl/OpenGlSSAO.h"//temporary testing purpose
 #include "Crimson/Renderer/Terrain.h"
 #include "Crimson/Renderer/SkyRenderer.h"
 #include "Crimson/Renderer/DeferredRenderer.h"
 #include "Crimson/Renderer/Antialiasing.h"
 #include "Material.h"
-#include "Crimson/ResourceManager.h"
+#include "Crimson/Core/ResourceManager.h"
 
 
-namespace Hazel {
+namespace Crimson {
 	//Camera* m_camera;
 	GLsync syncObj;
 	glm::mat4 Renderer3D::m_oldProjectionView = glm::mat4(1.0f);
@@ -50,11 +50,11 @@ namespace Hazel {
 	};
 
 	struct Renderer3DStorage {
-		ref<OpenGlSSAO> ssao;
-		ref<Antialiasing> taa; //temporal antialiasing
-		ref<Shadows> shadow_map;
-		ref<CubeMapReflection> reflection;
-		ref<Shader> shader, foliage_shader, foliageShader_instanced;
+		Ref<OpenGLSSAO> ssao;
+		Ref<Antialiasing> taa; //temporal antialiasing
+		Ref<Shadows> shadow_map;
+		Ref<CubeMapReflection> reflection;
+		Ref<Shader> shader, foliage_shader, foliageShader_instanced;
 	};
 	static Renderer3DStorage* m_data;
 
@@ -77,7 +77,7 @@ namespace Hazel {
 				//Loading cube map so that it can act as an environment light
 				//m_data->reflection = CubeMapReflection::Create();
 		m_data->taa = Antialiasing::Create(width, height);
-		m_data->ssao = std::make_shared<OpenGlSSAO>(width / 2, height / 2);
+		m_data->ssao = std::make_shared<OpenGLSSAO>(width / 2, height / 2);
 		m_data->shadow_map = Shadows::Create(2048 * 2.0, 2048 * 2.0);//create a 2048x2048 shadow map
 		for (int i = 0; i < 4; i++)
 			depth_id[i] = m_data->shadow_map->GetDepth_ID(i);
@@ -94,7 +94,7 @@ namespace Hazel {
 		m_data->shader->SetFloat3("EyePosition", camera.GetPosition());
 	}
 
-	void Renderer3D::BeginScene(Camera& camera, const ref<Shader>& otherShader)
+	void Renderer3D::BeginScene(Camera& camera, const Ref<Shader>& otherShader)
 	{
 		if (otherShader == nullptr) {
 			m_data->shader->Bind();//bind the textureShader
@@ -112,7 +112,7 @@ namespace Hazel {
 		}
 	}
 
-	void Renderer3D::BeginSceneFoliage(Camera& camera, const ref<Shader>& otherShader)
+	void Renderer3D::BeginSceneFoliage(Camera& camera, const Ref<Shader>& otherShader)
 	{
 		m_data->foliage_shader->Bind();//bind the textureShader
 		m_data->foliage_shader->SetMat4("u_ProjectionView", camera.GetProjectionView());//here the projection is ProjectionView
@@ -216,14 +216,14 @@ namespace Hazel {
 		DefferedRenderer::GetDeferredPassShader()->SetInt("Num_PointLights", pos.size());
 	}
 
-	void Renderer3D::DrawMesh(LoadMesh& mesh, glm::mat4& transform, const glm::vec4& color, const float& material_Roughness, const float& material_metallic, ref<Shader> otherShader)
+	void Renderer3D::DrawMesh(LoadMesh& mesh, glm::mat4& transform, const glm::vec4& color, const float& material_Roughness, const float& material_metallic, Ref<Shader> otherShader)
 	{
 		for (auto& sub_mesh : mesh.m_subMeshes)
 		{
-			ref<Material> material = ResourceManager::allMaterials[sub_mesh.m_MaterialID];
+			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.m_MaterialID];
 
 			if (!material) {
-				HAZEL_CORE_ERROR("Material dosent exist");
+				CN_CORE_ERROR("Material dosent exist");
 				return; //dont render in case of non existing material
 			}
 			material->Diffuse_Texture->Bind(ALBEDO_SLOT);
@@ -259,10 +259,10 @@ namespace Hazel {
 	{
 		m_data->foliageShader_instanced->Bind();
 		glDisable(GL_CULL_FACE);
-		ref<Material> material = ResourceManager::allMaterials[sub_mesh.m_MaterialID]; //get material from the resource manager
+		Ref<Material> material = ResourceManager::allMaterials[sub_mesh.m_MaterialID]; //get material from the resource manager
 
 		if (!material) {
-			HAZEL_CORE_ERROR("Material dosent exist");
+			CN_CORE_ERROR("Material dosent exist");
 			return; //dont render in case of non existing material
 		}
 		m_data->foliageShader_instanced->SetFloat("Roughness", material->GetRoughness()); //send the roughness value
@@ -373,7 +373,7 @@ namespace Hazel {
 		//m_data->shader->Bind();
 	}
 
-	ref<Shadows>& Renderer3D::GetShadowObj()
+	Ref<Shadows>& Renderer3D::GetShadowObj()
 	{
 		return m_data->shadow_map;
 	}
@@ -384,7 +384,7 @@ namespace Hazel {
 		m_data->shader->SetFloat("Transperancy", val);//for now assign to 10 :)
 	}
 
-	ref<Shader>& Renderer3D::GetFoliageInstancedShader()
+	Ref<Shader>& Renderer3D::GetFoliageInstancedShader()
 	{
 		return m_data->foliageShader_instanced;
 	}

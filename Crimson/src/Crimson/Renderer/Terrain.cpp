@@ -183,8 +183,8 @@ namespace Crimson
 
 		Ref<VertexBuffer> vb = VertexBuffer::Create(&terrainData[0].Position.x, sizeof(TerrainData) * terrainData.size());
 		bl = MakeRef<BufferLayout>();
-		bl->push("Position", DataType::Float3);
-		bl->push("coord", DataType::Float2);
+		bl->push("Position", ShaderDataType::Float3);
+		bl->push("coord", ShaderDataType::Float2);
 		m_terrainVertexArray->AddBuffer(bl, vb);
 		glPatchParameteri(GL_PATCH_VERTICES, 4);//will be present after all vertex array operations for tessellation
 

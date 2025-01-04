@@ -24,10 +24,10 @@ namespace Crimson {
 	};
 
 
-	class OpenGlIndexBuffer :public IndexBuffer {
+	class OpenGLIndexBuffer :public IndexBuffer {
 	public:
-		OpenGlIndexBuffer(unsigned int* data, size_t size);
-		~OpenGlIndexBuffer();
+		OpenGLIndexBuffer(unsigned int* data, size_t size);
+		~OpenGLIndexBuffer();
 		void Bind() const override;
 		void UnBind() const override;
 		size_t GetCount()override;

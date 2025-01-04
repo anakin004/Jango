@@ -17,16 +17,11 @@
 #else
 #error "This platform is not supported"
 #endif
-#define CN_ENABLE_ASSERTS
+
 #else
 #define CN_DEBUGBREAK()
 #endif // CN_DEBUG
 
-#ifdef CN_DEBUG
-#define CN_ASSERT(x,...) { if(!(x)) { CN_ERROR("Assertion Failed: {0}", __VA_ARGS__); CN_DEBUGBREAK(); } }
-#else
-#define HZ_ASSERT(x, ...)
-#endif
 
 
 #define BIT(x) (1 << x )

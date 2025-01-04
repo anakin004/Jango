@@ -219,13 +219,13 @@ namespace Crimson {
 	//		Renderer3D::DrawFoliageInstanced(sub_mesh, Terrain::m_terrainModelMat, ssbo_indirectBuffer_LOD1, Terrain::time, applyGradientMask, enableWind);
 	//	}
 	//}
-	void Foliage::RenderFoliage(ref<Shader>& shadow_shader)
+	void Foliage::RenderFoliage(Ref<Shader>& shadow_shader)
 	{
 		//LOD 0
 		Renderer3D::InstancedFoliageData(*m_foliageMesh->GetLOD(0), ssbo_outTransformsLOD0);	//render lod0 elements
 		for (auto sub_mesh : m_foliageMesh->GetLOD(0)->m_subMeshes)
 		{
-			ref<Material> material = ResourceManager::allMaterials[sub_mesh.m_MaterialID]; //get material from the resource manager
+			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.m_MaterialID]; //get material from the resource manager
 			material->Diffuse_Texture->Bind(ALBEDO_SLOT);
 			shadow_shader->SetInt("u_Albedo", ALBEDO_SLOT); //alpha channel is being used
 			RenderCommand::DrawArraysIndirect(*sub_mesh.VertexArray, ssbo_indirectBuffer_LOD0);			
@@ -234,7 +234,7 @@ namespace Crimson {
 	glm::mat4 Foliage::getTransform(int index)
 	{
 		if (index >= m_foliageTransforms.size() || index < 0) {
-			HAZEL_CORE_ERROR("index out of bounds of foliage transform array");
+			CN_CORE_ERROR("index out of bounds of foliage transform array");
 			return glm::mat4(1.0);
 		}
 		return m_foliageTransforms[index];

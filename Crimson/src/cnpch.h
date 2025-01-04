@@ -1,5 +1,6 @@
 #pragma once
 
+#define GLM_ENABLE_EXPERIMENTAL
 
 #include <limits>
 #include <functional>

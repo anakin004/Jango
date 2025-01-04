@@ -100,7 +100,7 @@ namespace Crimson {
 		float Transperancy = 1.0f;
 		Ref<Texture2D> texture = nullptr;
 		SpriteRenderer() = default;
-		SpriteRenderer(const glm::vec4& color, float roughness = 1.0f, float metallic = 0.0f, const ref<Texture2D> tex = nullptr)
+		SpriteRenderer(const glm::vec4& color, float roughness = 1.0f, float metallic = 0.0f, const Ref<Texture2D> tex = nullptr)
 			:Color(color),texture(tex),m_Metallic(metallic),m_Roughness(roughness)//Gamma correction in color
 		{}
 	};

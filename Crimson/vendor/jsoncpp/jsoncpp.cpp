@@ -1,3 +1,4 @@
+#include "cnpch.h"
 /// Json-cpp amalgamated source (http://jsoncpp.sourceforge.net/).
 /// It is intended to be used with #include "json/json.h"
 
@@ -69,8 +70,6 @@ license you like.
 // //////////////////////////////////////////////////////////////////////
 
 
-
-#include "hzpch.h"
 #include "json/json.h"
 
 

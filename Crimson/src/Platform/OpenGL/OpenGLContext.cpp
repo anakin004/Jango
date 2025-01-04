@@ -29,7 +29,7 @@ namespace Crimson {
 
 	void OpenGLContext::SwapBuffers()
 	{
-		glfwSwapBuffers(m_WindowHandle);
+		glfwSwapBuffers(m_WindowHandle.get());
 	}
 }
 

@@ -1,8 +1,10 @@
 #pragma once
-#include "Hazel/Scene/ScriptableEntity.h"
-#include "Hazel.h"
-#include "Hazel//Physics/Physics3D.h"
-namespace Hazel {
+#include "Crimson/Scene/ScriptableEntity.h"
+#include "Crimson.h"
+#include "Crimson/Physics/Physics3D.h"
+#include "Crimson/Core/KeyCodes.h"
+
+namespace Crimson {
 	class CustomScript :public ScriptableEntity {
 	public:
 		glm::vec3 position = { 0,0,0 }, rotate = { 0,0,0 };
@@ -19,32 +21,32 @@ namespace Hazel {
 			if (!m_Entity)
 				return;
 
-			if (Input::IsKeyPressed(HZ_KEY_W))
+			if (Input::IsKeyPressed(CRIMSON_KEY_W))
 				position.z += ObjSpeed * ts;
-			if (Input::IsKeyPressed(HZ_KEY_S))
+			if (Input::IsKeyPressed(CRIMSON_KEY_S))
 				position.z -= ObjSpeed * ts;
-			if (Input::IsKeyPressed(HZ_KEY_Q))
+			if (Input::IsKeyPressed(CRIMSON_KEY_Q))
 				rotate.y -= 1;
-			if (Input::IsKeyPressed(HZ_KEY_E))
+			if (Input::IsKeyPressed(CRIMSON_KEY_E))
 				rotate.y += 1;
-			if (Input::IsKeyPressed(HZ_KEY_UP))
+			if (Input::IsKeyPressed(CRIMSON_KEY_UP))
 				position.y += ObjSpeed * ts;
-			if (Input::IsKeyPressed(HZ_KEY_DOWN))
+			if (Input::IsKeyPressed(CRIMSON_KEY_DOWN))
 				position.y -= ObjSpeed * ts;
-			if (Input::IsKeyPressed(HZ_KEY_A))
+			if (Input::IsKeyPressed(CRIMSON_KEY_A))
 				position.x += ObjSpeed * ts;
-			if (Input::IsKeyPressed(HZ_KEY_D))
+			if (Input::IsKeyPressed(CRIMSON_KEY_D))
 				position.x -= ObjSpeed * ts;
 			
-			if (Input::IsKeyPressed(HZ_KEY_PAGE_UP))
+			if (Input::IsKeyPressed(CRIMSON_KEY_PAGE_UP))
 				scale += 0.01;
-			if (Input::IsKeyPressed(HZ_KEY_PAGE_DOWN))
+			if (Input::IsKeyPressed(CRIMSON_KEY_PAGE_DOWN))
 				scale -= 0.01;
 
 			if (m_Entity->HasComponent<CameraComponent>())
 			{
 				auto camera = m_Entity->GetComponent<CameraComponent>().camera;
-				if (Input::IsButtonPressed(HZ_MOUSE_BUTTON_1))
+				if (Input::IsMouseButtonPressed(CRIMSON_MOUSE_BUTTON_1))
 				{
 					if (Physics3D::Raycast(m_Entity->GetComponent<TransformComponent>().Translation, camera.GetViewDirection(), 10000, hit))
 					{
@@ -64,7 +66,7 @@ namespace Hazel {
 				}
 			}
 
-			//if (Input::IsButtonPressed(HZ_MOUSE_BUTTON_1))
+			//if (Input::IsButtonPressed(CRIMSON_MOUSE_BUTTON_1))
 			//{
 			//	s_entity = m_Entity->GetScene()->CreateEntity("Spwanned");
 			//	auto mouse_pos = Input::GetCursorPosition();
@@ -93,7 +95,7 @@ namespace Hazel {
 			if (!m_Entity)
 				return;
 			EventDispatcher dispatch(e);
-			dispatch.Dispatch<MouseButtonPressed>([&](MouseButtonPressed e) {
+			dispatch.Dispatch<MouseButtonPressedEvent>([&](MouseButtonPressedEvent e) {
 				s_entity = m_Entity->GetScene()->CreateEntity("Spwanned");
 				auto wp = m_Entity->GetComponent<TransformComponent>();
 				s_entity->AddComponent<TransformComponent>().m_transform = wp.GetTransform();

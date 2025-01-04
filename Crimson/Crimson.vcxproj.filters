@@ -666,6 +666,9 @@
     <ClInclude Include="vendor\assimp\include\assimp\commonMetaData.h">
       <Filter>vendor\assimp\include\assimp</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\assimp\include\assimp\config.h">
+      <Filter>vendor\assimp\include\assimp</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\assimp\include\assimp\defs.h">
       <Filter>vendor\assimp\include\assimp</Filter>
     </ClInclude>

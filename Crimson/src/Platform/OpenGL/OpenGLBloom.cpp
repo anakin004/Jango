@@ -78,7 +78,7 @@ namespace Crimson {
 			glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_MipLevels[i].texture, 0);
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
 			{
-				HAZEL_CORE_WARN("Downsample frame buff compleate!!");
+				CN_CORE_WARN("Downsample frame buff compleate!!");
 			}
 			RenderQuad();
 
@@ -146,15 +146,15 @@ namespace Crimson {
 		glm::vec4(-1,1,0,1),glm::vec4(0,0,0,0)
 		};
 
-		ref<VertexArray> vao = VertexArray::Create();
-		ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
+		Ref<VertexArray> vao = VertexArray::Create();
+		Ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
 		unsigned int i_data[] = { 0,1,2,0,2,3 };
-		ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
+		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
 
-		ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
+		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
 
-		bl->push("position", DataType::Float4);
-		bl->push("direction", DataType::Float4);
+		bl->push("position", ShaderDataType::Float4);
+		bl->push("direction", ShaderDataType::Float4);
 
 		vao->AddBuffer(bl, vb);
 		vao->SetIndexBuffer(ib);
@@ -179,15 +179,15 @@ namespace Crimson {
 		glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
 		};
 
-		ref<VertexArray> vao = VertexArray::Create();
-		ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
+		Ref<VertexArray> vao = VertexArray::Create();
+		Ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
 		unsigned int i_data[] = { 0,1,2,0,2,3 };
-		ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
+		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
 
-		ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
+		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
 
-		bl->push("position", DataType::Float4);
-		bl->push("direction", DataType::Float4);
+		bl->push("position", ShaderDataType::Float4);
+		bl->push("direction", ShaderDataType::Float4);
 
 		vao->AddBuffer(bl, vb);
 		vao->SetIndexBuffer(ib);

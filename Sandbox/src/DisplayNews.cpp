@@ -1,8 +1,13 @@
 #define CURL_STATICLIB
-#include "hzpch.h"
+#include "cnpch.h"
 #include "DisplayNews.h"
 #include "curl/curl.h"
 #include "ImGuiInputText.h"
+#include "Crimson/Renderer/Texture.h"
+#include "Crimson/ImGui/ImGuiLayer.h"
+#include "imgui.h"
+
+using namespace Crimson;
 
 size_t write_data1(void* ptr, size_t size, size_t nmemb, FILE* stream) {
 	size_t written = fwrite(ptr, size, nmemb, stream);
@@ -34,8 +39,8 @@ void News::ParseNewsData()
 				break;
 			NewsParameters param;
 			for (auto i = json_iterator->begin(); i != json_iterator->end(); i++) {
-				HAZEL_CORE_INFO(i.name());
-				//HAZEL_CORE_ERROR(i.memberName());
+				CN_CORE_INFO(i.name());
+				//CN_CORE_ERROR(i.memberName());
 				if (i.name().compare("url") == 0)
 					param.url = i->asString();
 				if (i.name().compare("title") == 0)
@@ -81,7 +86,7 @@ void News::OnAttach()
 		if (curl) {
 			fp = fopen(outfilename, "wb");
 			if (fp == NULL)
-				HAZEL_CORE_ERROR("File not found");
+				CN_CORE_ERROR("File not found");
 			curl_easy_setopt(curl, CURLOPT_URL, api.c_str());
 			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data1);
 			curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
@@ -90,7 +95,7 @@ void News::OnAttach()
 			curl_easy_cleanup(curl);
 			if (CURLE_OK != res) {
 				std::cerr << "CURL error: " << res << '\n';
-				HAZEL_CORE_ERROR("CURL_ERROR");
+				CN_CORE_ERROR("CURL_ERROR");
 			}
 			fclose(fp);
 		}
@@ -191,7 +196,7 @@ void News::SaveImage(const std::string& img_url)
 			ImageCount++;
 		}
 		if (fp == NULL)
-			HAZEL_CORE_ERROR("No file found");
+			CN_CORE_ERROR("No file found");
 		fclose(fp);
 	}
 	curl_global_cleanup();

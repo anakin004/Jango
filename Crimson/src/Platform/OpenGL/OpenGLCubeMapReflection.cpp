@@ -34,7 +34,7 @@ namespace Crimson {
 			stbi_set_flip_vertically_on_load_thread(1);
 			data = stbi_loadf((filename + "irr_" + std::to_string(i) + ".jpg").c_str(), &width, &height, &channels, 0);
 			if (!data)
-				HAZEL_CORE_ERROR("Irradiance map not loaded");
+				CN_CORE_ERROR("Irradiance map not loaded")
 			else
 				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data);
 		}
@@ -45,7 +45,7 @@ namespace Crimson {
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-		HAZEL_CORE_WARN(glGetError());
+		CN_CORE_WARN(glGetError());
 
 		//glBindTextureUnit(IRR_ENV_SLOT, tex_id);
 	}
@@ -72,10 +72,10 @@ namespace Crimson {
 		//{
 		//	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i , tex_id, 0);//Render the scene in the corresponding face on the cube map and "GL_COLOR_ATTACHMENT0" Represents the Render target where the fragment shader should output the color
 		//	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-		//		HAZEL_CORE_WARN("FrameBuffer compleate!!");
+		//		CN_CORE_WARN("FrameBuffer compleate!!");
 		//
 		//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//clear the buffers each time
-		//	//HAZEL_CORE_ERROR(glGetError());
+		//	//CN_CORE_ERROR(glGetError());
 		//
 		//	SwitchToFace(i);//rotate the camera
 		//	cam.RotateCamera(yaw, pitch);

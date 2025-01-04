@@ -1,4 +1,4 @@
-// #include "cnpch.h"
+#include "cnpch.h"
 // 
 // 
 // #include "Crimson/Core/Log.h"

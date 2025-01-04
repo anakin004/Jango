@@ -1,10 +1,10 @@
-#include <Hazel.h>
+#include <Crimson.h>
 
-#include <Hazel/EntryPoint.h>
+#include <Crimson/Core/EntryPoint.h>
 #include "Sandbox2dApp.h"
-using namespace Hazel;
+using namespace Crimson;
 
-class Sandbox :public Hazel::Application
+class Sandbox :public Crimson::Application
 {
 public:
 	Sandbox(){
@@ -15,6 +15,6 @@ public:
 	~Sandbox(){}
 };
 
-Hazel::Application* Hazel::CreateApplication() {
+Crimson::Application* Crimson::CreateApplication() {
 	return new Sandbox();
 }

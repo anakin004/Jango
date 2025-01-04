@@ -16,7 +16,7 @@ namespace Crimson {
 		case GraphicsAPI::None:
 			return nullptr;
 		case GraphicsAPI::OpenGL:
-			return std::make_shared<OpenGlCubeMapReflection>();
+			return MakeRef<OpenGLCubeMapReflection>();
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace Crimson
 		case GraphicsAPI::None:
 			return nullptr;
 		case GraphicsAPI::OpenGL:
-			return MakeRef<OpenGlFog>(density, fogStart, fogEnd, fogTop, fogBottom, ScreenSize);
+			return MakeRef<OpenGLFog>(density, fogStart, fogEnd, fogTop, fogBottom, ScreenSize);
 		default:
 			return nullptr;
 		}

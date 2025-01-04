@@ -49,8 +49,8 @@ namespace Crimson {
 
 		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
 
-		bl->push("position", DataType::Float4);
-		bl->push("direction", DataType::Float4);
+		bl->push("position", ShaderDataType::Float4);
+		bl->push("direction", ShaderDataType::Float4);
 
 		vao->AddBuffer(bl, vb);
 		vao->SetIndexBuffer(ib);

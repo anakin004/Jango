@@ -18,11 +18,11 @@ namespace Crimson
 		switch (RendererAPI::GetAPI())
 		{
 		case GraphicsAPI::OpenGL:
-			return std::make_shared<OpenGlAntialiasing>(width,height);
+			return MakeRef<OpenGLAntialiasing>(width,height);
 		case GraphicsAPI::None:
 			return nullptr;
 		default:
-			return std::make_shared<OpenGlAntialiasing>(width,height);//default renderer is opengl
+			return MakeRef<OpenGLAntialiasing>(width,height);//default renderer is opengl
 		}
 	}
 	glm::vec2 Antialiasing::GetJitterOffset()

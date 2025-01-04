@@ -18,7 +18,7 @@ namespace Crimson {
 	}
 	void Renderer::BeginScene(OrthographicCamera& camera)
 	{
-		m_data->m_ProjectionViewMatrix = camera.GetViewProjectionMatrix();
+		m_data->m_ProjectionViewMatrix = camera.GetProjectionViewMatix();
 	}
 	void Renderer::Submit(Shader& shader, VertexArray& vertexarray, glm::mat4 ModelTransform)
 	{

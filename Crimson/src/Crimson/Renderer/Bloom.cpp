@@ -7,7 +7,7 @@ namespace Crimson {
     {
         switch (RendererAPI::GetAPI()) {
         case GraphicsAPI::OpenGL:
-            return std::make_shared<OpenGlBloom>();
+            return MakeRef<OpenGLBloom>();
         case GraphicsAPI::None:
             return nullptr;
         default:

@@ -204,7 +204,7 @@ namespace Crimson {
 		m_width = width;
 	}
 
-	void OpenGLShadows::PassShadowUniforms(Camera& cam, ref<Shader> rendering_shader)
+	void OpenGLShadows::PassShadowUniforms(Camera& cam, Ref<Shader> rendering_shader)
 	{
 		//this function passes the uniforms required for shadow rendering to the rendering shader
 		rendering_shader->Bind();

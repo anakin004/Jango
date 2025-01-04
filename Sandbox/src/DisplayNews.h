@@ -1,12 +1,12 @@
 #pragma once
-#include "Hazel.h"
+#include "Crimson.h"
 #include "json/json.h"
 
-using namespace Hazel;
+using namespace Crimson;
 struct NewsParameters {
 	std::string summary = "",
 		title = "", url = "", banner_image = "";
-	ref<Texture2D > texture;
+	Ref<Texture2D > texture;
 };
 
 class News
