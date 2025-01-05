@@ -142,6 +142,12 @@
     <Filter Include="vendor\physx_x64-windows\include\foundation\unix">
       <UniqueIdentifier>{23A6AA13-0F4F-1243-38E5-2DC224ED2C84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\foundation\unix\neon">
+      <UniqueIdentifier>{C281777B-2E9E-696C-F775-D6D96351D32D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\foundation\unix\sse2">
+      <UniqueIdentifier>{AF797A7B-1B96-6C6C-E46D-D9D95049D62D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor\physx_x64-windows\include\foundation\windows">
       <UniqueIdentifier>{8A302055-F641-C8FB-7F93-5A3BEBA35135}</UniqueIdentifier>
     </Filter>
@@ -154,6 +160,9 @@
     <Filter Include="vendor\physx_x64-windows\include\gpu">
       <UniqueIdentifier>{E587520C-D16E-1404-7ABF-7A2166858D6A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\omnipvd">
+      <UniqueIdentifier>{D632FDE0-C2AF-F023-EB2C-F137D7088DB7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor\physx_x64-windows\include\pvd">
       <UniqueIdentifier>{E3AE520C-CF95-1404-78E6-7A2164AC8D6A}</UniqueIdentifier>
     </Filter>
@@ -165,6 +174,69 @@
     </Filter>
     <Filter Include="vendor\physx_x64-windows\include\vehicle">
       <UniqueIdentifier>{79CBBEE8-6548-B22B-8EC5-B23F7AA14EBF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2">
+      <UniqueIdentifier>{CB3A9800-3755-FBA1-8077-0B36ECD022A9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\braking">
+      <UniqueIdentifier>{5807C591-C4CD-21AE-0D29-B010792E9012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\commands">
+      <UniqueIdentifier>{8CC6D6EB-785A-CC93-E11E-2648CDD10686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\drivetrain">
+      <UniqueIdentifier>{32F1AFAB-1E30-5A27-C7B2-3659B3D00F92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\physxActor">
+      <UniqueIdentifier>{AF263055-9B65-DAD0-44E8-B6023006903B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\physxConstraints">
+      <UniqueIdentifier>{AE649019-9A24-21BE-0342-09C9EF2034D0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\physxRoadGeometry">
+      <UniqueIdentifier>{C89FAFD2-345D-5809-BD27-447129E4CA5D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\pvd">
+      <UniqueIdentifier>{245A9AB4-90CA-9C2D-59E9-16B6C518D52E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\rigidBody">
+      <UniqueIdentifier>{F7805BD9-6392-0380-ECE3-95BF58F48CB9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\roadGeometry">
+      <UniqueIdentifier>{CCA70CEB-B851-42FA-A122-4A158D6BE2E8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\steering">
+      <UniqueIdentifier>{BB79A61D-A70D-9CC5-10D2-F579FC84D6B7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\suspension">
+      <UniqueIdentifier>{91C50CB2-7D04-B72D-2687-935F12A56C98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\tire">
+      <UniqueIdentifier>{0E9BE747-FA18-38E1-E310-F678CF2D7A09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\physx_x64-windows\include\vehicle2\wheel">
+      <UniqueIdentifier>{0F831045-7BBE-7008-84B3-ED97F06DF538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\stb">
+      <UniqueIdentifier>{8BD3C5A8-778B-07F6-E092-E051CC69A2E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\yaml-cpp">
+      <UniqueIdentifier>{C5B3FC54-313F-6A19-3A50-ED0DA65AC619}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\yaml-cpp\include">
+      <UniqueIdentifier>{38D04F32-A407-98C9-AD11-FCEC19C8BEC2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\yaml-cpp\include\yaml-cpp">
+      <UniqueIdentifier>{EAF52FF2-D646-1B34-FFAA-09F6EB5AAE9D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\yaml-cpp\include\yaml-cpp\contrib">
+      <UniqueIdentifier>{EA87E472-D604-D8B5-FF81-D8C9EB5D7449}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\yaml-cpp\include\yaml-cpp\node">
+      <UniqueIdentifier>{FFEED84C-6BB3-D73C-3419-0807A09C7372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\yaml-cpp\include\yaml-cpp\node\detail">
+      <UniqueIdentifier>{E131EE05-CD44-EE5E-762E-CB4B62208BAC}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -483,9 +555,6 @@
     <ClInclude Include="vendor\ImGuizmo\vcpkg-example\ImApp.h">
       <Filter>vendor\ImGuizmo\vcpkg-example</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\assimp\include\assimp\AssertHandler.h">
-      <Filter>vendor\assimp\include\assimp</Filter>
-    </ClInclude>
     <ClInclude Include="vendor\assimp\include\assimp\Base64.hpp">
       <Filter>vendor\assimp\include\assimp</Filter>
     </ClInclude>
@@ -753,16 +822,19 @@
     <ClInclude Include="vendor\physx_x64-windows\include\PxActor.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxActorData.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxAggregate.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\PxArticulation.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\PxAnisotropy.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\PxArticulationBase.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\PxArrayConverter.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\PxArticulationJoint.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\PxArticulationFlag.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxArticulationJointReducedCoordinate.h">
@@ -771,13 +843,19 @@
     <ClInclude Include="vendor\physx_x64-windows\include\PxArticulationLink.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxArticulationMimicJoint.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxArticulationReducedCoordinate.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\PxBatchQuery.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\PxArticulationTendon.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\PxBatchQueryDesc.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\PxArticulationTendonData.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxBaseMaterial.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxBroadPhase.h">
@@ -786,7 +864,7 @@
     <ClInclude Include="vendor\physx_x64-windows\include\PxClient.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\PxConfig.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\PxConeLimitedConstraint.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxConstraint.h">
@@ -801,7 +879,55 @@
     <ClInclude Include="vendor\physx_x64-windows\include\PxContactModifyCallback.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableAttachment.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableBody.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableBodyFlag.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableElementFilter.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableMaterial.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableSkinning.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableSurface.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableSurfaceFlag.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableSurfaceMaterial.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableVolume.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableVolumeFlag.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDeformableVolumeMaterial.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxDeletionListener.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxDirectGPUAPI.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxFEMMaterial.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxFEMParameter.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxFEMSoftBodyMaterial.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxFiltering.h">
@@ -810,16 +936,46 @@
     <ClInclude Include="vendor\physx_x64-windows\include\PxForceMode.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\PxFoundation.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\PxImmediateMode.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\PxImmediateMode.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\PxIsosurfaceExtraction.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxLockedData.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxMaterial.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxNodeIndex.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxPBDMaterial.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxPBDParticleSystem.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxParticleBuffer.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxParticleGpu.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxParticleMaterial.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxParticleNeighborhoodProvider.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxParticleSolverType.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxParticleSystem.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxParticleSystemFlag.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxPhysXConfig.h">
@@ -834,9 +990,6 @@
     <ClInclude Include="vendor\physx_x64-windows\include\PxPhysicsSerialization.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\PxPhysicsVersion.h">
-      <Filter>vendor\physx_x64-windows\include</Filter>
-    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxPruningStructure.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
@@ -844,6 +997,9 @@
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxQueryReport.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxResidual.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxRigidActor.h">
@@ -858,6 +1014,9 @@
     <ClInclude Include="vendor\physx_x64-windows\include\PxRigidStatic.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxSDFBuilder.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxScene.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
@@ -867,6 +1026,12 @@
     <ClInclude Include="vendor\physx_x64-windows\include\PxSceneLock.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxSceneQueryDesc.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxSceneQuerySystem.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxShape.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
@@ -874,6 +1039,18 @@
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxSimulationStatistics.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxSmoothing.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxSoftBody.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxSoftBodyFlag.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxSparseGridParams.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxVisualizationParameter.h">
@@ -912,6 +1089,9 @@
     <ClInclude Include="vendor\physx_x64-windows\include\common\PxCoreUtilityTypes.h">
       <Filter>vendor\physx_x64-windows\include\common</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\common\PxInsertionCallback.h">
+      <Filter>vendor\physx_x64-windows\include\common</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\common\PxMetaData.h">
       <Filter>vendor\physx_x64-windows\include\common</Filter>
     </ClInclude>
@@ -921,13 +1101,13 @@
     <ClInclude Include="vendor\physx_x64-windows\include\common\PxPhysXCommonConfig.h">
       <Filter>vendor\physx_x64-windows\include\common</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\common\PxPhysicsInsertionCallback.h">
-      <Filter>vendor\physx_x64-windows\include\common</Filter>
-    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\common\PxProfileZone.h">
       <Filter>vendor\physx_x64-windows\include\common</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\common\PxRenderBuffer.h">
+      <Filter>vendor\physx_x64-windows\include\common</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\common\PxRenderOutput.h">
       <Filter>vendor\physx_x64-windows\include\common</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\common\PxSerialFramework.h">
@@ -954,7 +1134,7 @@
     <ClInclude Include="vendor\physx_x64-windows\include\cooking\PxBVH34MidphaseDesc.h">
       <Filter>vendor\physx_x64-windows\include\cooking</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\cooking\PxBVHStructureDesc.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\cooking\PxBVHDesc.h">
       <Filter>vendor\physx_x64-windows\include\cooking</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\cooking\PxConvexMeshDesc.h">
@@ -963,7 +1143,16 @@
     <ClInclude Include="vendor\physx_x64-windows\include\cooking\PxCooking.h">
       <Filter>vendor\physx_x64-windows\include\cooking</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\cooking\PxCookingInternal.h">
+      <Filter>vendor\physx_x64-windows\include\cooking</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\cooking\PxMidphaseDesc.h">
+      <Filter>vendor\physx_x64-windows\include\cooking</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\cooking\PxSDFDesc.h">
+      <Filter>vendor\physx_x64-windows\include\cooking</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\cooking\PxTetrahedronMeshDesc.h">
       <Filter>vendor\physx_x64-windows\include\cooking</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\cooking\PxTriangleMeshDesc.h">
@@ -972,10 +1161,13 @@
     <ClInclude Include="vendor\physx_x64-windows\include\cooking\Pxc.h">
       <Filter>vendor\physx_x64-windows\include\cooking</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\cudamanager\PxCudaContext.h">
+      <Filter>vendor\physx_x64-windows\include\cudamanager</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\cudamanager\PxCudaContextManager.h">
       <Filter>vendor\physx_x64-windows\include\cudamanager</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\cudamanager\PxCudaMemoryManager.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\cudamanager\PxCudaTypes.h">
       <Filter>vendor\physx_x64-windows\include\cudamanager</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxBinaryConverter.h">
@@ -993,7 +1185,19 @@
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxContactJoint.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxConvexCoreExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxConvexMeshExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxCudaHelpersExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxCustomGeometryExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxCustomSceneQuerySystem.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxD6Joint.h">
@@ -1017,6 +1221,15 @@
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxDefaultStreams.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxDeformableSkinningExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxDeformableSurfaceExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxDeformableVolumeExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxDistanceJoint.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
@@ -1024,6 +1237,12 @@
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxFixedJoint.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxGearJoint.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxGjkQueryExt.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxJoint.h">
@@ -1035,10 +1254,22 @@
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxMassProperties.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxParticleClothCooker.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxParticleExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxPrismaticJoint.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxRackAndPinionJoint.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxRaycastCCD.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxRemeshingExt.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxRepXSerializer.h">
@@ -1056,7 +1287,13 @@
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxRigidBodyExt.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxSamplingExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxSceneQueryExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxSceneQuerySystemExt.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxSerialization.h">
@@ -1071,10 +1308,25 @@
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxSmoothNormals.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxSoftBodyExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxSphericalJoint.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxStringTableExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxTetMakerExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxTetrahedronMeshAnalysisResult.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxTetrahedronMeshExt.h">
+      <Filter>vendor\physx_x64-windows\include\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxTriangleMeshAnalysisResult.h">
       <Filter>vendor\physx_x64-windows\include\extensions</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\extensions\PxTriangleMeshExt.h">
@@ -1083,19 +1335,49 @@
     <ClInclude Include="vendor\physx_x64-windows\include\filebuf\PxFileBuf.h">
       <Filter>vendor\physx_x64-windows\include\filebuf</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\foundation\Px.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxAlignedMalloc.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxAlloca.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxAllocator.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxAllocatorCallback.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxAoS.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxArray.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxAssert.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxAtomic.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxBasicTemplates.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxBitAndData.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxBitMap.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxBitUtils.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxBounds3.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxBroadcast.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxConstructor.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxErrorCallback.h">
@@ -1104,13 +1386,40 @@
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxErrors.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxFPU.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxFlags.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxFoundation.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxFoundationConfig.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxHash.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxHashInternals.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxHashMap.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxHashSet.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxIO.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxInlineAllocator.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxInlineAoS.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxInlineArray.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxIntrinsics.h">
@@ -1119,10 +1428,16 @@
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxMat33.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxMat34.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxMat44.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxMath.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxMathIntrinsics.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxMathUtils.h">
@@ -1131,7 +1446,19 @@
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxMemory.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxMutex.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxPhysicsVersion.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxPinnedArray.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxPlane.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxPool.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxPreprocessor.h">
@@ -1143,19 +1470,52 @@
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxQuat.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxSharedAssert.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxSIMDHelpers.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxSList.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxSimpleTypes.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxSocket.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxSort.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxSortInternals.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxStrideIterator.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxString.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxSync.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxTempAllocator.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxThread.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxTime.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxTransform.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxUnionCast.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxUserAllocated.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxUtilities.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxVec2.h">
@@ -1167,13 +1527,79 @@
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxVec4.h">
       <Filter>vendor\physx_x64-windows\include\foundation</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxVecMath.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxVecMathAoSScalar.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxVecMathAoSScalarInline.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxVecMathSSE.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxVecQuat.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\PxVecTransform.h">
+      <Filter>vendor\physx_x64-windows\include\foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\unix\PxUnixAoS.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\unix</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\unix\PxUnixFPU.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\unix</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\unix\PxUnixInlineAoS.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\unix</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\unix\PxUnixIntrinsics.h">
       <Filter>vendor\physx_x64-windows\include\foundation\unix</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\unix\PxUnixMathIntrinsics.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\unix</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\unix\PxUnixTrigConstants.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\unix</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\unix\neon\PxUnixNeonAoS.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\unix\neon</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\unix\neon\PxUnixNeonInlineAoS.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\unix\neon</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\unix\sse2\PxUnixSse2AoS.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\unix\sse2</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\unix\sse2\PxUnixSse2InlineAoS.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\unix\sse2</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\windows\PxWindowsAoS.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\windows\PxWindowsFPU.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\windows\PxWindowsInclude.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\windows\PxWindowsInlineAoS.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\windows</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\foundation\windows\PxWindowsIntrinsics.h">
       <Filter>vendor\physx_x64-windows\include\foundation\windows</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxBVHStructure.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\windows\PxWindowsMathIntrinsics.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\foundation\windows\PxWindowsTrigConstants.h">
+      <Filter>vendor\physx_x64-windows\include\foundation\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxBVH.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxBVHBuildStrategy.h">
       <Filter>vendor\physx_x64-windows\include\geometry</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxBoxGeometry.h">
@@ -1182,10 +1608,16 @@
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxCapsuleGeometry.h">
       <Filter>vendor\physx_x64-windows\include\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxConvexCoreGeometry.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxConvexMesh.h">
       <Filter>vendor\physx_x64-windows\include\geometry</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxConvexMeshGeometry.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxCustomGeometry.h">
       <Filter>vendor\physx_x64-windows\include\geometry</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxGeometry.h">
@@ -1194,7 +1626,22 @@
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxGeometryHelpers.h">
       <Filter>vendor\physx_x64-windows\include\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxGeometryHit.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxGeometryInternal.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxGeometryQuery.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxGeometryQueryContext.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxGeometryQueryFlags.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxGjkQuery.h">
       <Filter>vendor\physx_x64-windows\include\geometry</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxHeightField.h">
@@ -1218,13 +1665,28 @@
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxMeshScale.h">
       <Filter>vendor\physx_x64-windows\include\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxParticleSystemGeometry.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxPlaneGeometry.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxReportCallback.h">
       <Filter>vendor\physx_x64-windows\include\geometry</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxSimpleTriangleMesh.h">
       <Filter>vendor\physx_x64-windows\include\geometry</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxSphereGeometry.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxTetrahedron.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxTetrahedronMesh.h">
+      <Filter>vendor\physx_x64-windows\include\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxTetrahedronMeshGeometry.h">
       <Filter>vendor\physx_x64-windows\include\geometry</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxTriangle.h">
@@ -1236,14 +1698,20 @@
     <ClInclude Include="vendor\physx_x64-windows\include\geometry\PxTriangleMeshGeometry.h">
       <Filter>vendor\physx_x64-windows\include\geometry</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\geomutils\GuContactBuffer.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\geomutils\PxContactBuffer.h">
       <Filter>vendor\physx_x64-windows\include\geomutils</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\geomutils\GuContactPoint.h">
+    <ClInclude Include="vendor\physx_x64-windows\include\geomutils\PxContactPoint.h">
       <Filter>vendor\physx_x64-windows\include\geomutils</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\gpu\PxGpu.h">
       <Filter>vendor\physx_x64-windows\include\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\gpu\PxPhysicsGpu.h">
+      <Filter>vendor\physx_x64-windows\include\gpu</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\omnipvd\PxOmniPvd.h">
+      <Filter>vendor\physx_x64-windows\include\omnipvd</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\pvd\PxPvd.h">
       <Filter>vendor\physx_x64-windows\include\pvd</Filter>
@@ -1261,9 +1729,6 @@
       <Filter>vendor\physx_x64-windows\include\task</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\task\PxTask.h">
-      <Filter>vendor\physx_x64-windows\include\task</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\physx_x64-windows\include\task\PxTaskDefine.h">
       <Filter>vendor\physx_x64-windows\include\task</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\task\PxTaskManager.h">
@@ -1313,6 +1778,291 @@
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\vehicle\PxVehicleWheels.h">
       <Filter>vendor\physx_x64-windows\include\vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\PxVehicleAPI.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\PxVehicleComponent.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\PxVehicleComponentSequence.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\PxVehicleFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\PxVehicleLimits.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\PxVehicleMaths.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\PxVehicleParams.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\braking\PxVehicleBrakingFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\braking</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\braking\PxVehicleBrakingParams.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\braking</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\commands\PxVehicleCommandHelpers.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\commands\PxVehicleCommandParams.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\commands\PxVehicleCommandStates.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\drivetrain\PxVehicleDrivetrainComponents.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\drivetrain</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\drivetrain\PxVehicleDrivetrainFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\drivetrain</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\drivetrain\PxVehicleDrivetrainHelpers.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\drivetrain</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\drivetrain\PxVehicleDrivetrainParams.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\drivetrain</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\drivetrain\PxVehicleDrivetrainStates.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\drivetrain</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxActor\PxVehiclePhysXActorComponents.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxActor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxActor\PxVehiclePhysXActorFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxActor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxActor\PxVehiclePhysXActorHelpers.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxActor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxActor\PxVehiclePhysXActorStates.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxActor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxConstraints\PxVehiclePhysXConstraintComponents.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxConstraints</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxConstraints\PxVehiclePhysXConstraintFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxConstraints</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxConstraints\PxVehiclePhysXConstraintHelpers.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxConstraints</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxConstraints\PxVehiclePhysXConstraintParams.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxConstraints</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxConstraints\PxVehiclePhysXConstraintStates.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxConstraints</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxRoadGeometry\PxVehiclePhysXRoadGeometryComponents.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxRoadGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxRoadGeometry\PxVehiclePhysXRoadGeometryFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxRoadGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxRoadGeometry\PxVehiclePhysXRoadGeometryHelpers.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxRoadGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxRoadGeometry\PxVehiclePhysXRoadGeometryParams.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxRoadGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\physxRoadGeometry\PxVehiclePhysXRoadGeometryState.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\physxRoadGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\pvd\PxVehiclePvdComponents.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\pvd</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\pvd\PxVehiclePvdFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\pvd</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\pvd\PxVehiclePvdHelpers.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\pvd</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\rigidBody\PxVehicleRigidBodyComponents.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\rigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\rigidBody\PxVehicleRigidBodyFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\rigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\rigidBody\PxVehicleRigidBodyParams.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\rigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\rigidBody\PxVehicleRigidBodyStates.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\rigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\roadGeometry\PxVehicleRoadGeometryState.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\roadGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\steering\PxVehicleSteeringFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\steering</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\steering\PxVehicleSteeringParams.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\steering</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\suspension\PxVehicleSuspensionComponents.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\suspension</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\suspension\PxVehicleSuspensionFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\suspension</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\suspension\PxVehicleSuspensionHelpers.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\suspension</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\suspension\PxVehicleSuspensionParams.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\suspension</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\suspension\PxVehicleSuspensionStates.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\suspension</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\tire\PxVehicleTireComponents.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\tire</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\tire\PxVehicleTireFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\tire</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\tire\PxVehicleTireHelpers.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\tire</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\tire\PxVehicleTireParams.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\tire</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\tire\PxVehicleTireStates.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\tire</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\wheel\PxVehicleWheelComponents.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\wheel</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\wheel\PxVehicleWheelFunctions.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\wheel</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\wheel\PxVehicleWheelHelpers.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\wheel</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\wheel\PxVehicleWheelParams.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\wheel</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\vehicle2\wheel\PxVehicleWheelStates.h">
+      <Filter>vendor\physx_x64-windows\include\vehicle2\wheel</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\stb\stb_image.h">
+      <Filter>vendor\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\stb\stb_image_resize.h">
+      <Filter>vendor\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\anchor.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\binary.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\contrib\anchordict.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\contrib</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\contrib</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\depthguard.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\dll.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\emitfromevents.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\emitter.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\emitterdef.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\emittermanip.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\emitterstyle.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\eventhandler.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\exceptions.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\mark.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\convert.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\detail\impl.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\detail\iterator.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\detail\iterator_fwd.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\detail\memory.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\detail\node.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\detail\node_data.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\detail\node_iterator.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\detail\node_ref.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\emit.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\impl.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\iterator.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\node.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\parse.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\ptr.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\node\type.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp\node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\noexcept.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\null.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\ostream_wrapper.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\parser.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\stlemitter.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\traits.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\yaml.h">
+      <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1538,11 +2288,14 @@
     <ClCompile Include="vendor\ImGuizmo\example\main.cpp">
       <Filter>vendor\ImGuizmo\example</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\vcpkg-example\main.cpp">
-      <Filter>vendor\ImGuizmo\vcpkg-example</Filter>
-    </ClCompile>
     <ClCompile Include="vendor\jsoncpp\jsoncpp.cpp">
       <Filter>vendor\jsoncpp</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\stb\stb.cpp">
+      <Filter>vendor\stb</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\stb\stb_impl.cpp">
+      <Filter>vendor\stb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,4 +1,3 @@
-//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions
 // are met:
@@ -23,15 +22,12 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-// Copyright (c) 2008-2021 NVIDIA Corporation. All rights reserved.
+// Copyright (c) 2008-2024 NVIDIA Corporation. All rights reserved.
 // Copyright (c) 2004-2008 AGEIA Technologies, Inc. All rights reserved.
 // Copyright (c) 2001-2004 NovodeX AG. All rights reserved.  
 
 #ifndef PX_VEHICLE_SHADERS_H
 #define PX_VEHICLE_SHADERS_H
-/** \addtogroup vehicle
-  @{
-*/
 
 #include "foundation/PxSimpleTypes.h"
 
@@ -41,6 +37,7 @@ namespace physx
 #endif
 
 /**
+\deprecated This API is deprecated and is replaced by a new API, see the Vehicles section in the 4.0 to 5.1 migration guide.
 \brief Prototype of shader function that is used to compute wheel torque and tire forces.
 \param[in]  shaderData is the shader data for the tire being processed.  The shader data describes the tire data in the format required by the tire model that is implemented by the shader function.
 \param[in]  tireFriction is the value of friction for the contact between the tire and the ground.
@@ -59,9 +56,9 @@ namespace physx
 \param[out] tireLongForceMag is the magnitude of the longitudinal tire force to be applied to the vehicle's rigid body.
 \param[out] tireLatForceMag is the magnitude of the lateral tire force to be applied to the vehicle's rigid body.
 \param[out] tireAlignMoment is the aligning moment of the tire that is to be applied to the vehicle's rigid body (not currently used).
-@see PxVehicleWheelsDynData::setTireForceShaderFunction,  PxVehicleWheelsDynData::setTireForceShaderData
+\see PxVehicleWheelsDynData::setTireForceShaderFunction, PxVehicleWheelsDynData::setTireForceShaderData
 */
-typedef void (*PxVehicleComputeTireForce)
+PX_DEPRECATED typedef void (*PxVehicleComputeTireForce)
 (const void* shaderData, 
  const PxF32 tireFriction,
  const PxF32 longSlip, const PxF32 latSlip, const PxF32 camber,
@@ -75,5 +72,4 @@ typedef void (*PxVehicleComputeTireForce)
 } // namespace physx
 #endif
 
-/** @} */
-#endif //PX_VEHICLE_SHADERS_H
+#endif

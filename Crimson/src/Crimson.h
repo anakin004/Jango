@@ -19,7 +19,6 @@
 #include "Crimson/Scene/ScriptableEntity.h"
 
 //-------Non Crimson api----------------
-#define GLM_ENABLE_EXPERIMENTAL
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"

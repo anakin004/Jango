@@ -6,6 +6,9 @@
 #include "Crimson/Renderer/Texture.h"
 #include "Crimson/ImGui/ImGuiLayer.h"
 #include "imgui.h"
+#include <windows.h>
+#pragma comment(lib, "Shell32.lib")
+
 
 using namespace Crimson;
 
@@ -125,10 +128,10 @@ void News::OnImGuiRender()
 					if (tex->GetHeight() > 250)
 						scale = 250.0 / tex->GetHeight();
 					float AspectRatio = tex->GetWidth() / tex->GetHeight();
-					ImGui::Image(reinterpret_cast<void*>(news_param[i].texture->GetID()), { tex->GetWidth()*scale,tex->GetHeight()*scale }, { 0,1 }, { 1,0 });
+					ImGui::Image(news_param[i].texture->GetID(), { tex->GetWidth()*scale,tex->GetHeight()*scale }, { 0,1 }, { 1,0 });
 				}
 
-				ImGui::PushFont(ImGuiLayer::Font);
+				ImGui::PushFont(ImGuiLayer::GetFont());
 				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 0.8f, 1.0f, 1.0f));
 				ImGui::TextWrapped(news_param[i].title.c_str());
 				ImGui::PopFont();
@@ -143,8 +146,8 @@ void News::OnImGuiRender()
 
 				std::wstring Wstr = std::wstring(news_param[i].url.begin(), news_param[i].url.end());
 				auto url = Wstr.c_str();
-				if (ImGui::IsItemClicked())
-					ShellExecute(NULL, L"open", url, NULL, NULL, SW_SHOWDEFAULT);//system call to open web browser
+			//	if (ImGui::IsItemClicked())
+		//			ShellExecute(NULL, L"open", url, NULL, NULL, SW_SHOWDEFAULT);//system call to open web browser
 
 				ImGui::Text("\n\n");
 			}

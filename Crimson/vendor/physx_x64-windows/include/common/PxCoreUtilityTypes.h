@@ -1,4 +1,3 @@
-//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions
 // are met:
@@ -23,19 +22,16 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-// Copyright (c) 2008-2021 NVIDIA Corporation. All rights reserved.
+// Copyright (c) 2008-2024 NVIDIA Corporation. All rights reserved.
 // Copyright (c) 2004-2008 AGEIA Technologies, Inc. All rights reserved.
 // Copyright (c) 2001-2004 NovodeX AG. All rights reserved.  
 
-
-#ifndef PX_CORE_UTILTY_TYPES_H
-#define PX_CORE_UTILTY_TYPES_H
-/** \addtogroup common
-@{
-*/
+#ifndef PX_CORE_UTILITY_TYPES_H
+#define PX_CORE_UTILITY_TYPES_H
 
 #include "foundation/PxAssert.h"
 #include "foundation/PxMemory.h"
+#include "foundation/PxIO.h"
 
 #if !PX_DOXYGEN
 namespace physx
@@ -50,10 +46,10 @@ struct PxStridedData
 
 	<b>Default:</b> 0
 	*/
-	PxU32 stride;
 	const void* data;
+	PxU32 stride;
 
-	PxStridedData() : stride( 0 ), data( NULL ) {}
+	PxStridedData() : data( NULL ), stride(0) {}
 
 	template<typename TDataType>
 	PX_INLINE const TDataType& at( PxU32 idx ) const
@@ -69,21 +65,51 @@ struct PxStridedData
 template<typename TDataType>
 struct PxTypedStridedData
 {
+	TDataType* data;
 	PxU32 stride;
-	const TDataType* data;
 
 	PxTypedStridedData()
-		: stride( 0 )
-		, data( NULL )
+		: data(NULL)
+		, stride(0)
 	{
 	}
 
+	PxTypedStridedData(TDataType* data_, PxU32 stride_ = 0)
+		: data(data_)
+		, stride(stride_)
+	{
+	}
+	
+	PX_CUDA_CALLABLE PX_INLINE const TDataType& at(PxU32 idx) const
+	{
+		PxU32 theStride(stride);
+		if (theStride == 0)
+			theStride = sizeof(TDataType);
+		PxU32 offset(theStride * idx);
+		return *(reinterpret_cast<const TDataType*>(reinterpret_cast<const PxU8*>(data) + offset));
+	}
+	
+	PX_CUDA_CALLABLE PX_INLINE TDataType& atRef(PxU32 idx) 
+	{
+		PxU32 theStride(stride);
+		if (theStride == 0)
+			theStride = sizeof(TDataType);
+		PxU32 offset(theStride * idx);
+		return *(reinterpret_cast<TDataType*>(reinterpret_cast<PxU8*>(data) + offset));
+	}
 };
 
 struct PxBoundedData : public PxStridedData
 {
 	PxU32 count;
 	PxBoundedData() : count( 0 ) {}
+};
+
+template <typename TDataType>
+struct PxTypedBoundedData : public PxTypedStridedData<TDataType>
+{
+	PxU32 count;
+	PxTypedBoundedData() : count(0) {}
 };
 
 template<PxU8 TNumBytes>
@@ -99,12 +125,6 @@ struct PxPadding
 
 template <PxU32 NB_ELEMENTS> class PxFixedSizeLookupTable
 {
-//= ATTENTION! =====================================================================================
-// Changing the data layout of this class breaks the binary serialization format.  See comments for 
-// PX_BINARY_SERIAL_VERSION.  If a modification is required, please adjust the getBinaryMetaData 
-// function.  If the modification is made on a custom branch, please change PX_BINARY_SERIAL_VERSION
-// accordingly.
-//==================================================================================================
 public:
 	
 	PxFixedSizeLookupTable() 
@@ -183,7 +203,7 @@ public:
 	
 	void clear()
 	{
-		memset(mDataPairs, 0, NB_ELEMENTS*2*sizeof(PxReal));
+		PxMemSet(mDataPairs, 0, NB_ELEMENTS*2*sizeof(PxReal));
 		mNbDataPairs = 0;
 	}
 
@@ -207,5 +227,4 @@ public:
 } // namespace physx
 #endif
 
-/** @} */
 #endif

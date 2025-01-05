@@ -1,8 +1,8 @@
 #pragma once
-#include "Hazel.h"
+#include "Crimson.h"
 #include <filesystem>
 
-using namespace Hazel;
+using namespace Crimson;
 
 class ContentBrowser
 {
@@ -11,6 +11,6 @@ public:
 	~ContentBrowser() = default;
 	void OnImGuiRender();
 private:
-	ref<Scene> m_scene;
+	Ref<Scene> m_scene;
 	std::filesystem::path m_filePath;
 };

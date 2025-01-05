@@ -77,12 +77,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <PreprocessorDefinitions>CN_PLATFORM_WINDOWS;CN_DEBUG;CN_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;..\Crimson\vendor\imgui;..\Crimson\vendor\glm;..\Crimson\vendor\entt;..\Crimson\vendor\Curl\include;..\Crimson\vendor\jsoncpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;..\Crimson\vendor\imgui;..\Crimson\vendor\glm;..\Crimson\vendor\entt;..\Crimson\vendor\Curl\include;..\Crimson\vendor\jsoncpp;..\Crimson\vendor\ImGuizmo;..\Crimson\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -97,13 +97,13 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CN_PLATFORM_WINDOWS;CN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;..\Crimson\vendor\imgui;..\Crimson\vendor\glm;..\Crimson\vendor\entt;..\Crimson\vendor\Curl\include;..\Crimson\vendor\jsoncpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;..\Crimson\vendor\imgui;..\Crimson\vendor\glm;..\Crimson\vendor\entt;..\Crimson\vendor\Curl\include;..\Crimson\vendor\jsoncpp;..\Crimson\vendor\ImGuizmo;..\Crimson\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -119,13 +119,13 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CN_PLATFORM_WINDOWS;CN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;..\Crimson\vendor\imgui;..\Crimson\vendor\glm;..\Crimson\vendor\entt;..\Crimson\vendor\Curl\include;..\Crimson\vendor\jsoncpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Crimson\vendor\spdlog\include;..\Crimson\src;..\Crimson\vendor;..\Crimson\vendor\Chroma;..\Crimson\vendor\imgui;..\Crimson\vendor\glm;..\Crimson\vendor\entt;..\Crimson\vendor\Curl\include;..\Crimson\vendor\jsoncpp;..\Crimson\vendor\ImGuizmo;..\Crimson\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalOptions>/utf-8 Release %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -154,8 +154,13 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\textures\Crimson.png" />
+    <Image Include="Assets\textures\RPGpack_sheet_2X.png" />
     <Image Include="Assets\textures\Ship.png" />
+    <Image Include="Assets\textures\Test.png" />
+    <Image Include="Assets\textures\img_4.png" />
+    <Image Include="Assets\textures\img_5.png" />
     <Image Include="Assets\textures\linux.png" />
+    <Image Include="Assets\textures\rickshaw.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Crimson\Crimson.vcxproj">

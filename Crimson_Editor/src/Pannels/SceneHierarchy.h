@@ -1,21 +1,21 @@
 #pragma once
-#include "Hazel/Scene/Scene.h"
-#include "Hazel/Scene/Entity.h"
-#include "Hazel/Core.h"
-#include "Hazel/Log.h"
+#include "Crimson/Scene/Scene.h"
+#include "Crimson/Scene/Entity.h"
+#include "Crimson/Core/Core.h"
+#include "Crimson/Core/Log.h"
 
-using namespace Hazel;
-class Hazel::PointLight;
+using namespace Crimson;
+class Crimson::PointLight;
 class SceneHierarchyPannel {
 public:
 	SceneHierarchyPannel();
 	~SceneHierarchyPannel();
-	void Context(const ref<Scene>& context);
+	void Context(const Ref<Scene>& context);
 	void OnImGuiRender();
 public:
-	static ref<Entity> m_selected_entity;
+	static Ref<Entity> m_selected_entity;
 private:
-	ref<Scene> m_Context;
+	Ref<Scene> m_Context;
 	PointLight* m_selected_Light = nullptr;
 
 	glm::vec3 PointLight_position = { 0,0,0 }, PointLight_color = {1,1,1};

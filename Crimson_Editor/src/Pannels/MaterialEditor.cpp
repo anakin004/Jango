@@ -1,7 +1,7 @@
 #include "MaterialEditor.h"
-#include "Hazel/ResourceManager.h"
-#include "Hazel/Scene/SceneSerializer.h"
-using namespace Hazel;
+#include "Crimson/Core/ResourceManager.h"
+#include "Crimson/Scene/SceneSerializer.h"
+using namespace Crimson;
 
 uint64_t MaterialEditor::cached_materialID;
 std::string MaterialEditor::cached_texturePath;
@@ -13,7 +13,7 @@ MaterialEditor::MaterialEditor()
 
 void MaterialEditor::OnImGuiRender()
 {
-	ref<Material>& cached_material = ResourceManager::allMaterials[cached_materialID];//get reference to the particular material of chached_materialID
+	Ref<Material>& cached_material = ResourceManager::allMaterials[cached_materialID];//get reference to the particular material of chached_materialID
 
 	auto HoverName = [](const std::string& name) 
 	{

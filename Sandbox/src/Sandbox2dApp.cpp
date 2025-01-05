@@ -165,8 +165,9 @@ void SandBox2dApp::AutoFill(const std::string& str)//this function is used for t
 				tmp += i.name()+" : " + i->asString() + "\n";
 			CompanyDescription.push_back(tmp);
 		}
-
-		CN_CORE_INFO(jsondata["bestMatches"]);
+		Json::FastWriter writer;
+		std::string bestMatchesStr = writer.write(jsondata["bestMatches"]);
+		CN_CORE_INFO(bestMatchesStr);
 	}
 };
 
@@ -321,14 +322,14 @@ void SandBox2dApp::OnDetach()
 	delete[] & val[0];
 }
 
-void SandBox2dApp::OnUpdate(float deltatime)
+void SandBox2dApp::OnUpdate(TimeStep ts)
 {
 	m_Framebuffer->Bind();
 	RenderCommand::ClearColor({ 0,0,0,1 });
 	RenderCommand::Clear();
 
 	if (isWindowFocused)
-		m_camera.OnUpdate(deltatime);
+		m_camera.OnUpdate(ts);
 
 	news->OnUpdate(); //not working!!
 	//draw lines at cursor tip
@@ -437,7 +438,7 @@ void SandBox2dApp::OnImGuiRender()
 		m_camera.onResize(Size.x, Size.y);//resize the camera
 		RenderCommand::SetViewport(Size.x, Size.y);
 	}
-	ImGui::Image((void*)m_Framebuffer->GetSceneTextureID(), {m_ViewportSize.x,m_ViewportSize.y});
+	ImGui::Image(m_Framebuffer->GetSceneTextureID(), {m_ViewportSize.x,m_ViewportSize.y});
 
 	
 	// get the ImDrawList for the current window

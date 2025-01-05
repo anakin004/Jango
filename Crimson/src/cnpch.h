@@ -1,7 +1,5 @@
 #pragma once
 
-#define GLM_ENABLE_EXPERIMENTAL
-
 #include <limits>
 #include <functional>
 #include <string>
@@ -23,6 +21,8 @@
 #include <typeinfo>
 #include <future>
 #include <filesystem>
+
+#define GLM_ENABLE_EXPERIMENTAL
 
 #include "Crimson/Debug/Instrumentor.h"
 #include "Crimson/Core/Log.h"

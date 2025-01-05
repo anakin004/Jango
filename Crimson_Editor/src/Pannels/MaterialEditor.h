@@ -1,8 +1,8 @@
 #pragma once
-#include "Hazel.h"
-#include "Hazel/Renderer/Material.h"
+#include "Crimson.h"
+#include "Crimson/Renderer/Material.h"
 
-using namespace Hazel;
+using namespace Crimson;
 class MaterialEditor
 {
 public:

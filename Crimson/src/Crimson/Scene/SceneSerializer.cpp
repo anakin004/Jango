@@ -9,6 +9,7 @@
 #include "Crimson/Renderer/Material.h"
 #include "Crimson/Core/ResourceManager.h"
 
+#pragma comment(lib, "yaml-cpp.lib")
 
 namespace YAML {
 

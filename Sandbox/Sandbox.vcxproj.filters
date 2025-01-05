@@ -57,10 +57,25 @@
     <Image Include="Assets\textures\Crimson.png">
       <Filter>Assets\textures</Filter>
     </Image>
+    <Image Include="Assets\textures\RPGpack_sheet_2X.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
     <Image Include="Assets\textures\Ship.png">
       <Filter>Assets\textures</Filter>
     </Image>
+    <Image Include="Assets\textures\Test.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\img_4.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\img_5.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
     <Image Include="Assets\textures\linux.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\rickshaw.png">
       <Filter>Assets\textures</Filter>
     </Image>
   </ItemGroup>

@@ -1,10 +1,9 @@
-#include "hzpch.h"
 #include "ContentBrowser.h"
-#include "Hazel/Scene/SceneSerializer.h"
-#include "Hazel/ResourceManager.h"
+#include "Crimson/Scene/SceneSerializer.h"
+#include "Crimson/Core/ResourceManager.h"
 #include "MaterialEditor.h"
 
-using namespace Hazel;
+using namespace Crimson;
 namespace FileSystem = std::filesystem;
 constexpr char* dir = "Assets";
 

@@ -1,18 +1,17 @@
-#include "hzpch.h"
 #include "SceneHierarchy.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "imgui_internal.h"
 #include "imgui.h"
-#include "Hazel/Scene/PointLight.h"
-#include "Hazel/Physics/Physics3D.h"
-#include "Hazel/Scene/SceneSerializer.h"
-#include "Hazel/Renderer/Material.h"
+#include "Crimson/Scene/PointLight.h"
+#include "Crimson/Physics/Physics3D.h"
+#include "Crimson/Scene/SceneSerializer.h"
+#include "Crimson/Renderer/Material.h"
 #include "../CustomScript.h"
-#include "Hazel/ResourceManager.h"
+#include "Crimson/Core/ResourceManager.h"
 
-using namespace Hazel;
+using namespace Crimson;
 std::string texture_path = "Assets/Textures/Test.png";
-ref<Entity> SceneHierarchyPannel::m_selected_entity;
+Ref<Entity> SceneHierarchyPannel::m_selected_entity;
 SceneHierarchyPannel::SceneHierarchyPannel() = default;
 SceneHierarchyPannel::~SceneHierarchyPannel()
 {
@@ -76,20 +75,20 @@ static void DrawVec3Control(const std::string& label, glm::vec3& values, float r
 	ImGui::PopID();
 }
 
-void SceneHierarchyPannel::Context(const ref<Scene>& context)
+void SceneHierarchyPannel::Context(const Ref<Scene>& context)
 {
 	m_Context = context;
 	/*the m_scriptMap is a map that contains all the scripts object with the class hash_code as its key.
 	* for now I have to mannually include all the scripts then manually bind them here (one by one)
 	*/
 	m_Context->m_scriptsMap[typeid(CustomScript).hash_code()] = new CustomScript();
-	HAZEL_CORE_WARN(typeid(CustomScript).hash_code());
+	CN_CORE_WARN(typeid(CustomScript).hash_code());
 }
 void SceneHierarchyPannel::OnImGuiRender()
 {
 	//static int 
 	bool isEntityDestroyed = false;
-	ref<Entity> m_Entity;
+	Ref<Entity> m_Entity;
 	ImGuiTreeNodeFlags flags = 0;
 	ImGui::Begin("Scene Hierarchy Pannel");
 	if (ImGui::Button("Save Scene", { 100,20 }))
@@ -102,7 +101,7 @@ void SceneHierarchyPannel::OnImGuiRender()
 		SceneSerializer serialize(m_Context);
 		serialize.DeSerialize("SceneSaved.hz");
 	}
-		if (ImGui::BeginPopupContextWindow("Actions",1,false))
+		if (ImGui::BeginPopupContextWindow("Actions",1))
 		{
 			if (ImGui::Button("Create Entity", { 130,30 }))
 			{
@@ -165,7 +164,7 @@ void SceneHierarchyPannel::OnImGuiRender()
 	//properties pannel
 	ImGui::Begin("Properties");
 
-	if (m_selected_entity && ImGui::BeginPopupContextWindow("Actions",1,false))//click on any blank area to add component
+	if (m_selected_entity && ImGui::BeginPopupContextWindow("Actions",1))//click on any blank area to add component
 	{
 		if (ImGui::Button("Create Transform Component", { 220,30 }))
 		{
@@ -472,13 +471,13 @@ void SceneHierarchyPannel::DrawStaticMeshComponentUI()
 		LoadMesh* mesh = m_selected_entity->GetComponent<StaticMeshComponent>();
 		for (auto& sub_mesh : mesh->m_subMeshes)
 		{
-			ref<Material> mat = ResourceManager::allMaterials[sub_mesh.m_MaterialID];
+			Ref<Material> mat = ResourceManager::allMaterials[sub_mesh.m_MaterialID];
 			ImGui::Button(mat->m_MaterialName.c_str(), { 120,20 });
 			if (ImGui::BeginDragDropTarget())//drag drop materials from content browser
 			{
 				if (const ImGuiPayload* val = ImGui::AcceptDragDropPayload("Material payload"))
 				{
-					ResourceManager::allMaterials[sub_mesh.m_MaterialID] = *(ref<Material>*)val->Data;
+					ResourceManager::allMaterials[sub_mesh.m_MaterialID] = *(Ref<Material>*)val->Data;
 				}
 				ImGui::EndDragDropTarget();
 			}
@@ -560,7 +559,7 @@ void SceneHierarchyPannel::DrawPhysicsComponentUI()
 			physics_component.ResetSimulation = true;
 			m_selected_entity->GetComponent<TransformComponent>().m_transform = glm::mat4(1.0f);
 		}
-			//HAZEL_CORE_WARN(Physics3D::GetNbActors());
+			//CN_CORE_WARN(Physics3D::GetNbActors());
 		ImGui::TreePop();
 	}
 }

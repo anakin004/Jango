@@ -160,61 +160,87 @@ namespace Crimson {
 		m_defaultMaterial = m_physics->createMaterial(physics_component.m_StaticFriction, physics_component.m_DynamicFriction, physics_component.m_Restitution);
 		physx::PxTransform localTm(*(physx::PxMat44*)glm::value_ptr(physics_component.m_transform));
 
-		if (physics_component.isStatic == true)// for static rigid bodies use triangle mesh for better accuracy of the volume being covered
+		if (physics_component.isStatic) // for static rigid bodies, use triangle mesh for better accuracy
 		{
-			physx::PxTriangleMeshDesc TriMeshDesc;
-			TriMeshDesc.points.count = vertices.size();
-			TriMeshDesc.points.data = &vertices[0].x;
-			TriMeshDesc.points.stride = sizeof(glm::vec3);
-			TriMeshDesc.triangles.count = indices.size();
-			TriMeshDesc.triangles.data = &indices[0];
-			TriMeshDesc.triangles.stride = 3 * sizeof(unsigned int);
-			CN_ASSERT(!TriMeshDesc.isValid(), "Not valid");
+			// Set up the triangle mesh descriptor
+			physx::PxTriangleMeshDesc triMeshDesc;
+			triMeshDesc.points.count = vertices.size();
+			triMeshDesc.points.data = &vertices[0].x;
+			triMeshDesc.points.stride = sizeof(glm::vec3);
+			triMeshDesc.triangles.count = indices.size() / 3;  // Ensure the triangles are counted correctly
+			triMeshDesc.triangles.data = &indices[0];
+			triMeshDesc.triangles.stride = 3 * sizeof(unsigned int);
 
-			//cook the triangle mesh
-			physx::PxDefaultMemoryOutputStream outBuffer;
+			physx::PxCookingParams cookingParams(m_physics->getTolerancesScale());
 
-			physx::PxTriangleMeshCookingResult::Enum cookingResult;
-			bool validate = m_cooking->validateTriangleMesh(TriMeshDesc);
-			CN_ASSERT(!validate, "Not Valid");
-			if (!m_cooking->cookTriangleMesh(TriMeshDesc, outBuffer, &cookingResult))
-				CN_CORE_ERROR("Cannot cook the triangle mesh!!");
+			physx::PxTriangleMesh* triMesh = PxCreateTriangleMesh(cookingParams, triMeshDesc);
+			if (!triMesh)
+			{
+				CN_CORE_ERROR("Error creating triangle mesh");
+				return;
+			}
 
-			physx::PxDefaultMemoryInputData stream(outBuffer.getData(), outBuffer.getSize());
-			physx::PxTriangleMesh* triMesh = m_physics->createTriangleMesh(stream);
+			// Set up the static mesh
+			physx::PxShape* staticShape = m_physics->createShape(physx::PxTriangleMeshGeometry(triMesh, physx::PxMeshScale(*(physx::PxVec3*)glm::value_ptr(scaling))), *m_defaultMaterial);
+			if (!staticShape)
+			{
+				CN_CORE_ERROR("Error creating static shape");
+				return;
+			}
 
-			//setup the static mesh
-			physx::PxShape* static_shape = m_physics->createShape(physx::PxTriangleMeshGeometry(triMesh, physx::PxMeshScale(*(physx::PxVec3*)glm::value_ptr(scaling))), *m_defaultMaterial);
-			physics_component.m_StaticActor = physx::PxCreateStatic(*m_physics, localTm, *static_shape);
+			physics_component.m_StaticActor = physx::PxCreateStatic(*m_physics, localTm, *staticShape);
+			if (!physics_component.m_StaticActor)
+			{
+				CN_CORE_ERROR("Error creating static actor");
+				return;
+			}
+
 			m_scene->addActor(*physics_component.m_StaticActor);
-			static_shape->release();
+			staticShape->release();
 			triMesh->release();
 		}
-		else //for dynamic rigid bodies use convex colliders
+		else // for dynamic rigid bodies, use convex colliders
 		{
-			physx::PxConvexMeshDesc convexMeshdesc;
-			convexMeshdesc.points.data = &vertices[0];
-			convexMeshdesc.points.count = vertices.size();
-			convexMeshdesc.points.stride = sizeof(glm::vec3);
-			convexMeshdesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX | physx::PxConvexFlag::eGPU_COMPATIBLE;
+			// Set up the convex mesh descriptor
+			physx::PxConvexMeshDesc convexMeshDesc;
+			convexMeshDesc.points.count = vertices.size();
+			convexMeshDesc.points.data = &vertices[0];
+			convexMeshDesc.points.stride = sizeof(glm::vec3);
+			convexMeshDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX | physx::PxConvexFlag::eGPU_COMPATIBLE;
 
-			physx::PxDefaultMemoryOutputStream cookedMeshOutput;
-			physx::PxConvexMeshCookingResult::Enum cookingResult;
-			if (!m_cooking->cookConvexMesh(convexMeshdesc, cookedMeshOutput, &cookingResult))
-				CN_CORE_ERROR("Could not cook convex mesh!!");
+			physx::PxCookingParams cookingParams(m_physics->getTolerancesScale());
+			// Create the convex mesh directly
+			physx::PxConvexMesh* convexMesh = PxCreateConvexMesh(cookingParams, convexMeshDesc);
+			if (!convexMesh)
+			{
+				CN_CORE_ERROR("Error creating convex mesh");
+				return;
+			}
 
-			// use output as input to convex mesh
-			physx::PxDefaultMemoryInputData cookedMeshInput(cookedMeshOutput.getData(), cookedMeshOutput.getSize());
-			physx::PxConvexMesh* convexMesh = m_physics->createConvexMesh(cookedMeshInput);
+			// Set up the shape
 			physx::PxShape* shape = m_physics->createShape(physx::PxConvexMeshGeometry(convexMesh, physx::PxMeshScale(*(physx::PxVec3*)glm::value_ptr(scaling))), *m_defaultMaterial);
+			if (!shape)
+			{
+				CN_CORE_ERROR("Error creating shape");
+				return;
+			}
 
-			//set up dynamic rigid body
+			// Set up dynamic rigid body
 			physics_component.m_DynamicActor = physx::PxCreateDynamic(*m_physics, localTm, *shape, physics_component.m_mass);
+			if (!physics_component.m_DynamicActor)
+			{
+				CN_CORE_ERROR("Error creating dynamic actor");
+				return;
+			}
 
 			if (physics_component.isKinematic)
+			{
 				physics_component.m_DynamicActor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+			}
 			else
+			{
 				physics_component.m_DynamicActor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false);
+			}
 
 			physx::PxRigidBodyExt::updateMassAndInertia(*physics_component.m_DynamicActor, physics_component.m_mass);
 			m_scene->addActor(*physics_component.m_DynamicActor);
@@ -222,6 +248,7 @@ namespace Crimson {
 			convexMesh->release();
 		}
 	}
+
 	void Physics3D::AddHeightFieldCollider(const std::vector<int>& HeightValues, int width, int height, float spacing, const glm::mat4& transform)
 	{
 		m_defaultMaterial = m_physics->createMaterial(0.6, 0.6, 0.7);
@@ -243,8 +270,7 @@ namespace Crimson {
 		hfDesc.samples.stride = sizeof(physx::PxHeightFieldSample);
 		hfDesc.flags = physx::PxHeightFieldFlag::eNO_BOUNDARY_EDGES;
 
-		physx::PxHeightField* aHeightField = m_cooking->createHeightField(hfDesc,
-			m_physics->getPhysicsInsertionCallback());
+		physx::PxHeightField* aHeightField = PxCreateHeightField(hfDesc, m_physics->getPhysicsInsertionCallback());
 		// flags = physx::PxMeshGeometryFlags::PxFlags::;
 		physx::PxHeightFieldGeometry hfGeom(aHeightField, physx::PxMeshGeometryFlags(), 1, spacing,
 			spacing);
@@ -337,36 +363,55 @@ namespace Crimson {
 	}
 	void Physics3D::SetUpPhysics()
 	{
-		physx::PxCudaContextManagerDesc cudaContextManagerDesc;
-		physx::PxDefaultAllocator      mDefaultAllocatorCallback;
-		physx::PxDefaultErrorCallback  mDefaultErrorCallback;
+		// Set up the foundation, allocator, and error callback
+		physx::PxDefaultAllocator mDefaultAllocatorCallback;
+		physx::PxDefaultErrorCallback mDefaultErrorCallback;
 		m_foundation = PxCreateFoundation(PX_PHYSICS_VERSION, mDefaultAllocatorCallback, mDefaultErrorCallback);
+
+		// Create CUDA context manager for GPU acceleration (if needed)
+		physx::PxCudaContextManagerDesc cudaContextManagerDesc;
 		gCudaContextManager = PxCreateCudaContextManager(*m_foundation, cudaContextManagerDesc);
-		physx::PxTolerancesScale TollarenceScale;
+		if (!gCudaContextManager)
+		{
+			CN_CORE_ERROR("Error in creating CUDA context manager");
+			return;
+		}
 
-		m_cooking = PxCreateCooking(PX_PHYSICS_VERSION, *m_foundation, physx::PxCookingParams(TollarenceScale));
-		m_physics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_foundation, TollarenceScale);
-		PxRegisterHeightFields(*m_physics);
-
+		// In PhysX 5.x, cooking is integrated with the PxPhysics object, no need for PxCreateCooking
+		physx::PxTolerancesScale toleranceScale;
+		m_physics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_foundation, toleranceScale);
 		if (!m_physics)
+		{
 			CN_CORE_ERROR("Error in creating physics object");
+			return;
+		}
 
+		// No need for PxRegisterHeightFields in PhysX 5.x
+		// Cooking is now integrated with PxPhysics, so heightfields will be handled through the new API
+
+		// Create the CPU dispatcher and configure the scene
 		physx::PxSceneDesc sceneDesc(m_physics->getTolerancesScale());
-		//sceneDesc.flags.set(physx::PxSceneFlag::eENABLE_ACTIVE_ACTORS);
-		sceneDesc.gravity = physx::PxVec3(0.0f, 981.f, 0.0f);
+		sceneDesc.gravity = physx::PxVec3(0.0f, -981.f, 0.0f);
 		m_dispatcher = physx::PxDefaultCpuDispatcherCreate(4);
+		if (!m_dispatcher)
+		{
+			CN_CORE_ERROR("Error creating CPU dispatcher");
+			return;
+		}
+
 		sceneDesc.cpuDispatcher = m_dispatcher;
 		sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
 		sceneDesc.cudaContextManager = gCudaContextManager;
-
 		sceneDesc.flags |= physx::PxSceneFlag::eENABLE_GPU_DYNAMICS;
 		sceneDesc.broadPhaseType = physx::PxBroadPhaseType::eGPU;
-		m_scene = m_physics->createScene(sceneDesc);
 
-		while (1) {
-			if (SimulatePhysics)
-				StepPhysics();
+		m_scene = m_physics->createScene(sceneDesc);
+		if (!m_scene)
+		{
+			CN_CORE_ERROR("Error creating physics scene");
+			return;
 		}
-		CleanUpPhysics();
+
+		// Now the physics scene is ready to be simulated in the main loop
 	}
 }

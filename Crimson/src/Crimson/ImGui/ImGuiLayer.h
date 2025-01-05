@@ -18,6 +18,8 @@ namespace Crimson {
 		virtual void OnDetach() override;
 		virtual void OnImGuiRender() override;
 
+		static inline ImFont* GetFont() { return m_Font; }
+
 		void Begin();
 		void End();
 
