@@ -485,18 +485,18 @@ namespace Crimson
 	{
 		node->childrens.clear();
 		NodePool::node_memoryPool.push(node); //when we want to deallocate a node just recycle the memory to memory pool
-		//node = nullptr; //delete the node
-		CN_CORE_WARN("Quad Tree Node Deleted and memory recycled");
+		node = nullptr; //delete the node
+		CN_CORE_TRACE("Quad Tree Node Deleted and memory recycled");
 	}
 	void NodePool::Allocate()
 	{
-		CN_CORE_WARN("allocating memory, initial pool size{}", NodePool::node_memoryPool.size());
+		CN_CORE_TRACE("Allocating Memory, Initial Pool Size -> {}", NodePool::node_memoryPool.size());
 
-		for (int i = 0; i < 30; i++) //allocate 40 new nodes
+		for (int i = 0; i < 40; i++) //allocate 40 new nodes
 		{
 			NodePool::node_memoryPool.push(new QNode());
 		}
-		CN_CORE_WARN("Done!! allocating memory, after pool size{}", NodePool::node_memoryPool.size());
+		CN_CORE_TRACE("Allocated Memory!, Pool Size -> {}", NodePool::node_memoryPool.size());
 
 	}
 	void NodePool::DeAllocate()

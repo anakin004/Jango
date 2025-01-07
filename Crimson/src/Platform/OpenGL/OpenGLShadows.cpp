@@ -46,7 +46,8 @@ namespace Crimson {
 
 				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_id[i], 0);
 				if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-					CN_CORE_INFO("shadow map FrameBuffer compleate!!");
+					//CN_CORE_INFO("Shadow Map FrameBuffer Complete");
+					1;
 
 				glClear(GL_DEPTH_BUFFER_BIT);
 				//glCullFace(GL_FRONT);
@@ -96,7 +97,9 @@ namespace Crimson {
 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_id[i], 0);
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-				CN_CORE_INFO("shadow map FrameBuffer compleate!!");
+				//CN_CORE_INFO("Shadow Map FrameBuffer Complete");
+				1;
+
 			glClear(GL_DEPTH_BUFFER_BIT);
 
 			//terrain_shadowShader->Bind();
@@ -181,7 +184,8 @@ namespace Crimson {
 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_id[i], 0);
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-				CN_CORE_INFO("shadow map FrameBuffer compleate for foliage!!");
+				//CN_CORE_INFO("Shadowmap Frame Buffer Complete for Foliage");
+				1;
 
 			glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -240,7 +244,8 @@ namespace Crimson {
 			glReadBuffer(GL_NONE);
 
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-				CN_CORE_INFO("shadow map FrameBuffer compleate!!");
+				//CN_CORE_INFO("Shadow Map FrameBuffer Complete");
+				1;
 		}
 
 		glBindTextureUnit(SHDOW_MAP1, depth_id[0]);

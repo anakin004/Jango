@@ -92,9 +92,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>echo $(SolutionDir)/Crimson/vendor/assimp/dll/*.dll
-echo ../bin/Debug-windows-x86_64/Crimson_Editor/
-IF EXIST "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll"\ (xcopy /Q /E /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Debug-windows-x86_64\Crimson_Editor\" &gt; nul) ELSE (xcopy /Q /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Debug-windows-x86_64\Crimson_Editor\" &gt; nul)
+      <Command>IF EXIST "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll"\ (xcopy /Q /E /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Debug-windows-x86_64\Crimson_Editor\" &gt; nul) ELSE (xcopy /Q /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Debug-windows-x86_64\Crimson_Editor\" &gt; nul)
 IF EXIST "$(SolutionDir)\Crimson\vendor\physx_x64-windows\dll\*.dll"\ (xcopy /Q /E /Y /I "$(SolutionDir)\Crimson\vendor\physx_x64-windows\dll\*.dll" "..\bin\Debug-windows-x86_64\Crimson_Editor\" &gt; nul) ELSE (xcopy /Q /Y /I "$(SolutionDir)\Crimson\vendor\physx_x64-windows\dll\*.dll" "..\bin\Debug-windows-x86_64\Crimson_Editor\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -120,9 +118,7 @@ IF EXIST "$(SolutionDir)\Crimson\vendor\physx_x64-windows\dll\*.dll"\ (xcopy /Q 
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>echo $(SolutionDir)/Crimson/vendor/assimp/dll/*.dll
-echo ../bin/Release-windows-x86_64/Crimson_Editor/
-IF EXIST "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll"\ (xcopy /Q /E /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Release-windows-x86_64\Crimson_Editor\" &gt; nul) ELSE (xcopy /Q /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Release-windows-x86_64\Crimson_Editor\" &gt; nul)
+      <Command>IF EXIST "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll"\ (xcopy /Q /E /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Release-windows-x86_64\Crimson_Editor\" &gt; nul) ELSE (xcopy /Q /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Release-windows-x86_64\Crimson_Editor\" &gt; nul)
 IF EXIST "$(SolutionDir)\Crimson\vendor\physx_x64-windows\dll\*.dll"\ (xcopy /Q /E /Y /I "$(SolutionDir)\Crimson\vendor\physx_x64-windows\dll\*.dll" "..\bin\Release-windows-x86_64\Crimson_Editor\" &gt; nul) ELSE (xcopy /Q /Y /I "$(SolutionDir)\Crimson\vendor\physx_x64-windows\dll\*.dll" "..\bin\Release-windows-x86_64\Crimson_Editor\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -148,9 +144,7 @@ IF EXIST "$(SolutionDir)\Crimson\vendor\physx_x64-windows\dll\*.dll"\ (xcopy /Q 
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>echo $(SolutionDir)/Crimson/vendor/assimp/dll/*.dll
-echo ../bin/Dist-windows-x86_64/Crimson_Editor/
-IF EXIST "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll"\ (xcopy /Q /E /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Dist-windows-x86_64\Crimson_Editor\" &gt; nul) ELSE (xcopy /Q /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Dist-windows-x86_64\Crimson_Editor\" &gt; nul)
+      <Command>IF EXIST "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll"\ (xcopy /Q /E /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Dist-windows-x86_64\Crimson_Editor\" &gt; nul) ELSE (xcopy /Q /Y /I "$(SolutionDir)\Crimson\vendor\assimp\dll\*.dll" "..\bin\Dist-windows-x86_64\Crimson_Editor\" &gt; nul)
 IF EXIST "$(SolutionDir)\Crimson\vendor\physx_x64-windows\dll\*.dll"\ (xcopy /Q /E /Y /I "$(SolutionDir)\Crimson\vendor\physx_x64-windows\dll\*.dll" "..\bin\Dist-windows-x86_64\Crimson_Editor\" &gt; nul) ELSE (xcopy /Q /Y /I "$(SolutionDir)\Crimson\vendor\physx_x64-windows\dll\*.dll" "..\bin\Dist-windows-x86_64\Crimson_Editor\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

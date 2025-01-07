@@ -91,7 +91,8 @@ namespace Crimson
 		int k = 0;
 		for (auto sub_mesh : m_Mesh->m_subMeshes) //iterate through all sub meshes and get the materials
 		{
-			CN_ASSERT(!ResourceManager::allMaterials[sub_mesh.m_MaterialID], "Resource Manager Invalid (BVH)");
+			CN_CORE_TRACE("Updating Material, Count : {0}", k);
+			CN_ASSERT(ResourceManager::allMaterials[sub_mesh.m_MaterialID], "Resource Manager Invalid (BVH)");
 			auto recource_material = ResourceManager::allMaterials[sub_mesh.m_MaterialID];
 			Material mat;
 			mat.color = recource_material->GetColor();

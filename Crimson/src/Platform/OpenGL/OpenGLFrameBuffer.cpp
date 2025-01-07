@@ -17,8 +17,6 @@ namespace Crimson {
     void OpenGLFrameBuffer::Bind()
     {
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_RenderID);
-        CN_CORE_ERROR(glGetError());
-
     }
     void OpenGLFrameBuffer::UnBind()
     {

@@ -1,8 +1,8 @@
 Material ID: 5321493151383549080
-Color: [1, 1, 1, 1]
-Roughness: 1
-Metallic: 0
-Normal Strength: 1
+Color: [1, 0.030888021, 0.030888021, 1]
+Roughness: 0
+Metallic: 1
+Normal Strength: 0
 Emission: 0
 Albedo Map: Assets/Textures/MeshTextures/MI_BirchBark_BaseColor.png
 Normal Map: Assets/Textures/MeshTextures/MI_BirchBark_Normal.png

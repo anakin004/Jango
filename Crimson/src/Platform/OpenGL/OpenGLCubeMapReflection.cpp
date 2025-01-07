@@ -52,63 +52,66 @@ namespace Crimson {
 
 	void OpenGLCubeMapReflection::RenderToCubeMap(Scene& scene)
 	{
-		//shader->Bind();
-		//auto size = RenderCommand::GetViewportSize();
-		//
-		//EditorCamera cam = EditorCamera();
-		//cam.SetPerspctive(90.00f, -10.0f, 1000.0f);//*** mann this game me a headache (by not converting the FOV to radians) the fov is converted to radians in the editorCamera class :)
-		//cam.SetUPVector({ 0,-1,0 });
-		//cam.SetCameraPosition({ 0,-5,0 });
-		//
-		////glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//glBindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer_id);
-		//glViewport(0, 0, cubemap_width , cubemap_height);
-		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//std::vector<glm::vec3> dir = { {1,0,0},{-1,0,0},{0,-1,0},{0,1,0},{0,0,1},{0,0,-1} };
-		//glm::vec3 pos = {2,3,6};
-		////shader->SetFloat3("LightPosition", pos);//world position
-		//shader->SetInt("env", 18);//18th slot is the slot that stores cubemap texture
-		//for (int i = 0; i < 6; i++)
-		//{
-		//	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i , tex_id, 0);//Render the scene in the corresponding face on the cube map and "GL_COLOR_ATTACHMENT0" Represents the Render target where the fragment shader should output the color
-		//	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-		//		CN_CORE_WARN("FrameBuffer compleate!!");
-		//
-		//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//clear the buffers each time
-		//	//CN_CORE_ERROR(glGetError());
-		//
-		//	SwitchToFace(i);//rotate the camera
-		//	cam.RotateCamera(yaw, pitch);
-		//
-		//	//Render the cube map
-		//	//shader->Bind();
-		//	CubeMapEnvironment::RenderQuad(cam.GetViewMatrix(), cam.GetProjectionMatrix());//cubemap shader is binded here follow this order
-		//
-		//	/*shader->Bind();//bind the shader and pass the projectionview and Eye pos as uniform.
-		//	shader->SetMat4("u_ProjectionView", cam.GetProjectionView());
-		//	shader->SetFloat3("EyePosition", cam.GetCameraPosition());
-		//	scene.getRegistry().each([&](auto m_entity)//iterate through every entities and render them
-		//		{
-		//			//auto entt = item.second->GetEntity();//get the original entity (i.e. entt::entity returns an unsigned int)
-		//			Entity Entity(&scene, m_entity);
-		//			auto& transform = Entity.GetComponent<TransformComponent>().GetTransform();
-		//			glm::vec4 color;
-		//
-		//			//if (camera.camera.bIsMainCamera) {
-		//			if (Entity.HasComponent<SpriteRenderer>()) {
-		//				auto SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
-		//				Renderer3D::DrawMesh(*m_LoadMesh, transform, SpriteRendererComponent.Color);
-		//			}
-		//			else
-		//				Renderer3D::DrawMesh(*Cube, transform, Entity.m_DefaultColor);
-		//
-		//		});
-		//			Renderer3D::DrawMesh(*Plane, { 0,0,0 }, { 100,100,100 }, { 0,0,0 });*/
-		//}
-		//glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);//unbind the framebuffer to compleate the capturing process
+		/*
+		shader->Bind();
+		auto size = RenderCommand::GetViewportSize();
+		
+		EditorCamera cam = EditorCamera();
+		cam.SetPerspctive(90.00f, -10.0f, 1000.0f);
+		cam.SetUPVector({ 0,-1,0 });
+		cam.SetCameraPosition({ 0,-5,0 });
+		
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer_id);
+		glViewport(0, 0, cubemap_width , cubemap_height);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		std::vector<glm::vec3> dir = { {1,0,0},{-1,0,0},{0,-1,0},{0,1,0},{0,0,1},{0,0,-1} };
+		glm::vec3 pos = {2,3,6};
+		shader->SetFloat3("LightPosition", pos); //world position
+		shader->SetInt("env", 18);18th slot is the slot that stores cubemap texture
+		for (int i = 0; i < 6; i++)
+		{
+			glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i , tex_id, 0);Render the scene in the corresponding face on the cube map and "GL_COLOR_ATTACHMENT0" Represents the Render target where the fragment shader should output the color
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+				CN_CORE_WARN("FrameBuffer complete");
+		
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);clear the buffers each time
+			CN_CORE_ERROR(glGetError());
+		
+			SwitchToFace(i);rotate the camera
+			cam.RotateCamera(yaw, pitch);
+		
+			Render the cube map
+			shader->Bind();
+			CubeMapEnvironment::RenderQuad(cam.GetViewMatrix(), cam.GetProjectionMatrix()); //cubemap shader is binded here follow this order
+		
+			/*shader->Bind();bind the shader and pass the projectionview and Eye pos as uniform.
+			shader->SetMat4("u_ProjectionView", cam.GetProjectionView());
+			shader->SetFloat3("EyePosition", cam.GetCameraPosition());
+			scene.getRegistry().each([&](auto m_entity)iterate through every entities and render them
+				{
+					auto entt = item.second->GetEntity();get the original entity (i.e. entt::entity returns an unsigned int)
+					Entity Entity(&scene, m_entity);
+					auto& transform = Entity.GetComponent<TransformComponent>().GetTransform();
+					glm::vec4 color;
+		
+					if (camera.camera.bIsMainCamera) {
+					if (Entity.HasComponent<SpriteRenderer>()) {
+						auto SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
+						Renderer3D::DrawMesh(*m_LoadMesh, transform, SpriteRendererComponent.Color);
+					}
+					else
+						Renderer3D::DrawMesh(*Cube, transform, Entity.m_DefaultColor);
+		
+				});
+					Renderer3D::DrawMesh(*Plane, { 0,0,0 }, { 100,100,100 }, { 0,0,0 });
+		}
+		//glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);//unbind the framebuffer for capturing process
 		//glViewport(0, 0, size.x, size.y);
 		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//glBindTextureUnit(10, tex_id);
+
+		*/
 	}
 
 	void OpenGLCubeMapReflection::Bind(int slot)

@@ -1,0 +1,1 @@
+{"otherData": {},"traceEvents":[{"cat":"function","dur":20201,"name":"__cdecl Crimson::LayerStack::~LayerStack(void)","ph":"X","pid":0,"tid":892903769,"ts":36396428211},{"cat":"function","dur":70394,"name":"void __cdecl Crimson::WindowsWindow::Shutdown(void)","ph":"X","pid":0,"tid":892903769,"ts":36396448474}]}

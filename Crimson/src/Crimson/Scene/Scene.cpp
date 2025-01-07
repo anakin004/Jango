@@ -69,6 +69,8 @@ namespace Crimson {
 
 		GroundPlant = new LoadMesh("Assets/Meshes/forest_grass1.fbx");
 		//GroundPlant->CreateLOD("Assets/Meshes/flower_LOD1.fbx");
+
+
 		Sphere = new LoadMesh("Assets/Meshes/10-Car.fbx");
 		Sphere_simple = new LoadMesh("Assets/Meshes/sphere_simple.fbx");
 		//Plane = new LoadMesh("Assets/Meshes/Plane.fbx");

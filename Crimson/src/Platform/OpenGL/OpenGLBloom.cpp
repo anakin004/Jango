@@ -78,7 +78,7 @@ namespace Crimson {
 			glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_MipLevels[i].texture, 0);
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
 			{
-				CN_CORE_INFO("Downsample Frame Buffer Complete");
+				//CN_CORE_INFO("Downsample Frame Buffer Complete");
 			}
 			RenderQuad();
 

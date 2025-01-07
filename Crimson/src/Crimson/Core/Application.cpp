@@ -45,7 +45,7 @@ namespace Crimson {
 			Renderer::WindowResize(e.GetWidth(), e.GetHeight());
 			return false; });
 
-		CN_CORE_TRACE(e.GetName());
+		//CN_CORE_TRACE(e.GetName());
 		for (auto it = m_layerstack.end(); it != m_layerstack.begin();)
 		{
 			if (e.GetHandled())
@@ -56,12 +56,14 @@ namespace Crimson {
 
 	void Application::PushLayer(Layer* layer)
 	{
+		CN_CORE_INFO("Layer {0}, Pushed onto LayerStack", layer->GetName());
 		m_layerstack.PushLayer(layer);
 		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* Overlay)
 	{
+		CN_CORE_INFO("Overlay {0}, Pushed onto LayerStack", Overlay->GetName());
 		m_layerstack.PushOverlay(Overlay);
 		Overlay->OnAttach();
 	}

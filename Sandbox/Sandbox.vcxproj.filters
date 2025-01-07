@@ -7,46 +7,12 @@
     <Filter Include="Assets\textures">
       <UniqueIdentifier>{2BD15FD2-975C-CD96-A06D-508B0C782997}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor\glm">
       <UniqueIdentifier>{829FC5A8-6E57-07F6-D75E-E051C335A2E6}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\DisplayNews.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ImGuiInputText.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MonteCarloSim.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Sandbox2dApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\DisplayNews.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ImGuiInputText.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MonteCarloSim.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Sandbox2dApp.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SandboxApp.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\glm\glm">
@@ -64,9 +30,6 @@
       <Filter>Assets\textures</Filter>
     </Image>
     <Image Include="Assets\textures\Test.png">
-      <Filter>Assets\textures</Filter>
-    </Image>
-    <Image Include="Assets\textures\img_4.png">
       <Filter>Assets\textures</Filter>
     </Image>
     <Image Include="Assets\textures\img_5.png">

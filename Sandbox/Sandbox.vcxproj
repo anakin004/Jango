@@ -137,19 +137,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\DisplayNews.h" />
-    <ClInclude Include="src\ImGuiInputText.h" />
-    <ClInclude Include="src\MonteCarloSim.h" />
-    <ClInclude Include="src\Sandbox2dApp.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\DisplayNews.cpp" />
-    <ClCompile Include="src\ImGuiInputText.cpp" />
-    <ClCompile Include="src\MonteCarloSim.cpp" />
-    <ClCompile Include="src\Sandbox2dApp.cpp" />
-    <ClCompile Include="src\SandboxApp.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="vendor\glm\glm" />
   </ItemGroup>
   <ItemGroup>
@@ -157,7 +144,6 @@
     <Image Include="Assets\textures\RPGpack_sheet_2X.png" />
     <Image Include="Assets\textures\Ship.png" />
     <Image Include="Assets\textures\Test.png" />
-    <Image Include="Assets\textures\img_4.png" />
     <Image Include="Assets\textures\img_5.png" />
     <Image Include="Assets\textures\linux.png" />
     <Image Include="Assets\textures\rickshaw.png" />
