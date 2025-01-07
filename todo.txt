@@ -1,8 +1,7 @@
-	
--- add compiler defines for math library	
+-- prompt user to see if they want to use 2d renderer or 3d renderer based on what they are trying to make
+-- in 3d apps will use both (likely) for title screens, menus etc.
 
--- change crimson to static lib 
--- rendering architecture 				( not started yet ) -> planning
- 
+-- lots of tech debt, was careless about naming and organization, along with logging in certain areas, profiling too.
+
 
 
