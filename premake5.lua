@@ -279,11 +279,6 @@ project "Crimson_Editor"
 
 	postbuildcommands
 	{
-		-- Print the paths being used
-		'echo %{wks.location}/Crimson/vendor/assimp/dll/*.dll',
-		'echo %{cfg.targetdir}/',
-
-		-- Attempt to copy DLL files
 		'{COPY} "%{wks.location}/Crimson/vendor/assimp/dll/*.dll" "%{cfg.targetdir}/"',
 		'{COPY} "%{wks.location}/Crimson/vendor/physx_x64-windows/dll/*.dll" "%{cfg.targetdir}/"'
 	}
