@@ -2,4 +2,7 @@
 bin/
 bin-int/
 
+Crimson/vendor/physx_x64-windows/dll/
+Crimson/vendor/physx_x64-windows/lib/
+
 *.user
