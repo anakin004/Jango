@@ -164,7 +164,7 @@ namespace Crimson {
 		{
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, tex_id, 0);
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-				CN_CORE_ERROR("FrameBuffer compleate for equirectangular to cube map!!");
+				CN_CORE_TRACE("FrameBuffer {0}, for Equirectangular Cube Shader Complete", i+1);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//clear the buffers each time
 
 			equirectangularToCube_shader->SetMat4("u_ProjectionView", camera.GetProjectionMatrix()*captureViews[i]);
@@ -233,7 +233,7 @@ namespace Crimson {
 		{
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradiance_map_id, 0);
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-				CN_CORE_ERROR("FrameBuffer compleate Irradiance map");
+				CN_CORE_TRACE("FrameBuffer {0} Complete for Irradiance map", i+1);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//clear the buffers each time
 
 			irradiance_shader->SetMat4("u_ProjectionView", proj * captureViews[i]);

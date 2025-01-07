@@ -76,9 +76,8 @@ namespace Crimson
 		float EvaluateSAH(BVHNode& node, int& axis, float& pos); //returns cost after finding best axis and position
 		int FlattenBVH(BVHNode* node, int* offset);
 		void CleanBVH(BVHNode* node);//removes count of triangles from child nodes
-	private:
-		LoadMesh* m_Mesh;
-		BVHNode* head = nullptr;
+
+
 	public:
 		std::vector<Material> arrMaterials;
 		std::vector<Ref<Texture2D>> tex_albedo;
@@ -88,5 +87,9 @@ namespace Crimson
 		std::vector<RTTriangles> arrRTTriangles;//to be sent on to the gpu
 		std::vector<int> triIndex;//to be sent on to the gpu
 		int numNodes;
+
+	private:
+		LoadMesh* m_Mesh;
+		BVHNode* head = nullptr;
 	};
 }

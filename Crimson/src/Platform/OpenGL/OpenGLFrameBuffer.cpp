@@ -82,9 +82,9 @@ namespace Crimson {
 
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-            CN_CORE_INFO("Scene FrameBuffer Compleate")
+            CN_CORE_TRACE("Scene FrameBuffer Status Complete")
         else
-            CN_CORE_ERROR("Scene FrameBuffer inCompleate !!")
+            CN_CORE_ERROR("Scene FrameBuffer Failed!")
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }

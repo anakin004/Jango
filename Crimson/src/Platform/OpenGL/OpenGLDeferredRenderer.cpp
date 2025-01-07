@@ -67,7 +67,7 @@ namespace Crimson
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_RenderBufferID, 0);
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-			CN_CORE_TRACE("G-Buffer Framebuffer complete")
+			CN_CORE_INFO("G-Buffer Framebuffer complete")
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		glBindTextureUnit(G_NORMAL_TEXTURE_SLOT, m_NormalBufferID);

@@ -3,8 +3,10 @@
 #include "Crimson/Core/Core.h"
 #include <Glad/glad.h>
 #include "Crimson/Core/ResourceManager.h"
+#include <GLFW/glfw3.h>
 
 #define NUM_BINS 200
+
 
 namespace Crimson
 {
@@ -17,41 +19,45 @@ namespace Crimson
 		glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), { 0,0,1 }) * glm::scale(glm::mat4(1.0), glm::vec3(0.1f));
 		//glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), { 0,0,1 }) * glm::scale(glm::mat4(1.0), glm::vec3(0.1f));
 
+		CN_CORE_TRACE("Creating Triangles : BVH")
 		CreateTriangles(transform);
+		CN_CORE_TRACE("Created Triangles ... Updating Materials : BVH")
 		UpdateMaterials();
+		CN_CORE_TRACE("Updated Materials : BVH")
 		triIndex.resize(arrRTTriangles.size()); //making a seperate triangle index for swaping
 		for (int i = 0; i < arrRTTriangles.size(); i++)
 			triIndex[i] = i;
 		arrLinearBVHNode.resize(arrRTTriangles.size() * 2 + 1);
-		std::cout << "BVH Creation started " << std::endl;
+		CN_CORE_TRACE("BVH Creation started")
 		BuildBVH(head, 0, arrRTTriangles.size());
 		CleanBVH(head);//identify child nodes by making their triangle count = 0
-		std::cout << "BVH Creation Finished " << std::endl;
 		int* offset = &numNodes;
 		FlattenBVH(head, &numNodes);
 		arrLinearBVHNode.resize(numNodes);
+
+		CN_CORE_INFO("BVH Initialized!")
 	}
 	void BVH::CreateTriangles(glm::mat4& transform)
 	{
 		int matCount = 0;
 		std::vector<std::string> texturePaths_albedo, texturePaths_roughness;
-		for (auto sub_mesh : m_Mesh->m_subMeshes)
+		for (auto& sub_mesh : m_Mesh->m_subMeshes)
 		{
 			Ref<Texture2D> albedoTexture = Texture2D::Create(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetAlbedoPath());
 			Ref<Texture2D> roughnessTexture = Texture2D::Create(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetRoughnessPath());
 
 			//Enabling bindless textures causes render-doc to crash so disable them
-			uint64_t albedo_handle;// = glGetTextureHandleARB(albedoTexture->GetID()); //get a handle from the gpu
-			//glMakeTextureHandleResidentARB(albedo_handle); //load the texture into gpu memory using the handle
-			uint64_t roughness_handle;// = glGetTextureHandleARB(roughnessTexture->GetID());
-			//if(albedo_handle!=roughness_handle)
-			//glMakeTextureHandleResidentARB(roughness_handle);
+			uint64_t albedo_handle = glGetTextureHandleARB(albedoTexture->GetID()); //get a handle from the gpu
+			glMakeTextureHandleResidentARB(albedo_handle); //load the texture into gpu memory using the handle
+			uint64_t roughness_handle = glGetTextureHandleARB(roughnessTexture->GetID());
+			if(albedo_handle!=roughness_handle)
+				glMakeTextureHandleResidentARB(roughness_handle);
 
 			for (int i = 0; i < sub_mesh.Vertices.size(); i += 3)
 			{
-				//auto vertices = sub_mesh.Vertices;
-				//auto normals = sub_mesh.Normal;
-				//auto uv = sub_mesh.TexCoord;
+				auto& vertices = sub_mesh.Vertices;
+				auto& normals = sub_mesh.Normal;
+				auto& uv = sub_mesh.TexCoord;
 
 				//transforming the vertices and normals to world space
 				glm::vec3 v0 = transform * glm::vec4(sub_mesh.Vertices[i], 1.0);
@@ -69,9 +75,11 @@ namespace Crimson
 				arrRTTriangles.push_back(triangles);
 			}
 
-			//texturePaths_albedo.push_back(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetAlbedoPath());
-			//texturePaths_roughness.push_back(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetRoughnessPath());
+			texturePaths_albedo.push_back(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetAlbedoPath());
+			texturePaths_roughness.push_back(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetRoughnessPath());
 			matCount++; //increment the material as we move to the next sub mesh
+
+			CN_CORE_TRACE("Made Material");
 		}
 		arrMaterials.resize(matCount);
 		//texArray_albedo = Texture2DArray::Create(texturePaths_albedo, matCount,3);

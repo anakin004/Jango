@@ -31,8 +31,7 @@ namespace Crimson {
 	}
 	void Physics3D::Initilize()
 	{
-		std::thread physics_thread = std::thread([&]() {SetUpPhysics(); });
-		physics_thread.detach();
+		SetUpPhysics();
 	}
 
 	void Physics3D::UpdateTransform(TransformComponent& transform_component, PhysicsComponent& physics_component)

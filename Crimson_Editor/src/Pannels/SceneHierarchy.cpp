@@ -15,7 +15,7 @@ Ref<Entity> SceneHierarchyPannel::m_selected_entity;
 SceneHierarchyPannel::SceneHierarchyPannel() = default;
 SceneHierarchyPannel::~SceneHierarchyPannel()
 {
-	//delete m_selected_Light;
+	delete m_selected_Light;
 }
 
 static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f ,char *x ="X",char *y="Y",char *z="Z")

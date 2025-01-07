@@ -1,6 +1,7 @@
 #include "MaterialEditor.h"
 #include "Crimson/Core/ResourceManager.h"
 #include "Crimson/Scene/SceneSerializer.h"
+
 using namespace Crimson;
 
 uint64_t MaterialEditor::cached_materialID;

@@ -28,26 +28,44 @@ namespace Crimson {
 	float Scene::num_foliage = 10000.f;
 	//std::vector<PointLight*> Scene::m_PointLights;
 	EditorCamera editor_cam;
+
 	 LoadMesh* Scene::Sphere=nullptr, *Scene::Sphere_simple = nullptr, *Scene::Cube= nullptr, *Scene::Plane= nullptr
 		 , *Scene::plant, *Scene::House,*Scene::Windmill, *Scene::Fern,
 		 *Scene::Sponza, *Scene::Grass, *Scene::Grass2, *Scene::Grass3, *Scene::GroundPlant,
 		 *Scene::Tree1, *Scene::Tree2, *Scene::Tree3, *Scene::Tree4, *Scene::Tree5,
 		 *Scene::Bush1, *Scene::Bush2, *Scene::Rock1, *Scene::Rock2, *Scene::Flower1, *Scene::Flower2;
+
 	 bool capture = false;
 	 glm::vec3 camloc = { 0.f,0.f,0.f }, camrot = {0.f,0.f,0.f};
+
+
+
 	Scene::Scene()
 	{
-		//framebuffer = FrameBuffer::Create({ 2048,2048 });
-		//Physics3D::Initilize();
-		SkyRenderer::SetSkyType(SkyType::PROCEDURAL_SKY);
-		SkyRenderer::Initilize("Assets/Textures/HDR/rainforest_trail_4k.hdr");
+		CN_CORE_TRACE("Creating Scene Frame Buffer");
+		framebuffer = FrameBuffer::Create({ 2048,2048 });
+		CN_CORE_INFO("----Scene Frame Buffer Created!----");
 
+		CN_CORE_TRACE("Initializng Physx");
+		Physics3D::Initilize();
+		CN_CORE_INFO("----Phsyx Initialized!----");
+
+		SkyRenderer::SetSkyType(SkyType::PROCEDURAL_SKY);
+
+		CN_CORE_TRACE("Initializng SkyRenderer");
+		SkyRenderer::Initilize("Assets/Textures/HDR/rainforest_trail_4k.hdr");
+		CN_CORE_INFO("----SkyRender Initialized!----");
+
+		CN_CORE_TRACE("Initializng 2D and 3D Renderer");
 		Renderer3D::Init(1920,1080); //set up the renderer
 		Renderer2D::Init();
+		CN_CORE_INFO("----Renderers Initialized!----");
 
 		auto viewportSize = { 1920,1080 };// RenderCommand::GetViewportSize();
 
+		CN_CORE_TRACE("< Loading Materials...>");
 		Material::DeserializeMaterial();// load all materials from the disc
+		CN_CORE_TRACE("---- Materials Loaded! ----");
 
 		GroundPlant = new LoadMesh("Assets/Meshes/forest_grass1.fbx");
 		//GroundPlant->CreateLOD("Assets/Meshes/flower_LOD1.fbx");

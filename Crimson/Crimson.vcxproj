@@ -90,7 +90,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;Normaliz.lib;Ws2_32.lib;Wldap32.lib;Crypt32.lib;advapi32.lib;vendor\Curl\lib\libcurl_a_debug.lib;vendor\assimp\lib\x64\assimp-vc143-mt.lib;vendor\physx_x64-windows\lib\LowLevel_static_64.lib;vendor\physx_x64-windows\lib\LowLevelAABB_static_64.lib;vendor\physx_x64-windows\lib\LowLevelDynamics_static_64.lib;vendor\physx_x64-windows\lib\PhysX_64.lib;vendor\physx_x64-windows\lib\PhysXCharacterKinematic_static_64.lib;vendor\physx_x64-windows\lib\PhysXCommon_64.lib;vendor\physx_x64-windows\lib\PhysXCooking_64.lib;vendor\physx_x64-windows\lib\PhysXExtensions_static_64.lib;vendor\physx_x64-windows\lib\PhysXFoundation_64.lib;vendor\physx_x64-windows\lib\PhysXPvdSDK_static_64.lib;vendor\physx_x64-windows\lib\PhysXTask_static_64.lib;vendor\physx_x64-windows\lib\PhysXVehicle_static_64.lib;vendor\physx_x64-windows\lib\SceneQuery_static_64.lib;vendor\physx_x64-windows\lib\SimulationController_static_64.lib;vendor\oidn\lib\OpenImageDenoise.lib;vendor\oidn\lib\OpenImageDenoise_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;Normaliz.lib;Ws2_32.lib;Wldap32.lib;Crypt32.lib;advapi32.lib;vendor\Curl\lib\libcurl_a_debug.lib;vendor\assimp\lib\x64\assimp-vc143-mt.lib;vendor\physx_x64-windows\lib\**.lib;vendor\oidn\lib\OpenImageDenoise.lib;vendor\oidn\lib\OpenImageDenoise_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -116,7 +116,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;Normaliz.lib;Ws2_32.lib;Wldap32.lib;Crypt32.lib;advapi32.lib;vendor\Curl\lib\libcurl_a_debug.lib;vendor\assimp\lib\x64\assimp-vc143-mt.lib;vendor\physx_x64-windows\lib\LowLevel_static_64.lib;vendor\physx_x64-windows\lib\LowLevelAABB_static_64.lib;vendor\physx_x64-windows\lib\LowLevelDynamics_static_64.lib;vendor\physx_x64-windows\lib\PhysX_64.lib;vendor\physx_x64-windows\lib\PhysXCharacterKinematic_static_64.lib;vendor\physx_x64-windows\lib\PhysXCommon_64.lib;vendor\physx_x64-windows\lib\PhysXCooking_64.lib;vendor\physx_x64-windows\lib\PhysXExtensions_static_64.lib;vendor\physx_x64-windows\lib\PhysXFoundation_64.lib;vendor\physx_x64-windows\lib\PhysXPvdSDK_static_64.lib;vendor\physx_x64-windows\lib\PhysXTask_static_64.lib;vendor\physx_x64-windows\lib\PhysXVehicle_static_64.lib;vendor\physx_x64-windows\lib\SceneQuery_static_64.lib;vendor\physx_x64-windows\lib\SimulationController_static_64.lib;vendor\oidn\lib\OpenImageDenoise.lib;vendor\oidn\lib\OpenImageDenoise_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;Normaliz.lib;Ws2_32.lib;Wldap32.lib;Crypt32.lib;advapi32.lib;vendor\Curl\lib\libcurl_a_debug.lib;vendor\assimp\lib\x64\assimp-vc143-mt.lib;vendor\physx_x64-windows\lib\**.lib;vendor\oidn\lib\OpenImageDenoise.lib;vendor\oidn\lib\OpenImageDenoise_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -142,7 +142,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;Normaliz.lib;Ws2_32.lib;Wldap32.lib;Crypt32.lib;advapi32.lib;vendor\Curl\lib\libcurl_a_debug.lib;vendor\assimp\lib\x64\assimp-vc143-mt.lib;vendor\physx_x64-windows\lib\LowLevel_static_64.lib;vendor\physx_x64-windows\lib\LowLevelAABB_static_64.lib;vendor\physx_x64-windows\lib\LowLevelDynamics_static_64.lib;vendor\physx_x64-windows\lib\PhysX_64.lib;vendor\physx_x64-windows\lib\PhysXCharacterKinematic_static_64.lib;vendor\physx_x64-windows\lib\PhysXCommon_64.lib;vendor\physx_x64-windows\lib\PhysXCooking_64.lib;vendor\physx_x64-windows\lib\PhysXExtensions_static_64.lib;vendor\physx_x64-windows\lib\PhysXFoundation_64.lib;vendor\physx_x64-windows\lib\PhysXPvdSDK_static_64.lib;vendor\physx_x64-windows\lib\PhysXTask_static_64.lib;vendor\physx_x64-windows\lib\PhysXVehicle_static_64.lib;vendor\physx_x64-windows\lib\SceneQuery_static_64.lib;vendor\physx_x64-windows\lib\SimulationController_static_64.lib;vendor\oidn\lib\OpenImageDenoise.lib;vendor\oidn\lib\OpenImageDenoise_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;Normaliz.lib;Ws2_32.lib;Wldap32.lib;Crypt32.lib;advapi32.lib;vendor\Curl\lib\libcurl_a_debug.lib;vendor\assimp\lib\x64\assimp-vc143-mt.lib;vendor\physx_x64-windows\lib\**.lib;vendor\oidn\lib\OpenImageDenoise.lib;vendor\oidn\lib\OpenImageDenoise_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -236,21 +236,7 @@
     <ClInclude Include="vendor\Curl\include\curl\typecheck-gcc.h" />
     <ClInclude Include="vendor\Curl\include\curl\urlapi.h" />
     <ClInclude Include="vendor\Curl\include\curl\websockets.h" />
-    <ClInclude Include="vendor\ImGuizmo\GraphEditor.h" />
-    <ClInclude Include="vendor\ImGuizmo\ImCurveEdit.h" />
-    <ClInclude Include="vendor\ImGuizmo\ImGradient.h" />
     <ClInclude Include="vendor\ImGuizmo\ImGuizmo.h" />
-    <ClInclude Include="vendor\ImGuizmo\ImSequencer.h" />
-    <ClInclude Include="vendor\ImGuizmo\ImZoomSlider.h" />
-    <ClInclude Include="vendor\ImGuizmo\example\ImApp.h" />
-    <ClInclude Include="vendor\ImGuizmo\example\imconfig.h" />
-    <ClInclude Include="vendor\ImGuizmo\example\imgui.h" />
-    <ClInclude Include="vendor\ImGuizmo\example\imgui_internal.h" />
-    <ClInclude Include="vendor\ImGuizmo\example\imstb_rectpack.h" />
-    <ClInclude Include="vendor\ImGuizmo\example\imstb_textedit.h" />
-    <ClInclude Include="vendor\ImGuizmo\example\imstb_truetype.h" />
-    <ClInclude Include="vendor\ImGuizmo\example\stb_image.h" />
-    <ClInclude Include="vendor\ImGuizmo\vcpkg-example\ImApp.h" />
     <ClInclude Include="vendor\assimp\include\assimp\Base64.hpp" />
     <ClInclude Include="vendor\assimp\include\assimp\BaseImporter.h" />
     <ClInclude Include="vendor\assimp\include\assimp\Bitmap.h" />
@@ -355,6 +341,7 @@
     <ClInclude Include="vendor\physx_x64-windows\include\PxBroadPhase.h" />
     <ClInclude Include="vendor\physx_x64-windows\include\PxClient.h" />
     <ClInclude Include="vendor\physx_x64-windows\include\PxConeLimitedConstraint.h" />
+    <ClInclude Include="vendor\physx_x64-windows\include\PxConfig.h" />
     <ClInclude Include="vendor\physx_x64-windows\include\PxConstraint.h" />
     <ClInclude Include="vendor\physx_x64-windows\include\PxConstraintDesc.h" />
     <ClInclude Include="vendor\physx_x64-windows\include\PxContact.h" />
@@ -821,17 +808,7 @@
     <ClCompile Include="src\cnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\GraphEditor.cpp" />
-    <ClCompile Include="vendor\ImGuizmo\ImCurveEdit.cpp" />
-    <ClCompile Include="vendor\ImGuizmo\ImGradient.cpp" />
     <ClCompile Include="vendor\ImGuizmo\ImGuizmo.cpp" />
-    <ClCompile Include="vendor\ImGuizmo\ImSequencer.cpp" />
-    <ClCompile Include="vendor\ImGuizmo\example\imgui.cpp" />
-    <ClCompile Include="vendor\ImGuizmo\example\imgui_demo.cpp" />
-    <ClCompile Include="vendor\ImGuizmo\example\imgui_draw.cpp" />
-    <ClCompile Include="vendor\ImGuizmo\example\imgui_tables.cpp" />
-    <ClCompile Include="vendor\ImGuizmo\example\imgui_widgets.cpp" />
-    <ClCompile Include="vendor\ImGuizmo\example\main.cpp" />
     <ClCompile Include="vendor\jsoncpp\jsoncpp.cpp" />
     <ClCompile Include="vendor\stb\stb.cpp" />
     <ClCompile Include="vendor\stb\stb_impl.cpp" />

@@ -9,7 +9,6 @@
 #include "Crimson/Renderer/Material.h"
 #include "Crimson/Core/ResourceManager.h"
 
-#pragma comment(lib, "yaml-cpp.lib")
 
 namespace YAML {
 
@@ -463,6 +462,8 @@ namespace Crimson {
 		std::string albedo_path = data["Albedo Map"].as<std::string>();
 		std::string normal_path = data["Normal Map"].as<std::string>();
 		std::string roughness_path = data["Roughness Map"].as<std::string>();
+
+		CN_CORE_TRACE("DeSerializingMaterial {0}", filepath)
 		material.SetTexturePaths(albedo_path, normal_path, roughness_path);
 		//TODO Shader
 

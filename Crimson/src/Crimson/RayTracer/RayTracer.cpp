@@ -188,6 +188,7 @@ namespace Crimson
 		{
 			if (sample_count % 15 == 0) //after 15 sample denoise
 			{
+				/*
 				// Create an Open Image Denoise device
 				oidn::DeviceRef device = oidn::newDevice(oidn::DeviceType::CUDA); // CPU or GPU if available
 				device.commit();
@@ -218,6 +219,7 @@ namespace Crimson
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 				m_Output_TextureID = m_Denoised_TextureID;
+				*/
 			}
 
 		}

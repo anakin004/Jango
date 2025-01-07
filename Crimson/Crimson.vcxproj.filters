@@ -64,12 +64,6 @@
     <Filter Include="vendor\ImGuizmo">
       <UniqueIdentifier>{73BF7F4C-DF4A-ED10-E85B-700554664911}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vendor\ImGuizmo\example">
-      <UniqueIdentifier>{4E948965-BACB-D1FC-C3D5-35202F8CF8F5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vendor\ImGuizmo\vcpkg-example">
-      <UniqueIdentifier>{F633CAB3-624C-B1DD-2BF9-407797D04577}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vendor\assimp">
       <UniqueIdentifier>{6F57A1F8-DB17-1D2F-A452-66AC10D2610B}</UniqueIdentifier>
     </Filter>
@@ -510,50 +504,8 @@
     <ClInclude Include="vendor\Curl\include\curl\websockets.h">
       <Filter>vendor\Curl\include\curl</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\GraphEditor.h">
-      <Filter>vendor\ImGuizmo</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\ImCurveEdit.h">
-      <Filter>vendor\ImGuizmo</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\ImGradient.h">
-      <Filter>vendor\ImGuizmo</Filter>
-    </ClInclude>
     <ClInclude Include="vendor\ImGuizmo\ImGuizmo.h">
       <Filter>vendor\ImGuizmo</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\ImSequencer.h">
-      <Filter>vendor\ImGuizmo</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\ImZoomSlider.h">
-      <Filter>vendor\ImGuizmo</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\example\ImApp.h">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\example\imconfig.h">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\example\imgui.h">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\example\imgui_internal.h">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\example\imstb_rectpack.h">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\example\imstb_textedit.h">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\example\imstb_truetype.h">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\example\stb_image.h">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\ImGuizmo\vcpkg-example\ImApp.h">
-      <Filter>vendor\ImGuizmo\vcpkg-example</Filter>
     </ClInclude>
     <ClInclude Include="vendor\assimp\include\assimp\Base64.hpp">
       <Filter>vendor\assimp\include\assimp</Filter>
@@ -865,6 +817,9 @@
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxConeLimitedConstraint.h">
+      <Filter>vendor\physx_x64-windows\include</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\physx_x64-windows\include\PxConfig.h">
       <Filter>vendor\physx_x64-windows\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\physx_x64-windows\include\PxConstraint.h">
@@ -2255,38 +2210,8 @@
     <ClCompile Include="src\cnpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\GraphEditor.cpp">
-      <Filter>vendor\ImGuizmo</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\ImCurveEdit.cpp">
-      <Filter>vendor\ImGuizmo</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\ImGradient.cpp">
-      <Filter>vendor\ImGuizmo</Filter>
-    </ClCompile>
     <ClCompile Include="vendor\ImGuizmo\ImGuizmo.cpp">
       <Filter>vendor\ImGuizmo</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\ImSequencer.cpp">
-      <Filter>vendor\ImGuizmo</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\example\imgui.cpp">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\example\imgui_demo.cpp">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\example\imgui_draw.cpp">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\example\imgui_tables.cpp">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\example\imgui_widgets.cpp">
-      <Filter>vendor\ImGuizmo\example</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\ImGuizmo\example\main.cpp">
-      <Filter>vendor\ImGuizmo\example</Filter>
     </ClCompile>
     <ClCompile Include="vendor\jsoncpp\jsoncpp.cpp">
       <Filter>vendor\jsoncpp</Filter>

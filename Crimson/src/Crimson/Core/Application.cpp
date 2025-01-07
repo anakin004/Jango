@@ -20,6 +20,7 @@ namespace Crimson {
 
 	Application* Application::getApplication;
 	TimeStep Application::deltaTime(0.0);
+
 	Application::Application()
 	{
 		getApplication = this;
@@ -27,7 +28,7 @@ namespace Crimson {
 		m_window->SetEventCallback(CN_BIND_FN(OnEvent));
 		//m_window->SetVsync(true);
 		Renderer::Init();//initilize the scene , enable blending,get gpu info,set culling dist
-
+		CN_CORE_INFO("Renderer Initialized!");
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 	}

@@ -16,7 +16,7 @@ LoadMesh* mesh;
  CrimsonEditor::CrimsonEditor()
 	:Layer("Renderer2D layer"), m_camera(1920.0 / 1080.0)
 {
-	//CN_PROFILE_SCOPE("  CrimsonEditor()");
+	CN_PROFILE_SCOPE("CrimsonEditor()");
 	level_map =
 		"llllllllllllllllllllllllllllll"
 		"lllmlllllllwwwwwllllllllllllll"
@@ -60,11 +60,17 @@ LoadMesh* mesh;
 	m_FrameBuffer2 = FrameBuffer::Create({ (unsigned int)viewportSize.x,(unsigned int)viewportSize.y });
 	m_FrameBuffer3 = FrameBuffer::Create({ (unsigned int)viewportSize.x,(unsigned int)viewportSize.y });
 
+	CN_CORE_INFO("Frame Buffers and SubTextures Created : CrimsonEditor()")
+
 }
 
  void CrimsonEditor::OnAttach()
  {
+	 CN_CORE_INFO("Creating Scene : Editor -> OnAttach")
+
 	 m_scene = Scene::Create();
+	 CN_CORE_ASSERT(m_scene, "Scene Failed to Create! : Editor -> OnAttach")
+	 CN_CORE_INFO("Scene Created!")
 
 	//Square_entity = m_scene->CreateEntity("Square");
 	//

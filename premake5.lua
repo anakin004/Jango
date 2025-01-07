@@ -75,8 +75,8 @@ project "Crimson"
 		"%{IncludeDir.Physx}/**.cpp",
 		"%{IncludeDir.oidn}/**.h",
 		"%{IncludeDir.oidn}/**.hpp",
-		"%{IncludeDir.ImGuizmo}/**.h",
-		"%{IncludeDir.ImGuizmo}/**.cpp",
+		"%{IncludeDir.ImGuizmo}/ImGuizmo.h",
+		"%{IncludeDir.ImGuizmo}/ImGuizmo.cpp",
 		"%{IncludeDir.Stb}/**.h",
 		"%{IncludeDir.Stb}/**.cpp",
 		"%{IncludeDir.yaml}/**.h",
@@ -122,20 +122,7 @@ project "Crimson"
 		"advapi32.lib",
 		"Crimson/vendor/Curl/lib/libcurl_a_debug.lib",
 		"Crimson/vendor/assimp/lib/x64/assimp-vc143-mt.lib",
-		"Crimson/vendor/physx_x64-windows/lib/LowLevel_static_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/LowLevelAABB_static_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/LowLevelDynamics_static_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/PhysX_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/PhysXCharacterKinematic_static_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/PhysXCommon_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/PhysXCooking_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/PhysXExtensions_static_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/PhysXFoundation_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/PhysXPvdSDK_static_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/PhysXTask_static_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/PhysXVehicle_static_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/SceneQuery_static_64.lib",
-		"Crimson/vendor/physx_x64-windows/lib/SimulationController_static_64.lib",
+		"Crimson/vendor/physx_x64-windows/lib/**.lib",
 		"Crimson/vendor/oidn/lib/OpenImageDenoise.lib",
 		"Crimson/vendor/oidn/lib/OpenImageDenoise_core.lib",
 	}
@@ -288,6 +275,17 @@ project "Crimson_Editor"
 		"%{IncludeDir.Physx}",
 		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.yaml}",
+	}
+
+	postbuildcommands
+	{
+		-- Print the paths being used
+		'echo %{wks.location}/Crimson/vendor/assimp/dll/*.dll',
+		'echo %{cfg.targetdir}/',
+
+		-- Attempt to copy DLL files
+		'{COPY} "%{wks.location}/Crimson/vendor/assimp/dll/*.dll" "%{cfg.targetdir}/"',
+		'{COPY} "%{wks.location}/Crimson/vendor/physx_x64-windows/dll/*.dll" "%{cfg.targetdir}/"'
 	}
 
 	links
