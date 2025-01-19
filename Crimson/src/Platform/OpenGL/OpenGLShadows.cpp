@@ -46,8 +46,8 @@ namespace Crimson {
 
 				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_id[i], 0);
 				if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-					//CN_CORE_INFO("Shadow Map FrameBuffer Complete");
-					1;
+					CN_CORE_INFO("Shadow Map FrameBuffer Complete");
+			
 
 				glClear(GL_DEPTH_BUFFER_BIT);
 				//glCullFace(GL_FRONT);
@@ -102,20 +102,20 @@ namespace Crimson {
 
 			glClear(GL_DEPTH_BUFFER_BIT);
 
-			//terrain_shadowShader->Bind();
-			//terrain_shadowShader->SetMat4("LightProjection", LightProjection);
-			//terrain_shadowShader->SetInt("u_HeightMap", HEIGHT_MAP_TEXTURE_SLOT);
-			//terrain_shadowShader->SetFloat("HEIGHT_SCALE", Terrain::HeightScale);
-			//terrain_shadowShader->SetMat4("u_Model", Terrain::m_terrainModelMat);
-			//terrain_shadowShader->SetMat4("u_View", cam.GetViewMatrix());
+			terrain_shadowShader->Bind();
+			terrain_shadowShader->SetMat4("LightProjection", LightProjection);
+			terrain_shadowShader->SetInt("u_HeightMap", HEIGHT_MAP_TEXTURE_SLOT);
+			terrain_shadowShader->SetFloat("HEIGHT_SCALE", Terrain::HeightScale);
+			terrain_shadowShader->SetMat4("u_Model", Terrain::m_terrainModelMat);
+			terrain_shadowShader->SetMat4("u_View", cam.GetViewMatrix());
 
 			//render terrain
 			//Needs change as I cannot just make terrain vertex array and terrain data public static
-			//glDisable(GL_CULL_FACE);
-			//glCullFace(GL_FRONT);
-			//RenderCommand::DrawArrays(*Terrain::m_terrainVertexArray, Terrain::terrainData.size(), GL_PATCHES, 0);
-			//glEnable(GL_CULL_FACE);
-			//glCullFace(GL_BACK);
+			glDisable(GL_CULL_FACE);
+			glCullFace(GL_FRONT);
+			RenderCommand::DrawArrays(*Terrain::m_terrainVertexArray, Terrain::terrainData.size(), GL_PATCHES, 0);
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
 
 			//scene entity shadow caster
 			shadow_shader->Bind();

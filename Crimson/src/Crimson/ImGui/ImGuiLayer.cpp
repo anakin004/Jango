@@ -16,7 +16,7 @@ namespace Crimson {
 	#define BIND_FUNC(x) std::bind(&ImGuiLayer::x,this,std::placeholders::_1)
 
 
-	ImFont* ImGuiLayer::m_Font = nullptr;
+	ImFont* ImGuiLayer::s_Font = nullptr;
 
 	ImGuiLayer::ImGuiLayer()
 		:Layer("ImGuiLayer")
@@ -74,7 +74,7 @@ namespace Crimson {
 		//io.ConfigViewportsNoTaskBarIcon = true;
 
 		io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Font/OpenSans-Bold.ttf", 18.0f);
-		m_Font = io.Fonts->AddFontFromFileTTF("Assets/Font/OpenSans-ExtraBold.ttf", 20.0f);
+		s_Font = io.Fonts->AddFontFromFileTTF("Assets/Font/OpenSans-ExtraBold.ttf", 20.0f);
 
 
 		// Setup Dear ImGui style

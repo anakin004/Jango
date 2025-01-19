@@ -43,10 +43,11 @@ namespace Crimson {
 
 	public:
 		std::vector<PointLight*> m_PointLights;
-		static LoadMesh* Sphere, *Sphere_simple, *Cube , *Plane,*plant,*House,* Windmill , *Sponza,
-			*Fern, *Grass, *Grass2, *Grass3,*GroundPlant,
-			*Tree1, *Tree2, *Tree3, *Tree4, *Tree5, *TreeDead,
-			*Bush1, *Bush2, *Rock1, *Rock2, *Flower1, *Flower2;
+		static LoadMesh* Sphere, * Sphere_simple, * Cube, * Plane, * plant, * House, * Windmill, * Sponza, * Flower,
+			* Fern, * Grass, * Grass2, * Grass3, * GroundPlant,
+			* Tree, * Tree1, * Tree2, * Tree3, * Tree4, * Tree5, * TreeDead,
+			* Bush1, * Bush2, * Rock1, * Rock2, * Flower1, * Flower2,
+			* Freddy;
 		static unsigned int m_Scene_tex_id;
 		static unsigned int m_Scene_depth_id;
 		Ref<FrameBuffer> framebuffer;

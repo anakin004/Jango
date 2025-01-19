@@ -2,4 +2,99 @@ Scene: Untitled
 PointLight:
   []
 Entities:
-  []
+  - Entity: 13212514564232
+    TagComponent:
+      tag: 3rdSquare
+    TransformComponent:
+      Translation: [62.143219, 189.136047, 61.5755005]
+      Rotation: [0, -0, 0]
+      Scale: [1, 1, 1]
+      Transform:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+    CameraComponent:
+      Camera Distance: [0, 2, 2]
+      Follow Player: 0
+      FOV: 213.800003
+      Aspect Ratio: 1.60909855
+      Near: 44444
+      Far: 1052.19995
+      View Direction: [0, 0, 1]
+      Is Main Camera: 0
+    StaticMeshComponent:
+      MeshPath: Assets/Meshes\Cube.asset
+  - Entity: 13212514564232
+    TagComponent:
+      tag: 2ndSquare
+    TransformComponent:
+      Translation: [-1, 0, 5]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+      Transform:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+    CameraComponent:
+      Camera Distance: [0, 2, 2]
+      Follow Player: 1
+      FOV: 90
+      Aspect Ratio: 1.60909855
+      Near: 0.00999999978
+      Far: 1000
+      View Direction: [0, 0, 1]
+      Is Main Camera: 0
+    StaticMeshComponent:
+      MeshPath: Assets/Meshes\Cube.asset
+  - Entity: 13212514564232
+    TagComponent:
+      tag: Camera
+    TransformComponent:
+      Translation: [-6, 171.878555, 0]
+      Rotation: [0, -0, 0]
+      Scale: [1, 1, 1]
+      Transform:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+    CameraComponent:
+      Camera Distance: [0, 2, 2]
+      Follow Player: 1
+      FOV: 90
+      Aspect Ratio: 1.60909855
+      Near: 0.00999999978
+      Far: 1000
+      View Direction: [0, 0, 1]
+      Is Main Camera: 0
+    StaticMeshComponent:
+      MeshPath: Assets/Meshes\Cube.asset
+  - Entity: 13212514564232
+    TagComponent:
+      tag: Square
+    TransformComponent:
+      Translation: [74.4213333, 127.474464, 7.05539894]
+      Rotation: [0, -0, 0]
+      Scale: [1, 1, 1]
+      Transform:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+    SpriteRenderer:
+      Color: [1, 0.200000003, 0, 1]
+      Roughness: 1
+      Metallic: 0
+    CameraComponent:
+      Camera Distance: [0, 2, 2]
+      Follow Player: 1
+      FOV: 90
+      Aspect Ratio: 1.60909855
+      Near: 0.00999999978
+      Far: 1000
+      View Direction: [0, 0, 1]
+      Is Main Camera: 0
+    StaticMeshComponent:
+      MeshPath: Assets/Meshes\Cube.asset

@@ -18,7 +18,7 @@ namespace Crimson {
 		virtual void OnDetach() override;
 		virtual void OnImGuiRender() override;
 
-		static inline ImFont* GetFont() { return m_Font; }
+		static inline ImFont* GetFont() { return s_Font; }
 
 		void Begin();
 		void End();
@@ -29,7 +29,7 @@ namespace Crimson {
 	private:
 
 		bool m_DispatchEvents = false;
-		static ImFont* m_Font;
+		static ImFont* s_Font;
 	};
 
 }

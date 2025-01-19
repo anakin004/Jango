@@ -13,24 +13,23 @@ namespace Crimson {
 	void OrthographicCameraController::OnUpdate(TimeStep deltatime)
 	{
 		if (Input::IsKeyPressed(CRIMSON_KEY_W))
-			v3.y -= m_movespeed * deltatime;
+			m_Position.y -= m_MovementSpeed * deltatime;
 		if (Input::IsKeyPressed(CRIMSON_KEY_S))
-			v3.y += m_movespeed * deltatime;
+			m_Position.y += m_MovementSpeed * deltatime;
 		if (Input::IsKeyPressed(CRIMSON_KEY_A))
-			v3.x -= m_movespeed * deltatime;
+			m_Position.x -= m_MovementSpeed * deltatime;
 		if (Input::IsKeyPressed(CRIMSON_KEY_D))
-			v3.x += m_movespeed * deltatime;
+			m_Position.x += m_MovementSpeed * deltatime;
 
-		if (bCanRotate)
-		{
-			if (Input::IsKeyPressed(CRIMSON_KEY_E))
-				r += 60 * deltatime;
+		if (m_RotationOn) {
 			if (Input::IsKeyPressed(CRIMSON_KEY_Q))
-				r -= 60 * deltatime;
+				m_Rotation += m_RotationSpeed * deltatime;
+			if (Input::IsKeyPressed(CRIMSON_KEY_E))
+				m_Rotation -= m_RotationSpeed * deltatime;
+			m_Camera.SetRotation(m_Rotation);
 		}
 
-		m_Camera.SetPosition(v3);
-		m_Camera.SetRotation(r);
+		m_Camera.SetRotation(m_RotationSpeed);
 	}
 	void OrthographicCameraController::OnEvent(Event& e)
 	{
@@ -38,7 +37,7 @@ namespace Crimson {
 		dispatcher.Dispatch<MouseScrolledEvent>(CN_BIND_FN(ZoomEvent));
 		dispatcher.Dispatch<WindowResizeEvent>(CN_BIND_FN(WindowResize));
 	}
-	void OrthographicCameraController::onResize(float width, float height)
+	void OrthographicCameraController::OnResize(float width, float height)
 	{
 		m_AspectRatio = width / height;
 		m_Camera.SetOrthographicProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
@@ -58,58 +57,10 @@ namespace Crimson {
 	}
 }
 
-// #include "cnpch.h"
+
+
 // 
-// #include "OrthographicCameraController.h"
-// 
-// #include "Crimson/Core/Input.h"
-// #include "Crimson/Core/KeyCodes.h"
-// 
-// 
-// namespace Crimson {
-// 
-// 	OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)
-// 		: m_AspectRatio(aspectRatio), m_Camera(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, m_ZoomLevel, -m_ZoomLevel), m_RotationOn(rotation)
-// 	{
-// 
-// 	}
-// 
-// 
-// 	void OrthographicCameraController::OnUpdate(TimeStep timeStep)
-// 	{
-// 		CN_PROFILE_FUNCTION()
-// 
-// 
-// 		if (Input::IsKeyPressed(CRIMSON_KEY_W))
-// 			m_Position.y += m_CameraSpeed * timeStep;
-// 		if (Input::IsKeyPressed(CRIMSON_KEY_A))
-// 			m_Position.x -= m_CameraSpeed * timeStep;
-// 		if (Input::IsKeyPressed(CRIMSON_KEY_S))
-// 			m_Position.y -= m_CameraSpeed * timeStep;
-// 		if (Input::IsKeyPressed(CRIMSON_KEY_D))
-// 			m_Position.x += m_CameraSpeed * timeStep;
-// 
-// 		if (m_RotationOn) {
-// 			if (Input::IsKeyPressed(CRIMSON_KEY_Q))
-// 				m_Rotation += m_RotationSpeed * timeStep;
-// 			if (Input::IsKeyPressed(CRIMSON_KEY_E))
-// 				m_Rotation -= m_RotationSpeed * timeStep;
-// 			m_Camera.SetRotation(m_Rotation);
-// 		}
-// 
-// 		m_Camera.SetPosition(m_Position);
-// 
-// 	}
-// 
-// 	void OrthographicCameraController::OnEvent(Event& e)
-// 	{
-// 		CN_PROFILE_FUNCTION()
-// 
-// 		EventDispatcher dispatcher(e);
-// 		dispatcher.Dispatch<MouseScrolledEvent>(CN_BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolled));
-// 		dispatcher.Dispatch<WindowResizeEvent>(CN_BIND_EVENT_FN(OrthographicCameraController::OnWindowResize));
-// 	}
-// 
+//  for 2d stuff, depends on api
 // 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 // 	{
 // 		CN_PROFILE_FUNCTION()
@@ -120,13 +71,3 @@ namespace Crimson {
 // 		return false;
 // 	}
 // 
-// 	bool OrthographicCameraController::OnWindowResize(WindowResizeEvent& e)
-// 	{
-// 		CN_PROFILE_FUNCTION()
-// 
-// 		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-// 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, m_ZoomLevel, -m_ZoomLevel);
-// 		return false;
-// 	}
-// 
-// }

@@ -94,14 +94,15 @@ namespace Crimson {
 	struct SpriteRenderer
 	{
 		glm::vec4 Color = glm::vec4(1.0);
+		bool m_WireFrame = false;
 		float m_Roughness = 1.0f;
 		float m_Metallic = 0.0f;
 		float Emission_Scale = 1.0;
 		float Transperancy = 1.0f;
 		Ref<Texture2D> texture = nullptr;
 		SpriteRenderer() = default;
-		SpriteRenderer(const glm::vec4& color, float roughness = 1.0f, float metallic = 0.0f, const Ref<Texture2D> tex = nullptr)
-			:Color(color),texture(tex),m_Metallic(metallic),m_Roughness(roughness)//Gamma correction in color
+		SpriteRenderer(const glm::vec4& color, bool activateWire = false, float roughness = 1.0f, float metallic = 0.0f, const Ref<Texture2D> tex = nullptr)
+			:Color(color), m_WireFrame(activateWire), texture(tex),m_Metallic(metallic),m_Roughness(roughness)//Gamma correction in color
 		{}
 	};
 

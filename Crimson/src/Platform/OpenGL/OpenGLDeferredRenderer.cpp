@@ -105,12 +105,14 @@ namespace Crimson
 
 					if (Entity.HasComponent<SpriteRenderer>()) {
 						auto SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
-						//Renderer3D::SetTransperancy(SpriteRendererComponent.Transperancy);
-						Renderer3D::DrawMesh(*mesh, transform, SpriteRendererComponent.Color * SpriteRendererComponent.Emission_Scale, SpriteRendererComponent.m_Roughness, SpriteRendererComponent.m_Metallic, m_ForwardPassShader);
+						Renderer3D::SetTransperancy(SpriteRendererComponent.Transperancy);
+						Renderer3D::DrawMesh(*mesh, transform, SpriteRendererComponent.Color * SpriteRendererComponent.Emission_Scale, SpriteRendererComponent.m_WireFrame, SpriteRendererComponent.m_Roughness, SpriteRendererComponent.m_Metallic, m_ForwardPassShader);
 					}
 					else {
-						//Renderer3D::SetTransperancy(1.0f);
-						Renderer3D::DrawMesh(*mesh, transform, Entity.m_DefaultColor,1.0f,0.0f,m_ForwardPassShader); // default color, roughness, metallic value
+
+						Renderer3D::SetTransperancy(1.0f);
+						Renderer3D::DrawMesh(*mesh, transform, Entity.m_DefaultColor, false, 1.0f, 0.0f, m_ForwardPassShader); // default color, roughness, metallic value
+						Renderer3D::DrawMesh(*mesh, glm::mat4(1.0f) );
 					}
 				}
 				Renderer3D::EndScene();

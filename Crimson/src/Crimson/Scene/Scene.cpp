@@ -21,6 +21,8 @@
 #include "Crimson/RayTracer/RayTracer.h"
 
 namespace Crimson {
+
+
 	
 	bool Scene::TOGGLE_SHADOWS = true;
 	bool Scene::TOGGLE_SSAO = true;
@@ -29,11 +31,12 @@ namespace Crimson {
 	//std::vector<PointLight*> Scene::m_PointLights;
 	EditorCamera editor_cam;
 
-	 LoadMesh* Scene::Sphere=nullptr, *Scene::Sphere_simple = nullptr, *Scene::Cube= nullptr, *Scene::Plane= nullptr
-		 , *Scene::plant, *Scene::House,*Scene::Windmill, *Scene::Fern,
-		 *Scene::Sponza, *Scene::Grass, *Scene::Grass2, *Scene::Grass3, *Scene::GroundPlant,
-		 *Scene::Tree1, *Scene::Tree2, *Scene::Tree3, *Scene::Tree4, *Scene::Tree5,
-		 *Scene::Bush1, *Scene::Bush2, *Scene::Rock1, *Scene::Rock2, *Scene::Flower1, *Scene::Flower2;
+	LoadMesh* Scene::Sphere = nullptr, * Scene::Sphere_simple = nullptr, * Scene::Cube = nullptr, * Scene::Plane = nullptr
+		, * Scene::plant, * Scene::House, * Scene::Windmill, * Scene::Fern,
+		* Scene::Sponza, * Scene::Grass, * Scene::Grass2, * Scene::Grass3, * Scene::GroundPlant,
+		* Scene::Tree1, * Scene::Tree2, * Scene::Tree3, * Scene::Tree4, * Scene::Tree5,
+		* Scene::Bush1, * Scene::Bush2, * Scene::Rock1, * Scene::Rock2, * Scene::Flower1, * Scene::Flower2,
+		* Scene::Freddy;
 
 	 bool capture = false;
 	 glm::vec3 camloc = { 0.f,0.f,0.f }, camrot = {0.f,0.f,0.f};
@@ -53,7 +56,7 @@ namespace Crimson {
 		SkyRenderer::SetSkyType(SkyType::PROCEDURAL_SKY);
 
 		CN_CORE_TRACE("Initializng SkyRenderer");
-		SkyRenderer::Initilize("Assets/Textures/HDR/rainforest_trail_4k.hdr");
+		SkyRenderer::Initilize("Assets/Textures/HDR/dusk.hdr");
 		CN_CORE_INFO("----SkyRender Initialized!----");
 
 		CN_CORE_TRACE("Initializng 2D and 3D Renderer");
@@ -68,18 +71,18 @@ namespace Crimson {
 		CN_CORE_TRACE("---- Materials Loaded! ----");
 
 		GroundPlant = new LoadMesh("Assets/Meshes/forest_grass1.fbx");
-		//GroundPlant->CreateLOD("Assets/Meshes/flower_LOD1.fbx");
+		GroundPlant->CreateLOD("Assets/Meshes/flower_LOD1.fbx");
 
 
-		Sphere = new LoadMesh("Assets/Meshes/10-Car.fbx");
+		Sphere = new LoadMesh("Assets/Meshes/Sphere.fbx");
 		Sphere_simple = new LoadMesh("Assets/Meshes/sphere_simple.fbx");
-		//Plane = new LoadMesh("Assets/Meshes/Plane.fbx");
+		Plane = new LoadMesh("Assets/Meshes/Plane.fbx");
 		Cube = new LoadMesh("Assets/Meshes/Cube.fbx");
 		//Trees
 		Tree1 = new LoadMesh("Assets/Meshes/forest_PineTree1.fbx");
-		//Tree1->CreateLOD("Assets/Meshes/forest_PineTree1_LOD1.fbx");
+		Tree1->CreateLOD("Assets/Meshes/forest_PineTree1_LOD1.fbx");
 		Tree2 = new LoadMesh("Assets/Meshes/forest_PineTree2.fbx");
-		//Tree2->CreateLOD("Assets/Meshes/forest_PineTree2_LOD1.fbx");
+		Tree2->CreateLOD("Assets/Meshes/forest_PineTree2_LOD1.fbx");
 		Tree3 = new LoadMesh("Assets/Meshes/forest_PineTree3.fbx");
 		Tree3->CreateLOD("Assets/Meshes/forest_PineTree3_LOD1.fbx");
 		Tree4 = new LoadMesh("Assets/Meshes/forest_Tree.fbx");
@@ -105,13 +108,15 @@ namespace Crimson {
 		Flower1 = new LoadMesh("Assets/Meshes/forest_flower1.fbx");
 		Flower2 = new LoadMesh("Assets/Meshes/forest_flower2.fbx");
 		
-		//Grass->CreateLOD("Assets/Meshes/grass3_LOD1.fbx");
+		Grass->CreateLOD("Assets/Meshes/grass3_LOD1.fbx");
 		plant = new LoadMesh("Assets/Meshes/dragon.fbx");
 		House = new LoadMesh("Assets/Meshes/house.fbx");
 		Fern = new LoadMesh("Assets/Meshes/forest_Fern.fbx");
-		//Fern->CreateLOD("Assets/Meshes/Fern_LOD1.fbx");
+		Fern->CreateLOD("Assets/Meshes/Fern_LOD1.fbx");
+
+		Freddy = new LoadMesh("Assets/Meshes/Bonnie.fbx");
 		
-		//Windmill = new LoadMesh("Assets/Meshes/Windmill.fbx");
+		Windmill = new LoadMesh("Assets/Meshes/Windmill.fbx");
 		Sponza = new LoadMesh("Assets/Meshes/Sponza.fbx", LoadMesh::IMPORT_MESH);
 		Renderer3D::SetUpCubeMapReflections(*this);
 		editor_cam.SetVerticalFOV(45.f);
@@ -126,9 +131,14 @@ namespace Crimson {
 		m_Fog = Fog::Create(fogDensity,30.f, 5000.f, 100.f,10.f, { 1920.f,1080.f });
 		m_rayTracer = std::make_shared<RayTracer>();
 	}
+
+
 	Scene::~Scene()
 	{
 	}
+
+
+
 	Entity* Scene::CreateEntity(const std::string& name)
 	{
 		m_entity = m_registry.create();
@@ -205,15 +215,15 @@ namespace Crimson {
 			Renderer3D::SetPointLightPosition(m_PointLights);
 
 		////debug physics
-		//Renderer2D::BeginScene(*MainCamera);
-		//for (int i = 0; i < Physics3D::DebugPoints.size(); i++)
-		//{
-		//	Renderer2D::DrawLine(Physics3D::DebugPoints[i].pos0, Physics3D::DebugPoints[i].pos1, glm::vec4(0.0, 1.0, 0.6, 1.0));
-		//}
+		Renderer2D::BeginScene(*MainCamera);
+		for (int i = 0; i < Physics3D::DebugPoints.size(); i++)
+		{
+			Renderer2D::DrawLine(Physics3D::DebugPoints[i].pos0, Physics3D::DebugPoints[i].pos1, glm::vec4(0.0, 1.0, 0.6, 1.0));
+		}
 
 		Renderer3D::SetSunLightDirection(Renderer3D::m_SunLightDir);
 		Renderer3D::SetSunLightColorAndIntensity(Renderer3D::m_SunColor, Renderer3D::m_SunIntensity);
-		//m_rayTracer->RenderImage(*MainCamera);
+		m_rayTracer->RenderImage(*MainCamera);
 	}
 	void Scene::OnCreate()
 	{

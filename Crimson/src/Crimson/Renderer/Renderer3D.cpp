@@ -75,7 +75,7 @@ namespace Crimson {
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				//Loading cube map so that it can act as an environment light
-				//m_data->reflection = CubeMapReflection::Create();
+		m_data->reflection = CubeMapReflection::Create();
 		m_data->taa = Antialiasing::Create(width, height);
 		m_data->ssao = std::make_shared<OpenGLSSAO>(width / 2, height / 2);
 		m_data->shadow_map = Shadows::Create(2048 * 2.0, 2048 * 2.0);//create a 2048x2048 shadow map
@@ -108,7 +108,7 @@ namespace Crimson {
 			otherShader->SetMat4("u_ProjectionView", camera.GetProjectionView());//here the projection is ProjectionView
 			otherShader->SetMat4("u_View", camera.GetViewMatrix());
 			otherShader->SetMat4("u_oldProjectionView", m_oldProjectionView);
-			//otherShader->SetFloat3("EyePosition", camera.GetCameraPosition());//get the eye position for specular lighting calculation
+			otherShader->SetFloat3("EyePosition", camera.GetCameraPosition());//get the eye position for specular lighting calculation
 		}
 	}
 
@@ -216,10 +216,11 @@ namespace Crimson {
 		DefferedRenderer::GetDeferredPassShader()->SetInt("Num_PointLights", pos.size());
 	}
 
-	void Renderer3D::DrawMesh(LoadMesh& mesh, glm::mat4& transform, const glm::vec4& color, const float& material_Roughness, const float& material_metallic, Ref<Shader> otherShader)
+	void Renderer3D::DrawMesh(LoadMesh& mesh, glm::mat4& transform, const glm::vec4& color, bool wireframe, const float& material_Roughness, const float& material_metallic, Ref<Shader> otherShader)
 	{
 		for (auto& sub_mesh : mesh.m_subMeshes)
 		{
+
 			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.m_MaterialID];
 
 			if (!material) {
@@ -230,28 +231,41 @@ namespace Crimson {
 			material->Roughness_Texture->Bind(ROUGHNESS_SLOT);
 			material->Normal_Texture->Bind(NORMAL_SLOT);
 
+			
 			if (!otherShader) //shader will be defined from material
 			{
-				m_data->shader->SetFloat("Roughness", material->GetRoughness()); //send the roughness value
-				m_data->shader->SetFloat("Metallic", material->GetMetalness()); //send the metallic value
+				m_data->shader->Bind();
+				//m_data->shader->SetFloat("Roughness", material->GetRoughness()); //send the roughness value
+				m_data->shader->SetFloat("Roughness",  material_Roughness); //send the roughness value
+				//m_data->shader->SetFloat("Metallic", material->GetMetalness()); //send the metallic value
+				m_data->shader->SetFloat("Metallic", material_metallic); //send the metallic value
 				m_data->shader->SetInt("u_Albedo", ALBEDO_SLOT);//bind albedo texture array to slot1;
 				m_data->shader->SetInt("u_Roughness", ROUGHNESS_SLOT);
 				m_data->shader->SetInt("u_NormalMap", NORMAL_SLOT);
 				m_data->shader->SetMat4("u_Model", transform);
-				m_data->shader->SetFloat4("m_color", material->GetColor());
+				//m_data->shader->SetFloat4("m_color", material->GetColor());
+				m_data->shader->SetFloat4("m_color", color);
 			}
 			else
 			{
-				otherShader->SetFloat("Roughness", material->GetRoughness()); //send the roughness value
-				otherShader->SetFloat("Metallic", material->GetMetalness()); //send the metallic value
+				otherShader->Bind();
+				//otherShader->SetFloat("Roughness", material->GetRoughness()); //send the roughness value
+				otherShader->SetFloat("Roughness", material_Roughness); //send the roughness value
+				//otherShader->SetFloat("Metallic", material->GetMetalness()); //send the metallic value
+				otherShader->SetFloat("Metallic", material_metallic); //send the metallic value
 				otherShader->SetInt("u_Albedo", ALBEDO_SLOT);//bind albedo texture array to slot1;
 				otherShader->SetInt("u_Roughness", ROUGHNESS_SLOT);
 				otherShader->SetInt("u_NormalMap", NORMAL_SLOT);
 				otherShader->SetMat4("u_Model", transform);
-				otherShader->SetFloat4("m_color", material->GetColor());
+				//otherShader->SetFloat4("m_color", material->GetColor());
+				otherShader->SetFloat4("m_color", color);
 			}
 
-			RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.numVertices);
+
+			if( wireframe )
+				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.numVertices, GL_LINES, 0);
+			else
+				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.numVertices);
 		}
 	}
 

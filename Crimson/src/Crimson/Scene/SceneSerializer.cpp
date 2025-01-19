@@ -343,10 +343,11 @@ namespace Crimson {
 				if (SpriteRenderComp)
 				{
 					glm::vec4 color = SpriteRenderComp["Color"].as<glm::vec4>();
+					bool wire = SpriteRenderComp["WireFrame"].as<bool>();
 					float roughness = SpriteRenderComp["Roughness"].as<float>();
 					float metallic = SpriteRenderComp["Metallic"].as<float>();
 
-					DeserializedEntity->AddComponent<SpriteRenderer>(color, roughness, metallic);
+					DeserializedEntity->AddComponent<SpriteRenderer>(color, wire, roughness, metallic);
 				}
 				auto ScriptComp = entity["ScriptComponent"];
 				if (ScriptComp)

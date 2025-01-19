@@ -8,6 +8,7 @@
 #include "Crimson/Renderer/SkyRenderer.h"
 #include "Crimson/Renderer/Fog.h"
 #include "Crimson/RayTracer/RayTracer.h"
+#include "CustomScript.h"
 
 //#include "Crimson/Debug/Profiling.h"
 
@@ -72,32 +73,35 @@ LoadMesh* mesh;
 	 CN_CORE_ASSERT(m_scene, "Scene Failed to Create! : Editor -> OnAttach")
 	 CN_CORE_INFO("Scene Created!")
 
-	//Square_entity = m_scene->CreateEntity("Square");
+	Square_entity = m_scene->CreateEntity("Square");
 	//
-	//Square_entity->AddComponent<TransformComponent>(glm::vec3(5,-2,0));
-	//Square_entity->AddComponent<CameraComponent>();
-	//Square_entity->AddComponent<SpriteRenderer>(glm::vec4(1, 0.2, 0, 1));
+	Square_entity->AddComponent<TransformComponent>(glm::vec3(5,-2,0));
+	Square_entity->AddComponent<CameraComponent>();
+	Square_entity->AddComponent<SpriteRenderer>(glm::vec4(1, 0.2, 0, 1));
 	//
-	// camera_entity = m_scene->CreateEntity("Camera");//create the camera entity
-	// camera_entity->AddComponent<TransformComponent>(glm::vec3(-6,-1,0));
-	// camera_entity->AddComponent<CameraComponent>();
+	 camera_entity = m_scene->CreateEntity("Camera");//create the camera entity
+	 camera_entity->AddComponent<TransformComponent>(glm::vec3(-6,-1,0));
+	 camera_entity->AddComponent<CameraComponent>();
 	//
-	// camera_entity->GetComponent<CameraComponent>().camera.bIsMainCamera = false;
-	// camera_entity->GetComponent<CameraComponent>().camera.SetOrthographic(50);
+	 camera_entity->GetComponent<CameraComponent>().camera.bIsMainCamera = false;
+	 camera_entity->GetComponent<CameraComponent>().camera.SetOrthographic(50);
 	//
-	// Square2 = m_scene->CreateEntity("2ndSquare");
-	// Square2->AddComponent<TransformComponent>(glm::vec3(-1,0,5));
-	// Square2->AddComponent<CameraComponent>();
-	// //Square2->GetComponent<CameraComponent>();
+	 Square2 = m_scene->CreateEntity("2ndSquare");
+	 Square2->AddComponent<TransformComponent>(glm::vec3(-1,0,5));
+	 Square2->AddComponent<CameraComponent>();
+	 Square2->AddComponent<SpriteRenderer>();
 	//
-	// Square3 = m_scene->CreateEntity("3rdSquare");
-	// Square3->AddComponent<TransformComponent>(glm::vec3(-2,0,-5));
-//....................script......................................................................
+	 Square3 = m_scene->CreateEntity("3rdSquare");
+	 Square3->AddComponent<TransformComponent>(glm::vec3(-2,0,-5));
+
+	//....................script......................................................................
 
 	 //.........................script.........................................................
+
 	//Square_entity->AddComponent<ScriptComponent>().Bind<(CustomScript)>();
-	 //Square3->AddComponent<ScriptComponent>().Bind<CustomScript>();
-	//Square3->AddComponent<CameraComponent>();
+	// Square3->AddComponent<ScriptComponent>().Bind<CustomScript>();
+	 Square3->AddComponent<CameraComponent>();
+	 //Square3->AddComponent<SpriteRenderer>(glm::vec4(1, 0.2, 0, 1));
 	 //CN_WARN(typeid(CustomScript).raw_name());
 	 m_Pannel.Context(m_scene);
  }
@@ -151,7 +155,7 @@ void CrimsonEditor::OnImGuiRender()
 		m_FrameBuffer3->Resize(m_ViewportSize.x, m_ViewportSize.y);
 		m_FrameBuffer->Resize(m_ViewportSize.x, m_ViewportSize.y);
 		numFrame = 0;
-		m_camera.onResize(Size.x, Size.y);
+		m_camera.OnResize(Size.x, Size.y);
 	}
 	ImGui::Image((m_FrameBuffer->GetSceneTextureID()), *(ImVec2*)&m_ViewportSize);
 
@@ -261,7 +265,7 @@ void CrimsonEditor::OnImGuiRender()
 	ImGui::TextColored({ 0,1,0,1 }, std::to_string(frame_time).c_str());
 	ImGui::Checkbox("Simulate Physics", &Physics3D::SimulatePhysics);
 	
-	ImGui::DragFloat("FOG DENSITY", &m_scene->fogDensity, 0.00001);
+	ImGui::DragFloat("FOG DENSITY", &m_scene->fogDensity, 1);
 	ImGui::DragFloat("FOG END", &m_scene->fogEnd, 0.1);
 	ImGui::DragFloat("FOG TOP", &m_scene->fogTop, 0.1);
 	ImGui::ColorEdit3("FOG COLOR", glm::value_ptr(m_scene->fogColor));

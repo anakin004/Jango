@@ -48,7 +48,7 @@ namespace Crimson
 	{
 		Assimp::Importer importer;
 
-		const aiScene* scene = importer.ReadFile(Path, aiProcess_OptimizeGraph | aiProcess_FixInfacingNormals | aiProcess_SplitLargeMeshes | aiProcess_CalcTangentSpace);
+		const aiScene* scene = importer.ReadFile(Path, aiProcess_Triangulate | aiProcess_OptimizeGraph | aiProcess_SplitLargeMeshes | aiProcess_CalcTangentSpace);
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
 			CN_CORE_ERROR("ERROR::ASSIMP::");
@@ -111,17 +111,11 @@ namespace Crimson
 
 			for (int k = 0; k < m_Mesh[i]->mNumVertices; k++)
 			{
-				aiVector3D aivertices = m_Mesh[i]->mVertices[k];
-				glm::vec4 pos = GlobalTransform * glm::vec4(aivertices.x, aivertices.y, aivertices.z, 1.0);
+				aiVector3D aivertice = m_Mesh[i]->mVertices[k];
+				glm::vec4 pos = GlobalTransform * glm::vec4(aivertice.x, aivertice.y, aivertice.z, 1.0);
 				Bounds mesh_bounds(glm::vec3(pos.x, pos.y, pos.z));
 				m_subMeshes[material_ind].mesh_bounds.Union(mesh_bounds);
 				m_subMeshes[material_ind].Vertices.push_back({ pos.x,pos.y,pos.z });
-
-				if (m_Mesh[i]->HasNormals()) {
-					aiVector3D ainormal = m_Mesh[i]->mNormals[k];
-					glm::vec4 norm = GlobalTransform * glm::vec4(ainormal.x, ainormal.y, ainormal.z, 0.0);
-					m_subMeshes[material_ind].Normal.push_back({ norm.x,norm.y,norm.z });
-				}
 
 				glm::vec2 coord(0.0f);
 				if (m_Mesh[i]->mTextureCoords[0])
@@ -134,6 +128,14 @@ namespace Crimson
 				else
 					m_subMeshes[material_ind].TexCoord.push_back(coord);
 
+
+				if (m_Mesh[i]->HasNormals()) {
+					aiVector3D ainormal = m_Mesh[i]->mNormals[k];
+					glm::vec4 norm = GlobalTransform * glm::vec4(ainormal.x, ainormal.y, ainormal.z, 0.0);
+					m_subMeshes[material_ind].Normal.push_back({ norm.x,norm.y,norm.z });
+				}
+
+
 				if (m_Mesh[i]->HasTangentsAndBitangents())
 				{
 					aiVector3D tangent = m_Mesh[i]->mTangents[k];
@@ -143,7 +145,6 @@ namespace Crimson
 
 					m_subMeshes[material_ind].Tangent.push_back({ tan.x, tan.y, tan.z });
 					m_subMeshes[material_ind].BiTangent.push_back({ bitan.x,bitan.y,bitan.z });
-					//m_Mesh[i]->biTange
 				}
 				else
 				{
@@ -152,12 +153,6 @@ namespace Crimson
 				}
 			}
 			total_bounds.Union(m_subMeshes[material_ind].mesh_bounds);
-			//for (int k = 0; k < m_Mesh[i]->mNumFaces; k++)
-			//{
-			//	aiFace face = m_Mesh[i]->mFaces[k];
-			//	for (int j = 0; j < face.mNumIndices; j++)
-			//		Vertex_Indices.push_back(face.mIndices[j]);
-			//}
 		}
 	}
 	void LoadMesh::ProcessMaterials(const aiScene* scene)//get all the materials in a scene
@@ -165,7 +160,7 @@ namespace Crimson
 		int NumMaterials = scene->mNumMaterials;
 		m_subMeshes.resize(NumMaterials);
 
-		std::string relative_path = "Assets/Textures/MeshTextures/";
+		const std::string relative_path = "Assets/Textures/MeshTextures/";
 		auto GetTexturePath = [&](aiMaterial*& material, aiTextureType type)
 		{
 			auto x = material->GetTextureCount(type);

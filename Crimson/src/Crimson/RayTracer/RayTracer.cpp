@@ -270,7 +270,7 @@ namespace Crimson
 	}
 	void RayTracer::UpdateScene()
 	{
-		//cs_RayTracingShader->SetFloat3("LightPos", m_LightPos);
+		cs_RayTracingShader->SetFloat3("LightPos", m_LightPos);
 		//cs_RayTracingShader->SetFloat("u_Roughness", m_Roughness);
 	}
 	void RayTracer::RenderScreenSizeQuad()

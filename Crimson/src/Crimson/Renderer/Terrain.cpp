@@ -276,7 +276,7 @@ namespace Crimson
 		m_terrainShader->SetFloat("MountainLevel", MountainLevel);
 		time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - StartTime).count() / 1000.0;
 		m_terrainShader->SetFloat("Time", time);
-		//HAZEL_CORE_ERROR(time);
+
 		if (bShowTerrain)
 			RenderCommand::DrawArrays(*m_terrainVertexArray, terrainData.size(), GL_PATCHES, 0);
 		glEnable(GL_CULL_FACE);

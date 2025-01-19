@@ -412,6 +412,7 @@ void SceneHierarchyPannel::DrawSpriteRendererUI()
 		}
 		ImGui::DragFloat("Roughness", &Sprite_Renderer.m_Roughness, 0.001, 0.0, 1.0);
 		ImGui::DragFloat("Metallic", &Sprite_Renderer.m_Metallic, 0.001, 0.0, 1.0);
+		ImGui::Checkbox("WireFrame", &Sprite_Renderer.m_WireFrame);
 
 		ImGui::TreePop();
 	}
@@ -434,6 +435,12 @@ void SceneHierarchyPannel::DrawStaticMeshComponentUI()
 		{
 			m_selected_entity->ReplaceComponent<StaticMeshComponent>(Scene::Sphere_simple);
 		}
+
+		if (ImGui::Button("Freddy", { 100,30 }))
+		{
+			m_selected_entity->ReplaceComponent<StaticMeshComponent>(Scene::Freddy);
+		}
+
 		if (ImGui::Button("Plane", { 100,30 }))
 		{
 			m_selected_entity->ReplaceComponent<StaticMeshComponent>(Scene::Plane);
@@ -534,17 +541,17 @@ void SceneHierarchyPannel::DrawPhysicsComponentUI()
 			Physics3D::AddSphereCollider(physics_component);
 			physics_component.m_shapes = SPHERE_COLLIDER;
 		}
-		//if (ImGui::Button("Add Mesh collider", { 200.f,30.f }))
-		//{
-		//	if (m_selected_entity->HasComponent<StaticMeshComponent>())
-		//	{
-		//		auto& mesh = m_selected_entity->GetComponent<StaticMeshComponent>();
-		//		physics_component.m_transform = transform.GetTransform();
-		//		std::thread t([&]() {Physics3D::AddMeshCollider(mesh.static_mesh->Vertices, mesh.static_mesh->Vertex_Indices, transform.Scale, physics_component); });
-		//		t.detach();
-		//		physics_component.m_shapes = MESH_COLLIDER;
-		//	}
-		//}
+// 		if (ImGui::Button("Add Mesh collider", { 200.f,30.f }))
+// 		{
+// 			if (m_selected_entity->HasComponent<StaticMeshComponent>())
+// 			{
+// 				auto& mesh = m_selected_entity->GetComponent<StaticMeshComponent>();
+// 				physics_component.m_transform = transform.GetTransform();
+// 				std::thread t([&]() {Physics3D::AddMeshCollider(mesh.static_mesh->Vertices, mesh.static_mesh->Vertex_Indices, transform.Scale, physics_component); });
+// 				t.detach();
+// 				physics_component.m_shapes = MESH_COLLIDER;
+// 			}
+// 		}
 		if (ImGui::Button("Add Force"))
 		{
 			Physics3D::AddForce(physics_component);

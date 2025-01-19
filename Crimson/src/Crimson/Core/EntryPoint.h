@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 
 	Crimson::Log::Init();
 
-	CN_PROFILE_BEGIN_SESSION("Startup", "CrimsonProfile-Startup.json");
+	CN_PROFILE_BEGIN_SESSION("Init", "CrimsonProfile-Startup.json");
 	auto app = Crimson::CreateApplication();
 	CN_PROFILE_END_SESSION();
 

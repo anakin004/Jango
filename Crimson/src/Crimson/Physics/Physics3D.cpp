@@ -336,16 +336,16 @@ namespace Crimson {
 	}
 	void Physics3D::CleanUpPhysics()
 	{
-		//m_boxActor->release();
-		//m_groundActor->release();
+		m_boxActor->release();
+		m_groundActor->release();
 		m_dispatcher->release();
 		m_scene->release();
-		//m_physics->release();
-		//m_foundation->release();
+		m_physics->release();
+		m_foundation->release();
 		m_scene = nullptr;
 		m_dispatcher = nullptr;
-		//m_physics = nullptr;
-		//m_foundation = nullptr;
+		m_physics = nullptr;
+		m_foundation = nullptr;
 		m_boxActor = nullptr;
 		m_groundActor = nullptr;
 	}

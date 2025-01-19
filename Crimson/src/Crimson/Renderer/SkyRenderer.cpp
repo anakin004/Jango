@@ -15,9 +15,11 @@ namespace Crimson {
 
 	void SkyRenderer::RenderSky(Camera& camera)
 	{
+		m_skyType = SkyType::CUBE_MAP_SKY;
 		switch (m_skyType)
 		{
 		case SkyType::CUBE_MAP_SKY:
+
 			CubeMapEnvironment::RenderCubeMap(camera.GetViewMatrix(),camera.GetProjectionMatrix(),camera.GetViewDirection());
 			break;
 		case SkyType::PROCEDURAL_SKY:

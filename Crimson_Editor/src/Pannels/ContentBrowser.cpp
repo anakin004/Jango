@@ -58,16 +58,16 @@ void ContentBrowser::OnImGuiRender()
 					ImGui::EndDragDropSource();
 				}
 			}
-			//if (ImGui::BeginDragDropTarget())
-			//{
-			//	if (const ImGuiPayload* val = ImGui::AcceptDragDropPayload("Material payload"))
-			//	{
-			//		std::string path = *(const std::string*)val->Data;
-			//		filename = path;
-			//	}
-			//	ImGui::EndDragDropTarget();
-			//}
-			//ImGui::Text(filename.c_str());
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* val = ImGui::AcceptDragDropPayload("Material payload"))
+				{
+					std::string path = *(const std::string*)val->Data;
+					filename = path;
+				}
+				ImGui::EndDragDropTarget();
+			}
+			ImGui::Text(filename.c_str());
 		}
 	}
 	ImGui::End();

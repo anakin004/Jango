@@ -11,31 +11,39 @@ namespace Crimson {
 	{
 	public:
 		OrthographicCameraController(float aspectratio);
+
 		void OnUpdate(TimeStep ts);
 		void OnEvent(Event& e);
-		inline OrthographicCamera GetCamera() { return m_Camera; }
-		void onResize(float width, float height);
-		glm::vec3 GetPosition() { return v3; }
-		void SetCameraPosition(const glm::vec3& pos) { v3 = pos; }
-		bool bCanBeRotated(bool val) {
-			bCanRotate = val;
-			return val;
-		}
-		inline void SetCameraSpeed(const float& val) { m_movespeed = val; }
-		inline float GetZoomLevel() { return m_ZoomLevel; }
+		void OnResize(float width, float height);
+
+
+		inline float GetZoomLevel() const { return m_ZoomLevel; }
+		inline glm::vec3& GetPosition() { return m_Position; }
+		inline OrthographicCamera& GetCamera() { return m_Camera; }
+
+		inline void SetRotationAbility(bool able) { m_RotationOn = true; }
+		inline void SetCameraPosition(const glm::vec3& pos) { m_Position = pos; }
+		inline void SetCameraSpeed(const float& val) { m_MovementSpeed = val; }
+
 	private:
+
 		bool ZoomEvent(MouseScrolledEvent& e);
 		bool WindowResize(WindowResizeEvent& e);
+
 	private:
+
 		float m_ZoomLevel = 3.0f;
 		float m_AspectRatio;
 		OrthographicCamera m_Camera;
 
-		glm::vec3 v3 = { 0,0,0 };
+		glm::vec3 m_Position = { 0,0,0 };
+		float m_Rotation = 0.0f;
 
-		float m_movespeed = 80;
-		float r = 0;
-		bool bCanRotate = true;
+		float m_MovementSpeed = 80.0f;
+		float m_RotationSpeed = 40.0f;
+
+		bool m_RotationOn = true;
+
 	};
 
 }

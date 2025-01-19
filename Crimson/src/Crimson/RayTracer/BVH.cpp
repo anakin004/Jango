@@ -55,9 +55,9 @@ namespace Crimson
 
 			for (int i = 0; i < sub_mesh.Vertices.size(); i += 3)
 			{
-				auto& vertices = sub_mesh.Vertices;
-				auto& normals = sub_mesh.Normal;
-				auto& uv = sub_mesh.TexCoord;
+// 				auto& vertices = sub_mesh.Vertices;
+// 				auto& normals = sub_mesh.Normal;
+// 				auto& uv = sub_mesh.TexCoord;
 
 				//transforming the vertices and normals to world space
 				glm::vec3 v0 = transform * glm::vec4(sub_mesh.Vertices[i], 1.0);
@@ -74,9 +74,9 @@ namespace Crimson
 
 				arrRTTriangles.push_back(triangles);
 			}
-
-			texturePaths_albedo.push_back(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetAlbedoPath());
-			texturePaths_roughness.push_back(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetRoughnessPath());
+// 
+// 			texturePaths_albedo.push_back(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetAlbedoPath());
+// 			texturePaths_roughness.push_back(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetRoughnessPath());
 			matCount++; //increment the material as we move to the next sub mesh
 
 			CN_CORE_TRACE("Made Material");
