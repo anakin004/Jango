@@ -43,7 +43,7 @@ namespace Crimson {
 
 		static Ref<Camera> GetCamera(CameraType type);
 	public:
-		bool bIsMainCamera = true;
+		bool bIsMainCamera = false;
 		bool IsResiziable = true;
 
 	};

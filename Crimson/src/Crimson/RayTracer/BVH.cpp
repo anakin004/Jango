@@ -16,8 +16,7 @@ namespace Crimson
 		m_Mesh = mesh;
 		numNodes = 0;
 		uint32_t rootIndex = 0;
-		glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), { 0,0,1 }) * glm::scale(glm::mat4(1.0), glm::vec3(0.1f));
-		//glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), { 0,0,1 }) * glm::scale(glm::mat4(1.0), glm::vec3(0.1f));
+		glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), { 0.f,0.f,1.f }) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
 		CN_CORE_TRACE("Creating Triangles : BVH")
 		CreateTriangles(transform);
@@ -36,6 +35,9 @@ namespace Crimson
 		arrLinearBVHNode.resize(numNodes);
 
 		CN_CORE_INFO("BVH Initialized!")
+
+		CN_CORE_INFO("Number of triangles before BVH construction: {0}", arrRTTriangles.size());
+		CN_CORE_INFO("Number of triangles after BVH construction: {0}", numNodes);
 	}
 	void BVH::CreateTriangles(glm::mat4& transform)
 	{
@@ -55,18 +57,15 @@ namespace Crimson
 
 			for (int i = 0; i < sub_mesh.Vertices.size(); i += 3)
 			{
-// 				auto& vertices = sub_mesh.Vertices;
-// 				auto& normals = sub_mesh.Normal;
-// 				auto& uv = sub_mesh.TexCoord;
 
 				//transforming the vertices and normals to world space
-				glm::vec3 v0 = transform * glm::vec4(sub_mesh.Vertices[i], 1.0);
-				glm::vec3 v1 = transform * glm::vec4(sub_mesh.Vertices[i + 1], 1.0);
-				glm::vec3 v2 = transform * glm::vec4(sub_mesh.Vertices[i + 2], 1.0);
+				glm::vec3 v0 = transform * glm::vec4(sub_mesh.Vertices[i], 1.0f);
+				glm::vec3 v1 = transform * glm::vec4(sub_mesh.Vertices[i + 1], 1.0f);
+				glm::vec3 v2 = transform * glm::vec4(sub_mesh.Vertices[i + 2], 1.0f);
 
-				glm::vec3 n0 = transform * glm::vec4(sub_mesh.Normal[i], 0.0);
-				glm::vec3 n1 = transform * glm::vec4(sub_mesh.Normal[i + 1], 0.0);
-				glm::vec3 n2 = transform * glm::vec4(sub_mesh.Normal[i + 2], 0.0);
+				glm::vec3 n0 = transform * glm::vec4(sub_mesh.Normal[i], 1.0f);
+				glm::vec3 n1 = transform * glm::vec4(sub_mesh.Normal[i + 1], 1.0f);
+				glm::vec3 n2 = transform * glm::vec4(sub_mesh.Normal[i + 2], 1.0f);
 
 				RTTriangles triangles(v0, v1, v2, n0, n1, n2, sub_mesh.TexCoord[i], sub_mesh.TexCoord[i + 1], sub_mesh.TexCoord[i + 2], matCount);
 				triangles.tex_albedo = albedo_handle;
@@ -74,16 +73,12 @@ namespace Crimson
 
 				arrRTTriangles.push_back(triangles);
 			}
-// 
-// 			texturePaths_albedo.push_back(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetAlbedoPath());
-// 			texturePaths_roughness.push_back(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetRoughnessPath());
+
 			matCount++; //increment the material as we move to the next sub mesh
 
 			CN_CORE_TRACE("Made Material");
 		}
 		arrMaterials.resize(matCount);
-		//texArray_albedo = Texture2DArray::Create(texturePaths_albedo, matCount,3);
-		//texArray_roughness = Texture2DArray::Create(texturePaths_roughness, matCount,1);
 	}
 
 	void BVH::UpdateMaterials()
@@ -172,18 +167,23 @@ namespace Crimson
 		linearNode->aabbMin = node->aabbMin;
 
 		int myOffset = (*offset)++;
-		if (node->triangleCount > 0)
+
+		if (node->triangleCount > 0) 
 		{
+			// If the node has triangles, assign them to this node
 			linearNode->triangleStartID = node->triangleStartID;
 			linearNode->triangleCount = node->triangleCount;
 		}
-		else {
+
+		else 
+		{
 			linearNode->triangleStartID = node->triangleStartID;
 			linearNode->triangleCount = node->triangleCount;
 
 			BVH::FlattenBVH(node->leftChild, offset);
 			linearNode->rightChild = BVH::FlattenBVH(node->rightChild, offset);
 		}
+
 		return myOffset;
 	}
 

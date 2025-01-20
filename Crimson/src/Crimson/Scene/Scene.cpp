@@ -114,10 +114,10 @@ namespace Crimson {
 		Fern = new LoadMesh("Assets/Meshes/forest_Fern.fbx");
 		Fern->CreateLOD("Assets/Meshes/Fern_LOD1.fbx");
 
-		Freddy = new LoadMesh("Assets/Meshes/Bonnie.fbx");
+		Freddy = new LoadMesh("Assets/Meshes/wBonnie.fbx");
 		
 		Windmill = new LoadMesh("Assets/Meshes/Windmill.fbx");
-		Sponza = new LoadMesh("Assets/Meshes/Sponza.fbx", LoadMesh::IMPORT_MESH);
+		Sponza = new LoadMesh("Assets/Meshes/Sponza.fbx");
 		Renderer3D::SetUpCubeMapReflections(*this);
 		editor_cam.SetVerticalFOV(45.f);
 		editor_cam.SetPerspectiveFar(10000.f);

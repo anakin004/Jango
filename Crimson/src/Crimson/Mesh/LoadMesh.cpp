@@ -17,6 +17,7 @@ namespace Crimson
 	LoadMesh::LoadMesh()
 	{
 	}
+
 	LoadMesh::LoadMesh(const std::string& Path, LoadType type)
 	{
 		GlobalTransform = glm::mat4(1.0);
@@ -27,19 +28,18 @@ namespace Crimson
 		if (m_LOD.size() == 0)
 			m_LOD.push_back(this);
 
-		//if (type == IMPORT_MESH)
+		if (type == LOAD_MESH)
 		{
 			LoadObj(Path);
 		}
-		//else if (type == LOAD_MESH)
-		//{
-		//	SceneSerializer deserialize;
-		//	deserialize.DeSerializeMesh(m_path, *this);
-		//	uuid = UUID(Path); //only create uuid for engine compatible mesh
-		//	//ResourceManager::allMeshes[uuid] = 
-		//	CreateStaticBuffers();
-		//}
-
+		if (type == IMPORT_MESH)
+		{
+			SceneSerializer deserialize;
+			deserialize.DeSerializeMesh(m_path, *this);
+			uuid = UUID(Path); //only create uuid for engine compatible mesh
+			//ResourceManager::allMeshes[uuid] = m_Mesh;
+			CreateStaticBuffers();
+		}
 	}
 	LoadMesh::~LoadMesh()
 	{
@@ -48,7 +48,26 @@ namespace Crimson
 	{
 		Assimp::Importer importer;
 
-		const aiScene* scene = importer.ReadFile(Path, aiProcess_Triangulate | aiProcess_OptimizeGraph | aiProcess_SplitLargeMeshes | aiProcess_CalcTangentSpace);
+		static const uint32_t s_MeshImportFlags =
+			aiProcess_CalcTangentSpace
+			| aiProcess_Triangulate
+			| aiProcess_SortByPType
+			| aiProcess_GenNormals
+			| aiProcess_GenUVCoords
+			| aiProcess_LimitBoneWeights
+			| aiProcess_ValidateDataStructure
+			| aiProcess_GlobalScale
+			| aiProcess_OptimizeGraph;
+
+		static const uint32_t s_TempMeshFlags =
+			aiProcess_Triangulate
+			| aiProcess_GenNormals
+			| aiProcess_GenUVCoords
+			| aiProcess_OptimizeMeshes
+			| aiProcess_SplitLargeMeshes
+			| aiProcess_CalcTangentSpace;
+
+		const aiScene* scene = importer.ReadFile(Path, s_MeshImportFlags);
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
 			CN_CORE_ERROR("ERROR::ASSIMP::");
@@ -101,6 +120,8 @@ namespace Crimson
 		{
 			ProcessNode(Node->mChildren[i], scene);
 		}
+
+
 	}
 	void LoadMesh::ProcessMesh()
 	{
@@ -108,6 +129,21 @@ namespace Crimson
 		{
 			unsigned int material_ind = m_Mesh[i]->mMaterialIndex;
 			m_subMeshes[material_ind].numVertices = m_Mesh[i]->mNumVertices;
+
+			for (unsigned int j = 0; j < m_Mesh[i]->mNumFaces; j++)
+			{
+				aiFace face = m_Mesh[i]->mFaces[j];
+				if (face.mNumIndices != 3)
+				{
+					CN_CORE_WARN("Face {0} in mesh {1} is not a triangle!", j, i);
+				}
+			}
+
+			m_subMeshes[material_ind].Vertices.reserve(m_Mesh[i]->mNumVertices);
+			m_subMeshes[material_ind].TexCoord.reserve(m_Mesh[i]->mNumVertices);
+			m_subMeshes[material_ind].Normal.reserve(m_Mesh[i]->mNumVertices);
+			m_subMeshes[material_ind].Tangent.reserve(m_Mesh[i]->mNumVertices);
+			m_subMeshes[material_ind].BiTangent.reserve(m_Mesh[i]->mNumVertices);
 
 			for (int k = 0; k < m_Mesh[i]->mNumVertices; k++)
 			{
@@ -117,16 +153,16 @@ namespace Crimson
 				m_subMeshes[material_ind].mesh_bounds.Union(mesh_bounds);
 				m_subMeshes[material_ind].Vertices.push_back({ pos.x,pos.y,pos.z });
 
-				glm::vec2 coord(0.0f);
 				if (m_Mesh[i]->mTextureCoords[0])
 				{
+					glm::vec2 coord(0.0f, 0.0f);
 					coord.x = m_Mesh[i]->mTextureCoords[0][k].x;
 					coord.y = m_Mesh[i]->mTextureCoords[0][k].y;
 
 					m_subMeshes[material_ind].TexCoord.push_back(coord);
 				}
 				else
-					m_subMeshes[material_ind].TexCoord.push_back(coord);
+					m_subMeshes[material_ind].TexCoord.emplace_back(0.0f,0.0f);
 
 
 				if (m_Mesh[i]->HasNormals()) {
@@ -153,6 +189,16 @@ namespace Crimson
 				}
 			}
 			total_bounds.Union(m_subMeshes[material_ind].mesh_bounds);
+		}
+
+
+		for (int i = 0; i < m_Mesh.size(); i++) {
+			for (int j = 0; j < m_Mesh[i]->mNumFaces; j++) {
+				aiFace& face = m_Mesh[i]->mFaces[j];
+				if (face.mNumIndices != 3) {
+					CN_CORE_ERROR("Invalid face detected: {0} indices in mesh {1}", face.mNumIndices, i);
+				}
+			}
 		}
 	}
 	void LoadMesh::ProcessMaterials(const aiScene* scene)//get all the materials in a scene
@@ -192,6 +238,9 @@ namespace Crimson
 				material->SerializeMaterial("", materialName); //save the material
 			}
 		}
+
+
+
 	}
 	void LoadMesh::CalculateTangent()
 	{
@@ -205,18 +254,20 @@ namespace Crimson
 			std::vector<VertexAttributes> buffer(m_subMeshes[k].Vertices.size());
 			m_subMeshes[k].VertexArray = VertexArray::Create();
 
+			// Populate vertex buffer
 			for (int i = 0; i < m_subMeshes[k].Vertices.size(); i++)
 			{
-				glm::vec3 transformed_normals = (m_subMeshes[k].Normal[i]);//re-orienting the normals (do not include translation as normals only needs to be orinted)
-				glm::vec3 transformed_tangents = (m_subMeshes[k].Tangent[i]);
-				glm::vec3 transformed_binormals = (m_subMeshes[k].BiTangent[i]);
-				buffer[i] = (VertexAttributes(glm::vec4(m_subMeshes[k].Vertices[i], 1.0), m_subMeshes[k].TexCoord[i], transformed_normals, transformed_tangents, transformed_binormals));
+				glm::vec3 transformed_normals = m_subMeshes[k].Normal[i];
+				glm::vec3 transformed_tangents = m_subMeshes[k].Tangent[i];
+				glm::vec3 transformed_binormals = m_subMeshes[k].BiTangent[i];
+				buffer[i] = VertexAttributes(glm::vec4(m_subMeshes[k].Vertices[i], 1.0), m_subMeshes[k].TexCoord[i], transformed_normals, transformed_tangents, transformed_binormals);
 			}
 
+			// Create and set vertex buffer
 			vb = VertexBuffer::Create(&buffer[0].Position.x, sizeof(VertexAttributes) * m_subMeshes[k].Vertices.size());
 
-			bl = std::make_shared<BufferLayout>(); //buffer layout
 
+			bl = std::make_shared<BufferLayout>();
 			bl->push("position", ShaderDataType::Float4);
 			bl->push("TexCoord", ShaderDataType::Float2);
 			bl->push("Normal", ShaderDataType::Float3);
@@ -224,6 +275,10 @@ namespace Crimson
 			bl->push("BiTangent", ShaderDataType::Float3);
 
 			m_subMeshes[k].VertexArray->AddBuffer(bl, vb);
+
+
+
 		}
 	}
+
 }

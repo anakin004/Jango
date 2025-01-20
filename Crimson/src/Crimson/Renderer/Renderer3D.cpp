@@ -235,29 +235,23 @@ namespace Crimson {
 			if (!otherShader) //shader will be defined from material
 			{
 				m_data->shader->Bind();
-				//m_data->shader->SetFloat("Roughness", material->GetRoughness()); //send the roughness value
 				m_data->shader->SetFloat("Roughness",  material_Roughness); //send the roughness value
-				//m_data->shader->SetFloat("Metallic", material->GetMetalness()); //send the metallic value
 				m_data->shader->SetFloat("Metallic", material_metallic); //send the metallic value
 				m_data->shader->SetInt("u_Albedo", ALBEDO_SLOT);//bind albedo texture array to slot1;
 				m_data->shader->SetInt("u_Roughness", ROUGHNESS_SLOT);
 				m_data->shader->SetInt("u_NormalMap", NORMAL_SLOT);
 				m_data->shader->SetMat4("u_Model", transform);
-				//m_data->shader->SetFloat4("m_color", material->GetColor());
 				m_data->shader->SetFloat4("m_color", color);
 			}
 			else
 			{
 				otherShader->Bind();
-				//otherShader->SetFloat("Roughness", material->GetRoughness()); //send the roughness value
 				otherShader->SetFloat("Roughness", material_Roughness); //send the roughness value
-				//otherShader->SetFloat("Metallic", material->GetMetalness()); //send the metallic value
 				otherShader->SetFloat("Metallic", material_metallic); //send the metallic value
 				otherShader->SetInt("u_Albedo", ALBEDO_SLOT);//bind albedo texture array to slot1;
 				otherShader->SetInt("u_Roughness", ROUGHNESS_SLOT);
 				otherShader->SetInt("u_NormalMap", NORMAL_SLOT);
 				otherShader->SetMat4("u_Model", transform);
-				//otherShader->SetFloat4("m_color", material->GetColor());
 				otherShader->SetFloat4("m_color", color);
 			}
 
@@ -265,7 +259,7 @@ namespace Crimson {
 			if( wireframe )
 				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.numVertices, GL_LINES, 0);
 			else
-				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.numVertices);
+				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.numVertices, GL_QUADS, 0);
 		}
 	}
 
