@@ -60,10 +60,12 @@ namespace Crimson {
 		std::vector<glm::vec3> Tangent;
 		std::vector<glm::vec3> BiTangent;
 		std::vector<glm::vec2> TexCoord;
+		std::vector<unsigned int> Indices;
 		Ref<VertexArray> VertexArray;
 		uint64_t m_MaterialID;
 		uint32_t numVertices;
 		Bounds mesh_bounds; //sub_mesh bounds
+
 	};
 	class LoadMesh
 	{

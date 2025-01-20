@@ -33,7 +33,7 @@ namespace Crimson {
 		vertexarray.Bind();
 		//vertexarray.GetIndexBuffer()->Bind();
 		//glDrawElements(GL_TRIANGLES, 0, GL_UNSIGNED_INT, nullptr);  // Use DrawElements
-		glDrawArrays(renderingMode, first, count + 100);
+		glDrawArrays(renderingMode, first, count);
 	}
 
 	void OpenGLRendererAPI::DrawInstancedArrays(VertexArray& vertexarray, size_t count, size_t instance_count, int first)

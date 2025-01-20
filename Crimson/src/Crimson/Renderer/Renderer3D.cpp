@@ -259,7 +259,7 @@ namespace Crimson {
 			if( wireframe )
 				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.numVertices, GL_LINES, 0);
 			else
-				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.numVertices, GL_QUADS, 0);
+				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.numVertices, GL_TRIANGLES, 0);
 		}
 	}
 

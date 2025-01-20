@@ -130,6 +130,7 @@ namespace Crimson
 			unsigned int material_ind = m_Mesh[i]->mMaterialIndex;
 			m_subMeshes[material_ind].numVertices = m_Mesh[i]->mNumVertices;
 
+
 			for (unsigned int j = 0; j < m_Mesh[i]->mNumFaces; j++)
 			{
 				aiFace face = m_Mesh[i]->mFaces[j];
@@ -144,9 +145,13 @@ namespace Crimson
 			m_subMeshes[material_ind].Normal.reserve(m_Mesh[i]->mNumVertices);
 			m_subMeshes[material_ind].Tangent.reserve(m_Mesh[i]->mNumVertices);
 			m_subMeshes[material_ind].BiTangent.reserve(m_Mesh[i]->mNumVertices);
+			m_subMeshes[material_ind].Indices.reserve(m_Mesh[i]->mNumVertices); 
+
+
 
 			for (int k = 0; k < m_Mesh[i]->mNumVertices; k++)
 			{
+
 				aiVector3D aivertice = m_Mesh[i]->mVertices[k];
 				glm::vec4 pos = GlobalTransform * glm::vec4(aivertice.x, aivertice.y, aivertice.z, 1.0);
 				Bounds mesh_bounds(glm::vec3(pos.x, pos.y, pos.z));
@@ -188,18 +193,24 @@ namespace Crimson
 					m_subMeshes[material_ind].BiTangent.push_back({ 0,0,0 });
 				}
 			}
-			total_bounds.Union(m_subMeshes[material_ind].mesh_bounds);
-		}
-
-
-		for (int i = 0; i < m_Mesh.size(); i++) {
-			for (int j = 0; j < m_Mesh[i]->mNumFaces; j++) {
+			
+			for (unsigned int j = 0; j < m_Mesh[i]->mNumFaces; j++) 
+			{
 				aiFace& face = m_Mesh[i]->mFaces[j];
-				if (face.mNumIndices != 3) {
-					CN_CORE_ERROR("Invalid face detected: {0} indices in mesh {1}", face.mNumIndices, i);
+				if (face.mNumIndices == 3) {
+					m_subMeshes[material_ind].Indices.push_back(face.mIndices[0]);
+					m_subMeshes[material_ind].Indices.push_back(face.mIndices[1]);
+					m_subMeshes[material_ind].Indices.push_back(face.mIndices[2]);
+				}
+				else {
+					CN_CORE_WARN("Face {0} in mesh {1} is not a triangle!", j, i);
 				}
 			}
+			
+			total_bounds.Union(m_subMeshes[material_ind].mesh_bounds);
+
 		}
+
 	}
 	void LoadMesh::ProcessMaterials(const aiScene* scene)//get all the materials in a scene
 	{
@@ -265,6 +276,7 @@ namespace Crimson
 
 			// Create and set vertex buffer
 			vb = VertexBuffer::Create(&buffer[0].Position.x, sizeof(VertexAttributes) * m_subMeshes[k].Vertices.size());
+			ib = IndexBuffer::Create(m_subMeshes[k].Indices.data(), m_subMeshes[k].Indices.size());
 
 
 			bl = std::make_shared<BufferLayout>();
@@ -274,6 +286,7 @@ namespace Crimson
 			bl->push("Tangent", ShaderDataType::Float3);
 			bl->push("BiTangent", ShaderDataType::Float3);
 
+			m_subMeshes[k].VertexArray->SetIndexBuffer(ib);
 			m_subMeshes[k].VertexArray->AddBuffer(bl, vb);
 
 

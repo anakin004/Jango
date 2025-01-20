@@ -81,7 +81,7 @@ namespace Crimson {
 		Renderer3D::BeginSceneFoliage(cam);
 		//LOD 0
 		Renderer3D::InstancedFoliageData(*m_foliageMesh->GetLOD(0), ssbo_outTransformsLOD0);//render lod0 elements
-		for (auto sub_mesh : m_foliageMesh->GetLOD(0)->m_subMeshes)
+		for (auto& sub_mesh : m_foliageMesh->GetLOD(0)->m_subMeshes)
 		{
 			cs_CopyIndirectBufferData->Bind();
 			cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.numVertices);

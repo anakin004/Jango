@@ -45,7 +45,8 @@ namespace Crimson {
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-		CN_CORE_WARN(glGetError());
+		
+		//CN_CORE_WARN(glGetError());
 
 		//glBindTextureUnit(IRR_ENV_SLOT, tex_id);
 	}
@@ -73,10 +74,10 @@ namespace Crimson {
 		{
 			glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, tex_id, 0);//Render the scene in the corresponding face on the cube map and "GL_COLOR_ATTACHMENT0" Represents the Render target where the fragment shader should output the color
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-				CN_CORE_WARN("FrameBuffer complete");
+				CN_CORE_TRACE("FrameBuffer complete");
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//clear the buffers each time
-			CN_CORE_ERROR(glGetError());
+			//CN_CORE_ERROR(glGetError());
 
 			SwitchToFace(i);//rotate the camera
 			cam.RotateCamera(yaw, pitch);
