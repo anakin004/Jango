@@ -22,12 +22,20 @@ imported tools used are found in the Crimson/vendor directory
 - **Glad**: loading OpenGL functions into Crimson
 - **Math Library**: Developed my own math library, Chroma(https://github.com/anakin004/Chroma)
   relevant snipets and inspiration accredited to the YouTube channel GetIntoGameDev
-- **Compiler Support (Work in Progress)**: 
+  - **Compiler Support (Work in Progress)**: 
   - GCC, Cmake, MSVC support SIMD operations
   - working on including more
+## In Unreleased Crimson
+- **Physx**: Physx Library with optional nvidia gpu acceleration
+- **yaml-cpp**: config files and assets managment
+- **assimp**: model loader
+- **imguizmo**: ui to interact with objects
+- **entt**: used for entity management
 
-## Sneak Peak of Crimson(Not Released Yet) ( Demo as of January 12th 2025 )
-https://github.com/user-attachments/assets/99ad7c79-45fb-4436-8ec6-fab906d483d9
+
+## Sneak Peak of Crimson(Not Released Yet) ( Demo as of January 21st 2025 )
+https://github.com/user-attachments/assets/0956fbeb-b1f8-4321-8566-b559aefaa198
+
 
 
 
