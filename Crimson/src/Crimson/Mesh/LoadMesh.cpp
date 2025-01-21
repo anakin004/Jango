@@ -193,6 +193,8 @@ namespace Crimson
 					m_subMeshes[material_ind].BiTangent.push_back({ 0,0,0 });
 				}
 			}
+
+			m_subMeshes[material_ind].numIndices = m_Mesh[i]->mNumFaces * 3;
 			
 			for (unsigned int j = 0; j < m_Mesh[i]->mNumFaces; j++) 
 			{
@@ -260,6 +262,7 @@ namespace Crimson
 	}
 	void LoadMesh::CreateStaticBuffers()
 	{
+
 		for (int k = 0; k < m_subMeshes.size(); k++)
 		{
 			std::vector<VertexAttributes> buffer(m_subMeshes[k].Vertices.size());
@@ -276,7 +279,7 @@ namespace Crimson
 
 			// Create and set vertex buffer
 			vb = VertexBuffer::Create(&buffer[0].Position.x, sizeof(VertexAttributes) * m_subMeshes[k].Vertices.size());
-			ib = IndexBuffer::Create(m_subMeshes[k].Indices.data(), m_subMeshes[k].Indices.size());
+			ib = IndexBuffer::Create(m_subMeshes[k].Indices.data(), m_subMeshes[k].Indices.size() * sizeof(unsigned int));
 
 
 			bl = std::make_shared<BufferLayout>();

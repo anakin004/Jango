@@ -31,9 +31,13 @@ namespace Crimson {
 	void OpenGLRendererAPI::DrawArrays(VertexArray& vertexarray, size_t count, unsigned int renderingMode, int first)
 	{
 		vertexarray.Bind();
-		//vertexarray.GetIndexBuffer()->Bind();
-		//glDrawElements(GL_TRIANGLES, 0, GL_UNSIGNED_INT, nullptr);  // Use DrawElements
-		glDrawArrays(renderingMode, first, count);
+		if (vertexarray.GetIndexBuffer())
+		{
+			vertexarray.GetIndexBuffer()->Bind();
+			glDrawElements(renderingMode, vertexarray.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		}
+		else
+			glDrawArrays(renderingMode, first, count);
 	}
 
 	void OpenGLRendererAPI::DrawInstancedArrays(VertexArray& vertexarray, size_t count, size_t instance_count, int first)

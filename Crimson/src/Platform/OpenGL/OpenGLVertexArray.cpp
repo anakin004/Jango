@@ -56,7 +56,7 @@ namespace Crimson {
 	{
 		glBindVertexArray(0);
 	}
-	void OpenGLVertexArray::AddBuffer(std::shared_ptr<BufferLayout>& layout, std::shared_ptr<VertexBuffer>& vbo)
+	void OpenGLVertexArray::AddBuffer(Ref<BufferLayout>& layout, Ref<VertexBuffer>& vbo)
 	{
 		vbo->Bind();
 		Bind();
@@ -72,7 +72,7 @@ namespace Crimson {
 
 		m_VertexBuffer.push_back(vbo);
 	}
-	void OpenGLVertexArray::SetIndexBuffer(std::shared_ptr<IndexBuffer> IndexBuffer)
+	void OpenGLVertexArray::SetIndexBuffer(Ref<IndexBuffer> IndexBuffer)
 	{
 		Bind();
 		IndexBuffer->Bind();

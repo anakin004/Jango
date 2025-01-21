@@ -64,6 +64,7 @@ namespace Crimson {
 		Ref<VertexArray> VertexArray;
 		uint64_t m_MaterialID;
 		uint32_t numVertices;
+		uint32_t numIndices;
 		Bounds mesh_bounds; //sub_mesh bounds
 
 	};
