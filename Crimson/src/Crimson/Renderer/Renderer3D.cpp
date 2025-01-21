@@ -38,15 +38,9 @@ namespace Crimson {
 		glm::vec3 BiNormal;
 		unsigned int Material_index = 0;//serves as an index to the array of texture slot which is passed as an uniform in init()
 		VertexAttributes(const glm::vec4& Position, const glm::vec2& TextureCoordinate, const glm::vec3& normal = { 0,0,0 }, const glm::vec3& Tangent = { 0,0,0 }, const glm::vec3& BiNormal = { 0,0,0 }, unsigned int Material_index = 0)
+			: Position(Position), TextureCoordinate(TextureCoordinate), Material_index(Material_index), Normal(normal), Tangent(Tangent), BiNormal(BiNormal)
 		{
-			this->Position = Position;
-			this->TextureCoordinate = TextureCoordinate;
-			this->Material_index = Material_index;
-			Normal = normal;
-			this->Tangent = Tangent;
-			this->BiNormal = BiNormal;
 		}
-		//may more ..uv coord , tangents , normals..
 	};
 
 	struct Renderer3DStorage {

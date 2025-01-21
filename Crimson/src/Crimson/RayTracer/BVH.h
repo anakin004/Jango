@@ -7,64 +7,58 @@ namespace Crimson
 	class BVH
 	{
 	public:
+		
+		enum SplitMethod
+                {
+                        SAH, 
+			MEAN
+                };
+
 		struct RTTriangles
 		{
 			glm::vec3 v0, v1, v2;
 			glm::vec3 n0, n1, n2;
 			glm::vec2 uv0, uv1, uv2;
-			uint64_t tex_albedo; //handle value for bindless albedo texture
-			uint64_t tex_roughness; //handle value for bindless roughness texture
-			int materialID;
+			uint64_t TexAlbedo; //handle value for bindless albedo texture
+			uint64_t TexRoughness; //handle value for bindless roughness texture
+			int MaterialID;
 
 			//int materialID;
 			RTTriangles() = default;
 			RTTriangles(glm::vec3& v0, glm::vec3& v1, glm::vec3& v2, glm::vec3& n0, glm::vec3& n1, glm::vec3& n2,
 				glm::vec2& uv0, glm::vec2& uv1, glm::vec2& uv2, int materialID)
+				: v0(v0), v1(v1), v2(v2), n0(n0), n1(n1), n2(n2), uv0(uv0), uv1(uv1), uv2(uv2), MaterialID(materialID)
 			{
-				this->v0 = v0;
-				this->v1 = v1;
-				this->v2 = v2;
-				this->n0 = n0;
-				this->n1 = n1;
-				this->n2 = n2;
-				this->uv0 = uv0;
-				this->uv1 = uv1;
-				this->uv2 = uv2;
-				this->materialID = materialID;
 			}
 			glm::vec3 GetCentroid() { return (v0 + v1 + v2) * 0.3333333333333f; };
 			Bounds GetBounds() { return Bounds(v0, v1, v2); };
 		};
 		struct BVHNode
 		{
-			BVHNode* leftChild, * rightChild;
-			int axis;
-			int triangleStartID, triangleCount;
+			BVHNode* LeftChild, * RightChild;
+			int Axis;
+			int TriangleStartID, TriangleCount;
 			glm::vec3 aabbMin, aabbMax;//bounds of the node
-			BVHNode() { leftChild = nullptr, rightChild = nullptr; triangleStartID = 0, triangleCount = 0; }
+			BVHNode() : LeftChild(nullptr), RightChild(nullptr), TriangleStartID(0), TriangleCount(0)  {}
 		};
 		struct LinearBVHNode
 		{
-			int rightChild;
-			int triangleStartID, triangleCount;
+			int RightChild;
+			int TriangleStartID, TriangleCount;
 			glm::vec3 aabbMin, aabbMax;
 		};
 		struct Bins
 		{
 			Bounds bounds;
-			int triangleCount = 0;
-		};
-		enum SplitMethod
-		{
-			SAH, MEAN
+			int TriangleCount = 0;
 		};
 		struct Material
 		{
-			glm::vec4 color;
-			float roughness;
-			float metalness;
-			glm::vec4 emissive_col;
-			float emissive_strength;
+			glm::vec4 Color;
+			float Roughness;
+			float Metalness;
+			glm::vec4 EmissiveCol;
+			float EmmisiveStrength;
 		};
 	public:
 		BVH() = default;
@@ -79,17 +73,18 @@ namespace Crimson
 
 
 	public:
-		std::vector<Material> arrMaterials;
-		std::vector<Ref<Texture2D>> tex_albedo;
-		std::vector<Ref<Texture2D>> tex_roughness;
+		std::vector<Material> MaterialArr;
+		std::vector<Ref<Texture2D>> TexAlbedoArr;
+		std::vector<Ref<Texture2D>> TexRoughnessArr;
 
-		std::vector<LinearBVHNode> arrLinearBVHNode;//to be sent on to the gpu
-		std::vector<RTTriangles> arrRTTriangles;//to be sent on to the gpu
-		std::vector<int> triIndex;//to be sent on to the gpu
-		int numNodes;
+		std::vector<LinearBVHNode> LinearBVHNodeArr;//to be sent on to the gpu
+		std::vector<RTTriangles> RTTrianglesArr;//to be sent on to the gpu
+		std::vector<int> TriIndices;//to be sent on to the gpu
+		
+		int m_NumNodes = 0;
 
 	private:
-		LoadMesh* m_Mesh;
-		BVHNode* head = nullptr;
+		LoadMesh* m_Mesh = nullptr;
+		BVHNode* m_Head = nullptr;
 	};
 }
