@@ -51,6 +51,7 @@ namespace Crimson
 		static const uint32_t s_MeshImportFlags =
 			aiProcess_CalcTangentSpace
 			| aiProcess_Triangulate
+			| aiProcess_JoinIdenticalVertices
 			| aiProcess_SortByPType
 			| aiProcess_GenNormals
 			| aiProcess_GenUVCoords
@@ -70,8 +71,7 @@ namespace Crimson
 		const aiScene* scene = importer.ReadFile(Path, s_MeshImportFlags);
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
-			CN_CORE_ERROR("ERROR::ASSIMP::");
-			CN_CORE_ERROR(importer.GetErrorString());
+			CN_CORE_ERROR("Assimp Error: ", importer.GetErrorString());
 			return;
 		}
 
@@ -127,8 +127,8 @@ namespace Crimson
 	{
 		for (int i = 0; i < m_Mesh.size(); i++)
 		{
-			unsigned int material_ind = m_Mesh[i]->mMaterialIndex;
-			m_subMeshes[material_ind].numVertices = m_Mesh[i]->mNumVertices;
+			unsigned int MaterialIdx = m_Mesh[i]->mMaterialIndex;
+			m_SubMeshes[MaterialIdx].NumVertices = m_Mesh[i]->mNumVertices;
 
 
 			for (unsigned int j = 0; j < m_Mesh[i]->mNumFaces; j++)
@@ -140,12 +140,12 @@ namespace Crimson
 				}
 			}
 
-			m_subMeshes[material_ind].Vertices.reserve(m_Mesh[i]->mNumVertices);
-			m_subMeshes[material_ind].TexCoord.reserve(m_Mesh[i]->mNumVertices);
-			m_subMeshes[material_ind].Normal.reserve(m_Mesh[i]->mNumVertices);
-			m_subMeshes[material_ind].Tangent.reserve(m_Mesh[i]->mNumVertices);
-			m_subMeshes[material_ind].BiTangent.reserve(m_Mesh[i]->mNumVertices);
-			m_subMeshes[material_ind].Indices.reserve(m_Mesh[i]->mNumVertices); 
+			m_subMeshes[MaterialIdx].Vertices.reserve(m_Mesh[i]->mNumVertices);
+			m_subMeshes[MaterialIdx].TexCoord.reserve(m_Mesh[i]->mNumVertices);
+			m_subMeshes[MaterialIdx].Normal.reserve(m_Mesh[i]->mNumVertices);
+			m_subMeshes[MaterialIdx].Tangent.reserve(m_Mesh[i]->mNumVertices);
+			m_subMeshes[MaterialIdx].BiTangent.reserve(m_Mesh[i]->mNumVertices);
+			m_subMeshes[Materialidx].Indices.reserve(m_Mesh[i]->mNumVertices); 
 
 
 
@@ -154,9 +154,9 @@ namespace Crimson
 
 				aiVector3D aivertice = m_Mesh[i]->mVertices[k];
 				glm::vec4 pos = GlobalTransform * glm::vec4(aivertice.x, aivertice.y, aivertice.z, 1.0);
-				Bounds mesh_bounds(glm::vec3(pos.x, pos.y, pos.z));
-				m_subMeshes[material_ind].mesh_bounds.Union(mesh_bounds);
-				m_subMeshes[material_ind].Vertices.push_back({ pos.x,pos.y,pos.z });
+				Bounds SubMeshBounds(glm::vec3(pos.x, pos.y, pos.z));
+				m_SubMeshes[MaterialIdx].MeshBounds.Union(SubMeshBounds);
+				m_SubMeshes[MaterialIdx].Vertices.push_back({ pos.x,pos.y,pos.z });
 
 				if (m_Mesh[i]->mTextureCoords[0])
 				{
@@ -164,16 +164,16 @@ namespace Crimson
 					coord.x = m_Mesh[i]->mTextureCoords[0][k].x;
 					coord.y = m_Mesh[i]->mTextureCoords[0][k].y;
 
-					m_subMeshes[material_ind].TexCoord.push_back(coord);
+					m_SubMeshes[MaterialIdx].TexCoord.push_back(coord);
 				}
 				else
-					m_subMeshes[material_ind].TexCoord.emplace_back(0.0f,0.0f);
+					m_SubMeshes[MaterialIdx].TexCoord.emplace_back(0.0f,0.0f);
 
 
 				if (m_Mesh[i]->HasNormals()) {
 					aiVector3D ainormal = m_Mesh[i]->mNormals[k];
 					glm::vec4 norm = GlobalTransform * glm::vec4(ainormal.x, ainormal.y, ainormal.z, 0.0);
-					m_subMeshes[material_ind].Normal.push_back({ norm.x,norm.y,norm.z });
+					m_SubMeshes[MaterialIdx].Normal.push_back({ norm.x,norm.y,norm.z });
 				}
 
 
@@ -184,13 +184,13 @@ namespace Crimson
 					glm::vec4 tan = GlobalTransform * glm::vec4(tangent.x, tangent.y, tangent.z, 0.0);
 					glm::vec4 bitan = GlobalTransform * glm::vec4(bitangent.x, bitangent.y, bitangent.z, 0.0);
 
-					m_subMeshes[material_ind].Tangent.push_back({ tan.x, tan.y, tan.z });
-					m_subMeshes[material_ind].BiTangent.push_back({ bitan.x,bitan.y,bitan.z });
+					m_SubMeshes[MaterialIdx].Tangent.emplace_back( tan.x, tan.y, tan.z );
+					m_SubMeshes[Materialidx].BiTangent.emplace_back( bitan.x,bitan.y,bitan.z );
 				}
 				else
 				{
-					m_subMeshes[material_ind].Tangent.push_back({ 0,0,0 });
-					m_subMeshes[material_ind].BiTangent.push_back({ 0,0,0 });
+					m_SubMeshes[MaterialIdx].Tangent.emplace_back{ 0.0f,0.0f,0.0f );
+					m_SubMeshes[MaterialIdx].BiTangent.emplace_back{ 0.0f,0.0f,0.0f );
 				}
 			}
 
@@ -200,16 +200,16 @@ namespace Crimson
 			{
 				aiFace& face = m_Mesh[i]->mFaces[j];
 				if (face.mNumIndices == 3) {
-					m_subMeshes[material_ind].Indices.push_back(face.mIndices[0]);
-					m_subMeshes[material_ind].Indices.push_back(face.mIndices[1]);
-					m_subMeshes[material_ind].Indices.push_back(face.mIndices[2]);
+					m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[0]);
+					m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[1]);
+					m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[2]);
 				}
 				else {
 					CN_CORE_WARN("Face {0} in mesh {1} is not a triangle!", j, i);
 				}
 			}
 			
-			total_bounds.Union(m_subMeshes[material_ind].mesh_bounds);
+			total_bounds.Union(m_SubMeshes[MaterialIdx].MeshBounds);
 
 		}
 

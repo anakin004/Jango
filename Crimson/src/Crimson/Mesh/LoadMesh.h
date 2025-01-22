@@ -62,10 +62,10 @@ namespace Crimson {
 		std::vector<glm::vec2> TexCoord;
 		std::vector<unsigned int> Indices;
 		Ref<VertexArray> VertexArray;
-		uint64_t m_MaterialID;
-		uint32_t numVertices;
-		uint32_t numIndices;
-		Bounds mesh_bounds; //sub_mesh bounds
+		uint64_t MaterialID;
+		uint32_t NumVertices;
+		uint32_t NumIndices;
+		Bounds MeshBounds; //submesh bounds utilized by BVH
 
 	};
 	class LoadMesh
@@ -104,15 +104,9 @@ namespace Crimson {
 			glm::vec3 Tangent;
 			glm::vec3 BiNormal;
 			VertexAttributes(const glm::vec4& Position, const glm::vec2& TextureCoordinate, const glm::vec3& normal = { 0,0,0 }, const glm::vec3& Tangent = { 0,0,0 }, const glm::vec3& BiNormal = { 0,0,0 })
+				: Position(Position), TextureCoordinate(TextureCoordinate), Normal(normal), Tangent(Tangent), BiNormal(BiNormal)
 			{
-				this->Position = Position;
-				this->TextureCoordinate = TextureCoordinate;
-				Normal = normal;
-				this->Tangent = Tangent;
-				this->BiNormal = BiNormal;
 			}
-			VertexAttributes() = default;
-			//may more ..uv coord , tangents , normals..
 		};
 	private:
 		void LoadObj(const std::string& Path);
