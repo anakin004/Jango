@@ -112,6 +112,9 @@ void CrimsonEditor::OnDetach()
 
 void CrimsonEditor::OnUpdate(TimeStep ts )
 {
+
+	frame_time = ts;
+
 	numFrame++;
 	m_scene->OnUpdate(ts);
 	Renderer3D::ForwardRenderPass(m_scene.get());//forward pass for later deferred stage

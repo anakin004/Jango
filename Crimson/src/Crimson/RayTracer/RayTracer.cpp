@@ -37,19 +37,19 @@ namespace Crimson
 		//pass the nodes,triangles as ssbos
 		glGenBuffers(1, &ssbo_linearBVHNodes);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_linearBVHNodes);
-		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(BVH::LinearBVHNode) * bvh->arrLinearBVHNode.size(), &bvh->arrLinearBVHNode[0], GL_STATIC_READ);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(BVH::LinearBVHNode) * bvh->GetLinearBVHNodes().size(), &bvh->GetLinearBVHNodes()[0], GL_STATIC_READ);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, ssbo_linearBVHNodes);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
 		glGenBuffers(1, &ssbo_rtTriangles);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_rtTriangles);
-		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(BVH::RTTriangles) * bvh->arrRTTriangles.size(), &bvh->arrRTTriangles[0], GL_STATIC_READ);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(BVH::RTTriangle) * bvh->GetRTTriangles().size(), &bvh->GetRTTriangles()[0], GL_STATIC_READ);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, ssbo_rtTriangles);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
 		glGenBuffers(1, &ssbo_triangleIndices);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_triangleIndices);
-		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(int) * bvh->triIndex.size(), &bvh->triIndex[0], GL_STATIC_READ);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(int) * bvh->GetTriangleIndices().size(), &bvh->GetTriangleIndices()[0], GL_STATIC_READ);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, ssbo_triangleIndices);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
@@ -121,7 +121,7 @@ namespace Crimson
 		cs_RayTracingShader->SetInt("sample_count", abs(sample_count));
 		cs_RayTracingShader->SetInt("num_bounces", numBounces);
 		cs_RayTracingShader->SetInt("samplesPerPixel", samplesPerPixel);
-		cs_RayTracingShader->SetInt("BVHNodeSize", bvh->arrLinearBVHNode.size());
+		cs_RayTracingShader->SetInt("BVHNodeSize", bvh->GetLinearBVHNodes().size());
 		cs_RayTracingShader->SetFloat("light_intensity", Renderer3D::m_SunIntensity);
 		cs_RayTracingShader->SetFloat3("LightPos", m_LightPos);
 		cs_RayTracingShader->SetFloat("u_LightStrength", m_LightStrength);
@@ -150,7 +150,7 @@ namespace Crimson
 		//pass material data to the gpu using ssbo every frame
 		glGenBuffers(1, &ssbo_arrMaterials);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_arrMaterials);
-		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(BVH::Material) * bvh->arrMaterials.size(), &bvh->arrMaterials[0], GL_STATIC_READ);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(BVH::Material) * bvh->GetMaterials().size(), &bvh->GetMaterials()[0], GL_STATIC_READ);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 5, ssbo_arrMaterials);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 

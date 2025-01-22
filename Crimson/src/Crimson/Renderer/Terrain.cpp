@@ -6,6 +6,11 @@
 #include "stb_image.h"
 #include "Crimson/Physics/Physics3D.h"
 #include "Crimson/Renderer/Antialiasing.h"
+
+
+//temporary
+#include <GLFW/glfw3.h>
+
 /*
 	terrain class needs its own ui and modelling tools for basic prototyping.
 	and also remove redundant glsl codes.
@@ -203,7 +208,7 @@ namespace Crimson
 					min_height = Height_data[j * m_Width + i + m_Channels];
 
 		std::uniform_real_distribution<float> RandomFloat(-1.0f, 1.0f);
-		std::normal_distribution<float> NormalDist(0.0, 1.0);
+		std::normal_distribution<float> NormalDist(0.0f, 1.0f);
 		std::default_random_engine generator;
 
 		CurrentChunkIndex = 0;//Let cam position at start is at 0,0
@@ -211,7 +216,7 @@ namespace Crimson
 
 		//Terrain collision
 		std::vector<int> HeightValues;
-		int spacing = 32.0f;
+		int spacing = 32;
 		//in physx the data is stored in row-major format
 		for (int j = 0; j < m_Width; j += spacing) {
 			for (int i = 0; i < m_Height; i += spacing)
@@ -239,12 +244,15 @@ namespace Crimson
 		if (frame_counter % 10 == 0) //check to delete after every 10th frame
 			qtree->DeleteNodesIfNotInScope(rootNode, cam);
 
-		for (auto topLayerFoliage : topFoliageLayer)
-			topLayerFoliage->RenderFoliage(cam);
-		for (auto middleLayerFoliage : middleFoliageLayer)
-			middleLayerFoliage->RenderFoliage(cam);
-		for (auto bottomLayerFoliage : bottomFoliageLayer)
-			bottomLayerFoliage->RenderFoliage(cam);
+		if (bShowTerrain) {
+
+			for (auto topLayerFoliage : topFoliageLayer)
+				topLayerFoliage->RenderFoliage(cam);
+			for (auto middleLayerFoliage : middleFoliageLayer)
+				middleLayerFoliage->RenderFoliage(cam);
+			for (auto bottomLayerFoliage : bottomFoliageLayer)
+				bottomLayerFoliage->RenderFoliage(cam);
+		}
 
 		int CamX = cam.GetCameraPosition().x;
 		int CamZ = cam.GetCameraPosition().z;
@@ -296,9 +304,8 @@ namespace Crimson
 			RenderCommand::DrawArrays(*m_terrainVertexArray, terrainData.size(), GL_PATCHES, 0);		
 	}
 
-	QuadTree::QuadTree(Terrain* _terrain)
+	QuadTree::QuadTree(Terrain* _terrain) :  terrain(_terrain)
 	{
-		terrain = _terrain;
 		//delete_NodeThread = std::thread([&]() {DeleteNodesIfNotInScope(); });
 		//delete_NodeThread.join();
 	}
@@ -358,15 +365,17 @@ namespace Crimson
 			//top right
 			QNode* tr = NodePool::GetNode(Bounds(glm::vec3(bounds_min.x, 0, mid_point.z), glm::vec3(mid_point.x, 0, bounds_max.z)));
 
-			SpawnFoliageAtTile(bl,cam);
-			SpawnFoliageAtTile(br, cam);
-			SpawnFoliageAtTile(tl, cam);
-			SpawnFoliageAtTile(tr, cam);
+			if (bl && br && tl && tr) {
+				SpawnFoliageAtTile(bl, cam);
+				SpawnFoliageAtTile(br, cam);
+				SpawnFoliageAtTile(tl, cam);
+				SpawnFoliageAtTile(tr, cam);
 
-			node->childrens.push_back(bl);
-			node->childrens.push_back(br);
-			node->childrens.push_back(tl);
-			node->childrens.push_back(tr);
+				node->childrens.push_back(bl);
+				node->childrens.push_back(br);
+				node->childrens.push_back(tl);
+				node->childrens.push_back(tr);
+			}
 		}
 	}
 	void QuadTree::Insert(QNode*& node, Camera& cam)
@@ -461,42 +470,69 @@ namespace Crimson
 	{
 	}
 
+
+	float NodePool::allocTime = 0.6f;
+
 	QNode* NodePool::GetNode(Bounds bounds)
 	{
 		if (!node_memoryPool.empty())
 		{
 			node_memoryPool.top()->childrens.clear();
 			node_memoryPool.top()->chunk_bounds = bounds;
-			auto node = node_memoryPool.top();
+			QNode* node = node_memoryPool.top();
 			node_memoryPool.pop();
 			return node;
 		}
 		else
 		{
-			Allocate(); //if stack is empty allocate new chunks of memory
+			//if stack is empty allocate new chunks of memory, we also need to be able to allocate
+			if (!Allocate())
+				return nullptr;
 			node_memoryPool.top()->childrens.clear();
 			node_memoryPool.top()->chunk_bounds = bounds;
-			auto node = node_memoryPool.top();
+			QNode* node = node_memoryPool.top();
 			node_memoryPool.pop();
 			return node;
 		}
 	}
 	void NodePool::RecycleMemory(QNode*& node)
 	{
-		node->childrens.clear();
-		NodePool::node_memoryPool.push(node); //when we want to deallocate a node just recycle the memory to memory pool
-		node = nullptr; //delete the node
-		CN_CORE_TRACE("Quad Tree Node Deleted and memory recycled");
-	}
-	void NodePool::Allocate()
-	{
-		CN_CORE_TRACE("Allocating Memory, Initial Pool Size -> {}", NodePool::node_memoryPool.size());
+		// allocTime is temp, just messing around with allocation timing to reduce screen tearing when we allocate nodes
+		// even though its allocTime we also need to think about dealloc time, trying to constantly call delete with .clear
+		// since our vector is filled with dynamicly allocated memory it will be slow
 
-		for (int i = 0; i < 40; i++) //allocate 40 new nodes
-		{
-			NodePool::node_memoryPool.push(new QNode());
+		if (allocTime > 0.5f) {
+			node->childrens.clear();
+			NodePool::node_memoryPool.push(node); //when we want to deallocate a node just recycle the memory to memory pool
+			node = nullptr; //delete the node
+			CN_CORE_TRACE("Quad Tree Node Deleted and memory recycled");
+			allocTime = 0.0f;
 		}
-		CN_CORE_TRACE("Allocated Memory!, Pool Size -> {}", NodePool::node_memoryPool.size());
+
+		allocTime += 0.001f;
+	}
+	bool NodePool::Allocate()
+	{
+
+		// allocTime is temp, just messing around with allocation timing to reduce screen tearing when we allocate nodes
+		if (allocTime > 0.5f) {
+
+			CN_CORE_TRACE("Allocating Memory, Initial Pool Size -> {}", NodePool::node_memoryPool.size());
+
+			for (int i = 0; i < 5; i++) //allocate 20 new nodes
+			{
+				NodePool::node_memoryPool.push(new QNode());
+			}
+			CN_CORE_TRACE("Allocated Memory!, Pool Size -> {}", NodePool::node_memoryPool.size());
+
+			allocTime = 0.0f;
+
+			return true;
+		}
+
+		allocTime += 0.001;
+
+		return false;
 
 	}
 	void NodePool::DeAllocate()

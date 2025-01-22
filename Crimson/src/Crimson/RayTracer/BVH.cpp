@@ -5,14 +5,14 @@
 #include "Crimson/Core/ResourceManager.h"
 #include <GLFW/glfw3.h>
 
-constexpr uint_8 NUM_BINS 200
+constexpr uint32_t NUM_BINS = 200;
 
 
 namespace Crimson
 {
 	static int val = 0;
 	BVH::BVH(LoadMesh*& mesh)
-		m_Mesh(mesh), m_NumNodes(0)
+		: m_Mesh(mesh), m_NumNodes(0)
 	{
 		uint32_t rootIndex = 0;
 		const glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), { 0.f,0.f,1.f }) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
@@ -23,23 +23,23 @@ namespace Crimson
 		UpdateMaterials();
 		CN_CORE_TRACE("Updated Materials : BVH")
 		
-		triIndex.resize(RTTrianglesArr.size()); //making a seperate triangle index for swaping
-		for (int i = 0; i < RTTrianglesArr.size(); i++)
-			TriIndices[i] = i;
+		m_TriIndices.resize(m_RTTriangles.size()); //making a seperate triangle index for swaping
+		for (int i = 0; i < m_RTTriangles.size(); i++)
+			m_TriIndices[i] = i;
 		
-		arrLinearBVHNode.resize(arrRTTriangles.size() * 2 + 1);
+		m_LinearBVHNodes.resize(m_LinearBVHNodes.size() * 2 + 1);
 		CN_CORE_TRACE("BVH Creation started")
-		BuildBVH(m_Head, 0, RTTrianglesArr.size());
+		BuildBVH(m_Head, 0, m_RTTriangles.size());
 		CleanBVH(m_Head);//identify child nodes by making their triangle count = 0
-		FlattenBVH(m_Head, m_NumNodes);
-		arrLinearBVHNode.resize(m_NumNodes);
+		FlattenBVH(m_Head, &m_NumNodes);
+		m_LinearBVHNodes.resize(m_NumNodes);
 
 		CN_CORE_INFO("BVH Initialized!")
 
-		CN_CORE_INFO("Number of triangles before BVH construction: {0}", RTTrianglesArr.size());
+		CN_CORE_INFO("Number of triangles before BVH construction: {0}", m_RTTriangles.size());
 		CN_CORE_INFO("Number of triangles after BVH construction: {0}", m_NumNodes);
 	}
-	void BVH::CreateTriangles(glm::mat4& transform)
+	void BVH::CreateTriangles(const glm::mat4& transform)
 	{
 		int matCount = 0;
 		std::vector<std::string> AlbedoPaths, RoughnessPaths; 
@@ -67,36 +67,36 @@ namespace Crimson
 				glm::vec3 n1 = transform * glm::vec4(sub_mesh.Normal[i + 1], 1.0f);
 				glm::vec3 n2 = transform * glm::vec4(sub_mesh.Normal[i + 2], 1.0f);
 
-				RTTriangles triangles(v0, v1, v2, n0, n1, n2, sub_mesh.TexCoord[i], sub_mesh.TexCoord[i + 1], sub_mesh.TexCoord[i + 2], matCount);
-				triangles.TexAlbedo = AlbedoHandle;
-				triangles.TexRoughness = RoughnessHandle;
+				RTTriangle triangle(v0, v1, v2, n0, n1, n2, sub_mesh.TexCoord[i], sub_mesh.TexCoord[i + 1], sub_mesh.TexCoord[i + 2], matCount);
+				triangle.TexAlbedo = AlbedoHandle;
+				triangle.TexRoughness = RoughnessHandle;
 
-				RTTrianglesArr.push_back(triangles);
+				m_RTTriangles.push_back(triangle);
 			}
 
 			matCount++; //increment the material as we move to the next sub mesh
 
 			CN_CORE_TRACE("Made Material");
 		}
-		MaterialsArr.resize(matCount);
+		m_Materials.resize(matCount);
 		
 	}
 
 	void BVH::UpdateMaterials()
 	{
 		int k = 0;
-		for (auto sub_mesh : m_Mesh->m_subMeshes) //iterate through all sub meshes and get the materials
+		for (auto& sub_mesh : m_Mesh->m_subMeshes) //iterate through all sub meshes and get the materials
 		{
 			CN_CORE_TRACE("Updating Material, Count : {0}", k);
 			CN_ASSERT(ResourceManager::allMaterials[sub_mesh.m_MaterialID], "Resource Manager Invalid (BVH)");
-			auto ResourceMaterial = ResourceManager::allMaterials[sub_mesh.m_MaterialID];
+			auto& ResourceMaterial = ResourceManager::allMaterials[sub_mesh.m_MaterialID];
 			Material mat;
-			mat.color = ResourceMaterial->GetColor();
-			mat.emissive_col = ResourceMaterial->GetColor(); //needs change
-			mat.emissive_strength ResourceMaterial->GetEmission(); //needs change
-			mat.metalness = ResourceMaterial->GetMetalness();
-			mat.roughness = ResourceMaterial->GetRoughness();
-			arrMaterials[k] = mat;
+			mat.Color = ResourceMaterial->GetColor();
+			mat.EmissiveCol = ResourceMaterial->GetColor(); //needs change
+			mat.EmmisiveStrength = ResourceMaterial->GetEmission(); //needs change
+			mat.Metalness = ResourceMaterial->GetMetalness();
+			mat.Roughness = ResourceMaterial->GetRoughness();
+			m_Materials[k] = mat;
 			k++;
 		}
 	}
@@ -107,7 +107,7 @@ namespace Crimson
 		Bounds ResultingBound; //get the total bounds of all the triangles in a particular node
 		for (int i = 0; i < node.TriangleCount; i++)
 		{
-			Bounds bnds = (RTTrianglesArr[TriIndices[node.TriangleStartID + i]].GetBounds());
+			Bounds& bnds = (m_RTTriangles[m_TriIndices[node.TriangleStartID + i]].GetBounds());
 
 			// adding node bound to resulting bound
 			ResultingBound.Union(bnds);
@@ -120,15 +120,15 @@ namespace Crimson
 				continue;
 
 			Bins bins[NUM_BINS]; //create bins array to store the triangle count and the bounds of the triangles in a node
-			auto size = (ResultingBound.aabbMax[a] - ResultingBound.aabbMin[a]) / NUM_BINS; //get size of individual bin
+			uint32_t size = (ResultingBound.aabbMax[a] - ResultingBound.aabbMin[a]) / NUM_BINS; //get size of individual bin
 			for (int i = 0; i < node.TriangleCount; i++)
 			{
-				auto& triangle = RTTrianglesArr[TriIndices[node.TriangleStartID + i]];
+				BVH::RTTriangle& triangle = m_RTTriangles[m_TriIndices[node.TriangleStartID + i]];
 				//get the bin index
-				int binIndx = std::min(NUM_BINS - 1,
-					static_cast<int>(std::abs((triangle.GetCentroid()[a] - ResultingBound.aabbMin[a]) / size)));
+				uint32_t binIndx = std::min(NUM_BINS - 1, static_cast<uint32_t>(std::abs((triangle.GetCentroid()[a] - ResultingBound.aabbMin[a]) / static_cast<int>(size) )));
 				bins[binIndx].TriangleCount++;
 				bins[binIndx].bounds.Union(triangle.GetBounds());
+
 			}
 
 			// determine triangle counts and bounds for this split candidate
@@ -156,20 +156,20 @@ namespace Crimson
 				{
 					best_cost = cost;
 					axis = a;
-					pos = m_Bounds.aabbMin[a] + (i + 1) * size;
+					pos = ResultingBound.aabbMin[a] + (i + 1) * size;
 				}
 			}
 		}
 		return best_cost > 0 ? best_cost : 1e30f;
 	}
 
-	int BVH::FlattenBVH(BVHNode* node, int* offset)//dfs traversal
+	int BVH::FlattenBVH(BVHNode* node, uint32_t* offset)//dfs traversal
 	{
-		LinearBVHNode* linearNode = &arrLinearBVHNode[*offset];
+		LinearBVHNode* linearNode = &m_LinearBVHNodes[*offset];
 		linearNode->aabbMax = node->aabbMax;
 		linearNode->aabbMin = node->aabbMin;
 
-		int myOffset = (*offset)++;
+		uint32_t myOffset = (*offset)++;
 
 		if (node->TriangleCount > 0) 
 		{
@@ -207,14 +207,14 @@ namespace Crimson
 	}
 
 	//recursively building the bvh tree and storing it as dfs format
-	void BVH::BuildBVH(BVHNode*& node, int triStartID, int triCount)
+	void BVH::BuildBVH(BVHNode*& node, uint32_t triStartID, uint32_t triCount)
 	{
 		node = new BVHNode();
 		//++numNodes;
 		Bounds bounds;
 		for (int i = 0; i < triCount; i++)
 		{
-			auto bnds = RTTrianglesArr[TriIndices[i + triStartID]].GetBounds();
+			Bounds& bnds = m_RTTriangles[m_TriIndices[i + triStartID]].GetBounds();
 			bounds.Union(bnds);
 		}
 
@@ -243,14 +243,14 @@ namespace Crimson
 		if (bestCost >= parentCost)
 			return;
 
-		int i = TriStartID, j = i + TriCount - 1;
+		int i = triStartID, j = i + triCount - 1;
 		//do partial sorting
 		while (i <= j)
 		{
-			if (RTTrianglesArr[TriIndices[i]].GetCentroid()[axis] < splitPos)
+			if (m_RTTriangles[m_TriIndices[i]].GetCentroid()[axis] < splitPos)
 				i++;
 			else
-				std::swap(TriIndices[i], TriIndices[j--]);
+				std::swap(m_TriIndices[i], m_TriIndices[j--]);
 		}
 
 		int leftCount = i - triStartID;

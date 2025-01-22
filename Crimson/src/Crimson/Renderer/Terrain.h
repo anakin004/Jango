@@ -38,14 +38,15 @@ namespace Crimson
 		Ref<Texture2DArray> TerrainTex_Albedo, TerrainTex_Roughness, TerratinTex_Normal;
 		Ref<Texture2DArray> TerrainTex_Masks;
 		int m_Height, m_Width, m_Channels,m_Channels1;
-		float m_maxTerrainHeight;
-		float max_height;
-		float min_height;
+		float m_maxTerrainHeight; // to put in a util file - should be const 
+		float max_height; // to put in a util file - should be const 
+		float min_height; // to put in a util file - should be const 
 		unsigned short* Height_data,*GrassSpawnArea;
 		std::chrono::steady_clock::time_point StartTime;
 		int CurrentChunkIndex = -1;
-		float ChunkSize = 128.0f;
+		float ChunkSize = 128.0f;	// to put in a util file - should be const 
 		uint32_t foliageBufferIndex;
+
 	private:
 		uint32_t frame_counter = 0;
 		Ref<Foliage> grass,grass2, grass3,
@@ -76,8 +77,11 @@ namespace Crimson
 		static std::stack<QNode*> node_memoryPool;
 		static QNode* GetNode(Bounds bounds);
 		static void RecycleMemory(QNode*& node);
-		static void Allocate();
+		static bool Allocate();
 		static void DeAllocate();
+
+		static float allocTime;
+
 	};
 	class QuadTree
 	{
