@@ -13,6 +13,9 @@ namespace Crimson
 	}
 	void OpenGLAntialiasing::Init(int width, int height)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		m_width = width; m_height = height;
 		TAA_Shader = Shader::Create("assets/Shaders/TAA_Shader.glsl");
 
@@ -32,6 +35,9 @@ namespace Crimson
 	}
 	void OpenGLAntialiasing::Update()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		numFrame++;
 		glm::vec2 screenSize = RenderCommand::GetViewportSize();
 		if (m_width != screenSize.x || m_height != screenSize.y)
@@ -54,6 +60,8 @@ namespace Crimson
 	}
 	void OpenGLAntialiasing::RenderQuad()
 	{
+
+		CN_PROFILE_FUNCTION()
 		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);//disable depth testing

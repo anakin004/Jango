@@ -45,6 +45,10 @@ namespace Crimson {
     }
     void OpenGLFrameBuffer::invalidate(const FrameBufferSpecification& spec)
     {
+
+
+        CN_PROFILE_FUNCTION()
+
         if (m_RenderID)
         {
             glDeleteFramebuffers(1, &m_RenderID);

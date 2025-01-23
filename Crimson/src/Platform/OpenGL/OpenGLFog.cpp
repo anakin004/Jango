@@ -12,6 +12,8 @@ namespace Crimson
 	OpenGLFog::OpenGLFog(float density, float fogStart, float fogEnd, float fogTop, float fogBottom, glm::vec2 ScreenSize)
 		: m_density(density), m_gradient(1), m_fogStart(fogStart), m_fogEnd(fogEnd), m_screenSize(ScreenSize)
 	{
+		CN_PROFILE_FUNCTION()
+
 		m_fogShader = Shader::Create("Assets/Shaders/pp_fogShader.glsl");
 
 		glGenFramebuffers(1, &m_framebufferID);
@@ -34,6 +36,9 @@ namespace Crimson
 	}
 	void OpenGLFog::RenderFog(Camera& cam, glm::vec2 screenSize)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		m_fogShader->Bind();
 		m_fogShader->SetInt("u_sceneDepth", SCENE_DEPTH_SLOT);
 		m_fogShader->SetInt("u_sceneColor", ORIGINAL_SCENE_TEXTURE_SLOT);
@@ -65,6 +70,9 @@ namespace Crimson
 
 	void OpenGLFog::RenderQuad()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);

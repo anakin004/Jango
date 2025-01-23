@@ -67,6 +67,9 @@ LoadMesh* mesh;
 
  void CrimsonEditor::OnAttach()
  {
+	 CN_PROFILE_FUNCTION()
+
+
 	 CN_CORE_INFO("Creating Scene : Editor -> OnAttach")
 
 	 m_scene = Scene::Create();
@@ -110,14 +113,19 @@ void CrimsonEditor::OnDetach()
 {
 }
 
-void CrimsonEditor::OnUpdate(TimeStep ts )
+void CrimsonEditor::OnUpdate(TimeStep ts)
 {
+
+	CN_PROFILE_FUNCTION()
 
 	frame_time = ts;
 
 	numFrame++;
+
 	m_scene->OnUpdate(ts);
+
 	Renderer3D::ForwardRenderPass(m_scene.get());//forward pass for later deferred stage
+
 
 	m_FrameBuffer2->Bind();//Bind the frame buffer so that it can store the pixel data to a texture
 	RenderCommand::ClearColor({ 0,0,0,1 });
@@ -126,25 +134,30 @@ void CrimsonEditor::OnUpdate(TimeStep ts )
 	m_scene->Resize(m_ViewportSize.x, m_ViewportSize.y);
 	m_FrameBuffer2->UnBind();
 
+
 	m_FrameBuffer2->BindFramebufferTexture(ORIGINAL_SCENE_TEXTURE_SLOT); //copy the rendered image to these slots
 	m_FrameBuffer2->BindFramebufferTexture(SCENE_TEXTURE_SLOT);
+
+
 	Renderer3D::RenderWithAntialiasing();
 
-	//do post processing stuff here
 	m_scene->m_Fog->RenderFog(*m_scene->GetCamera(), RenderCommand::GetViewportSize());
-	m_scene->m_Bloom->GetFinalImage(m_FrameBuffer2->GetSceneTextureID(), RenderCommand::GetViewportSize());	
+	m_scene->m_Bloom->GetFinalImage(m_FrameBuffer2->GetSceneTextureID(), RenderCommand::GetViewportSize());
 	m_scene->m_Bloom->RenderBloomTexture();
+
 	
 	m_FrameBuffer->Bind();
 	RenderCommand::ClearColor({ 0,0,0,1 });
 	RenderCommand::Clear();
+
 	m_scene->m_Bloom->Update(ts);
+
 	m_FrameBuffer->UnBind();
 }
 
 void CrimsonEditor::OnImGuiRender()
 {
-	CN_PROFILE_SCOPE("ImGUI RENDER");
+	CN_PROFILE_FUNCTION()
 
 	ImGui::DockSpaceOverViewport();//always keep DockSpaceOverViewport() above all other ImGui windows to make the other windows docable
 

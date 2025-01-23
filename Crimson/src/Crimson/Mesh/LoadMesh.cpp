@@ -23,7 +23,7 @@ namespace Crimson
 		GlobalTransform = glm::mat4(1.0);
 		std::filesystem::path mesh_path(Path);
 		objectName = mesh_path.stem().string();
-		m_path = (mesh_path.parent_path() / mesh_path.stem()).string() + extension; //temporary
+		m_Path = (mesh_path.parent_path() / mesh_path.stem()).string() + extension; //temporary
 
 		if (m_LOD.size() == 0)
 			m_LOD.push_back(this);
@@ -35,7 +35,7 @@ namespace Crimson
 		if (type == IMPORT_MESH)
 		{
 			SceneSerializer deserialize;
-			deserialize.DeSerializeMesh(m_path, *this);
+			deserialize.DeSerializeMesh(m_Path, *this);
 			uuid = UUID(Path); //only create uuid for engine compatible mesh
 			//ResourceManager::allMeshes[uuid] = m_Mesh;
 			CreateStaticBuffers();
@@ -51,7 +51,7 @@ namespace Crimson
 		static const uint32_t s_MeshImportFlags =
 			aiProcess_CalcTangentSpace
 			| aiProcess_Triangulate
-			| aiProcess_JoinIdenticalVertices
+			//| aiProcess_JoinIdenticalVertices
 			| aiProcess_SortByPType
 			| aiProcess_GenNormals
 			| aiProcess_GenUVCoords
@@ -140,12 +140,12 @@ namespace Crimson
 				}
 			}
 
-			m_subMeshes[MaterialIdx].Vertices.reserve(m_Mesh[i]->mNumVertices);
-			m_subMeshes[MaterialIdx].TexCoord.reserve(m_Mesh[i]->mNumVertices);
-			m_subMeshes[MaterialIdx].Normal.reserve(m_Mesh[i]->mNumVertices);
-			m_subMeshes[MaterialIdx].Tangent.reserve(m_Mesh[i]->mNumVertices);
-			m_subMeshes[MaterialIdx].BiTangent.reserve(m_Mesh[i]->mNumVertices);
-			m_subMeshes[Materialidx].Indices.reserve(m_Mesh[i]->mNumVertices); 
+			m_SubMeshes[MaterialIdx].Vertices.reserve(m_Mesh[i]->mNumVertices);
+			m_SubMeshes[MaterialIdx].TexCoord.reserve(m_Mesh[i]->mNumVertices);
+			m_SubMeshes[MaterialIdx].Normal.reserve(m_Mesh[i]->mNumVertices);
+			m_SubMeshes[MaterialIdx].Tangent.reserve(m_Mesh[i]->mNumVertices);
+			m_SubMeshes[MaterialIdx].BiTangent.reserve(m_Mesh[i]->mNumVertices);
+			m_SubMeshes[MaterialIdx].Indices.reserve(m_Mesh[i]->mNumVertices);
 
 
 
@@ -185,16 +185,16 @@ namespace Crimson
 					glm::vec4 bitan = GlobalTransform * glm::vec4(bitangent.x, bitangent.y, bitangent.z, 0.0);
 
 					m_SubMeshes[MaterialIdx].Tangent.emplace_back( tan.x, tan.y, tan.z );
-					m_SubMeshes[Materialidx].BiTangent.emplace_back( bitan.x,bitan.y,bitan.z );
+					m_SubMeshes[MaterialIdx].BiTangent.emplace_back( bitan.x,bitan.y,bitan.z );
 				}
 				else
 				{
-					m_SubMeshes[MaterialIdx].Tangent.emplace_back{ 0.0f,0.0f,0.0f );
-					m_SubMeshes[MaterialIdx].BiTangent.emplace_back{ 0.0f,0.0f,0.0f );
+					m_SubMeshes[MaterialIdx].Tangent.emplace_back( 0.0f,0.0f,0.0f );
+					m_SubMeshes[MaterialIdx].BiTangent.emplace_back( 0.0f,0.0f,0.0f );
 				}
 			}
 
-			m_subMeshes[material_ind].numIndices = m_Mesh[i]->mNumFaces * 3;
+			m_SubMeshes[MaterialIdx].NumIndices = m_Mesh[i]->mNumFaces * 3;
 			
 			for (unsigned int j = 0; j < m_Mesh[i]->mNumFaces; j++) 
 			{
@@ -217,7 +217,7 @@ namespace Crimson
 	void LoadMesh::ProcessMaterials(const aiScene* scene)//get all the materials in a scene
 	{
 		int NumMaterials = scene->mNumMaterials;
-		m_subMeshes.resize(NumMaterials);
+		m_SubMeshes.resize(NumMaterials);
 
 		const std::string relative_path = "Assets/Textures/MeshTextures/";
 		auto GetTexturePath = [&](aiMaterial*& material, aiTextureType type)
@@ -238,7 +238,7 @@ namespace Crimson
 			aiMaterial* scene_material = scene->mMaterials[i];
 			std::string materialName = objectName + std::string("_") + std::string(scene_material->GetName().C_Str());
 			Ref<Material> material = Material::Create(materialName, ""); //create a material and set the default storage directory
-			m_subMeshes[i].m_MaterialID = material->materialID;
+			m_SubMeshes[i].MaterialID = material->materialID;
 
 			//if material cannot be found then create and serialize the material
 			if (ResourceManager::allMaterials.find(material->materialID) == ResourceManager::allMaterials.end())
@@ -263,23 +263,23 @@ namespace Crimson
 	void LoadMesh::CreateStaticBuffers()
 	{
 
-		for (int k = 0; k < m_subMeshes.size(); k++)
+		for (int k = 0; k < m_SubMeshes.size(); k++)
 		{
-			std::vector<VertexAttributes> buffer(m_subMeshes[k].Vertices.size());
-			m_subMeshes[k].VertexArray = VertexArray::Create();
+			std::vector<VertexAttributes> buffer(m_SubMeshes[k].Vertices.size());
+			m_SubMeshes[k].VertexArray = VertexArray::Create();
 
 			// Populate vertex buffer
-			for (int i = 0; i < m_subMeshes[k].Vertices.size(); i++)
+			for (int i = 0; i < m_SubMeshes[k].Vertices.size(); i++)
 			{
-				glm::vec3 transformed_normals = m_subMeshes[k].Normal[i];
-				glm::vec3 transformed_tangents = m_subMeshes[k].Tangent[i];
-				glm::vec3 transformed_binormals = m_subMeshes[k].BiTangent[i];
-				buffer[i] = VertexAttributes(glm::vec4(m_subMeshes[k].Vertices[i], 1.0), m_subMeshes[k].TexCoord[i], transformed_normals, transformed_tangents, transformed_binormals);
+				glm::vec3 transformed_normals = m_SubMeshes[k].Normal[i];
+				glm::vec3 transformed_tangents = m_SubMeshes[k].Tangent[i];
+				glm::vec3 transformed_binormals = m_SubMeshes[k].BiTangent[i];
+				buffer[i] = VertexAttributes(glm::vec4(m_SubMeshes[k].Vertices[i], 1.0), m_SubMeshes[k].TexCoord[i], transformed_normals, transformed_tangents, transformed_binormals);
 			}
 
 			// Create and set vertex buffer
-			vb = VertexBuffer::Create(&buffer[0].Position.x, sizeof(VertexAttributes) * m_subMeshes[k].Vertices.size());
-			ib = IndexBuffer::Create(m_subMeshes[k].Indices.data(), m_subMeshes[k].Indices.size() * sizeof(unsigned int));
+			vb = VertexBuffer::Create(&buffer[0].Position.x, sizeof(VertexAttributes) * m_SubMeshes[k].Vertices.size());
+			ib = IndexBuffer::Create(m_SubMeshes[k].Indices.data(), m_SubMeshes[k].Indices.size() * sizeof(unsigned int));
 
 
 			bl = std::make_shared<BufferLayout>();
@@ -289,8 +289,8 @@ namespace Crimson
 			bl->push("Tangent", ShaderDataType::Float3);
 			bl->push("BiTangent", ShaderDataType::Float3);
 
-			m_subMeshes[k].VertexArray->SetIndexBuffer(ib);
-			m_subMeshes[k].VertexArray->AddBuffer(bl, vb);
+			m_SubMeshes[k].VertexArray->SetIndexBuffer(ib);
+			m_SubMeshes[k].VertexArray->AddBuffer(bl, vb);
 
 
 

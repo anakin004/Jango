@@ -22,6 +22,9 @@ namespace Crimson {
 		bCanCastShadow(canCastShadow), lod0Distance(LOD_Distance), applyGradientMask(bapplyGradientMask), 
 		enableWind(benableWind), alignToTerrainNormal(_alignToTerrainNormal), m_minScale(min_scale), m_maxScale(max_scale)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		class_ID++;
 		//m_coverage = glm::ivec2(coverageX, coverageY);
 		camera = new EditorCamera(16, 9);
@@ -56,6 +59,9 @@ namespace Crimson {
 	}
 	void Foliage::addInstance(glm::vec3 pos, glm::vec3 rot, glm::vec3 scale)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		glm::mat4 transform = glm::translate(glm::mat4(1.0), pos) *
 			glm::rotate(glm::mat4(1.0), glm::radians(90.0f), { 0,0,1 }) *
 			glm::rotate(glm::mat4(1.0), glm::radians(rot.y), { 1,0,0 }) *
@@ -67,6 +73,8 @@ namespace Crimson {
 
 	void Foliage::RenderFoliage(Camera& cam)
 	{
+		CN_PROFILE_FUNCTION()
+
 		float fov = cam.GetVerticalFOV();
 		cam.SetVerticalFOV(fov * 2);
 		if (!bHasSpawnned)
@@ -81,10 +89,10 @@ namespace Crimson {
 		Renderer3D::BeginSceneFoliage(cam);
 		//LOD 0
 		Renderer3D::InstancedFoliageData(*m_foliageMesh->GetLOD(0), ssbo_outTransformsLOD0);//render lod0 elements
-		for (auto& sub_mesh : m_foliageMesh->GetLOD(0)->m_subMeshes)
+		for (auto& sub_mesh : m_foliageMesh->GetLOD(0)->m_SubMeshes)
 		{
 			cs_CopyIndirectBufferData->Bind();
-			cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.numVertices);
+			cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.NumVertices);
 
 			if (ssbo_indirectBuffer_LOD0 == -1)
 			{
@@ -101,6 +109,7 @@ namespace Crimson {
 				glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 			}
 
+
 			glBindBuffer(GL_SHADER_STORAGE_BUFFER, atomicCounter_lod0);
 			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, atomicCounter_lod0);
 			glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
@@ -111,10 +120,10 @@ namespace Crimson {
 		}
 		//LOD 1
 		Renderer3D::InstancedFoliageData(*m_foliageMesh->GetLOD(1), ssbo_outTransformsLOD1);	//render lod1 elements
-		for (auto sub_mesh : m_foliageMesh->GetLOD(1)->m_subMeshes)
+		for (auto sub_mesh : m_foliageMesh->GetLOD(1)->m_SubMeshes)
 		{
 			cs_CopyIndirectBufferData->Bind();
-			cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.numVertices);
+			cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.NumVertices);
 		
 			if (ssbo_indirectBuffer_LOD1 == -1)
 			{
@@ -190,7 +199,7 @@ namespace Crimson {
 	//	}
 	//	//LOD 1
 	//	Renderer3D::InstancedFoliageData(*m_foliageMesh->GetLOD(1), ssbo_outTransformsLOD1);	//render lod1 elements
-	//	for (auto sub_mesh : m_foliageMesh->GetLOD(1)->m_subMeshes)
+	//	for (auto sub_mesh : m_foliageMesh->GetLOD(1)->m_SubMeshes)
 	//	{
 	//		cs_CopyIndirectBufferData->Bind();
 	//		cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.numVertices);
@@ -223,9 +232,9 @@ namespace Crimson {
 	{
 		//LOD 0
 		Renderer3D::InstancedFoliageData(*m_foliageMesh->GetLOD(0), ssbo_outTransformsLOD0);	//render lod0 elements
-		for (auto sub_mesh : m_foliageMesh->GetLOD(0)->m_subMeshes)
+		for (auto sub_mesh : m_foliageMesh->GetLOD(0)->m_SubMeshes)
 		{
-			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.m_MaterialID]; //get material from the resource manager
+			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.MaterialID]; //get material from the resource manager
 			material->Diffuse_Texture->Bind(ALBEDO_SLOT);
 			shadow_shader->SetInt("u_Albedo", ALBEDO_SLOT); //alpha channel is being used
 			RenderCommand::DrawArraysIndirect(*sub_mesh.VertexArray, ssbo_indirectBuffer_LOD0);			

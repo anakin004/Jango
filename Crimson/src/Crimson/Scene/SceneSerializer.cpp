@@ -146,7 +146,7 @@ namespace Crimson {
 			auto& sm = entity.GetComponent<StaticMeshComponent>();
 			out << YAML::Key << "StaticMeshComponent";
 			out << YAML::BeginMap;
-			out << YAML::Key << "MeshPath" << YAML::Value << sm.static_mesh->m_path;
+			out << YAML::Key << "MeshPath" << YAML::Value << sm.static_mesh->m_Path;
 			out << YAML::EndMap;
 		}
 		if (entity.HasComponent<ScriptComponent>())
@@ -246,13 +246,13 @@ namespace Crimson {
 
 		YAML::Emitter out;
 		out << YAML::BeginMap;
-		for (int i = 0; i < mesh.m_subMeshes.size(); i++)
+		for (int i = 0; i < mesh.m_SubMeshes.size(); i++)
 		{
-			auto sub_mesh = mesh.m_subMeshes[i];
+			auto sub_mesh = mesh.m_SubMeshes[i];
 			out << YAML::Key << std::to_string(i) << YAML::Value;
 			out << YAML::BeginSeq;
-			out << YAML::Binary(reinterpret_cast<const unsigned char*>(&sub_mesh.m_MaterialID), sizeof(uint64_t));			
-			for (int k = 0; k < sub_mesh.numVertices; k++)
+			out << YAML::Binary(reinterpret_cast<const unsigned char*>(&sub_mesh.MaterialID), sizeof(uint64_t));			
+			for (int k = 0; k < sub_mesh.NumVertices; k++)
 			{
 				out << YAML::Binary(reinterpret_cast<const unsigned char*>(&sub_mesh.Vertices[k].x), sizeof(float) * 3)
 				<< YAML::Binary(reinterpret_cast<const unsigned char*>(&sub_mesh.Normal[k].x), sizeof(float) * 3)
@@ -522,10 +522,10 @@ namespace Crimson {
 						sub_mesh.TexCoord.push_back({ vertex_data[0],vertex_data[1]});
 					}
 				}
-				sub_mesh.numVertices = sub_mesh.Vertices.size();
-				sub_mesh.m_MaterialID = materialID;
+				sub_mesh.NumVertices = sub_mesh.Vertices.size();
+				sub_mesh.MaterialID = materialID;
 
-				mesh.m_subMeshes.push_back(sub_mesh);
+				mesh.m_SubMeshes.push_back(sub_mesh);
 			}
 			else
 				break;

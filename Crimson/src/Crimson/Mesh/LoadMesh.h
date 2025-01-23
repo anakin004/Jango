@@ -83,8 +83,8 @@ namespace Crimson {
 		LoadMesh* GetLOD(int lodIndex);
 
 	public:
-		std::string m_path;
-		std::vector<SubMesh> m_subMeshes;
+		std::string m_Path;
+		std::vector<SubMesh> m_SubMeshes;
 		Bounds total_bounds; //total mesh bounds
 		glm::mat4 GlobalTransform;
 		uint64_t uuid;
@@ -103,6 +103,8 @@ namespace Crimson {
 			glm::vec3 Normal;
 			glm::vec3 Tangent;
 			glm::vec3 BiNormal;
+
+			VertexAttributes() = default;
 			VertexAttributes(const glm::vec4& Position, const glm::vec2& TextureCoordinate, const glm::vec3& normal = { 0,0,0 }, const glm::vec3& Tangent = { 0,0,0 }, const glm::vec3& BiNormal = { 0,0,0 })
 				: Position(Position), TextureCoordinate(TextureCoordinate), Normal(normal), Tangent(Tangent), BiNormal(BiNormal)
 			{

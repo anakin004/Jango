@@ -18,6 +18,9 @@ namespace Crimson
 
 	RayTracer::RayTracer()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		frame_num = 1;
 		sample_count = 1;
 		samples = 1;
@@ -71,6 +74,8 @@ namespace Crimson
 	}
 	void RayTracer::Init(int width, int height)
 	{
+		CN_PROFILE_FUNCTION()
+
 		m_focalLength = 10.f;
 		image_width = width;
 		image_height = height;
@@ -106,6 +111,9 @@ namespace Crimson
 
 	void RayTracer::draw(Camera& cam, uint32_t& outputTextureID)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		cs_RayTracingShader->Bind();
 
 		cs_RayTracingShader->SetInt("albedo", ALBEDO_SLOT);
@@ -172,6 +180,10 @@ namespace Crimson
 
 	void RayTracer::copyAccmulatedImage(uint32_t& ImageToCopy)
 	{
+
+
+		CN_PROFILE_FUNCTION()
+
 		glBindTextureUnit(PT_IMAGE_SLOT, ImageToCopy);
 		RayTracing_CopyShader->Bind();
 		RayTracing_CopyShader->SetInt("InputTexture", PT_IMAGE_SLOT);
@@ -184,45 +196,9 @@ namespace Crimson
 
 	void RayTracer::RenderImage(Camera& cam)
 	{
-		if (Denoise && (tile_index.x == image_width / tile_size.x - 1) && (tile_index.y == image_height / tile_size.y - 1))
-		{
-			if (sample_count % 15 == 0) //after 15 sample denoise
-			{
-				/*
-				// Create an Open Image Denoise device
-				oidn::DeviceRef device = oidn::newDevice(oidn::DeviceType::CUDA); // CPU or GPU if available
-				device.commit();
+		
+		CN_PROFILE_FUNCTION()
 
-				auto buff = device.newBuffer(sizeof(float) * 3 * image_width * image_height);
-				auto out_buff = device.newBuffer(sizeof(float) * 3 * image_width * image_height);
-
-				oidn::FilterRef filter = device.newFilter("RT"); // generic ray tracing filter
-				filter.setImage("color", buff, oidn::Format::Float3, image_width, image_height); // beauty
-				filter.setImage("output", out_buff, oidn::Format::Float3, image_width, image_height); // denoised beauty
-				filter.set("hdr", false);
-				filter.commit();
-
-				float* fill_image = (float*)buff.getData();
-				glBindTexture(GL_TEXTURE_2D, m_Sampled_TextureID);
-				glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_FLOAT, fill_image);
-
-				filter.execute();
-
-				const char* errorMessage;
-				if (device.getError(errorMessage) != oidn::Error::None)
-					CN_CORE_ERROR(errorMessage);
-
-				float* out_image = (float*)out_buff.getData();
-				glBindTexture(GL_TEXTURE_2D, m_Denoised_TextureID);
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, image_width, image_height, 0, GL_RGB, GL_FLOAT, out_image);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-				m_Output_TextureID = m_Denoised_TextureID;
-				*/
-			}
-
-		}
 		//if any if the buttons are pressed then re-initilize the frame
 		if (isViewportFocused && (Input::IsMouseButtonPressed(CRIMSON_MOUSE_BUTTON_1) || Input::IsMouseButtonPressed(CRIMSON_MOUSE_BUTTON_2) ||
 			Input::IsKeyPressed(CRIMSON_KEY_W) || Input::IsKeyPressed(CRIMSON_KEY_A) || Input::IsKeyPressed(CRIMSON_KEY_S) ||
@@ -275,6 +251,9 @@ namespace Crimson
 	}
 	void RayTracer::RenderScreenSizeQuad()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);//disable depth testing

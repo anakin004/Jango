@@ -25,6 +25,10 @@ namespace Crimson {
 	}
 	void OpenGLShadows::RenderShadows(Scene& scene,const glm::vec3& LightPosition ,Camera& cam)
 	{
+
+
+		CN_PROFILE_FUNCTION()
+
 		GLint OFb;
 		glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &OFb);
 		auto size = RenderCommand::GetViewportSize();
@@ -81,6 +85,9 @@ namespace Crimson {
 	}
 	void OpenGLShadows::RenderTerrainShadows(Scene& scene, const glm::vec3& LightPosition, Camera& cam)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		GLint OFb;
 		glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &OFb);
 		auto size = RenderCommand::GetViewportSize();
@@ -166,6 +173,9 @@ namespace Crimson {
 	}
 	void OpenGLShadows::RenderFoliageShadows(LoadMesh* mesh, uint32_t bufferID, int numMeshes, const glm::vec3& LightPosition, Camera& cam)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		auto size = RenderCommand::GetViewportSize();
 		PrepareShadowProjectionMatrix(cam, LightPosition);//CREATE THE orthographic projection matrix
 
@@ -225,6 +235,9 @@ namespace Crimson {
 
 	void OpenGLShadows::CreateShdowMap()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		glGenFramebuffers(1, &framebuffer_id);
 		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer_id);
 
@@ -255,6 +268,9 @@ namespace Crimson {
 	}
 	void OpenGLShadows::PrepareShadowProjectionMatrix(Camera& camera,const glm::vec3& LightPosition)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		m_ShadowProjection.clear();
 
 		float NearPlane = 1.0f;

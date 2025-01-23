@@ -10,6 +10,9 @@ namespace Crimson {
 
 	void Atmosphere::RenderAtmosphere(Camera& camera,const float& atmosphere_radius)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		skyGradients->Bind(ALBEDO_SLOT);
 		atmosphere_shader->Bind();
 		atmosphere_shader->SetFloat3("sun_direction", Renderer3D::m_SunLightDir);
@@ -31,6 +34,9 @@ namespace Crimson {
 	}
 	void Atmosphere::InitilizeAtmosphere()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		atmosphere_shader = Shader::Create("Assets/Shaders/Atmosphere_Shader.glsl");
 
 		std::vector<std::string> gradientTex_paths = {"Assets/Textures/Sky_Gradient_Textures/SunZenith_Gradient.png",
@@ -39,6 +45,9 @@ namespace Crimson {
 	}
 	void Atmosphere::RenderQuad(const glm::mat4& view, const glm::mat4& proj)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		//this function renders a quad infront of the camera
 		glDepthMask(GL_FALSE);//disable writing to depth buffer
 

@@ -476,15 +476,15 @@ void SceneHierarchyPannel::DrawStaticMeshComponentUI()
 			//m_selected_entity->GetComponent<StaticMeshComponent>().isFoliage
 		}
 		LoadMesh* mesh = m_selected_entity->GetComponent<StaticMeshComponent>();
-		for (auto& sub_mesh : mesh->m_subMeshes)
+		for (auto& sub_mesh : mesh->m_SubMeshes)
 		{
-			Ref<Material> mat = ResourceManager::allMaterials[sub_mesh.m_MaterialID];
+			Ref<Material> mat = ResourceManager::allMaterials[sub_mesh.MaterialID];
 			ImGui::Button(mat->m_MaterialName.c_str(), { 120,20 });
 			if (ImGui::BeginDragDropTarget())//drag drop materials from content browser
 			{
 				if (const ImGuiPayload* val = ImGui::AcceptDragDropPayload("Material payload"))
 				{
-					ResourceManager::allMaterials[sub_mesh.m_MaterialID] = *(Ref<Material>*)val->Data;
+					ResourceManager::allMaterials[sub_mesh.MaterialID] = *(Ref<Material>*)val->Data;
 				}
 				ImGui::EndDragDropTarget();
 			}

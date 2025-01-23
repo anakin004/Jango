@@ -15,6 +15,8 @@ namespace Crimson
 	}
 	Ref<Antialiasing> Antialiasing::Create(int width, int height)
 	{
+		CN_PROFILE_FUNCTION()
+
 		switch (RendererAPI::GetAPI())
 		{
 		case GraphicsAPI::OpenGL:
@@ -27,6 +29,7 @@ namespace Crimson
 	}
 	glm::vec2 Antialiasing::GetJitterOffset()
 	{
+
 		auto halton = [](int base, int index)
 		{
 			float result = 0.;

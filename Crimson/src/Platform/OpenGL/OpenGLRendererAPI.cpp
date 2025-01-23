@@ -43,12 +43,16 @@ namespace Crimson {
 	void OpenGLRendererAPI::DrawInstancedArrays(VertexArray& vertexarray, size_t count, size_t instance_count, int first)
 	{
 		vertexarray.Bind();
+		//vertexarray.GetIndexBuffer()->Bind();
+		//glDrawElementsInstanced(GL_TRIANGLES, vertexarray.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr, instance_count);
 		glDrawArraysInstanced(GL_TRIANGLES, first, count, instance_count);
 	}
 	void OpenGLRendererAPI::DrawArraysIndirect(VertexArray& vertexarray, uint32_t& indirectBufferID)
 	{
 		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirectBufferID);
 		vertexarray.Bind();
+		//vertexarray.GetIndexBuffer()->Bind();
+		//glDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, 0);
 		glDrawArraysIndirect(GL_TRIANGLES, 0);
 	}
 	void OpenGLRendererAPI::DrawLine(VertexArray& vertexarray, uint32_t count)

@@ -212,10 +212,10 @@ namespace Crimson {
 
 	void Renderer3D::DrawMesh(LoadMesh& mesh, glm::mat4& transform, const glm::vec4& color, bool wireframe, const float& material_Roughness, const float& material_metallic, Ref<Shader> otherShader)
 	{
-		for (auto& sub_mesh : mesh.m_subMeshes)
+		for (auto& sub_mesh : mesh.m_SubMeshes)
 		{
 
-			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.m_MaterialID];
+			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.MaterialID];
 
 			if (!material) {
 				CN_CORE_ERROR("Material dosent exist");
@@ -251,9 +251,9 @@ namespace Crimson {
 
 
 			if( wireframe )
-				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.numVertices, GL_LINES, 0);
+				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.NumVertices, GL_LINES, 0);
 			else
-				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.numVertices, GL_TRIANGLES, 0);
+				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.NumVertices, GL_TRIANGLES, 0);
 		}
 	}
 
@@ -261,7 +261,7 @@ namespace Crimson {
 	{
 		m_data->foliageShader_instanced->Bind();
 		glDisable(GL_CULL_FACE);
-		Ref<Material> material = ResourceManager::allMaterials[sub_mesh.m_MaterialID]; //get material from the resource manager
+		Ref<Material> material = ResourceManager::allMaterials[sub_mesh.MaterialID]; //get material from the resource manager
 
 		if (!material) {
 			CN_CORE_ERROR("Material dosent exist");
@@ -279,7 +279,7 @@ namespace Crimson {
 		m_data->foliageShader_instanced->SetInt("u_NormalMap", NORMAL_SLOT);
 		m_data->foliageShader_instanced->SetMat4("u_Model", transform);
 		m_data->foliageShader_instanced->SetFloat4("m_color", material->GetColor());
-		m_data->foliageShader_instanced->SetFloat3("u_BoundsExtent", (sub_mesh.mesh_bounds.aabbMax - sub_mesh.mesh_bounds.aabbMin));
+		m_data->foliageShader_instanced->SetFloat3("u_BoundsExtent", (sub_mesh.MeshBounds.aabbMax - sub_mesh.MeshBounds.aabbMin));
 		m_data->foliageShader_instanced->SetFloat("u_Time", TimeElapsed);
 		m_data->foliageShader_instanced->SetInt("Noise", PERLIN_NOISE_TEXTURE_SLOT);
 		m_data->foliageShader_instanced->SetInt("applyGradientMask", applyGradientMask);
@@ -293,7 +293,7 @@ namespace Crimson {
 	void Renderer3D::InstancedFoliageData(LoadMesh& mesh, uint32_t& bufferIndex)
 	{
 		//needs to be refactored!!
-		for (auto& sub_mesh : mesh.m_subMeshes)
+		for (auto& sub_mesh : mesh.m_SubMeshes)
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, bufferIndex);
 
@@ -319,7 +319,7 @@ namespace Crimson {
 		//glGenBuffers(1, &bufferIndex);
 		//glBindBuffer(GL_ARRAY_BUFFER, bufferIndex);
 		//glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * size, nullptr, GL_DYNAMIC_DRAW);
-		for (auto& sub_mesh : mesh.m_subMeshes)
+		for (auto& sub_mesh : mesh.m_SubMeshes)
 		{
 			sub_mesh.VertexArray->Bind();
 			glEnableVertexAttribArray(5);

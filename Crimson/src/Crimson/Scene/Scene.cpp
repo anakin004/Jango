@@ -114,7 +114,7 @@ namespace Crimson {
 		Fern = new LoadMesh("Assets/Meshes/forest_Fern.fbx");
 		Fern->CreateLOD("Assets/Meshes/Fern_LOD1.fbx");
 
-		Freddy = new LoadMesh("Assets/Meshes/Warehouse.fbx");
+		Freddy = new LoadMesh("Assets/Meshes/wBonnie.fbx");
 		
 		Windmill = new LoadMesh("Assets/Meshes/Windmill.fbx");
 		Sponza = new LoadMesh("Assets/Meshes/Sponza.fbx");
@@ -160,7 +160,8 @@ namespace Crimson {
 	void Scene::OnUpdate(TimeStep ts)
 	{
 		MainCamera = nullptr;//if there is no main camera Then dont render
-		m_Fog->SetFogParameters(fogDensity, fogTop,fogEnd, fogColor);
+
+		m_Fog->SetFogParameters(fogDensity, fogTop, fogEnd, fogColor);
 
 		//update camera , Mesh Forward vectors....
 		auto view = m_registry.view<CameraComponent>();
@@ -214,15 +215,17 @@ namespace Crimson {
 		if (m_PointLights.size() > 0)
 			Renderer3D::SetPointLightPosition(m_PointLights);
 
+		/*
 		////debug physics
 		Renderer2D::BeginScene(*MainCamera);
 		for (int i = 0; i < Physics3D::DebugPoints.size(); i++)
 		{
 			Renderer2D::DrawLine(Physics3D::DebugPoints[i].pos0, Physics3D::DebugPoints[i].pos1, glm::vec4(0.0, 1.0, 0.6, 1.0));
 		}
-
+		*/
 		Renderer3D::SetSunLightDirection(Renderer3D::m_SunLightDir);
 		Renderer3D::SetSunLightColorAndIntensity(Renderer3D::m_SunColor, Renderer3D::m_SunIntensity);
+		
 		m_rayTracer->RenderImage(*MainCamera);
 	}
 	void Scene::OnCreate()

@@ -6,6 +6,8 @@
 namespace Crimson {
 	OpenGLSSAO::OpenGLSSAO(int width, int height)
 	{
+		CN_PROFILE_FUNCTION()
+
 		SSAOShader = Shader::Create("Assets/Shaders/SSAOShader.glsl");
 		GbufferPosition = Shader::Create("Assets/Shaders/gBuffersShader.glsl");
 		GbufferPosition_Terrain = Shader::Create("Assets/Shaders/gBufferShader_Terrain.glsl");
@@ -26,6 +28,9 @@ namespace Crimson {
 
 	void OpenGLSSAO::CaptureScene(Scene& scene , Camera& cam)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		auto viewport_size = RenderCommand::GetViewportSize();
 
 		//Generate Random samples
@@ -95,6 +100,9 @@ namespace Crimson {
 	}
 	void OpenGLSSAO::CreateSSAOTexture(int width, int height)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		m_width = width;
 		m_height = height;
 		auto size = RenderCommand::GetViewportSize();
@@ -158,6 +166,9 @@ namespace Crimson {
 
 	void OpenGLSSAO::RenderQuad()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);//disable depth testing

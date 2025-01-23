@@ -17,6 +17,9 @@ namespace Crimson {
 	}
 	void OpenGLCubeMapReflection::CreateCubeMapTexture()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		float* data = nullptr;
 		int width, height, channels;
 
@@ -53,6 +56,8 @@ namespace Crimson {
 
 	void OpenGLCubeMapReflection::RenderToCubeMap(Scene& scene)
 	{
+
+		CN_PROFILE_FUNCTION()
 		
 		shader->Bind();
 		auto size = RenderCommand::GetViewportSize();

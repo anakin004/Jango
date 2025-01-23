@@ -16,6 +16,9 @@ namespace Crimson
 	static int m_width, m_height;
 	void OpenGLDeferredRenderer::Init(int width, int height)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		m_width = width;
 		m_height = height;
 
@@ -79,6 +82,10 @@ namespace Crimson
 	
 	void OpenGLDeferredRenderer::CreateBuffers(Scene* scene)
 	{
+
+		CN_PROFILE_FUNCTION()
+
+
 		auto viewport_size = RenderCommand::GetViewportSize();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferID);
@@ -126,6 +133,9 @@ namespace Crimson
 	}
 	void OpenGLDeferredRenderer::DeferredPass()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		glm::vec2 jitter = Antialiasing::GetJitterOffset();
 
 		m_DefferedPassShader->Bind();

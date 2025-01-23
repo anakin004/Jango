@@ -33,6 +33,9 @@ namespace Crimson
 	}
 	Material::Material(const std::string& material_name, const std::string& storage_path)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		m_MaterialName = material_name;
 		materialNameOffset++; //increment when a material is created
 		color = { 1,1,1,1 };

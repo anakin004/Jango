@@ -14,6 +14,9 @@ namespace Crimson
 	BVH::BVH(LoadMesh*& mesh)
 		: m_Mesh(mesh), m_NumNodes(0)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		uint32_t rootIndex = 0;
 		const glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), { 0.f,0.f,1.f }) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
@@ -41,12 +44,15 @@ namespace Crimson
 	}
 	void BVH::CreateTriangles(const glm::mat4& transform)
 	{
-		int matCount = 0;
+
+		CN_PROFILE_FUNCTION()
+
+		uint32_t matCount = 0;
 		std::vector<std::string> AlbedoPaths, RoughnessPaths; 
-		for (auto& sub_mesh : m_Mesh->m_subMeshes)
+		for (auto& sub_mesh : m_Mesh->m_SubMeshes)
 		{
-			Ref<Texture2D> AlbedoTexture = Texture2D::Create(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetAlbedoPath());
-			Ref<Texture2D> RoughnessTexture = Texture2D::Create(ResourceManager::allMaterials[sub_mesh.m_MaterialID]->GetRoughnessPath());
+			Ref<Texture2D> AlbedoTexture = Texture2D::Create(ResourceManager::allMaterials[sub_mesh.MaterialID]->GetAlbedoPath());
+			Ref<Texture2D> RoughnessTexture = Texture2D::Create(ResourceManager::allMaterials[sub_mesh.MaterialID]->GetRoughnessPath());
 
 			//Enabling bindless textures causes render-doc to crash so disable them
 			uint64_t AlbedoHandle = glGetTextureHandleARB(AlbedoTexture->GetID()); //get a handle from the gpu
@@ -55,19 +61,34 @@ namespace Crimson
 			if(AlbedoHandle!=RoughnessHandle)
 				glMakeTextureHandleResidentARB(RoughnessHandle);
 
-			for (int i = 0; i < sub_mesh.Vertices.size(); i += 3)
+			// to fix, currently not triangulating model on import, getting weird artifacts when i do, but this works without triangulation
+			// could be due to how im rendering the models
+			for (uint32_t i = 0; i < sub_mesh.Indices.size(); i += 3)
 			{
 
+				const uint32_t idx0 = sub_mesh.Indices[i];
+				const uint32_t idx1 = sub_mesh.Indices[i + 1];
+				const uint32_t idx2 = sub_mesh.Indices[i + 2];
+
 				//transforming the vertices and normals to world space
-				glm::vec3 v0 = transform * glm::vec4(sub_mesh.Vertices[i], 1.0f);
-				glm::vec3 v1 = transform * glm::vec4(sub_mesh.Vertices[i + 1], 1.0f);
-				glm::vec3 v2 = transform * glm::vec4(sub_mesh.Vertices[i + 2], 1.0f);
+				glm::vec3 v0 = transform * glm::vec4(sub_mesh.Vertices[idx0], 1.0f);
+				glm::vec3 v1 = transform * glm::vec4(sub_mesh.Vertices[idx1], 1.0f);
+				glm::vec3 v2 = transform * glm::vec4(sub_mesh.Vertices[idx2], 1.0f);
 
-				glm::vec3 n0 = transform * glm::vec4(sub_mesh.Normal[i], 1.0f);
-				glm::vec3 n1 = transform * glm::vec4(sub_mesh.Normal[i + 1], 1.0f);
-				glm::vec3 n2 = transform * glm::vec4(sub_mesh.Normal[i + 2], 1.0f);
+				//glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(transform)));
+				//glm::vec3 n0 = normalMatrix * sub_mesh.Normal[idx0];
+				//glm::vec3 n1 = normalMatrix * sub_mesh.Normal[idx1];
+				//glm::vec3 n2 = normalMatrix * sub_mesh.Normal[idx2];
 
-				RTTriangle triangle(v0, v1, v2, n0, n1, n2, sub_mesh.TexCoord[i], sub_mesh.TexCoord[i + 1], sub_mesh.TexCoord[i + 2], matCount);
+				glm::vec3 n0 = transform * glm::vec4(sub_mesh.Normal[idx0], 1.0f);
+				glm::vec3 n1 = transform * glm::vec4(sub_mesh.Normal[idx1], 1.0f);
+				glm::vec3 n2 = transform * glm::vec4(sub_mesh.Normal[idx2], 1.0f);
+
+				glm::vec2 uv0 = sub_mesh.TexCoord[idx0];
+				glm::vec2 uv1 = sub_mesh.TexCoord[idx1];
+				glm::vec2 uv2 = sub_mesh.TexCoord[idx2];
+
+				RTTriangle triangle(v0, v1, v2, n0, n1, n2, uv0, uv1, uv2, matCount);
 				triangle.TexAlbedo = AlbedoHandle;
 				triangle.TexRoughness = RoughnessHandle;
 
@@ -84,12 +105,15 @@ namespace Crimson
 
 	void BVH::UpdateMaterials()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		int k = 0;
-		for (auto& sub_mesh : m_Mesh->m_subMeshes) //iterate through all sub meshes and get the materials
+		for (auto& sub_mesh : m_Mesh->m_SubMeshes) //iterate through all sub meshes and get the materials
 		{
 			CN_CORE_TRACE("Updating Material, Count : {0}", k);
-			CN_ASSERT(ResourceManager::allMaterials[sub_mesh.m_MaterialID], "Resource Manager Invalid (BVH)");
-			auto& ResourceMaterial = ResourceManager::allMaterials[sub_mesh.m_MaterialID];
+			CN_ASSERT(ResourceManager::allMaterials[sub_mesh.MaterialID], "Resource Manager Invalid (BVH)");
+			auto& ResourceMaterial = ResourceManager::allMaterials[sub_mesh.MaterialID];
 			Material mat;
 			mat.Color = ResourceMaterial->GetColor();
 			mat.EmissiveCol = ResourceMaterial->GetColor(); //needs change
@@ -103,6 +127,9 @@ namespace Crimson
 
 	float BVH::EvaluateSAH(BVHNode& node, int& axis, float& pos)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		float best_cost = std::numeric_limits<float>::max();
 		Bounds ResultingBound; //get the total bounds of all the triangles in a particular node
 		for (int i = 0; i < node.TriangleCount; i++)
@@ -165,6 +192,9 @@ namespace Crimson
 
 	int BVH::FlattenBVH(BVHNode* node, uint32_t* offset)//dfs traversal
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		LinearBVHNode* linearNode = &m_LinearBVHNodes[*offset];
 		linearNode->aabbMax = node->aabbMax;
 		linearNode->aabbMin = node->aabbMin;
@@ -192,6 +222,9 @@ namespace Crimson
 
 	void BVH::CleanBVH(BVHNode* node)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		if (node->LeftChild == nullptr && node->RightChild == nullptr)
 		{
 			return;
@@ -209,6 +242,9 @@ namespace Crimson
 	//recursively building the bvh tree and storing it as dfs format
 	void BVH::BuildBVH(BVHNode*& node, uint32_t triStartID, uint32_t triCount)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		node = new BVHNode();
 		//++numNodes;
 		Bounds bounds;

@@ -90,6 +90,10 @@ namespace Crimson {
 	};
 	void CubeMapEnvironment::Init(const std::string& path)
 	{
+
+		CN_PROFILE_FUNCTION()
+
+
 		Cube_Shader = (Shader::Create("Assets/Shaders/CubeMapShader.glsl"));
 		equirectangularToCube_shader = Shader::Create("Assets/Shaders/equirectangularToCube_shader.glsl");
 		irradiance_shader = Shader::Create("Assets/Shaders/irradianceCubeMapShader.glsl");
@@ -188,6 +192,9 @@ namespace Crimson {
 
 	void CubeMapEnvironment::RenderCubeMap( glm::mat4& view, glm::mat4& proj, const glm::vec3& view_dir)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		Cube_Shader->Bind();
 		Cube_Shader->SetInt("env", IRR_ENV_SLOT);
 
@@ -195,6 +202,9 @@ namespace Crimson {
 	}
 	void CubeMapEnvironment::ConstructIrradianceMap(glm::mat4 proj)
 	{		
+
+		CN_PROFILE_FUNCTION()
+
 		int irrMapWidth = 32;
 		
 		glGenTextures(1, &irradiance_map_id);
@@ -278,6 +288,10 @@ namespace Crimson {
 
 	void CubeMapEnvironment::CreateSpecularMap(glm::mat4& proj, glm::mat4* viewDirs)
 	{
+
+
+		CN_PROFILE_FUNCTION()
+
 		// pbr: run a quasi monte-carlo simulation on the environment lighting to create a prefilter (cube)map.
 		// ----------------------------------------------------------------------------------------------------
 		unsigned int prefilterMap; //will be used in specular reflections
@@ -348,6 +362,10 @@ namespace Crimson {
 
 	void CubeMapEnvironment::RenderQuad()
 	{
+
+
+		CN_PROFILE_FUNCTION()
+
 		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);
@@ -382,6 +400,10 @@ namespace Crimson {
 
 	void CubeMapEnvironment::RenderQuad(const glm::mat4& view, const glm::mat4& proj)
 	{
+
+
+		CN_PROFILE_FUNCTION()
+
 		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);//disable writing to depth buffer

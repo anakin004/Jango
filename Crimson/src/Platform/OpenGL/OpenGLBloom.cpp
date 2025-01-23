@@ -17,6 +17,10 @@ namespace Crimson {
 	}
 	void OpenGLBloom::InitBloom()
 	{
+
+
+		CN_PROFILE_FUNCTION()
+
 		m_ScreenDimension = m_Dimension;
 
 		m_DownSampleShader = Shader::Create("Assets/Shaders/DownsampleBloom_Shader.glsl");
@@ -63,6 +67,9 @@ namespace Crimson {
 	}
 	void OpenGLBloom::DownSample()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		//High Frequency Parts Extraction
 		ExtractImageBrightParts();
 
@@ -92,6 +99,9 @@ namespace Crimson {
 
 	void OpenGLBloom::UpSample()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_ONE, GL_ONE);
 		glBlendEquation(GL_FUNC_ADD);
@@ -122,6 +132,9 @@ namespace Crimson {
 	}
 	void OpenGLBloom::Update(TimeStep ts)
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		BloomToneMapShader->Bind();
 		BloomToneMapShader->SetInt("inputImage", SCENE_TEXTURE_SLOT);
 		BloomToneMapShader->SetInt("OriginalImage", ORIGINAL_SCENE_TEXTURE_SLOT);
@@ -168,6 +181,9 @@ namespace Crimson {
 
 	void OpenGLBloom::RenderQuad()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);//disable depth testing
@@ -200,6 +216,9 @@ namespace Crimson {
 	}
 	void OpenGLBloom::ExtractImageBrightParts()
 	{
+
+		CN_PROFILE_FUNCTION()
+
 		ExtractBrightParts->Bind();
 		ExtractBrightParts->SetInt("inputImage", SCENE_TEXTURE_SLOT);
 		ExtractBrightParts->SetFloat("BightnessThreshold", Bloom::m_BrightnessThreshold);
