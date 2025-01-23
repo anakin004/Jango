@@ -18,6 +18,9 @@ namespace Crimson {
 		void DrawInstancedArrays(VertexArray& vertexarray, size_t count, size_t instance_count, int first = 0) override;
 		void DrawArraysIndirect(VertexArray& vertexarray, uint32_t& indirectBufferID) override;
 		void DrawLine(VertexArray& vertexarray, uint32_t count)override;
+		
+		void DrawElementsIndirect(VertexArray& vertexarray, DrawElementsIndirectCommand& indirectCommand) override;
+
 		void Init() override;
 		void SetViewPort(unsigned int, unsigned int) override;
 		virtual glm::vec2 GetViewportSize() override;

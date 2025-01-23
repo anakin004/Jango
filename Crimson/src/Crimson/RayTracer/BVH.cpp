@@ -70,7 +70,7 @@ namespace Crimson
 				const uint32_t idx1 = sub_mesh.Indices[i + 1];
 				const uint32_t idx2 = sub_mesh.Indices[i + 2];
 
-				//transforming the vertices and normals to world space
+				//transforming the vertices and normals togit checkout -- Crimson/src/Crimson/RayTracer/BVH.cpp world space
 				glm::vec3 v0 = transform * glm::vec4(sub_mesh.Vertices[idx0], 1.0f);
 				glm::vec3 v1 = transform * glm::vec4(sub_mesh.Vertices[idx1], 1.0f);
 				glm::vec3 v2 = transform * glm::vec4(sub_mesh.Vertices[idx2], 1.0f);

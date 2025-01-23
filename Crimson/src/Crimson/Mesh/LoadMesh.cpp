@@ -283,7 +283,7 @@ namespace Crimson
 
 
 			bl = std::make_shared<BufferLayout>();
-			bl->push("position", ShaderDataType::Float4);
+			bl->push("Position", ShaderDataType::Float4);
 			bl->push("TexCoord", ShaderDataType::Float2);
 			bl->push("Normal", ShaderDataType::Float3);
 			bl->push("Tangent", ShaderDataType::Float3);
