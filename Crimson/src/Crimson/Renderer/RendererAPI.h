@@ -16,7 +16,16 @@ namespace Crimson {
 
 	struct DrawElementsIndirectCommand
 	{
-		DrawElementsIndirect() = default;
+		uint32_t Count;
+		uint32_t InstanceCount;
+		uint32_t FirstIndex;
+		int BaseVertex;
+		uint32_t BaseInstance;
+
+		DrawElementsIndirectCommand(uint32_t count, uint32_t instanceCount, uint32_t firstIndex, int baseVertex, uint32_t baseInstance)
+			: Count(count), InstanceCount(instanceCount), FirstIndex(firstIndex), BaseVertex(baseVertex), BaseInstance(baseInstance)
+		{
+		}
 	};
 
 	class RendererAPI {

@@ -6,15 +6,17 @@ namespace Crimson
 	{
 		glm::vec4 front, back, left, right; //(normal.x,normal.y,normal.z,distance);
 	};
+
+	struct DrawArraysIndirectCommand {
+		uint32_t  count = 0;
+		uint32_t  instanceCount = 0;
+		uint32_t  first = 0;
+		uint32_t  baseInstance = 0;
+	};
+
 	class Foliage
 	{
 	public:
-		struct DrawArraysIndirectCommand {
-			uint32_t  count = 0;
-			uint32_t  instanceCount = 0;
-			uint32_t  first = 0;
-			uint32_t  baseInstance = 0;
-		};
 		/*mesh : Foliage Mesh
 		numInstances : total number of Instances that will be used
 		coverageX,coverageY : How much area(sq m) will the foliage cover (must be a power of 2) eg 512,512
@@ -100,7 +102,9 @@ namespace Crimson
 		uint32_t atomicCounter_lod0 = -1, atomicCounter_lod1 = -1; //Atomic_counter_Buffer IDs
 		uint32_t ssbo_outTransformsLOD0 = -1, ssbo_outTransformsLOD1 = -1; //2 transform matrix buffer IDs
 		uint32_t ssbo_indirectBuffer_LOD0 = -1, ssbo_indirectBuffer_LOD1 = -1;
+		
 		DrawArraysIndirectCommand indirectBuffer_LOD0, indirectBuffer_LOD1; //
+		// to add, DrawElementsIndirectComamnd
 
 		Ref<Texture2D> blueNoiseTexture;
 		uint32_t m_instanceCount; //atomic counter to count the number of instances
