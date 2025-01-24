@@ -86,6 +86,7 @@ namespace Crimson
 	private:
 		void BuildBVH(BVHNode*& node, uint32_t triStartID, uint32_t triCount);
 		void CreateTriangles(const glm::mat4& transform = glm::mat4(1.0f)); //create triangles from mesh vertex positions
+		void CreateIndices();
 		float EvaluateSAH(BVHNode& node, int& axis, float& pos); //returns cost after finding best axis and position
 		int FlattenBVH(BVHNode* node, uint32_t* offset);
 		void CleanBVH(BVHNode* node);//removes count of triangles from child nodes
@@ -97,6 +98,8 @@ namespace Crimson
 		std::vector<LinearBVHNode>& GetLinearBVHNodes() { return m_LinearBVHNodes; }
 		std::vector<RTTriangle>& GetRTTriangles() { return m_RTTriangles; }
 		std::vector<uint32_t>& GetTriangleIndices() { return m_TriIndices; }
+		
+		// will make these private
 
 		std::vector<Material> m_Materials;
 		std::vector<Ref<Texture2D>> m_AlbedoTextures;
@@ -109,6 +112,12 @@ namespace Crimson
 		uint32_t m_NumNodes = 0;
 
 	private:
+
+		// will be used to store all indices processed, there will be a delimeter in the indices to determine the end
+		// delimeter is -1 , indice cant be negative that why i use int64
+		// indices of a certain mesh, after the vector will be cleared to free useless memory
+		std::vector<int64_t> m_TempIndices;
+
 		LoadMesh* m_Mesh = nullptr;
 		BVHNode* m_Head = nullptr;
 	};

@@ -25,7 +25,9 @@ namespace Crimson
 		CN_CORE_TRACE("Created Triangles ... Updating Materials : BVH")
 		UpdateMaterials();
 		CN_CORE_TRACE("Updated Materials : BVH")
-		
+	
+		// replace with index buffer from model loading since 
+		// the indices will (likely) not be continous since if vertices are shared it will invalidate triIndices	
 		m_TriIndices.resize(m_RTTriangles.size()); //making a seperate triangle index for swaping
 		for (int i = 0; i < m_RTTriangles.size(); i++)
 			m_TriIndices[i] = i;
@@ -42,6 +44,38 @@ namespace Crimson
 		CN_CORE_INFO("Number of triangles before BVH construction: {0}", m_RTTriangles.size());
 		CN_CORE_INFO("Number of triangles after BVH construction: {0}", m_NumNodes);
 	}
+
+
+	void BVH::GenerateIndices()
+	{
+	
+		uint32_t offsetIndex = 0;
+		uint32_t accumulatedSize = 0;
+
+		// there is some overhead from the delimeters but it will not be much, if I wanted to
+		// I can track the number of delimeters added and allocate accordingly but as of now will not change
+		m_TriIndices.reserve(m_TempIndices.size());
+
+		for(uint32_t i = 0 ; i < m_TempIndices.size(); i++)
+		{
+
+			// if we are at delimeter
+			if(m_TempIndices[i] == -1)
+			{
+				offsetIndex = accumulatedSize;
+			}
+			
+			else
+			{
+				m_TriIndices.push_back(m_TempIndices[i + offsetIndex]);
+			}
+
+			accumulatedSize++;
+		}
+
+
+	}
+
 	void BVH::CreateTriangles(const glm::mat4& transform)
 	{
 
@@ -93,7 +127,14 @@ namespace Crimson
 				triangle.TexRoughness = RoughnessHandle;
 
 				m_RTTriangles.push_back(triangle);
+
+				m_TempIndices.push_back(idx0);
+				m_TempIndices.push_back(idx1);
+				m_TempIndices.push_back(idx2);
 			}
+
+			// adding delimeter for the end of a mesh's vertices/indices
+			m_TempIndices.push_back(-1);
 
 			matCount++; //increment the material as we move to the next sub mesh
 
