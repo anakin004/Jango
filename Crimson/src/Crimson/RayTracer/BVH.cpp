@@ -29,9 +29,11 @@ namespace Crimson
 		// replace with index buffer from model loading since 
 		// the indices will (likely) not be continous since if vertices are shared it will invalidate triIndices	
 		m_TriIndices.resize(m_RTTriangles.size()); //making a seperate triangle index for swaping
-		for (int i = 0; i < m_RTTriangles.size(); i++)
-			m_TriIndices[i] = i;
+		//for (int i = 0; i < m_RTTriangles.size(); i++)
+			//m_TriIndices[i] = i;
 		
+		GenerateIndices();
+
 		m_LinearBVHNodes.resize(m_LinearBVHNodes.size() * 2 + 1);
 		CN_CORE_TRACE("BVH Creation started")
 		BuildBVH(m_Head, 0, m_RTTriangles.size());
@@ -67,10 +69,12 @@ namespace Crimson
 			
 			else
 			{
-				m_TriIndices.push_back(m_TempIndices[i + offsetIndex]);
+				m_TriIndices.push_back(m_TempIndices[i] + offsetIndex);
+
+				// size is based off of the num of indices, not the delimeters
+				accumulatedSize++;
 			}
 
-			accumulatedSize++;
 		}
 
 

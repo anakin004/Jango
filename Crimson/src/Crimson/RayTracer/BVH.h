@@ -86,7 +86,7 @@ namespace Crimson
 	private:
 		void BuildBVH(BVHNode*& node, uint32_t triStartID, uint32_t triCount);
 		void CreateTriangles(const glm::mat4& transform = glm::mat4(1.0f)); //create triangles from mesh vertex positions
-		void CreateIndices();
+		void GenerateIndices();
 		float EvaluateSAH(BVHNode& node, int& axis, float& pos); //returns cost after finding best axis and position
 		int FlattenBVH(BVHNode* node, uint32_t* offset);
 		void CleanBVH(BVHNode* node);//removes count of triangles from child nodes

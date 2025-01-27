@@ -34,7 +34,8 @@ namespace Crimson {
 		cs_FoliageSpawn = Shader::Create("Assets/Shaders/cs_ProceduralFoliagePlacement.glsl");
 		cs_GrassPlacement = Shader::Create("Assets/Shaders/cs_GrassPlacement.glsl");
 		cs_createLod = Shader::Create("Assets/Shaders/cs_CreateLODs.glsl");
-		cs_CopyIndirectBufferData = Shader::Create("Assets/Shaders/cs_CopyIndirectBufferData.glsl");
+		cs_CopyIndirectBufferData = Shader::Create("Assets/Shaders/cs_CopyIndirectBufferDataArrays.glsl");
+		//cs_CopyIndirectBufferData = Shader::Create("Assets/Shaders/cs_CopyIndirectBufferDataElements.glsl");
 		cs_ResetDensityMap = Shader::Create("Assets/Shaders/cs_ResetDensityMap.glsl");
 
 		blueNoiseTexture = Texture2D::Create("Assets/Textures/Blue_Noise.png");
@@ -49,7 +50,7 @@ namespace Crimson {
 
 		foliageDensityMap = Texture2D::Create(densityMapPath);//custom density map provided to individual foliage assets for controlled growth
 
-		foliage_positions.resize(numInstances,glm::vec2(0.0,0.0));
+		foliage_positions.resize(numInstances,glm::vec2(0.0f,0.0f));
 		foliageObjects.push_back(this);//this is a static vector that keeps track of all foliage objects created
 	}
 
@@ -65,7 +66,7 @@ namespace Crimson {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0), pos) *
 			glm::rotate(glm::mat4(1.0), glm::radians(90.0f), { 0,0,1 }) *
 			glm::rotate(glm::mat4(1.0), glm::radians(rot.y), { 1,0,0 }) *
-			//glm::rotate(glm::mat4(1.0), glm::radians(rot.z), { 0,0,1 }) *			
+			glm::rotate(glm::mat4(1.0), glm::radians(rot.z), { 0,0,1 }) *			
 			glm::scale(glm::mat4(1.0), scale);
 
 		m_foliageTransforms.push_back(transform);
@@ -92,8 +93,12 @@ namespace Crimson {
 		for (auto& sub_mesh : m_foliageMesh->GetLOD(0)->m_SubMeshes)
 		{
 			cs_CopyIndirectBufferData->Bind();
-			cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.NumVertices);
 
+			cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.NumVertices);
+			//cs_CopyIndirectBufferData->SetInt("IndexBufferSize", sub_mesh.NumIndices);
+
+			// for draw arrays
+			
 			if (ssbo_indirectBuffer_LOD0 == -1)
 			{
 				glGenBuffers(1, &ssbo_indirectBuffer_LOD0);
@@ -109,6 +114,25 @@ namespace Crimson {
 				glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 			}
 
+			
+
+			// need to work on drawing elements
+			/*
+			if (ssbo_indirectBuffer_LOD0 == -1)
+			{
+				glGenBuffers(1, &ssbo_indirectBuffer_LOD0);
+				glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_indirectBuffer_LOD0);
+				glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(DrawElementsIndirectCommand), &indirectBuffer_LOD0, GL_DYNAMIC_DRAW);
+				glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo_indirectBuffer_LOD0);
+				glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+			}
+			else
+			{
+				glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_indirectBuffer_LOD0);
+				glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo_indirectBuffer_LOD0);
+				glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+			}
+			*/
 
 			glBindBuffer(GL_SHADER_STORAGE_BUFFER, atomicCounter_lod0);
 			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, atomicCounter_lod0);
@@ -116,6 +140,10 @@ namespace Crimson {
 
 			glDispatchCompute(1, 1, 1);
 			glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+			// temporary
+			//glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_indirectBuffer_LOD0);
+
 			Renderer3D::DrawFoliageInstanced(sub_mesh, Terrain::m_terrainModelMat, ssbo_indirectBuffer_LOD0, Terrain::time, applyGradientMask, enableWind);
 		}
 		//LOD 1

@@ -252,8 +252,10 @@ namespace Crimson {
 
 			if( wireframe )
 				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.NumVertices, GL_LINES, 0);
-			else
+			else 
+			{
 				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.NumVertices, GL_TRIANGLES, 0);
+			}
 		}
 	}
 
@@ -286,6 +288,19 @@ namespace Crimson {
 		m_data->foliageShader_instanced->SetInt("enableWind", enableWind);
 
 		RenderCommand::DrawArraysIndirect(*sub_mesh.VertexArray, indirectBufferID);
+
+		/*
+		DrawElementsIndirectCommand r(
+			sub_mesh.Indices.size(),
+			(uint32_t)3,
+			0,
+			0,
+			0
+		);
+
+		RenderCommand::DrawElementsIndirect(*sub_mesh.VertexArray, r);
+		*/
+
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 	}

@@ -14,6 +14,7 @@ namespace Crimson
 		uint32_t  baseInstance = 0;
 	};
 
+
 	class Foliage
 	{
 	public:

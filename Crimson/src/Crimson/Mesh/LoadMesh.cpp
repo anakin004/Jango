@@ -51,7 +51,7 @@ namespace Crimson
 		static const uint32_t s_MeshImportFlags =
 			aiProcess_CalcTangentSpace
 			| aiProcess_Triangulate
-			//| aiProcess_JoinIdenticalVertices
+			| aiProcess_JoinIdenticalVertices
 			| aiProcess_SortByPType
 			| aiProcess_GenNormals
 			| aiProcess_GenUVCoords
@@ -194,7 +194,7 @@ namespace Crimson
 				}
 			}
 
-			m_SubMeshes[MaterialIdx].NumIndices = m_Mesh[i]->mNumFaces * 3;
+			m_SubMeshes[MaterialIdx].NumIndices = m_Mesh[i]->mNumFaces * static_cast<uint32_t>(3);
 			
 			for (unsigned int j = 0; j < m_Mesh[i]->mNumFaces; j++) 
 			{

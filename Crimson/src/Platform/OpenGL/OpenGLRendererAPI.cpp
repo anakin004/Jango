@@ -37,7 +37,9 @@ namespace Crimson {
 			glDrawElements(renderingMode, vertexarray.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 		}
 		else
+		{
 			glDrawArrays(renderingMode, first, count);
+		}
 	}
 
 	void OpenGLRendererAPI::DrawInstancedArrays(VertexArray& vertexarray, size_t count, size_t instance_count, int first)
@@ -52,7 +54,7 @@ namespace Crimson {
 		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirectBufferID);
 		vertexarray.Bind();
 		//vertexarray.GetIndexBuffer()->Bind();
-		//glDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, 0);
+		//glDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, 0); // need to make draw elements indirect command
 		glDrawArraysIndirect(GL_TRIANGLES, 0);
 	}
 
@@ -60,8 +62,12 @@ namespace Crimson {
 	void OpenGLRendererAPI::DrawElementsIndirect(VertexArray& vertexarray, DrawElementsIndirectCommand& indirectCommand)
 	{
 		vertexarray.Bind();
-		vertexarray.GetIndexbuffer()->Bind();
-		glDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (void*)(&indirectCommand));
+		vertexarray.GetIndexBuffer()->Bind();
+		/*
+		If a buffer is bound to the GL_DRAW_INDIRECT_BUFFER binding at the time of a call to glDrawElementsIndirect, 
+		indirect is interpreted as an offset, in basic machine units, into that buffer and the parameter data is read from the buffer rather than from client memory.
+		*/
+		glDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (void*)&indirectCommand);
 	}
 	
 

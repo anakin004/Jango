@@ -37,9 +37,9 @@ namespace Crimson {
 		virtual void DrawArrays(VertexArray& vertexarray, size_t count, unsigned int renderingMode, int first) = 0;
 		virtual void DrawArraysIndirect(VertexArray& vertexarray, uint32_t& indirectBufferID) = 0;
 		virtual void DrawInstancedArrays(VertexArray& vertexarray, size_t count, size_t instance_count, int first = 0) = 0;
-                virtual void DrawLine(VertexArray& vertexarray, uint32_t count) = 0;
+        virtual void DrawLine(VertexArray& vertexarray, uint32_t count) = 0;
 
-		virtual void OpenGLRendererAPI::DrawElementsIndirect(VertexArray& vertexarray, DrawElementsIndirectCommand& indirectCommand) = 0;
+		virtual void DrawElementsIndirect(VertexArray& vertexarray, DrawElementsIndirectCommand& indirectCommand) = 0;
 		
 		inline static GraphicsAPI GetAPI() { return m_API; }
 		virtual void Init() = 0;
