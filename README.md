@@ -1,14 +1,15 @@
-# Crimson 
+# Jango
 
 
-![Crimson](https://github.com/user-attachments/assets/fae28d60-1330-4bae-acab-57e12994e7f2)
+![Jango]![pxArt](https://github.com/user-attachments/assets/94f709bb-4abf-4543-8ba8-9663fa66020d)
 
 
-# Crimson Engine 
 
-# IMPORTANT: I decided to work in a development repository apart from this. There is going to be doing a big release of Crimson in the upcomming weeks! It will be including a full 3D renderer, 3D renderer will likely come first and then the 2D renderer, libraries like Box2D, Physx, yaml-cpp, assimp, and some networking multiplayer stuff soon after! If you are seeing this watch my repository! I am very excited for this upcomming release!
+# Jango Engine 
 
-Crimson is an open-source game engine currently under development including 2D and 3D environments
+# IMPORTANT: I decided to work in a development repository apart from this. There is going to be doing a big release of Jango in the upcomming weeks! It will be including a full 3D renderer, 3D renderer will likely come first and then the 2D renderer, libraries like Box2D, Physx, yaml-cpp, assimp, and some networking multiplayer stuff soon after! If you are seeing this watch my repository! I am very excited for this upcomming release!
+
+Jango is an open-source game engine currently under development including 2D and 3D environments
 imported tools used are found in the Crimson/vendor directory
 
 ---
@@ -33,7 +34,7 @@ imported tools used are found in the Crimson/vendor directory
 - **entt**: used for entity management
 
 
-## Sneak Peak of Crimson(Not Released Yet) ( Demo as of January 21st 2025 )
+## Sneak Peak of Jango(Not Released Yet) ( Demo as of January 21st 2025 )
 https://github.com/user-attachments/assets/0956fbeb-b1f8-4321-8566-b559aefaa198
 
 //
