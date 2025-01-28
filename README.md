@@ -1,7 +1,8 @@
 # Jango
 
 
-<img src="[https://github.com/user-attachments/assets/2dd21c32-e1a0-4473-bcd9-dbeff9f41ee0]" alt="Jango pxArt" width="800">
+<img src="(https://github.com/user-attachments/assets/0e34a14d-62c1-44a5-9663-9505cdb90662)" alt="Jango pxArt" width="800">
+![pxArt](https://github.com/user-attachments/assets/0e34a14d-62c1-44a5-9663-9505cdb90662)
 
 
 
