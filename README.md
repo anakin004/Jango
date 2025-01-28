@@ -1,7 +1,7 @@
 # Jango
 
 
-<img src="https://github.com/user-attachments/assets/94f709bb-4abf-4543-8ba8-9663fa66020d" alt="Jango pxArt" width="800">
+<img src="[https://github.com/user-attachments/assets/2dd21c32-e1a0-4473-bcd9-dbeff9f41ee0]" alt="Jango pxArt" width="800">
 
 
 
