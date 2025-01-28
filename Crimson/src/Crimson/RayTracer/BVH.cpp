@@ -26,12 +26,6 @@ namespace Crimson
 		UpdateMaterials();
 		CN_CORE_TRACE("Updated Materials : BVH")
 	
-		// replace with index buffer from model loading since 
-		// the indices will (likely) not be continous since if vertices are shared it will invalidate triIndices	
-		m_TriIndices.resize(m_RTTriangles.size()); //making a seperate triangle index for swaping
-		//for (int i = 0; i < m_RTTriangles.size(); i++)
-			//m_TriIndices[i] = i;
-		
 		GenerateIndices();
 
 		m_LinearBVHNodes.resize(m_LinearBVHNodes.size() * 2 + 1);
@@ -49,35 +43,27 @@ namespace Crimson
 
 
 	void BVH::GenerateIndices()
-	{
-	
-		uint32_t offsetIndex = 0;
-		uint32_t accumulatedSize = 0;
-
+	{ 
+		uint32_t offsetIndex = 0; 
+		uint32_t accumulatedIndices = 0;
 		// there is some overhead from the delimeters but it will not be much, if I wanted to
 		// I can track the number of delimeters added and allocate accordingly but as of now will not change
 		m_TriIndices.reserve(m_TempIndices.size());
 
 		for(uint32_t i = 0 ; i < m_TempIndices.size(); i++)
 		{
-
 			// if we are at delimeter
 			if(m_TempIndices[i] == -1)
 			{
-				offsetIndex = accumulatedSize;
+				offsetIndex = accumulatedIndices;
 			}
-			
 			else
 			{
 				m_TriIndices.push_back(m_TempIndices[i] + offsetIndex);
-
 				// size is based off of the num of indices, not the delimeters
-				accumulatedSize++;
+				accumulatedIndices++;
 			}
-
 		}
-
-
 	}
 
 	void BVH::CreateTriangles(const glm::mat4& transform)
@@ -97,10 +83,13 @@ namespace Crimson
 			glMakeTextureHandleResidentARB(AlbedoHandle); //load the texture into gpu memory using the handle
 			uint64_t RoughnessHandle = glGetTextureHandleARB(RoughnessTexture->GetID());
 			if(AlbedoHandle!=RoughnessHandle)
+			{
 				glMakeTextureHandleResidentARB(RoughnessHandle);
-
-			// to fix, currently not triangulating model on import, getting weird artifacts when i do, but this works without triangulation
+			}
+			// to fix, triangulating model on import, getting weird artifacts when i do, but this works without triangulation
 			// could be due to how im rendering the models
+			// however, since are tringulating, we have numfaces * 3, numfaces is some positive integer, so 3 | numfaces * 3
+			// we can index by step of 3 safely
 			for (uint32_t i = 0; i < sub_mesh.Indices.size(); i += 3)
 			{
 

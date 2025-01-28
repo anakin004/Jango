@@ -27,7 +27,6 @@ namespace Crimson {
 		vertexarray.Bind();
 		glDrawArrays(GL_TRIANGLES, first, count);
 	}
-
 	void OpenGLRendererAPI::DrawArrays(VertexArray& vertexarray, size_t count, unsigned int renderingMode, int first)
 	{
 		if(rendereringMode == GL_LINE)
@@ -60,7 +59,7 @@ namespace Crimson {
 		//glDrawElementsInstanced(GL_TRIANGLES, vertexarray.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, vertexArray.GetIndexBuffer()->GetData(), instance_count);
 		glDrawArraysInstanced(GL_TRIANGLES, first, count, instance_count);
 	}
-	void OpenGLRendererAPI::DrawArraysIndirect(VertexArray& vertexarray, uint32_t& indirectBufferID)
+	void OpenGLRendererAPI::DrawArraysIndirect(VertexArray& vertexarray, uint32_t indirectBufferID)
 	{
 		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirectBufferID);
 		vertexarray.Bind();
@@ -69,6 +68,14 @@ namespace Crimson {
 		glDrawArraysIndirect(GL_TRIANGLES, 0);
 	}
 
+
+	void OpenGLRendererAPI::DrawElementsIndirect(VertexArray& vertexarray, uint32_t indirectBufferID)
+	{
+		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirectBufferID);
+		vertexarray.Bind();
+		vertexarray.GetIndexBuffer()->Bind();
+		glDrawArraysIndirect(GL_TRIANGLES, 0);
+	}
 	
 	void OpenGLRendererAPI::DrawElementsIndirect(VertexArray& vertexarray, DrawElementsIndirectCommand& indirectCommand)
 	{

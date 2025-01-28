@@ -20,6 +20,7 @@ namespace Crimson {
 		void DrawLine(VertexArray& vertexarray, uint32_t count)override;
 		
 		void DrawElementsIndirect(VertexArray& vertexarray, DrawElementsIndirectCommand& indirectCommand) override;
+		void DrawElementsIndirect(VertexArray& vertexarray, uint32_t indirectBufferID) override;
 
 		void Init() override;
 		void SetViewPort(unsigned int, unsigned int) override;
