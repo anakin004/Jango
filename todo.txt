@@ -1,8 +1,6 @@
--- wireframe for assimp
--- support for other model formats
+-- support for other model formats - glb, gltf
 -- drag and drop for models possibly
-
--- lots of tech debt, was careless about naming and organization, along with logging in certain areas, profiling too.
-
+-- triangulation of model on import -> propogated to BVH
+-- Drawing Elements instead of Arrays since joining vertices on import in assimp
 
 

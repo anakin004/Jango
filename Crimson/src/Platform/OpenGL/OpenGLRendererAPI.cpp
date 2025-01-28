@@ -30,15 +30,26 @@ namespace Crimson {
 
 	void OpenGLRendererAPI::DrawArrays(VertexArray& vertexarray, size_t count, unsigned int renderingMode, int first)
 	{
+		if(rendereringMode == GL_LINE)
+		{
+			glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+		}
+		else
+		{
+			glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
+		}
+
+
+
 		vertexarray.Bind();
 		if (vertexarray.GetIndexBuffer())
 		{
 			vertexarray.GetIndexBuffer()->Bind();
-			glDrawElements(renderingMode, vertexarray.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, vertexarray.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 		}
 		else
 		{
-			glDrawArrays(renderingMode, first, count);
+			glDrawArrays(GL_TRIANGLES, first, count);
 		}
 	}
 

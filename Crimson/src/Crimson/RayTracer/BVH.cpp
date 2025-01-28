@@ -329,9 +329,13 @@ namespace Crimson
 		while (i <= j)
 		{
 			if (m_RTTriangles[m_TriIndices[i]].GetCentroid()[axis] < splitPos)
+			{
 				i++;
+			}
 			else
+			{
 				std::swap(m_TriIndices[i], m_TriIndices[j--]);
+			}
 		}
 
 		int leftCount = i - triStartID;

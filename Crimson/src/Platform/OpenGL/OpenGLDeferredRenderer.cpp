@@ -182,13 +182,9 @@ namespace Crimson
 	}
 	uint32_t OpenGLDeferredRenderer::GetBuffers(int bufferInd)
 	{
-		if (bufferInd == 0)
-			return m_NormalBufferID;
-		if (bufferInd == 1)
-			return m_VelocityBufferID;
-		if (bufferInd == 2)
-			return m_AlbedoBufferID;
-		if (bufferInd == 3)
-			return m_RoughnessMetallicBufferID;
+		if (bufferInd == 0)	return m_NormalBufferID;
+		if (bufferInd == 1)	return m_VelocityBufferID;
+		if (bufferInd == 2)	return m_AlbedoBufferID;
+		if (bufferInd == 3)	return m_RoughnessMetallicBufferID;
 	}
 }
