@@ -73,7 +73,7 @@ namespace Crimson {
 		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirectBufferID);
 		vertexarray.Bind();
 		vertexarray.GetIndexBuffer()->Bind();
-		glDrawArraysIndirect(GL_TRIANGLES, 0);
+		glDrawElementsIndirect(GL_TRIANGLES, GL_ELEMENT_ARRAY_BUFFER, (void*)0);
 	}
 	
 	void OpenGLRendererAPI::DrawElementsIndirect(VertexArray& vertexarray, DrawElementsIndirectCommand& indirectCommand)
