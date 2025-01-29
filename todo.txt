@@ -3,4 +3,5 @@
 -- triangulation of model on import -> propogated to BVH
 -- Drawing Elements instead of Arrays since joining vertices on import in assimp
 
-
+- note -> most recent comment shows certain files were changed but is not accurate
+- I started using vim editor and wsl, changed some files for some reason ... 
