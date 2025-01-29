@@ -35,9 +35,9 @@ namespace Crimson {
 		virtual void DrawIndex(VertexArray& vertexarray) = 0;
 		virtual void DrawArrays(VertexArray& vertexarray, size_t count, int first = 0) = 0;
 		virtual void DrawArrays(VertexArray& vertexarray, size_t count, unsigned int renderingMode, int first) = 0;
-		virtual void DrawArraysIndirect(VertexArray& vertexarray, uint32_t& indirectBufferID) = 0;
+		virtual void DrawArraysIndirect(VertexArray& vertexarray, uint32_t indirectBufferID) = 0;
 		virtual void DrawInstancedArrays(VertexArray& vertexarray, size_t count, size_t instance_count, int first = 0) = 0;
-        	virtual void DrawLine(VertexArray& vertexarray, uint32_t count) = 0;
+        virtual void DrawLine(VertexArray& vertexarray, uint32_t count) = 0;
 
 		virtual void DrawElementsIndirect(VertexArray& vertexarray, DrawElementsIndirectCommand& indirectCommand) = 0;
 		virtual void DrawElementsIndirect(VertexArray& vertexarray, uint32_t indirectBufferID) = 0;	

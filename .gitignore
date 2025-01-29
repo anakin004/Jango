@@ -6,3 +6,10 @@ Crimson/vendor/physx_x64-windows/dll/
 Crimson/vendor/physx_x64-windows/lib/
 
 *.user
+
+
+# Ignore Visual Studio project files
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln

@@ -148,7 +148,7 @@ namespace Crimson {
 		}
 		//LOD 1
 		Renderer3D::InstancedFoliageData(*m_foliageMesh->GetLOD(1), ssbo_outTransformsLOD1);	//render lod1 elements
-		for (auto sub_mesh : m_foliageMesh->GetLOD(1)->m_SubMeshes)
+		for (auto& sub_mesh : m_foliageMesh->GetLOD(1)->m_SubMeshes)
 		{
 			cs_CopyIndirectBufferData->Bind();
 			cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.NumVertices);
@@ -260,7 +260,7 @@ namespace Crimson {
 	{
 		//LOD 0
 		Renderer3D::InstancedFoliageData(*m_foliageMesh->GetLOD(0), ssbo_outTransformsLOD0);	//render lod0 elements
-		for (auto sub_mesh : m_foliageMesh->GetLOD(0)->m_SubMeshes)
+		for (auto& sub_mesh : m_foliageMesh->GetLOD(0)->m_SubMeshes)
 		{
 			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.MaterialID]; //get material from the resource manager
 			material->Diffuse_Texture->Bind(ALBEDO_SLOT);

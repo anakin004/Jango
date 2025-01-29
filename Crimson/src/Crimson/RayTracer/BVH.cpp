@@ -25,7 +25,7 @@ namespace Crimson
 		CN_CORE_TRACE("Created Triangles ... Updating Materials : BVH")
 		UpdateMaterials();
 		CN_CORE_TRACE("Updated Materials : BVH")
-	
+		m_TriIndices.resize(m_RTTriangles.size());
 		GenerateIndices();
 
 		m_LinearBVHNodes.resize(m_LinearBVHNodes.size() * 2 + 1);

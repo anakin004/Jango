@@ -74,7 +74,9 @@ namespace Crimson {
 		m_data->ssao = std::make_shared<OpenGLSSAO>(width / 2, height / 2);
 		m_data->shadow_map = Shadows::Create(2048 * 2.0, 2048 * 2.0);//create a 2048x2048 shadow map
 		for (int i = 0; i < 4; i++)
+		{
 			depth_id[i] = m_data->shadow_map->GetDepth_ID(i);
+		}
 		ssao_id = m_data->ssao->GetSSAOid();
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -217,7 +219,8 @@ namespace Crimson {
 
 			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.MaterialID];
 
-			if (!material) {
+			if (!material) 
+			{
 				CN_CORE_ERROR("Material dosent exist");
 				return; //dont render in case of non existing material
 			}
@@ -250,8 +253,10 @@ namespace Crimson {
 			}
 
 
-			if( wireframe )
-				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.NumVertices, GL_LINES, 0);
+			if (wireframe) 
+			{
+				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.NumVertices, GL_LINE, 0);
+			}
 			else 
 			{
 				RenderCommand::DrawArrays(*sub_mesh.VertexArray, sub_mesh.NumVertices, GL_TRIANGLES, 0);

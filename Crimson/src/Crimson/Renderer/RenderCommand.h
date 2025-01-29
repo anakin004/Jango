@@ -36,7 +36,7 @@ namespace Crimson {
 		//indirectBufferID is bound to GL_DRAW_INDIRECT_BUFFER before the glDrawIndirect draw call to pass information to the gpu
 		//this is used when the number of instances to draw is unknown in the cpu side but gpu produces the num instances to draw
 		//so without copying the data from the gpu->cpu directly use gpu data to draw. 
-		inline static void DrawArraysIndirect(VertexArray& vertexarray, uint32_t& indirectBufferID)
+		inline static void DrawArraysIndirect(VertexArray& vertexarray, uint32_t indirectBufferID)
 		{
 			s_RendererAPI->DrawArraysIndirect(vertexarray, indirectBufferID);
 		}

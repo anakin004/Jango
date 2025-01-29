@@ -25,3 +25,6 @@
 [submodule "Crimson/vendor/assimp"]
 	path = Crimson/vendor/assimp
 	url = https://github.com/assimp/assimp
+[submodule "Crimson/vendor/mimalloc"]
+	path = Crimson/vendor/mimalloc
+	url = https://github.com/anakin004/mimalloc
