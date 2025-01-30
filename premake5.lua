@@ -1,3 +1,10 @@
+
+-- may not need this, executing with gmake might be enough
+--local useGCC = os.getenv("USE_GCC") or _ARGS[1] == "gcc"
+
+
+
+
 workspace "Crimson"
 	startproject "Crimson_Editor"
 	architecture "x86_64"
