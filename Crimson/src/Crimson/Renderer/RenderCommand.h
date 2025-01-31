@@ -44,6 +44,10 @@ namespace Crimson {
 		{
 			s_RendererAPI->DrawElementsIndirect(vertexarray, indirectCommand);
 		}
+		inline static void DrawElementsIndirect(VertexArray& vertexarray, uint32_t indirectBufferID)
+        {
+                s_RendererAPI->DrawElementsIndirect(vertexarray, indirectBufferID);
+        }
 		inline static void DrawLine(VertexArray& vertexarray, uint32_t& count) {
 			s_RendererAPI->DrawLine(vertexarray, count);
 		}

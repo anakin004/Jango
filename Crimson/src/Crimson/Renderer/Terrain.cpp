@@ -115,7 +115,7 @@ namespace Crimson
 		GrassSpawnArea = stbi_load_16("Assets/Textures/grass_mask.png", &m_Width, &m_Height, &m_Channels1, 0);
 
 		m_HeightMap = Texture2D::Create("Assets/Textures/Terrain_Height_Map2.png", true);
-		m_perlinNoise = Texture2D::Create("Assets/Textures/PerlinTexture.png");
+		m_perlinNoise = Texture2D::Create("Assets/Textures/PerlinTexture2.jpg");
 
 		/*
 			Terrain Layer Format:

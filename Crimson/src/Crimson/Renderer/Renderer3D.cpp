@@ -292,19 +292,10 @@ namespace Crimson {
 		m_data->foliageShader_instanced->SetInt("applyGradientMask", applyGradientMask);
 		m_data->foliageShader_instanced->SetInt("enableWind", enableWind);
 
-		RenderCommand::DrawArraysIndirect(*sub_mesh.VertexArray, indirectBufferID);
+	//	RenderCommand::DrawArraysIndirect(*sub_mesh.VertexArray, indirectBufferID);
 
-		/*
-		DrawElementsIndirectCommand r(
-			sub_mesh.Indices.size(),
-			(uint32_t)3,
-			0,
-			0,
-			0
-		);
 
-		RenderCommand::DrawElementsIndirect(*sub_mesh.VertexArray, r);
-		*/
+		RenderCommand::DrawElementsIndirect(*sub_mesh.VertexArray, indirectBufferID);
 
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);

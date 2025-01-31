@@ -34,8 +34,8 @@ namespace Crimson {
 		cs_FoliageSpawn = Shader::Create("Assets/Shaders/cs_ProceduralFoliagePlacement.glsl");
 		cs_GrassPlacement = Shader::Create("Assets/Shaders/cs_GrassPlacement.glsl");
 		cs_createLod = Shader::Create("Assets/Shaders/cs_CreateLODs.glsl");
-		cs_CopyIndirectBufferData = Shader::Create("Assets/Shaders/cs_CopyIndirectBufferDataArrays.glsl");
-		//cs_CopyIndirectBufferData = Shader::Create("Assets/Shaders/cs_CopyIndirectBufferDataElements.glsl");
+		//cs_CopyIndirectBufferData = Shader::Create("Assets/Shaders/cs_CopyIndirectBufferDataArrays.glsl");
+		cs_CopyIndirectBufferData = Shader::Create("Assets/Shaders/cs_CopyIndirectBufferDataElements.glsl");
 		cs_ResetDensityMap = Shader::Create("Assets/Shaders/cs_ResetDensityMap.glsl");
 
 		blueNoiseTexture = Texture2D::Create("Assets/Textures/Blue_Noise.png");
@@ -94,11 +94,11 @@ namespace Crimson {
 		{
 			cs_CopyIndirectBufferData->Bind();
 
-			cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.NumVertices);
-			//cs_CopyIndirectBufferData->SetInt("IndexBufferSize", sub_mesh.NumIndices);
+			//cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.NumVertices);
+			cs_CopyIndirectBufferData->SetInt("IndexBufferSize", sub_mesh.NumIndices);
 
 			// for draw arrays
-			
+			/*	
 			if (ssbo_indirectBuffer_LOD0 == -1)
 			{
 				glGenBuffers(1, &ssbo_indirectBuffer_LOD0);
@@ -113,11 +113,11 @@ namespace Crimson {
 				glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo_indirectBuffer_LOD0);
 				glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 			}
+			*/
 
-			
 
 			// need to work on drawing elements
-			/*
+			
 			if (ssbo_indirectBuffer_LOD0 == -1)
 			{
 				glGenBuffers(1, &ssbo_indirectBuffer_LOD0);
@@ -132,7 +132,7 @@ namespace Crimson {
 				glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo_indirectBuffer_LOD0);
 				glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 			}
-			*/
+			
 
 			glBindBuffer(GL_SHADER_STORAGE_BUFFER, atomicCounter_lod0);
 			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, atomicCounter_lod0);
@@ -151,8 +151,11 @@ namespace Crimson {
 		for (auto& sub_mesh : m_foliageMesh->GetLOD(1)->m_SubMeshes)
 		{
 			cs_CopyIndirectBufferData->Bind();
-			cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.NumVertices);
-		
+			//cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.NumVertices);
+			cs_CopyIndirectBufferData->SetInt("IndexBufferSize", sub_mesh.NumIndices);
+			
+			/*
+
 			if (ssbo_indirectBuffer_LOD1 == -1)
 			{
 				glGenBuffers(1, &ssbo_indirectBuffer_LOD1);
@@ -167,6 +170,25 @@ namespace Crimson {
 				glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo_indirectBuffer_LOD1);
 				glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 			}
+			*/
+
+
+            if (ssbo_indirectBuffer_LOD1 == -1)
+            {
+                    glGenBuffers(1, &ssbo_indirectBuffer_LOD1);
+                    glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_indirectBuffer_LOD1);
+                    glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(DrawElementsIndirectCommand), &indirectBuffer_LOD1, GL_DYNAMIC_DRAW);
+                    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo_indirectBuffer_LOD1);
+                    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+            }
+            else
+            {
+                    glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_indirectBuffer_LOD1);
+                    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo_indirectBuffer_LOD1);
+                    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+            }
+
+
 			glBindBuffer(GL_SHADER_STORAGE_BUFFER, atomicCounter_lod1);
 			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, atomicCounter_lod1);
 			glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
@@ -265,7 +287,8 @@ namespace Crimson {
 			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.MaterialID]; //get material from the resource manager
 			material->Diffuse_Texture->Bind(ALBEDO_SLOT);
 			shadow_shader->SetInt("u_Albedo", ALBEDO_SLOT); //alpha channel is being used
-			RenderCommand::DrawArraysIndirect(*sub_mesh.VertexArray, ssbo_indirectBuffer_LOD0);			
+			//RenderCommand::DrawArraysIndirect(*sub_mesh.VertexArray, ssbo_indirectBuffer_LOD0);
+			RenderCommand::DrawElementsIndirect(*sub_mesh.VertexArray, ssbo_indirectBuffer_LOD0);
 		}
 	}
 	glm::mat4 Foliage::getTransform(int index)

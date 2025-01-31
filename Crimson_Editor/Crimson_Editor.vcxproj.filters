@@ -76,13 +76,88 @@
     <Image Include="Assets\Textures\MeshTextures\Albedo_packed.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
+    <Image Include="Assets\Textures\MeshTextures\BareConcrete.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\BareEndo_Albedo_H.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\BareEndo_MRAC.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\BareEndo_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
     <Image Include="Assets\Textures\MeshTextures\BarkAI_Spec.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\Billboard_2K_Albedo_packed.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
+    <Image Include="Assets\Textures\MeshTextures\Bonnie_Body.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Bonnie_Head.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Bonnie_Parts.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Bonnie_skeleton.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Bus_stop_01.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Bus_stop_sign_01.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\CHAR_TEX_Phantom_Mangle_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\CHAR_TEX_Phantom_Mangle_Emissive.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\CHAR_TEX_Phantom_Mangle_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Char_Tex_EYE_Foxy_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Char_Tex_EYE_Phantom_Foxy_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Char_Tex_Mangle_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Char_Tex_Mangle_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
     <Image Include="Assets\Textures\MeshTextures\ForestFern_2K_Albedo_packed.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\FreddyNormal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Freddy_skeleton.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\G_FrostEndo_Emission_2_28_2022.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\G_FrostEndo_Main_2_28_2022.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\G_FrostEndo_Metallic_2_28_2022.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\G_FrostEndo_Normal_2_28_2022.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\G_FrostEndo_Occlusion_2_28_2022.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\G_FrostEndo_Roughness_2_28_2022.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\Grass 2K.png">
@@ -107,6 +182,12 @@
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\Grass_ORA.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Lamppost.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Land.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\MI_BirchBark_BaseColor.png">
@@ -247,16 +328,79 @@
     <Image Include="Assets\Textures\MeshTextures\MI_Veg031_Normal.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
+    <Image Include="Assets\Textures\MeshTextures\Mangle_Albedo.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Mangle_Body_baseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Mangle_Body_metallicRoughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Mangle_Body_normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Mangle_Eyes_emissive.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Mangle_MARC.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Mangle_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Mangle_metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Mangle_roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Plants.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Plants_01.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Plants_02.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Springtrap_MRAC_H1.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Springtrap_Skeleton_MRAC_H1.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
     <Image Include="Assets\Textures\MeshTextures\SpruceLeaves_Diffuse.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\SpruceTrunk_Albedo.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
+    <Image Include="Assets\Textures\MeshTextures\Tree_02.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Tree_03.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
     <Image Include="Assets\Textures\MeshTextures\Twig_Leaf_Long_Diffuse_C1-Twig_Leaf_Long_Opacity.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\Twig_Leaf_Long_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\Warehouse_normals.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\WetConcrete_Base_color.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\WetConcrete_Normal_DirectX.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\WetConcrete_Roughness@channels=B.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\WetConcrete_Roughness@channels=G.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\bark01.png">
@@ -277,7 +421,88 @@
     <Image Include="Assets\Textures\MeshTextures\bark_willow_rough_2k@channels=G.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodcontainer_low_2_main_non_sculpt_BaseC.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodcontainer_low_2_main_non_sculpt_Metal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodcontainer_low_2_main_non_sculpt_Norma.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodcontainer_low_2_main_non_sculpt_Rough.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodcontainer_low_2_main_sculpt_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodcontainer_low_2_main_sculpt_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodcontainer_low_2_main_sculpt_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodcontainer_low_2_main_sculpt_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodextractor_lambert1_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodextractor_lambert1_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodextractor_lambert1_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\bloodextractor_lambert1_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
     <Image Include="Assets\Textures\MeshTextures\brake_di.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\corkboard_lambert1_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\corkboard_lambert1_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\corkboard_lambert1_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\corkboard_lambert1_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\cup_of_noodles_lambert1_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\cup_of_noodles_lambert1_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\cup_of_noodles_lambert1_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\cup_of_noodles_lambert1_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\dissection_tableuvbucketfix_lambert1_BaseC.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\dissection_tableuvbucketfix_lambert1_Metal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\dissection_tableuvbucketfix_lambert1_Norma.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\dissection_tableuvbucketfix_lambert1_Rough.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\eye mangle 2.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\eye.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\fence_metal.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\flower daisy.png">
@@ -289,16 +514,112 @@
     <Image Include="Assets\Textures\MeshTextures\flowers-02.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
+    <Image Include="Assets\Textures\MeshTextures\freddy_endo_reflective.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
     <Image Include="Assets\Textures\MeshTextures\grass-02.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\grass_texture.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
+    <Image Include="Assets\Textures\MeshTextures\kidneyashtray_lambert1_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\kidneyashtray_lambert1_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\kidneyashtray_lambert1_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\kidneyashtray_lambert1_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert2_Base_Color.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert2_Normal_DirectX.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert2_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert3_Base_Color.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert3_Height.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert3_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert3_Normal_DirectX.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert3_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert4_Base_Color.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert4_Height.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert4_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert4_Normal_DirectX.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert4_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert5_Base_Color.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert5_Height.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert5_Normal_DirectX.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert5_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert6_Base_Color.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert6_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert8_Base_Color.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert8_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert8_Normal_DirectX.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\lambert8_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
     <Image Include="Assets\Textures\MeshTextures\leaf daisy.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\leaf daisy_normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\microwave_lambert1_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\microwave_lambert1_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\microwave_lambert1_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\microwave_lambert1_Roughness.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\miniHouse_Part1.png">
@@ -331,7 +652,73 @@
     <Image Include="Assets\Textures\MeshTextures\plant05.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
+    <Image Include="Assets\Textures\MeshTextures\rolling_cabinet_lambert1_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\rolling_cabinet_lambert1_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\rolling_cabinet_lambert1_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\rolling_cabinet_lambert1_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\room_for_texturing_room_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\room_for_texturing_room_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\room_for_texturing_room_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\room_for_texturing_room_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
     <Image Include="Assets\Textures\MeshTextures\sidewall.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\springtrap_Albedo_H1.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\springtrap_Normal_H1.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\springtrap_eye.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\springtrap_skeleton_Albedo_H1.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\springtrap_skeleton_Normal-HiRes.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\surgery_lamp_lambert1_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\surgery_lamp_lambert1_Emissive.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\surgery_lamp_lambert1_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\surgery_lamp_lambert1_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\surgery_lamp_lambert1_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\surgical_char_lambert1_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\surgical_char_lambert1_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\surgical_char_lambert1_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\surgical_char_lambert1_Roughness.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\t-sbark-01-bc.png">
@@ -344,6 +731,30 @@
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\wfzobb2ia_2K_Albedo.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\window_wblinds_glass_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\window_wblinds_glass_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\window_wblinds_glass_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\window_wblinds_glass_Roughness.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\window_wblinds_lambert1_BaseColor.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\window_wblinds_lambert1_Metallic.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\window_wblinds_lambert1_Normal.png">
+      <Filter>Assets\Textures\MeshTextures</Filter>
+    </Image>
+    <Image Include="Assets\Textures\MeshTextures\window_wblinds_lambert1_Roughness.png">
       <Filter>Assets\Textures\MeshTextures</Filter>
     </Image>
     <Image Include="Assets\Textures\MeshTextures\wk1ncbxja_2K_Albedo.png">
@@ -364,16 +775,19 @@
     <Image Include="Assets\Textures\Sky_Gradient_Textures\ViewZenith_Gradient.png">
       <Filter>Assets\Textures\Sky_Gradient_Textures</Filter>
     </Image>
+    <Image Include="Assets\Textures\TerrainHeightMap3.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
     <Image Include="Assets\Textures\Terrain_Height_Map.png">
       <Filter>Assets\Textures</Filter>
     </Image>
     <Image Include="Assets\Textures\Terrain_Height_Map2.png">
       <Filter>Assets\Textures</Filter>
     </Image>
-    <Image Include="Assets\Textures\Test.png">
+    <Image Include="Assets\Textures\ValleyMask.png">
       <Filter>Assets\Textures</Filter>
     </Image>
-    <Image Include="Assets\Textures\ValleyMask.png">
+    <Image Include="Assets\Textures\eye mangle 2.png">
       <Filter>Assets\Textures</Filter>
     </Image>
     <Image Include="Assets\Textures\grass_mask.png">

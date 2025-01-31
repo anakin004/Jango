@@ -17,6 +17,7 @@ layout (std430, binding = 1) buffer layoutBinding1
 }inLodCount;
 
 uniform int IndexBufferSize;
+
 void main()
 {
 	outIndirectBufferLOD0.count = IndexBufferSize;
