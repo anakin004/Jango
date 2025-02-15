@@ -155,6 +155,10 @@ project "Crimson"
 			"GLFW_INCLUDE_NONE"
 		}
 
+	filter { "system:linux or action:gmake" }
+		buildoptions { "-finput-charset=UTF-8", "-msse", "-mavx", "-Winvalid-pch", "-x c++-header" }
+
+
 	
 --	filter "toolset:msc"
 --		buildoptions { "/utf-8", "/arch:SSE", "/arch:AVX" }

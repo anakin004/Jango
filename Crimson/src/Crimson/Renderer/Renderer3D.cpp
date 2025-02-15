@@ -270,7 +270,8 @@ namespace Crimson {
 		glDisable(GL_CULL_FACE);
 		Ref<Material> material = ResourceManager::allMaterials[sub_mesh.MaterialID]; //get material from the resource manager
 
-		if (!material) {
+		if (!material) 
+		{
 			CN_CORE_ERROR("Material dosent exist");
 			return; //dont render in case of non existing material
 		}

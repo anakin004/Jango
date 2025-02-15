@@ -29,15 +29,7 @@ namespace Crimson {
 	}
 	void OpenGLRendererAPI::DrawArrays(VertexArray& vertexarray, size_t count, unsigned int renderingMode, int first)
 	{
-		if(renderingMode == GL_LINE)
-		{
-			std::cout << "lines";
-			glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-		}
-		else
-		{
-			glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
-		}
+		renderingMode == GL_LINE ? glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ) : glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
 
 		vertexarray.Bind();
 		if (vertexarray.GetIndexBuffer())
@@ -54,16 +46,12 @@ namespace Crimson {
 	void OpenGLRendererAPI::DrawInstancedArrays(VertexArray& vertexarray, size_t count, size_t instance_count, int first)
 	{
 		vertexarray.Bind();
-		//vertexarray.GetIndexBuffer()->Bind();
-		//glDrawElementsInstanced(GL_TRIANGLES, vertexarray.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, vertexArray.GetIndexBuffer()->GetData(), instance_count);
 		glDrawArraysInstanced(GL_TRIANGLES, first, count, instance_count);
 	}
 	void OpenGLRendererAPI::DrawArraysIndirect(VertexArray& vertexarray, uint32_t indirectBufferID)
 	{
 		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirectBufferID);
 		vertexarray.Bind();
-		//vertexarray.GetIndexBuffer()->Bind();
-		//glDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, 0); // need to make draw elements indirect command
 		glDrawArraysIndirect(GL_TRIANGLES, 0);
 	}
 
@@ -73,7 +61,7 @@ namespace Crimson {
 		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirectBufferID);
 		vertexarray.Bind();
 		vertexarray.GetIndexBuffer()->Bind();
-		glDrawElementsIndirect(GL_TRIANGLES, GL_ELEMENT_ARRAY_BUFFER, (void*)0);
+		glDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, 0);
 	}
 	
 	void OpenGLRendererAPI::DrawElementsIndirect(VertexArray& vertexarray, DrawElementsIndirectCommand& indirectCommand)
