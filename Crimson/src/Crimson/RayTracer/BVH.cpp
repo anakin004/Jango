@@ -97,19 +97,19 @@ namespace Crimson
 				const uint32_t idx1 = sub_mesh.Indices[i + 1];
 				const uint32_t idx2 = sub_mesh.Indices[i + 2];
 
-				//transforming the vertices and normals togit checkout -- Crimson/src/Crimson/RayTracer/BVH.cpp world space
+				//transforming the vertices and normals to world space
 				glm::vec3 v0 = transform * glm::vec4(sub_mesh.Vertices[idx0], 1.0f);
 				glm::vec3 v1 = transform * glm::vec4(sub_mesh.Vertices[idx1], 1.0f);
 				glm::vec3 v2 = transform * glm::vec4(sub_mesh.Vertices[idx2], 1.0f);
 
-				//glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(transform)));
-				//glm::vec3 n0 = normalMatrix * sub_mesh.Normal[idx0];
-				//glm::vec3 n1 = normalMatrix * sub_mesh.Normal[idx1];
-				//glm::vec3 n2 = normalMatrix * sub_mesh.Normal[idx2];
+				glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(transform)));
+				glm::vec3 n0 = normalMatrix * sub_mesh.Normal[idx0];
+				glm::vec3 n1 = normalMatrix * sub_mesh.Normal[idx1];
+				glm::vec3 n2 = normalMatrix * sub_mesh.Normal[idx2];
 
-				glm::vec3 n0 = transform * glm::vec4(sub_mesh.Normal[idx0], 1.0f);
-				glm::vec3 n1 = transform * glm::vec4(sub_mesh.Normal[idx1], 1.0f);
-				glm::vec3 n2 = transform * glm::vec4(sub_mesh.Normal[idx2], 1.0f);
+				//glm::vec3 n0 = transform * glm::vec4(sub_mesh.Normal[idx0], 1.0f);
+				//glm::vec3 n1 = transform * glm::vec4(sub_mesh.Normal[idx1], 1.0f);
+				//glm::vec3 n2 = transform * glm::vec4(sub_mesh.Normal[idx2], 1.0f);
 
 				glm::vec2 uv0 = sub_mesh.TexCoord[idx0];
 				glm::vec2 uv1 = sub_mesh.TexCoord[idx1];

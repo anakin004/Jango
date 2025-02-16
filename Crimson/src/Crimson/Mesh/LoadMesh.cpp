@@ -58,15 +58,8 @@ namespace Crimson
 			| aiProcess_LimitBoneWeights
 			| aiProcess_ValidateDataStructure
 			| aiProcess_GlobalScale
-			| aiProcess_OptimizeGraph;
-
-		static const uint32_t s_TempMeshFlags =
-			aiProcess_Triangulate
-			| aiProcess_GenNormals
-			| aiProcess_GenUVCoords
 			| aiProcess_OptimizeMeshes
-			| aiProcess_SplitLargeMeshes
-			| aiProcess_CalcTangentSpace;
+			| aiProcess_OptimizeGraph;
 
 		const aiScene* scene = importer.ReadFile(Path, s_MeshImportFlags);
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -130,16 +123,6 @@ namespace Crimson
 			unsigned int MaterialIdx = m_Mesh[i]->mMaterialIndex;
 			m_SubMeshes[MaterialIdx].NumVertices = m_Mesh[i]->mNumVertices;
 
-
-			for (unsigned int j = 0; j < m_Mesh[i]->mNumFaces; j++)
-			{
-				aiFace face = m_Mesh[i]->mFaces[j];
-				if (face.mNumIndices != 3)
-				{
-					CN_CORE_WARN("Face {0} in mesh {1} is not a triangle!", j, i);
-				}
-			}
-
 			m_SubMeshes[MaterialIdx].Vertices.reserve(m_Mesh[i]->mNumVertices);
 			m_SubMeshes[MaterialIdx].TexCoord.reserve(m_Mesh[i]->mNumVertices);
 			m_SubMeshes[MaterialIdx].Normal.reserve(m_Mesh[i]->mNumVertices);
@@ -199,14 +182,9 @@ namespace Crimson
 			for (unsigned int j = 0; j < m_Mesh[i]->mNumFaces; j++) 
 			{
 				aiFace& face = m_Mesh[i]->mFaces[j];
-				if (face.mNumIndices == 3) {
-					m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[0]);
-					m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[1]);
-					m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[2]);
-				}
-				else {
-					CN_CORE_WARN("Face {0} in mesh {1} is not a triangle!", j, i);
-				}
+				m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[0]);
+				m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[1]);
+				m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[2]);
 			}
 			
 			total_bounds.Union(m_SubMeshes[MaterialIdx].MeshBounds);

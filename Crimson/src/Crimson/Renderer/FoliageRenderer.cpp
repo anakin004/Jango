@@ -154,8 +154,9 @@ namespace Crimson {
 			//cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.NumVertices);
 			cs_CopyIndirectBufferData->SetInt("IndexBufferSize", sub_mesh.NumIndices);
 			
-			/*
 
+			// old stuff from drawing vertex array
+			/*
 			if (ssbo_indirectBuffer_LOD1 == -1)
 			{
 				glGenBuffers(1, &ssbo_indirectBuffer_LOD1);
