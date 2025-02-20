@@ -107,13 +107,18 @@ namespace Crimson {
 			m_scene->addActor(*physics_component.m_StaticActor);
 			shape->release();
 		}
-		else {
+		else 
+		{
 			physics_component.m_DynamicActor = physx::PxCreateDynamic(*m_physics, localTm, *shape, physics_component.m_mass);
 			if (physics_component.isKinematic)
+			{
 				physics_component.m_DynamicActor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+			}
 			else
+			{
 				physics_component.m_DynamicActor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false);
 
+			}
 			physx::PxRigidBodyExt::updateMassAndInertia(*physics_component.m_DynamicActor, physics_component.m_mass);
 			m_scene->addActor(*physics_component.m_DynamicActor);
 			shape->release();
@@ -130,10 +135,14 @@ namespace Crimson {
 			physics_component.m_DynamicActor = physx::PxCreateDynamic(*m_physics, localTm, *shape, physics_component.m_mass);
 
 			if (physics_component.isKinematic)
+			{
 				physics_component.m_DynamicActor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+			}
 			else
+			{
 				physics_component.m_DynamicActor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false);
 
+			}
 			//physics_component.m_DynamicActor->setRigidBodyFlag(physx::PxRigidBodyFlag::eENABLE_CCD, true);
 			//physics_component.m_DynamicActor->setRigidBodyFlag(physx::PxRigidBodyFlag::eENABLE_CCD_FRICTION, true);
 
