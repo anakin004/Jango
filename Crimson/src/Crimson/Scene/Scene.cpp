@@ -114,7 +114,7 @@ namespace Crimson {
 		Fern = new LoadMesh("Assets/Meshes/forest_Fern.fbx");
 		Fern->CreateLOD("Assets/Meshes/Fern_LOD1.fbx");
 
-		Freddy = new LoadMesh("Assets/Meshes/wBonnie.fbx");
+		Freddy = new LoadMesh("Assets/Meshes/steve.fbx");
 		
 		Windmill = new LoadMesh("Assets/Meshes/Windmill.fbx");
 		Sponza = new LoadMesh("Assets/Meshes/Sponza.fbx");

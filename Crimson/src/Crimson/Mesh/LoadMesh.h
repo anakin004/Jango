@@ -12,8 +12,10 @@ struct aiNode;
 struct aiScene;
 
 namespace Crimson {
+
 	class Texture2DArray;
 	class Material;
+
 	struct Bounds
 	{
 		glm::vec3 aabbMax, aabbMin;
@@ -53,6 +55,10 @@ namespace Crimson {
 			return (aabbMax + aabbMin) / glm::vec3(2.0);
 		}
 	};
+
+
+
+
 	struct SubMesh
 	{
 		std::vector<glm::vec3> Vertices;
@@ -68,14 +74,21 @@ namespace Crimson {
 		Bounds MeshBounds; //submesh bounds utilized by BVH
 
 	};
+
+
+
+
 	class LoadMesh
 	{
 	public:
+
 		enum LoadType
 		{
 			IMPORT_MESH, LOAD_MESH
 		};
+
 	public:
+
 		LoadMesh();
 		LoadMesh(const std::string& Path, LoadType type = LoadType::LOAD_MESH);
 		~LoadMesh();
@@ -83,12 +96,15 @@ namespace Crimson {
 		LoadMesh* GetLOD(int lodIndex);
 
 	public:
+
 		std::string m_Path;
 		std::vector<SubMesh> m_SubMeshes;
 		Bounds total_bounds; //total mesh bounds
 		glm::mat4 GlobalTransform;
 		uint64_t uuid;
+
 	private:
+
 		std::string extension = ".asset";
 		std::string objectName;
 		std::vector<LoadMesh*> m_LOD;
@@ -110,12 +126,15 @@ namespace Crimson {
 			{
 			}
 		};
+
 	private:
+
 		void LoadObj(const std::string& Path);
 		void ProcessNode(aiNode* Node, const aiScene* scene);
 		void ProcessMesh();
 		void ProcessMaterials(const aiScene* scene);
 		void CalculateTangent();
 		void CreateStaticBuffers();
+
 	};
 }

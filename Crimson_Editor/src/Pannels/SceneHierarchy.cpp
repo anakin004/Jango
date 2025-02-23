@@ -362,14 +362,13 @@ void SceneHierarchyPannel::DrawTagUI()
 		return;
 	if (ImGui::TreeNodeEx("TAG Component", ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		char buffer[250] = { 0 };
+		char buffer[200];
 		TagComponent& tag = m_selected_entity->GetComponent<TagComponent>();
 		std::string s = tag;
 		strcpy_s(buffer, sizeof(buffer), s.c_str());
 		if (ImGui::InputText("TAG", buffer, sizeof(buffer)))
 		{
 			tag = std::string(buffer);
-			
 		}
 		ImGui::TreePop();
 	}
@@ -390,34 +389,40 @@ void SceneHierarchyPannel::DrawSpriteRendererUI()
 	if (ImGui::BeginPopup("ComponentSettings"))
 	{
 		if (ImGui::MenuItem("Remove Component"))
+		{
 			delete_component = true;
+		}
 		ImGui::EndPopup();
 	}
 	if(open)
 	{
 		auto& Sprite_Renderer = m_selected_entity->GetComponent<SpriteRenderer>();
+		static cBuffer buffer(texture_path);
+
+		if ( ImGui::InputText("Texture Path", buffer.buff, static_cast<int>( sizeof(buffer.buff)/sizeof(char)) ) )
+		{
+			texture_path = std::string(buffer.buff);
+			strcpy_s(buffer.buff, sizeof(buffer.buff), texture_path.c_str());
+		}
+		if ( ImGui::Button("APPLY", {100,30}) )
+		{
+			Sprite_Renderer.texture = Texture2D::Create(texture_path);
+		}
+
 		ImGui::ColorEdit4("##Sprite", (float*)(&Sprite_Renderer.Color));
 		ImGui::DragFloat("Emissive Strength", &Sprite_Renderer.Emission_Scale, 1);
 		ImGui::DragFloat("Transperancy", &Sprite_Renderer.Transperancy, 0.01);
-		char buf[200];
-		strcpy_s(buf,sizeof(buf), texture_path.c_str());
-		if (ImGui::InputText("Texture Path", buf, 200))
-		{
-			texture_path = std::string(buf);
-		}
-
-		if (ImGui::Button("APPLY", {100,30}))
-		{
-			Sprite_Renderer.texture = Texture2D::Create(buf);
-		}
-		ImGui::DragFloat("Roughness", &Sprite_Renderer.m_Roughness, 0.001, 0.0, 1.0);
-		ImGui::DragFloat("Metallic", &Sprite_Renderer.m_Metallic, 0.001, 0.0, 1.0);
+		ImGui::DragFloat("Roughness", &Sprite_Renderer.m_Roughness, 0.01, 0.0, 1.0);
+		ImGui::DragFloat("Metallic", &Sprite_Renderer.m_Metallic, 0.01, 0.0, 1.0);
 		ImGui::Checkbox("WireFrame", &Sprite_Renderer.m_WireFrame);
 
 		ImGui::TreePop();
 	}
+
 	if (delete_component)
+	{
 		m_selected_entity->RemoveComponent<SpriteRenderer>();
+	}
 }
 void SceneHierarchyPannel::DrawStaticMeshComponentUI()
 {
