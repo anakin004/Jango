@@ -25,6 +25,7 @@ private:
     void DrawPhysicsComponentUI();
     void DrawScriptComponentUI();
 
+    // buffer for imgui, avoiding having to constantly copy into char buffer each pass
     struct cBuffer
     {
         char buff[200];

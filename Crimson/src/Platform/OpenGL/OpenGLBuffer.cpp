@@ -6,10 +6,9 @@
 
 namespace Crimson {
 
-	////////////////////////////////////////////////////////
-/// Vertex Buffer //////////////////////////////////////
-//////////////////////////////////////////////////////
-
+	// 	// --------------------------------------------------------------------
+	// 	//							Vertex Buffer
+	// 	// --------------------------------------------------------------------
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* data, size_t size)
 	{
@@ -22,14 +21,14 @@ namespace Crimson {
 	{
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-		auto flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT;
+		static const GLbitfield flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT;
 		switch (Storage_Type)
 		{
 		case BufferStorageType::MUTABLE:
 			glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
 			break;
 		case BufferStorageType::IMMUTABLE:
-			glBufferStorage(GL_ARRAY_BUFFER, size, 0, flags);
+			glBufferStorage(GL_ARRAY_BUFFER, size, nullptr, flags);
 			break;
 		default:
 			CN_CORE_ERROR("Select correct storage type");
@@ -65,9 +64,9 @@ namespace Crimson {
 		return glMapBufferRange(GL_ARRAY_BUFFER, 0, size, flags);
 	}
 
-	////////////////////////////////////////////////////////
-	/// Index Buffer //////////////////////////////////////
-	//////////////////////////////////////////////////////
+	// 	// --------------------------------------------------------------------
+	// 	//							Index Buffer
+	// 	// --------------------------------------------------------------------
 
 
 	OpenGLIndexBuffer::OpenGLIndexBuffer(unsigned int* data, size_t size)

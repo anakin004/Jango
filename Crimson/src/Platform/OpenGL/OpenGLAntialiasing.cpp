@@ -62,15 +62,14 @@ namespace Crimson
 	{
 
 		CN_PROFILE_FUNCTION()
-		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
-		glDepthMask(GL_FALSE);//disable depth testing
+		glDepthMask(GL_FALSE);
 
 		glm::vec4 data[] = {
-		glm::vec4(-1,-1,0,1),glm::vec4(0,0,0,0),
-		glm::vec4(1,-1,0,1),glm::vec4(1,0,0,0),
-		glm::vec4(1,1,0,1),glm::vec4(1,1,0,0),
-		glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
+			glm::vec4(-1,-1,0,1),glm::vec4(0,0,0,0),
+			glm::vec4(1,-1,0,1),glm::vec4(1,0,0,0),
+			glm::vec4(1,1,0,1),glm::vec4(1,1,0,0),
+			glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
 		};
 
 		Ref<VertexArray> vao = VertexArray::Create();

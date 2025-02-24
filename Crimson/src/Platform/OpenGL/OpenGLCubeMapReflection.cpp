@@ -3,6 +3,7 @@
 #include "glad/glad.h"
 #include "stb_image.h"
 #include "stb_image_resize.h"
+#include "Crimson/Scene/Scene.h"
 
 namespace Crimson {
 	OpenGLCubeMapReflection::OpenGLCubeMapReflection()
@@ -37,9 +38,13 @@ namespace Crimson {
 			stbi_set_flip_vertically_on_load_thread(1);
 			data = stbi_loadf((filename + "irr_" + std::to_string(i) + ".jpg").c_str(), &width, &height, &channels, 0);
 			if (!data)
+			{
 				CN_CORE_ERROR("Irradiance map not loaded")
+			}
 			else
+			{
 				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data);
+			}
 		}
 
 		glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
@@ -48,10 +53,10 @@ namespace Crimson {
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-		
-		//CN_CORE_WARN(glGetError());
 
 		//glBindTextureUnit(IRR_ENV_SLOT, tex_id);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, tex_id);
+
 	}
 
 	void OpenGLCubeMapReflection::RenderToCubeMap(Scene& scene)
@@ -74,7 +79,7 @@ namespace Crimson {
 		std::vector<glm::vec3> dir = { {1,0,0},{-1,0,0},{0,-1,0},{0,1,0},{0,0,1},{0,0,-1} };
 		glm::vec3 pos = {2,3,6};
 		shader->SetFloat3("LightPosition", pos); //world position
-		shader->SetInt("env", 18);//18th slot is the slot that stores cubemap texture
+		shader->SetInt("env", GL_TEXTURE_CUBE_MAP);
 		for (int i = 0; i < 6; i++)
 		{
 			glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, tex_id, 0);//Render the scene in the corresponding face on the cube map and "GL_COLOR_ATTACHMENT0" Represents the Render target where the fragment shader should output the color
@@ -95,28 +100,30 @@ namespace Crimson {
 			shader->SetMat4("u_ProjectionView", cam.GetProjectionView());
 			shader->SetFloat3("EyePosition", cam.GetCameraPosition());
 
-			/*
+			
 			scene.getRegistry().each([&](auto m_entity)//iterate through every entities and render them
 				{
-					auto entt = item.second->GetEntity();//get the original entity (i.e. entt::entity returns an unsigned int)
 					Entity Entity(&scene, m_entity);
 					auto& transform = Entity.GetComponent<TransformComponent>().GetTransform();
-					glm::vec4 color;
 
-					if (cam.bIsMainCamera) {
-						if (Entity.HasComponent<SpriteRenderer>()) {
-							auto SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
-							Renderer3D::DrawMesh(*m_LoadMesh, transform, SpriteRendererComponent.Color);
+					if (cam.bIsMainCamera) 
+					{
+						if (Entity.HasComponent<SpriteRenderer>()) 
+						{
+							auto& SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
+							Renderer3D::DrawMesh(*Scene::Cube, transform, SpriteRendererComponent.Color);
 						}
 						else
-							Renderer3D::DrawMesh(*Cube, transform, Entity.m_DefaultColor);
+						{
+							Renderer3D::DrawMesh(*Scene::Cube, transform, Entity.m_DefaultColor);
+						}
 
 					}
-					Renderer3D::DrawMesh(*Plane, { 0,0,0 }, { 100,100,100 }, { 0,0,0 });
+					//Renderer3D::DrawMesh(*Plane, { 0,0,0 }, { 100,100,100 }, { 0,0,0 });
 				});
-				*/
+			
 		}
-
+		
 		/*
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);//unbind the framebuffer for capturing process
 		glViewport(0, 0, size.x, size.y);

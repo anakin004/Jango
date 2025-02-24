@@ -205,7 +205,7 @@ namespace Crimson {
 
 		CN_PROFILE_FUNCTION()
 
-		int irrMapWidth = 32;
+		const int irrMapWidth = 32;
 		
 		glGenTextures(1, &irradiance_map_id);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, irradiance_map_id);
@@ -250,7 +250,6 @@ namespace Crimson {
 			RenderUnitCube();
 		}
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, irradiance_map_id);
 		glBindTextureUnit(IRR_ENV_SLOT, irradiance_map_id);
 	}
 	void CubeMapEnvironment::SwitchToFace(int n, float& pitch, float& yaw)
@@ -259,28 +258,28 @@ namespace Crimson {
 		{
 			//pitch , yaw
 		case 0:
-			pitch = 0;
-			yaw = -90;
+			pitch = 0.f;
+			yaw = -90.f;
 			break;
 		case 1:
-			pitch = 0;
-			yaw = 90;
+			pitch = 0.f;
+			yaw = 90.f;
 			break;
 		case 2:
 			pitch = 90.0f;
-			yaw = 180;
+			yaw = 180.f;
 			break;
 		case 3:
-			pitch = -90;
-			yaw = 180;
+			pitch = -90.f;
+			yaw = 180.f;
 			break;
 		case 4:
-			pitch = 0;
+			pitch = 0.f;
 			yaw = 0;
 			break;
 		case 5:
-			pitch = 0;
-			yaw = 180;
+			pitch = 0.f;
+			yaw = 180.f;
 			break;
 		}
 	}

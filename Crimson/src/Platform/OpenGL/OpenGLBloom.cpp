@@ -31,8 +31,10 @@ namespace Crimson {
 		glGenTextures(1, &m_InputImage);
 		glBindTexture(GL_TEXTURE_2D, m_InputImage);
 
-		if (m_Dimension == glm::vec2(0, 0))
+		if (m_Dimension == glm::vec2(0.f, 0.f))
+		{
 			CN_CORE_ERROR("Pass The Input Texture With the dimension");
+		}
 
 		glGenFramebuffers(1, &m_FBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
@@ -83,10 +85,11 @@ namespace Crimson {
 		{
 			glViewport(0, 0, m_MipLevels[i].dimension.x, m_MipLevels[i].dimension.y);
 			glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_MipLevels[i].texture, 0);
-			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 			{
-				//CN_CORE_INFO("Downsample Frame Buffer Complete");
+				CN_CORE_INFO("Downsample Frame Buffer Failed");
 			}
+
 			RenderQuad();
 
 			glBindTextureUnit(SCENE_TEXTURE_SLOT, m_MipLevels[i].texture);
@@ -123,8 +126,9 @@ namespace Crimson {
 			glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, next_mip.texture, 0);
 			RenderQuad();
 		}
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
+		// resetting gl states
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 		glDisable(GL_BLEND);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -146,17 +150,17 @@ namespace Crimson {
 	}
 
 	void OpenGLBloom::RenderRotatedQuad () {
-		//this function renders a quad infront of the camera
+
 		glDisable(GL_CULL_FACE);
-		glDepthMask(GL_FALSE);//disable depth testing
+		glDepthMask(GL_FALSE);
 
 		//quad is rotated by 180 deg by x axis to correct the image orientation
 		glm::vec4 data[] =
 		{
-		glm::vec4(-1,-1,0,1),glm::vec4(0,1,0,0),
-		glm::vec4(1,-1,0,1),glm::vec4(1,1,0,0),
-		glm::vec4(1,1,0,1),glm::vec4(1,0,0,0),
-		glm::vec4(-1,1,0,1),glm::vec4(0,0,0,0)
+			glm::vec4(-1,-1,0,1),glm::vec4(0,1,0,0),
+			glm::vec4(1,-1,0,1), glm::vec4(1,1,0,0),
+			glm::vec4(1,1,0,1),  glm::vec4(1,0,0,0),
+			glm::vec4(-1,1,0,1), glm::vec4(0,0,0,0)
 		};
 
 		Ref<VertexArray> vao = VertexArray::Create();
@@ -174,7 +178,7 @@ namespace Crimson {
 
 		RenderCommand::DrawIndex(*vao);
 
-		glDepthMask(GL_TRUE);//again enable depth testing
+		glDepthMask(GL_TRUE);
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 	}
@@ -184,15 +188,15 @@ namespace Crimson {
 
 		CN_PROFILE_FUNCTION()
 
-		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
-		glDepthMask(GL_FALSE);//disable depth testing
+		glDepthMask(GL_FALSE);
 
-		glm::vec4 data[] = {
-		glm::vec4(-1,-1,0,1),glm::vec4(0,0,0,0),
-		glm::vec4(1,-1,0,1),glm::vec4(1,0,0,0),
-		glm::vec4(1,1,0,1),glm::vec4(1,1,0,0),
-		glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
+		glm::vec4 data[] =
+		{
+			glm::vec4(-1,-1,0,1),glm::vec4(0,0,0,0),
+			glm::vec4(1,-1,0,1), glm::vec4(1,0,0,0),
+			glm::vec4(1,1,0,1),  glm::vec4(1,1,0,0),
+			glm::vec4(-1,1,0,1), glm::vec4(0,1,0,0)
 		};
 
 		Ref<VertexArray> vao = VertexArray::Create();
@@ -210,7 +214,7 @@ namespace Crimson {
 
 		RenderCommand::DrawIndex(*vao);
 
-		glDepthMask(GL_TRUE);//again enable depth testing
+		glDepthMask(GL_TRUE);
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 	}
@@ -222,10 +226,13 @@ namespace Crimson {
 		ExtractBrightParts->Bind();
 		ExtractBrightParts->SetInt("inputImage", SCENE_TEXTURE_SLOT);
 		ExtractBrightParts->SetFloat("BightnessThreshold", Bloom::m_BrightnessThreshold);
+		
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_FBO);
 		glViewport(0, 0, m_ScreenDimension.x, m_ScreenDimension.y);
 		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_InputImage, 0);
+		
 		RenderQuad();
+
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 		glBindTextureUnit(SCENE_TEXTURE_SLOT, m_InputImage);
 		ExtractBrightParts->UnBind();

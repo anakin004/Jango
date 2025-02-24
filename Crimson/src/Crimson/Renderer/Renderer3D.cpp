@@ -351,14 +351,16 @@ namespace Crimson {
 	}
 	void Renderer3D::SetUpCubeMapReflections(Scene& scene)
 	{
+		m_data->shader->Bind();
+		m_data->shader->SetInt("diffuse_env", IRR_ENV_SLOT);
+		m_data->shader->SetInt("specular_env", ENV_SLOT);
+		
+		// to fix
 		//m_data->reflection->RenderToCubeMap(scene);
-		m_data->shader->Bind();//you need to bind this other wise nothing will be rendererd
-		m_data->shader->SetInt("diffuse_env", IRR_ENV_SLOT);//for now assign to 10 :)
-		m_data->shader->SetInt("specular_env", ENV_SLOT);//for now assign to 18 :)
 
-		m_data->foliage_shader->Bind();//you need to bind this other wise nothing will be rendererd
-		m_data->foliage_shader->SetInt("diffuse_env", IRR_ENV_SLOT);//for now assign to 10 :)
-		m_data->foliage_shader->SetInt("specular_env", ENV_SLOT);//for now assign to 18 :)
+		m_data->foliage_shader->Bind();
+		m_data->foliage_shader->SetInt("diffuse_env", IRR_ENV_SLOT);
+		m_data->foliage_shader->SetInt("specular_env", ENV_SLOT);
 
 		m_data->foliageShader_instanced->Bind();
 		m_data->foliageShader_instanced->SetInt("diffuse_env", IRR_ENV_SLOT);

@@ -71,6 +71,7 @@ namespace Crimson
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
 			CN_CORE_INFO("G-Buffer Framebuffer complete")
+
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		glBindTextureUnit(G_NORMAL_TEXTURE_SLOT, m_NormalBufferID);
