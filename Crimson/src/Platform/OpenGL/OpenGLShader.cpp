@@ -13,7 +13,7 @@ namespace Crimson {
 		glShaderSource(vs, 1, &chr, nullptr);
 		glCompileShader(vs);
 		{
-			int id;
+			int id = -1; 
 			glGetShaderiv(vs, GL_COMPILE_STATUS, &id);
 			if (id == GL_FALSE)//if the shader code is not successfully compiled
 			{
@@ -30,7 +30,7 @@ namespace Crimson {
 		const char* chr1 = fragmentshader.c_str();
 		glShaderSource(fs, 1, &chr1, nullptr);
 		glCompileShader(fs);
-		int id;
+		int id = -1;
 		glGetShaderiv(fs, GL_COMPILE_STATUS, &id);
 		if (id)
 		{
@@ -106,7 +106,7 @@ namespace Crimson {
 		glShaderSource(s, 1, &chr, nullptr);
 		glCompileShader(s);
 
-		int id;
+		int id = -1;
 		glGetShaderiv(s, GL_COMPILE_STATUS, &id);
 		if (id == GL_FALSE)//if the shader code is not successfully compiled
 		{
