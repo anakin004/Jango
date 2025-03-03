@@ -15,8 +15,16 @@ namespace Crimson {
 		//compute shader, tess shader....
 	};
 
-	class OpenGLShader : public Shader {
+	class OpenGLShader : public Shader 
+	{
 	public:
+
+		struct ShaderProgramSource
+ 		{
+ 			std::string VertexSource;
+ 			std::string FragmentSource;
+		};
+
 		OpenGLShader(std::string& vertexshader, std::string& fragmentshader);
 		OpenGLShader(const std::string& path);
 		~OpenGLShader();
@@ -48,8 +56,8 @@ namespace Crimson {
 		void UpladUniformFloat3Array(const std::string& str, const float* pointer, size_t count);
 		void UpladUniformFloat4Array(const std::string& str, const float* pointer, size_t count);
 
-		unsigned int program;
-		Shaders m_shaders;
+		unsigned int m_ID;
+		Shaders m_Shaders;
 	};
 }
 
@@ -61,11 +69,6 @@ namespace Crimson {
 // namespace Crimson {
 // 
 // 
-// 	struct ShaderProgramSource
-// 	{
-// 		std::string VertexSource;
-// 		std::string FragmentSource;
-// 	};
 // 
 // 
 // 	class OpenGLShader : public Shader

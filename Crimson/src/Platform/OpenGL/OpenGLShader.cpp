@@ -17,11 +17,12 @@ namespace Crimson {
 			glGetShaderiv(vs, GL_COMPILE_STATUS, &id);
 			if (id == GL_FALSE)//if the shader code is not successfully compiled
 			{
-				int length;
+				int length = -1;
 				glGetShaderiv(vs, GL_INFO_LOG_LENGTH, &length);
 				char* message = new char[length];
 				glGetShaderInfoLog(vs, length, &length, message);
 				CN_CORE_ERROR(message);
+				delete []message;
 			}
 
 		}
@@ -39,142 +40,149 @@ namespace Crimson {
 			char* message = new char[length];
 			glGetShaderInfoLog(fs, length, &length, message);
 			CN_CORE_ERROR(message);
+			delete []message;
 		}
 
-		program = glCreateProgram();
-		glAttachShader(program, vs);
-		glAttachShader(program, fs);
-		glLinkProgram(program);
-		glValidateProgram(program);
+		m_ID = glCreateProgram();
+		glAttachShader(m_ID, vs);
+		glAttachShader(m_ID, fs);
+		glLinkProgram(m_ID);
+		glValidateProgram(m_ID);
 
-		glUseProgram(program);
+		glUseProgram(m_ID);
 	}
 
 	OpenGLShader::OpenGLShader(const std::string& path)
 	{
-		program = glCreateProgram();
+		m_ID = glCreateProgram();
 
-		m_shaders = ParseFile(path);
-		if (m_shaders.ComputeShader != "")
+		m_Shaders = ParseFile(path);
+		if (m_Shaders.ComputeShader != "")
 		{
-			unsigned int cs = CompileShader(m_shaders.ComputeShader, GL_COMPUTE_SHADER);
-			glAttachShader(program, cs);
+			unsigned int cs = CompileShader(m_Shaders.ComputeShader, GL_COMPUTE_SHADER);
+			glAttachShader(m_ID, cs);
 		}
 		else
 		{
-			unsigned int vs = CompileShader(m_shaders.VertexShader, GL_VERTEX_SHADER);
-			unsigned int fs = CompileShader(m_shaders.Fragmentshader, GL_FRAGMENT_SHADER);
+			unsigned int vs = CompileShader(m_Shaders.VertexShader, GL_VERTEX_SHADER);
+			unsigned int fs = CompileShader(m_Shaders.Fragmentshader, GL_FRAGMENT_SHADER);
 
-			glAttachShader(program, vs);
-			glAttachShader(program, fs);
+			glAttachShader(m_ID, vs);
+			glAttachShader(m_ID, fs);
 		}
 
-		if (m_shaders.GeometryShader != "")// all optional shaders must be done in this manner
+		if (m_Shaders.GeometryShader != "")// all optional shaders must be done in this manner
 		{
-			unsigned int gs = CompileShader(m_shaders.GeometryShader, GL_GEOMETRY_SHADER);
-			glAttachShader(program, gs);
+			unsigned int gs = CompileShader(m_Shaders.GeometryShader, GL_GEOMETRY_SHADER);
+			glAttachShader(m_ID, gs);
 		}
 
-		if (m_shaders.TessellationControlShader != "")
+		if (m_Shaders.TessellationControlShader != "")
 		{
-			unsigned int tcs = CompileShader(m_shaders.TessellationControlShader, GL_TESS_CONTROL_SHADER);
-			glAttachShader(program, tcs);
+			unsigned int tcs = CompileShader(m_Shaders.TessellationControlShader, GL_TESS_CONTROL_SHADER);
+			glAttachShader(m_ID, tcs);
 		}
 
-		if (m_shaders.TessellationEvaluationShader != "")
+		if (m_Shaders.TessellationEvaluationShader != "")
 		{
-			unsigned int tes = CompileShader(m_shaders.TessellationEvaluationShader, GL_TESS_EVALUATION_SHADER);
-			glAttachShader(program, tes);
+			unsigned int tes = CompileShader(m_Shaders.TessellationEvaluationShader, GL_TESS_EVALUATION_SHADER);
+			glAttachShader(m_ID, tes);
 		}
 
-		glLinkProgram(program);
-		glValidateProgram(program);
+		glLinkProgram(m_ID);
+		glValidateProgram(m_ID);
 
-		glUseProgram(program);
+		glUseProgram(m_ID);
 	}
 
 	OpenGLShader::~OpenGLShader()
 	{
-		glDeleteProgram(program);
+		glDeleteProgram(m_ID);
 	}
 
 	unsigned int OpenGLShader::CompileShader(std::string& Shader, unsigned int type)
 	{
-		unsigned int s = glCreateShader(type);
+		unsigned int program = glCreateShader(type);
 		const char* chr = Shader.c_str();
 		int length = Shader.size();
-		glShaderSource(s, 1, &chr, nullptr);
-		glCompileShader(s);
+		glShaderSource(program, 1, &chr, nullptr);
+		glCompileShader(program);
 
 		int id = -1;
-		glGetShaderiv(s, GL_COMPILE_STATUS, &id);
+		glGetShaderiv(program, GL_COMPILE_STATUS, &id);
 		if (id == GL_FALSE)//if the shader code is not successfully compiled
 		{
-			int length;
-			glGetShaderiv(s, GL_INFO_LOG_LENGTH, &length);
+			int length = -1;
+			glGetShaderiv(program, GL_INFO_LOG_LENGTH, &length);
 			char* message = new char[length];
-			glGetShaderInfoLog(s, length, &length, message);
+			glGetShaderInfoLog(program, length, &length, message);
 			CN_CORE_ERROR(message);
+			delete []message;
 		}
 
-		return s;
+		return program;
 	}
 
 	Shaders OpenGLShader::ParseFile(const std::string& path)
 	{
-		enum type {
+		enum type 
+		{
 			VERTEX_SHADER, FRAGMENT_SHADER, GEOMETRY_SHADER, TESS_CONTROL_SHADER, TESS_EVALUATION_SHADER, COMPUTE_SHADER
 		};
 
 		std::ifstream stream(path);
-		if (&stream == nullptr)
-			CN_CORE_ERROR("Shader File Not Found!!");
-		std::string ShaderCode;
-		std::string Shader[6];//as for now we have 6 shaders
-		int index;
+		if (!stream)
+		{
+			CN_CORE_ERROR("Shader File Not Found");
+		}
+
+		std::string ShaderCode("");
+		std::string Shader[6] = { "", "", "", "", "", ""};//as for now there are 6 shader types
+		int index = -1;
 		while (std::getline(stream, ShaderCode))
 		{
 			if (ShaderCode.find("#shader vertex") != std::string::npos)
 			{
 				index = type::VERTEX_SHADER;
-				continue;
 			}
-			if (ShaderCode.find("#shader fragment") != std::string::npos)
+
+			else if (ShaderCode.find("#shader fragment") != std::string::npos)
 			{
 				index = type::FRAGMENT_SHADER;
-				continue;
 			}
-			if (ShaderCode.find("#shader geometry") != std::string::npos)
+
+			else if (ShaderCode.find("#shader geometry") != std::string::npos)
 			{
 				index = type::GEOMETRY_SHADER;
-				continue;
 			}
 
-			if (ShaderCode.find("#shader tessellation control") != std::string::npos)
+			else if (ShaderCode.find("#shader tessellation control") != std::string::npos)
 			{
 				index = type::TESS_CONTROL_SHADER;
-				continue;
 			}
 
-			if (ShaderCode.find("#shader tessellation evaluation") != std::string::npos)
+			else if (ShaderCode.find("#shader tessellation evaluation") != std::string::npos)
 			{
 				index = type::TESS_EVALUATION_SHADER;
-				continue;
-			}
-			if (ShaderCode.find("#shader compute") != std::string::npos)
-			{
-				index = type::COMPUTE_SHADER;
-				continue;
 			}
 
-			Shader[index].append(ShaderCode + "\n");
+			else if (ShaderCode.find("#shader compute") != std::string::npos)
+			{
+				index = type::COMPUTE_SHADER;
+			}
+
+			else
+			{
+				Shader[index].append(ShaderCode + "\n");
+			}
 		}
+
 		return { Shader[0],Shader[1],Shader[2],Shader[3],Shader[4], Shader[5] };
 	}
 
 	void OpenGLShader::Bind()
 	{
-		glUseProgram(program);
+		glUseProgram(m_ID);
 	}
 
 	void OpenGLShader::UnBind()
@@ -227,57 +235,56 @@ namespace Crimson {
 		UploadIntArray(str, size, pointer);
 	}
 
-	//opengl specific upload uniform
 	void OpenGLShader::UploadUniformMat4(const std::string& str, glm::mat4& UniformMat4, size_t count)
 	{
-		unsigned int location = glGetUniformLocation(program, str.c_str());
+		uint32_t location = glGetUniformLocation(m_ID, str.c_str());
 		glUniformMatrix4fv(location, count, false, glm::value_ptr(UniformMat4));
 
 	}
 
 	void OpenGLShader::UploadUniformInt(const std::string& str, const int& UniformInt)
 	{
-		unsigned int location = glGetUniformLocation(program, str.c_str());
+		uint32_t location = glGetUniformLocation(m_ID, str.c_str());
 		glUniform1i(location, UniformInt);
 	}
 
 	void OpenGLShader::UploadIntArray(const std::string& str, const size_t size, const void* pointer)
 	{
-		auto location = glGetUniformLocation(program, str.c_str());
+		uint32_t location = glGetUniformLocation(m_ID, str.c_str());
 		glUniform1iv(location, size, (const GLint*)pointer);
 	}
 
 	void OpenGLShader::UpladUniformFloat(const std::string& str, const float& UniformFloat)
 	{
-		unsigned int location = glGetUniformLocation(program, str.c_str());
+		uint32_t location = glGetUniformLocation(m_ID, str.c_str());
 		glUniform1f(location, UniformFloat);
 	}
 
 	void OpenGLShader::UpladUniformFloatArray(const std::string& str, size_t count, float& UniformFloatArr)
 	{
-		unsigned int location = glGetUniformLocation(program, str.c_str());
+		uint32_t location = glGetUniformLocation(m_ID, str.c_str());
 		glUniform1fv(location, count, &UniformFloatArr);
 	}
 
 	void OpenGLShader::UpladUniformFloat4(const std::string& str, const glm::vec4& UniformFloat4)
 	{
-		unsigned int location = glGetUniformLocation(program, &str[0]);
+		uint32_t location = glGetUniformLocation(m_ID, &str[0]);
 		glUniform4f(location, UniformFloat4.r, UniformFloat4.g, UniformFloat4.b, UniformFloat4.a);
 	}
 	void OpenGLShader::UpladUniformFloat3(const std::string& str, const glm::vec3& UniformFloat3)
 	{
-		uint32_t location = glGetUniformLocation(program, str.c_str());
+		uint32_t location = glGetUniformLocation(m_ID, str.c_str());
 		glUniform3f(location, UniformFloat3.x, UniformFloat3.y, UniformFloat3.z);
 	}
 	void OpenGLShader::UpladUniformFloat3Array(const std::string& str, const float* pointer, size_t count)
 	{
-		uint32_t location = glGetUniformLocation(program, str.c_str());
-		glUniform3fv(location, count, (const GLfloat*)pointer);
+		uint32_t location = glGetUniformLocation(m_ID, str.c_str());
+		glUniform3fv(location, count, (const float*)pointer);
 	}
 	void OpenGLShader::UpladUniformFloat4Array(const std::string& str, const float* pointer, size_t count)
 	{
-		uint32_t location = glGetUniformLocation(program, str.c_str());
-		glUniform4fv(location, count, (const GLfloat*)pointer);
+		uint32_t location = glGetUniformLocation(m_ID, str.c_str());
+		glUniform4fv(location, count, (const float*)pointer);
 	}
 }
 

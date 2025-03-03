@@ -25,14 +25,17 @@ namespace Crimson
 		objectName = mesh_path.stem().string();
 		m_Path = (mesh_path.parent_path() / mesh_path.stem()).string() + extension; //temporary
 
-		if (m_LOD.size() == 0)
+		if (m_LOD.empty())
+		{
 			m_LOD.push_back(this);
+		}
 
 		if (type == LOAD_MESH)
 		{
 			LoadObj(Path);
 		}
-		if (type == IMPORT_MESH)
+
+		else if (type == IMPORT_MESH)
 		{
 			SceneSerializer deserialize;
 			deserialize.DeSerializeMesh(m_Path, *this);
@@ -65,16 +68,18 @@ namespace Crimson
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
 			CN_CORE_ERROR("Assimp Error: ", importer.GetErrorString());
-			return;
 		}
 
-		ProcessMaterials(scene);
-		ProcessNode(scene->mRootNode, scene);
-		ProcessMesh();
-		CreateStaticBuffers();
+		else
+		{
+			ProcessMaterials(scene);
+			ProcessNode(scene->mRootNode, scene);
+			ProcessMesh();
+			CreateStaticBuffers();
 
-		m_Mesh.clear();
-		m_Mesh.shrink_to_fit();
+			m_Mesh.clear();
+			m_Mesh.shrink_to_fit();
+		}
 	}
 
 	void LoadMesh::CreateLOD(const std::string& Path, LoadType type)

@@ -67,9 +67,9 @@ namespace Crimson
 
 		glm::vec4 data[] = {
 			glm::vec4(-1,-1,0,1),glm::vec4(0,0,0,0),
-			glm::vec4(1,-1,0,1),glm::vec4(1,0,0,0),
-			glm::vec4(1,1,0,1),glm::vec4(1,1,0,0),
-			glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
+			glm::vec4(1,-1,0,1), glm::vec4(1,0,0,0),
+			glm::vec4(1,1,0,1),  glm::vec4(1,1,0,0),
+			glm::vec4(-1,1,0,1), glm::vec4(0,1,0,0)
 		};
 
 		Ref<VertexArray> vao = VertexArray::Create();
