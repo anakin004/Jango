@@ -133,7 +133,6 @@ namespace Crimson {
 		void ProcessNode(aiNode* Node, const aiScene* scene);
 		void ProcessMesh();
 		void ProcessMaterials(const aiScene* scene);
-		void CalculateTangent();
 		void CreateStaticBuffers();
 
 	};

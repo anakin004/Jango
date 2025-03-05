@@ -13,7 +13,7 @@ namespace Crimson
 		static Ref<Material> Create();
 		//if storage path is blank then use the default storage path
 		static Ref<Material> Create(const std::string& material_name, const std::string& storage_path = "");
-		void SetTexturePaths(std::string& albedo_path , std::string& normal_path , std::string& roughness_path);
+		void SetTexturePaths(const std::string& albedo_path , const std::string& normal_path , const std::string& roughness_path);
 		void SetMaterialAttributes(const glm::vec4& color, float roughness, float metalness, float normal_strength);
 		void SerializeMaterial(const std::string& path, const std::string& materialName);
 		void SetEmission(float emission) { this->emission = emission; }

@@ -142,7 +142,7 @@ namespace Crimson
 	{
 		for (int i = 0; i < m_Mesh.size(); i++)
 		{
-			unsigned int MaterialIdx = m_Mesh[i]->mMaterialIndex;
+			const uint32_t MaterialIdx = m_Mesh[i]->mMaterialIndex;
 			m_SubMeshes[MaterialIdx].NumVertices = m_Mesh[i]->mNumVertices;
 
 			m_SubMeshes[MaterialIdx].Vertices.reserve(m_Mesh[i]->mNumVertices);
@@ -157,45 +157,43 @@ namespace Crimson
 			for (int k = 0; k < m_Mesh[i]->mNumVertices; k++)
 			{
 
-				aiVector3D aivertice = m_Mesh[i]->mVertices[k];
-				glm::vec4 pos = GlobalTransform * glm::vec4(aivertice.x, aivertice.y, aivertice.z, 1.0);
-				Bounds SubMeshBounds(glm::vec3(pos.x, pos.y, pos.z));
+				const aiVector3D& aivertice = m_Mesh[i]->mVertices[k];
+				const glm::vec4& pos = GlobalTransform * glm::vec4(aivertice.x, aivertice.y, aivertice.z, 1.0);
+				const Bounds SubMeshBounds(glm::vec3(pos.x, pos.y, pos.z));
+
 				m_SubMeshes[MaterialIdx].MeshBounds.Union(SubMeshBounds);
-				m_SubMeshes[MaterialIdx].Vertices.push_back({ pos.x,pos.y,pos.z });
+				m_SubMeshes[MaterialIdx].Vertices.emplace_back( pos.x,pos.y,pos.z );
 
 				if (m_Mesh[i]->mTextureCoords[0])
 				{
-					glm::vec2 coord(0.0f, 0.0f);
-					coord.x = m_Mesh[i]->mTextureCoords[0][k].x;
-					coord.y = m_Mesh[i]->mTextureCoords[0][k].y;
-
-					m_SubMeshes[MaterialIdx].TexCoord.push_back(coord);
+					m_SubMeshes[MaterialIdx].TexCoord.emplace_back(m_Mesh[i]->mTextureCoords[0][k].x, m_Mesh[i]->mTextureCoords[0][k].y);
 				}
 				else
-					m_SubMeshes[MaterialIdx].TexCoord.emplace_back(0.0f,0.0f);
-
+				{
+					m_SubMeshes[MaterialIdx].TexCoord.emplace_back(0.0f, 0.0f);
+				}
 
 				if (m_Mesh[i]->HasNormals()) {
-					aiVector3D ainormal = m_Mesh[i]->mNormals[k];
-					glm::vec4 norm = GlobalTransform * glm::vec4(ainormal.x, ainormal.y, ainormal.z, 0.0);
-					m_SubMeshes[MaterialIdx].Normal.push_back({ norm.x,norm.y,norm.z });
+					const aiVector3D& ainormal = m_Mesh[i]->mNormals[k];
+					const glm::vec4 norm = GlobalTransform * glm::vec4(ainormal.x, ainormal.y, ainormal.z, 0.0f);
+					m_SubMeshes[MaterialIdx].Normal.emplace_back( norm.x,norm.y,norm.z );
 				}
 
 
 				if (m_Mesh[i]->HasTangentsAndBitangents())
 				{
-					aiVector3D tangent = m_Mesh[i]->mTangents[k];
-					aiVector3D bitangent = m_Mesh[i]->mBitangents[k];
-					glm::vec4 tan = GlobalTransform * glm::vec4(tangent.x, tangent.y, tangent.z, 0.0);
-					glm::vec4 bitan = GlobalTransform * glm::vec4(bitangent.x, bitangent.y, bitangent.z, 0.0);
+					const aiVector3D& tangent = m_Mesh[i]->mTangents[k];
+					const aiVector3D& bitangent = m_Mesh[i]->mBitangents[k];
+					const glm::vec4& tan = GlobalTransform * glm::vec4(tangent.x, tangent.y, tangent.z, 0.0f);
+					const glm::vec4& bitan = GlobalTransform * glm::vec4(bitangent.x, bitangent.y, bitangent.z, 0.0f);
 
 					m_SubMeshes[MaterialIdx].Tangent.emplace_back( tan.x, tan.y, tan.z );
-					m_SubMeshes[MaterialIdx].BiTangent.emplace_back( bitan.x,bitan.y,bitan.z );
+					m_SubMeshes[MaterialIdx].BiTangent.emplace_back( bitan.x, bitan.y, bitan.z );
 				}
 				else
 				{
-					m_SubMeshes[MaterialIdx].Tangent.emplace_back( 0.0f,0.0f,0.0f );
-					m_SubMeshes[MaterialIdx].BiTangent.emplace_back( 0.0f,0.0f,0.0f );
+					m_SubMeshes[MaterialIdx].Tangent.emplace_back( 0.0f, 0.0f, 0.0f );
+					m_SubMeshes[MaterialIdx].BiTangent.emplace_back( 0.0f, 0.0f, 0.0f );
 				}
 			}
 
@@ -203,10 +201,10 @@ namespace Crimson
 			
 			for (unsigned int j = 0; j < m_Mesh[i]->mNumFaces; j++) 
 			{
-				aiFace& face = m_Mesh[i]->mFaces[j];
-				m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[0]);
-				m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[1]);
-				m_SubMeshes[MaterialIdx].Indices.push_back(face.mIndices[2]);
+				const aiFace& face = m_Mesh[i]->mFaces[j];
+				m_SubMeshes[MaterialIdx].Indices.emplace_back(face.mIndices[0]);
+				m_SubMeshes[MaterialIdx].Indices.emplace_back(face.mIndices[1]);
+				m_SubMeshes[MaterialIdx].Indices.emplace_back(face.mIndices[2]);
 			}
 			
 			total_bounds.Union(m_SubMeshes[MaterialIdx].MeshBounds);
@@ -216,11 +214,11 @@ namespace Crimson
 	}
 	void LoadMesh::ProcessMaterials(const aiScene* scene)//get all the materials in a scene
 	{
-		int NumMaterials = scene->mNumMaterials;
+		const int NumMaterials = scene->mNumMaterials;
 		m_SubMeshes.resize(NumMaterials);
 
 		const std::string relative_path = "Assets/Textures/MeshTextures/";
-		auto GetTexturePath = [&](aiMaterial*& material, aiTextureType type)
+		auto GetTexturePath = [&](const aiMaterial* material, aiTextureType type) -> const std::string
 		{
 			auto x = material->GetTextureCount(type);
 			if (x > 0)
@@ -235,17 +233,17 @@ namespace Crimson
 		};
 		for (int i = 0; i < NumMaterials; i++)
 		{
-			aiMaterial* scene_material = scene->mMaterials[i];
-			std::string materialName = objectName + std::string("_") + std::string(scene_material->GetName().C_Str());
+			const aiMaterial* scene_material = scene->mMaterials[i];
+			const std::string& materialName = objectName + std::string("_") + std::string(scene_material->GetName().C_Str());
 			Ref<Material> material = Material::Create(materialName, ""); //create a material and set the default storage directory
 			m_SubMeshes[i].MaterialID = material->materialID;
 
 			//if material cannot be found then create and serialize the material
 			if (ResourceManager::allMaterials.find(material->materialID) == ResourceManager::allMaterials.end())
 			{
-				std::string diffuse_path = GetTexturePath(scene_material, aiTextureType_DIFFUSE);
-				std::string normal_path = GetTexturePath(scene_material, aiTextureType_NORMALS);
-				std::string roughness_path = GetTexturePath(scene_material, aiTextureType_SHININESS);
+				const std::string diffuse_path = GetTexturePath(scene_material, aiTextureType_DIFFUSE);
+				const std::string normal_path = GetTexturePath(scene_material, aiTextureType_NORMALS);
+				const std::string roughness_path = GetTexturePath(scene_material, aiTextureType_SHININESS);
 
 				material->SetTexturePaths(diffuse_path, normal_path, roughness_path);
 				material->SerializeMaterial("", materialName); //save the material
@@ -255,25 +253,23 @@ namespace Crimson
 
 
 	}
-	void LoadMesh::CalculateTangent()
-	{
-		glm::vec3 tangent = { 0.f,0.f,0.f };
 
-	}
 	void LoadMesh::CreateStaticBuffers()
 	{
 
 		for (int k = 0; k < m_SubMeshes.size(); k++)
 		{
-			std::vector<VertexAttributes> buffer(m_SubMeshes[k].Vertices.size());
+			std::vector<VertexAttributes> buffer;
+			buffer.resize(m_SubMeshes[k].Vertices.size());
+
 			m_SubMeshes[k].VertexArray = VertexArray::Create();
 
 			// Populate vertex buffer
 			for (int i = 0; i < m_SubMeshes[k].Vertices.size(); i++)
 			{
-				glm::vec3 transformed_normals = m_SubMeshes[k].Normal[i];
-				glm::vec3 transformed_tangents = m_SubMeshes[k].Tangent[i];
-				glm::vec3 transformed_binormals = m_SubMeshes[k].BiTangent[i];
+				const glm::vec3& transformed_normals = m_SubMeshes[k].Normal[i];
+				const glm::vec3& transformed_tangents = m_SubMeshes[k].Tangent[i];
+				const glm::vec3& transformed_binormals = m_SubMeshes[k].BiTangent[i];
 				buffer[i] = VertexAttributes(glm::vec4(m_SubMeshes[k].Vertices[i], 1.0), m_SubMeshes[k].TexCoord[i], transformed_normals, transformed_tangents, transformed_binormals);
 			}
 

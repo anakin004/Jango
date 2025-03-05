@@ -61,7 +61,7 @@ namespace Crimson
 			materialID = uuid;
 		}
 	}
-	void Material::SetTexturePaths(std::string& albedo_path, std::string& normal_path, std::string& roughness_path)
+	void Material::SetTexturePaths(const std::string& albedo_path, const std::string& normal_path, const std::string& roughness_path)
 	{
 		albedoPath = albedo_path;
 		normalPath = normal_path;
