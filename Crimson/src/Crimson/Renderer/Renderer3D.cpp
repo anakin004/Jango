@@ -214,10 +214,10 @@ namespace Crimson {
 
 	void Renderer3D::DrawMesh(LoadMesh& mesh, glm::mat4& transform, const glm::vec4& color, bool wireframe, const float& material_Roughness, const float& material_metallic, Ref<Shader> otherShader)
 	{
-		for (auto& sub_mesh : mesh.m_SubMeshes)
+		for (const auto& sub_mesh : mesh.GetSubMeshes())
 		{
 
-			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.MaterialID];
+			Ref<Material>& material = ResourceManager::allMaterials[sub_mesh.MaterialID];
 
 			if (!material) 
 			{
@@ -264,7 +264,7 @@ namespace Crimson {
 		}
 	}
 
-	void Renderer3D::DrawFoliageInstanced(SubMesh& sub_mesh, glm::mat4& transform, uint32_t& indirectBufferID, float TimeElapsed, bool applyGradientMask, bool enableWind)
+	void Renderer3D::DrawFoliageInstanced(const SubMesh& sub_mesh, glm::mat4& transform, uint32_t& indirectBufferID, float TimeElapsed, bool applyGradientMask, bool enableWind)
 	{
 		m_data->foliageShader_instanced->Bind();
 		glDisable(GL_CULL_FACE);
@@ -305,7 +305,7 @@ namespace Crimson {
 	void Renderer3D::InstancedFoliageData(LoadMesh& mesh, uint32_t& bufferIndex)
 	{
 		//needs to be refactored!!
-		for (auto& sub_mesh : mesh.m_SubMeshes)
+		for (const auto& sub_mesh : mesh.GetSubMeshes())
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, bufferIndex);
 
@@ -331,7 +331,7 @@ namespace Crimson {
 		//glGenBuffers(1, &bufferIndex);
 		//glBindBuffer(GL_ARRAY_BUFFER, bufferIndex);
 		//glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * size, nullptr, GL_DYNAMIC_DRAW);
-		for (auto& sub_mesh : mesh.m_SubMeshes)
+		for (const auto& sub_mesh : mesh.GetSubMeshes())
 		{
 			sub_mesh.VertexArray->Bind();
 			glEnableVertexAttribArray(5);

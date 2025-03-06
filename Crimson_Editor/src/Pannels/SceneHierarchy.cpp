@@ -481,7 +481,7 @@ void SceneHierarchyPannel::DrawStaticMeshComponentUI()
 			//m_selected_entity->GetComponent<StaticMeshComponent>().isFoliage
 		}
 		LoadMesh* mesh = m_selected_entity->GetComponent<StaticMeshComponent>();
-		for (auto& sub_mesh : mesh->m_SubMeshes)
+		for (auto& sub_mesh : mesh->GetSubMeshes())
 		{
 			Ref<Material> mat = ResourceManager::allMaterials[sub_mesh.MaterialID];
 			ImGui::Button(mat->m_MaterialName.c_str(), { 120,20 });

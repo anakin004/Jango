@@ -95,22 +95,43 @@ namespace Crimson {
 		void CreateLOD(const std::string& Path, LoadType type = LoadType::LOAD_MESH);
 		LoadMesh* GetLOD(int lodIndex);
 
-	public:
+		// most of the time i want to make it clear that we shouldnt be modifying the
+		// submeshes once we create them unless we explicitly want to delete them
+		// i like the approach of being explicit in certain areas of my code where
+		// i know i dont want to be modifying something and like to make this const as much as i can
+		inline const std::vector<SubMesh>& GetSubMeshes() const
+		{
+			return m_SubMeshes;
+		}
 
-		std::string m_Path;
-		std::vector<SubMesh> m_SubMeshes;
-		Bounds total_bounds; //total mesh bounds
-		glm::mat4 GlobalTransform;
-		uint64_t uuid;
+		inline std::vector<SubMesh>& GetSubMeshesModifiable()
+		{
+			return m_SubMeshes;
+		}
+
+		inline const Bounds& GetTotalBounds() const
+		{
+			return m_TotalBounds;
+		}
+
+		inline const std::string& GetPath() const
+		{
+			return m_Path;
+		}
 
 	private:
 
-		std::string extension = ".asset";
-		std::string objectName;
+		std::string m_Path;
+		std::vector<SubMesh> m_SubMeshes;
+		Bounds m_TotalBounds; //total mesh bounds
+		glm::mat4 m_GlobalTransform;
+		uint64_t m_uuid;
+
+		std::string m_ObjectName;
 		std::vector<LoadMesh*> m_LOD;
-		Ref<BufferLayout> bl;
-		Ref<VertexBuffer> vb;
-		Ref<IndexBuffer> ib;
+		Ref<BufferLayout> m_BufferLayout;
+		Ref<VertexBuffer> m_VertexBuffer;
+		Ref<IndexBuffer> m_IndexBuffer;
 		std::vector<aiMesh*> m_Mesh;
 		struct VertexAttributes {
 			//glm::vec3 Position;

@@ -73,7 +73,7 @@ namespace Crimson
 
 		uint32_t matCount = 0;
 		std::vector<std::string> AlbedoPaths, RoughnessPaths; 
-		for (auto& sub_mesh : m_Mesh->m_SubMeshes)
+		for (const auto& sub_mesh : m_Mesh->GetSubMeshes())
 		{
 			Ref<Texture2D> AlbedoTexture = Texture2D::Create(ResourceManager::allMaterials[sub_mesh.MaterialID]->GetAlbedoPath());
 			Ref<Texture2D> RoughnessTexture = Texture2D::Create(ResourceManager::allMaterials[sub_mesh.MaterialID]->GetRoughnessPath());
@@ -143,7 +143,7 @@ namespace Crimson
 		CN_PROFILE_FUNCTION()
 
 		int k = 0;
-		for (auto& sub_mesh : m_Mesh->m_SubMeshes) //iterate through all sub meshes and get the materials
+		for (auto& sub_mesh : m_Mesh->GetSubMeshes()) 
 		{
 			CN_CORE_TRACE("Updating Material, Count : {0}", k);
 			CN_ASSERT(ResourceManager::allMaterials[sub_mesh.MaterialID], "Resource Manager Invalid (BVH)");
@@ -280,8 +280,8 @@ namespace Crimson
 		CN_PROFILE_FUNCTION()
 
 		node = new BVHNode();
-		//++numNodes;
 		Bounds bounds;
+
 		for (int i = 0; i < triCount; i++)
 		{
 			Bounds& bnds = m_RTTriangles[m_TriIndices[i + triStartID]].GetBounds();
@@ -310,10 +310,12 @@ namespace Crimson
 
 		float parentArea = extent.x * extent.y + extent.y * extent.z + extent.z * extent.x;
 		float parentCost = triCount * parentArea;
+
 		if (bestCost >= parentCost)
 			return;
 
 		int i = triStartID, j = i + triCount - 1;
+
 		//do partial sorting
 		while (i <= j)
 		{

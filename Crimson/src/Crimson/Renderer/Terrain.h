@@ -3,20 +3,27 @@
 namespace Crimson
 {
 	class Foliage;
+	class QuadTree;
+	class QNode;
+
 	struct TerrainData
 	{
 		glm::vec3 Position;
 		glm::vec2 TexCoord;
 	};
 
-	class QuadTree;
-	class QNode;
+
+
 	class Terrain {
+
 		friend class QuadTree;
+
 	public:
+
 		Terrain() {}
 		Terrain(float width, float height);
 		~Terrain();
+
 		void InitilizeTerrain();
 		glm::vec3 player_camera_pos;
 		static float WaterLevel, HillLevel, MountainLevel ,HeightScale , FoliageHeight;
@@ -27,13 +34,16 @@ namespace Crimson
 		static Ref<VertexArray> m_terrainVertexArray;
 		Ref<Shader> m_terrainShader,m_terrainWireframeShader;
 		static float time;
+
 	public:
 		void RenderTerrain(Camera& cam);
+
 	private:
-		QNode* rootNode = nullptr;
-		Ref<QuadTree> qtree;
-		glm::vec2 m_dimension;
-		Ref<BufferLayout> bl;
+
+		QNode* m_RootNode = nullptr;
+		Ref<QuadTree> m_Qtree;
+		glm::vec2 m_Dimension;
+		Ref<BufferLayout> m_BufferLayout;
 		Ref<Texture2D> m_HeightMap, m_perlinNoise;
 		Ref<Texture2DArray> TerrainTex_Albedo, TerrainTex_Roughness, TerratinTex_Normal;
 		Ref<Texture2DArray> TerrainTex_Masks;

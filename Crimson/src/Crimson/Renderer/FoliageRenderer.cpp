@@ -90,7 +90,7 @@ namespace Crimson {
 		Renderer3D::BeginSceneFoliage(cam);
 		//LOD 0
 		Renderer3D::InstancedFoliageData(*m_foliageMesh->GetLOD(0), ssbo_outTransformsLOD0);//render lod0 elements
-		for (auto& sub_mesh : m_foliageMesh->GetLOD(0)->m_SubMeshes)
+		for (const auto& sub_mesh : m_foliageMesh->GetLOD(0)->GetSubMeshes())
 		{
 			cs_CopyIndirectBufferData->Bind();
 
@@ -148,7 +148,7 @@ namespace Crimson {
 		}
 		//LOD 1
 		Renderer3D::InstancedFoliageData(*m_foliageMesh->GetLOD(1), ssbo_outTransformsLOD1);	//render lod1 elements
-		for (auto& sub_mesh : m_foliageMesh->GetLOD(1)->m_SubMeshes)
+		for (const auto& sub_mesh : m_foliageMesh->GetLOD(1)->GetSubMeshes())
 		{
 			cs_CopyIndirectBufferData->Bind();
 			//cs_CopyIndirectBufferData->SetInt("VertexBufferSize", sub_mesh.NumVertices);
@@ -283,7 +283,7 @@ namespace Crimson {
 	{
 		//LOD 0
 		Renderer3D::InstancedFoliageData(*m_foliageMesh->GetLOD(0), ssbo_outTransformsLOD0);	//render lod0 elements
-		for (auto& sub_mesh : m_foliageMesh->GetLOD(0)->m_SubMeshes)
+		for (const auto& sub_mesh : m_foliageMesh->GetLOD(0)->GetSubMeshes())
 		{
 			Ref<Material> material = ResourceManager::allMaterials[sub_mesh.MaterialID]; //get material from the resource manager
 			material->Diffuse_Texture->Bind(ALBEDO_SLOT);
@@ -315,8 +315,8 @@ namespace Crimson {
 		cs_FrustumCull->SetFloat3("camPos", cam.GetCameraPosition());
 		cs_FrustumCull->SetMat4("u_ViewProjection", cam.GetProjectionView());
 		cs_FrustumCull->SetFloat("u_cullDistance", m_cullDistance);
-		cs_FrustumCull->SetFloat3("aabb_min", m_foliageMesh->total_bounds.aabbMin);
-		cs_FrustumCull->SetFloat3("aabb_max", m_foliageMesh->total_bounds.aabbMax);
+		cs_FrustumCull->SetFloat3("aabb_min", m_foliageMesh->GetTotalBounds().aabbMin);
+		cs_FrustumCull->SetFloat3("aabb_max", m_foliageMesh->GetTotalBounds().aabbMax);
 
 		if (ssbo_outTransforms == -1)
 		{
@@ -428,11 +428,11 @@ namespace Crimson {
 			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 5, ssbo_totalPrefixSum);
 			glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 		}
-
-		if(m_instanceCount <64)
+					
+		if(m_instanceCount < (2 << 6) )
 			glDispatchCompute(1, 1, 1);
 		else
-			glDispatchCompute((int)std::ceil(m_instanceCount/64.0), 1, 1);
+			glDispatchCompute((int)std::ceil(m_instanceCount/static_cast<uint32_t>(64)), 1, 1);
 		glMemoryBarrier(GL_ALL_BARRIER_BITS);
 	}
 
@@ -546,10 +546,15 @@ namespace Crimson {
 
 	void Foliage::SpawnFoliage(glm::vec3 playerPos)
 	{
+
+
+		// todo: render dist for spawning fooliage should be some setting, maybe capped for performance
+
 		glm::vec2 dist = glm::vec2(abs(playerPos.x - oldPlayerPos.x), abs(playerPos.z - oldPlayerPos.y));
-		//HAZEL_CORE_ERROR("{}{}", "Distance is = ", dist);
-		if ((dist.x > 100 || dist.y > 100))
+
+		if ((dist.x > 100.0f || dist.y > 100.0f ))
 			return;
+
 		oldPlayerPos = glm::vec2(playerPos.x, playerPos.z);
 		cs_GrassPlacement->Bind();
 		cs_GrassPlacement->SetInt("u_HeightMap", HEIGHT_MAP_TEXTURE_SLOT);
@@ -585,7 +590,7 @@ namespace Crimson {
 			glBindBuffer(GL_ATOMIC_COUNTER_BUFFER, 0);
 		}
 
-		glDispatchCompute(m_coverage.x / 32, m_coverage.y / 32, 1);
+		glDispatchCompute(m_coverage.x / (2 << 5), m_coverage.y / (2 << 5), 1);
 		glMemoryBarrier(GL_ALL_BARRIER_BITS);
 	}
 

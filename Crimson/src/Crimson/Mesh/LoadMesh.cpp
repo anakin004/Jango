@@ -14,16 +14,20 @@
 
 namespace Crimson
 {
+
+
+	static const std::string s_FileExtension = ".asset";
+
 	LoadMesh::LoadMesh()
 	{
 	}
 
 	LoadMesh::LoadMesh(const std::string& Path, LoadType type)
 	{
-		GlobalTransform = glm::mat4(1.0);
+		m_GlobalTransform = glm::mat4(1.0f);
 		std::filesystem::path mesh_path(Path);
-		objectName = mesh_path.stem().string();
-		m_Path = (mesh_path.parent_path() / mesh_path.stem()).string() + extension; //temporary
+		m_ObjectName = mesh_path.stem().string();
+		m_Path = (mesh_path.parent_path() / mesh_path.stem()).string() + s_FileExtension; //temporary
 
 		if (m_LOD.empty())
 		{
@@ -39,7 +43,7 @@ namespace Crimson
 		{
 			SceneSerializer deserialize;
 			deserialize.DeSerializeMesh(m_Path, *this);
-			uuid = UUID(Path); //only create uuid for engine compatible mesh
+			m_uuid = UUID(Path); //only create uuid for engine compatible mesh
 			//ResourceManager::allMeshes[uuid] = m_Mesh;
 			CreateStaticBuffers();
 		}
@@ -124,7 +128,7 @@ namespace Crimson
 
 	void LoadMesh::ProcessNode(aiNode* Node, const aiScene* scene)
 	{
-		GlobalTransform *= AssimpToGlmMatrix(Node->mTransformation);
+		m_GlobalTransform *= AssimpToGlmMatrix(Node->mTransformation);
 		for (int i = 0; i < Node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[Node->mMeshes[i]];
@@ -158,7 +162,7 @@ namespace Crimson
 			{
 
 				const aiVector3D& aivertice = m_Mesh[i]->mVertices[k];
-				const glm::vec4& pos = GlobalTransform * glm::vec4(aivertice.x, aivertice.y, aivertice.z, 1.0);
+				const glm::vec4& pos = m_GlobalTransform * glm::vec4(aivertice.x, aivertice.y, aivertice.z, 1.0);
 				const Bounds SubMeshBounds(glm::vec3(pos.x, pos.y, pos.z));
 
 				m_SubMeshes[MaterialIdx].MeshBounds.Union(SubMeshBounds);
@@ -175,7 +179,7 @@ namespace Crimson
 
 				if (m_Mesh[i]->HasNormals()) {
 					const aiVector3D& ainormal = m_Mesh[i]->mNormals[k];
-					const glm::vec4 norm = GlobalTransform * glm::vec4(ainormal.x, ainormal.y, ainormal.z, 0.0f);
+					const glm::vec4 norm = m_GlobalTransform * glm::vec4(ainormal.x, ainormal.y, ainormal.z, 0.0f);
 					m_SubMeshes[MaterialIdx].Normal.emplace_back( norm.x,norm.y,norm.z );
 				}
 
@@ -184,8 +188,8 @@ namespace Crimson
 				{
 					const aiVector3D& tangent = m_Mesh[i]->mTangents[k];
 					const aiVector3D& bitangent = m_Mesh[i]->mBitangents[k];
-					const glm::vec4& tan = GlobalTransform * glm::vec4(tangent.x, tangent.y, tangent.z, 0.0f);
-					const glm::vec4& bitan = GlobalTransform * glm::vec4(bitangent.x, bitangent.y, bitangent.z, 0.0f);
+					const glm::vec4& tan = m_GlobalTransform * glm::vec4(tangent.x, tangent.y, tangent.z, 0.0f);
+					const glm::vec4& bitan = m_GlobalTransform * glm::vec4(bitangent.x, bitangent.y, bitangent.z, 0.0f);
 
 					m_SubMeshes[MaterialIdx].Tangent.emplace_back( tan.x, tan.y, tan.z );
 					m_SubMeshes[MaterialIdx].BiTangent.emplace_back( bitan.x, bitan.y, bitan.z );
@@ -207,7 +211,7 @@ namespace Crimson
 				m_SubMeshes[MaterialIdx].Indices.emplace_back(face.mIndices[2]);
 			}
 			
-			total_bounds.Union(m_SubMeshes[MaterialIdx].MeshBounds);
+			m_TotalBounds.Union(m_SubMeshes[MaterialIdx].MeshBounds);
 
 		}
 
@@ -234,7 +238,7 @@ namespace Crimson
 		for (int i = 0; i < NumMaterials; i++)
 		{
 			const aiMaterial* scene_material = scene->mMaterials[i];
-			const std::string& materialName = objectName + std::string("_") + std::string(scene_material->GetName().C_Str());
+			const std::string& materialName = m_ObjectName + std::string("_") + std::string(scene_material->GetName().C_Str());
 			Ref<Material> material = Material::Create(materialName, ""); //create a material and set the default storage directory
 			m_SubMeshes[i].MaterialID = material->materialID;
 
@@ -274,19 +278,19 @@ namespace Crimson
 			}
 
 			// Create and set vertex buffer
-			vb = VertexBuffer::Create(&buffer[0].Position.x, sizeof(VertexAttributes) * m_SubMeshes[k].Vertices.size());
-			ib = IndexBuffer::Create(m_SubMeshes[k].Indices.data(), m_SubMeshes[k].Indices.size() * sizeof(unsigned int));
+			m_VertexBuffer = VertexBuffer::Create(&buffer[0].Position.x, sizeof(VertexAttributes) * m_SubMeshes[k].Vertices.size());
+			m_IndexBuffer = IndexBuffer::Create(m_SubMeshes[k].Indices.data(), m_SubMeshes[k].Indices.size() * sizeof(unsigned int));
 
 
-			bl = std::make_shared<BufferLayout>();
-			bl->push("Position", ShaderDataType::Float4);
-			bl->push("TexCoord", ShaderDataType::Float2);
-			bl->push("Normal", ShaderDataType::Float3);
-			bl->push("Tangent", ShaderDataType::Float3);
-			bl->push("BiTangent", ShaderDataType::Float3);
+			m_BufferLayout = std::make_shared<BufferLayout>();
+			m_BufferLayout->push("Position", ShaderDataType::Float4);
+			m_BufferLayout->push("TexCoord", ShaderDataType::Float2);
+			m_BufferLayout->push("Normal", ShaderDataType::Float3);
+			m_BufferLayout->push("Tangent", ShaderDataType::Float3);
+			m_BufferLayout->push("BiTangent", ShaderDataType::Float3);
 
-			m_SubMeshes[k].VertexArray->SetIndexBuffer(ib);
-			m_SubMeshes[k].VertexArray->AddBuffer(bl, vb);
+			m_SubMeshes[k].VertexArray->SetIndexBuffer(m_IndexBuffer);
+			m_SubMeshes[k].VertexArray->AddBuffer(m_BufferLayout, m_VertexBuffer);
 
 
 

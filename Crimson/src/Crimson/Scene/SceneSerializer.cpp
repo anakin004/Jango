@@ -146,7 +146,7 @@ namespace Crimson {
 			auto& sm = entity.GetComponent<StaticMeshComponent>();
 			out << YAML::Key << "StaticMeshComponent";
 			out << YAML::BeginMap;
-			out << YAML::Key << "MeshPath" << YAML::Value << sm.static_mesh->m_Path;
+			out << YAML::Key << "MeshPath" << YAML::Value << sm.static_mesh->GetPath();
 			out << YAML::EndMap;
 		}
 		if (entity.HasComponent<ScriptComponent>())
@@ -246,9 +246,9 @@ namespace Crimson {
 
 		YAML::Emitter out;
 		out << YAML::BeginMap;
-		for (int i = 0; i < mesh.m_SubMeshes.size(); i++)
+		for (int i = 0; i < mesh.GetSubMeshes().size(); i++)
 		{
-			auto sub_mesh = mesh.m_SubMeshes[i];
+			const auto& sub_mesh = mesh.GetSubMeshes()[i];
 			out << YAML::Key << std::to_string(i) << YAML::Value;
 			out << YAML::BeginSeq;
 			out << YAML::Binary(reinterpret_cast<const unsigned char*>(&sub_mesh.MaterialID), sizeof(uint64_t));			
@@ -525,7 +525,7 @@ namespace Crimson {
 				sub_mesh.NumVertices = sub_mesh.Vertices.size();
 				sub_mesh.MaterialID = materialID;
 
-				mesh.m_SubMeshes.push_back(sub_mesh);
+				mesh.GetSubMeshesModifiable().push_back(sub_mesh);
 			}
 			else
 				break;

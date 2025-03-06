@@ -96,8 +96,8 @@ namespace Crimson
 
 		maxGrassAmount = ChunkSize * ChunkSize * (pow(2 * RadiusOfSpawn + 1, 2));//radius of spawn defines how many tiles to cover from the centre
 		StartTime = std::chrono::high_resolution_clock::now();
-		m_dimension.x = width;
-		m_dimension.y = height;
+		m_Dimension.x = width;
+		m_Dimension.y = height;
 		m_maxTerrainHeight = std::numeric_limits<float>::min();
 		m_terrainShader = Shader::Create("Assets/Shaders/TerrainShader.glsl");
 		m_terrainWireframeShader = Shader::Create("Assets/Shaders/TerrainWireframeShader.glsl");
@@ -160,37 +160,37 @@ namespace Crimson
 		//divide the landscape in 'n' number of patches
 		float res = ChunkSize;
 		//skip the edges for abrupt triangle formation
-		for (int i = 2; i <= m_dimension.y - 2; i += res)
+		for (int i = 2; i <= m_Dimension.y - 2; i += res)
 		{
-			for (int j = 2; j <= m_dimension.x - 2; j += res)
+			for (int j = 2; j <= m_Dimension.x - 2; j += res)
 			{
 				TerrainData v1;
 				v1.Position = glm::vec3(j, 0, i);
-				v1.TexCoord = glm::vec2(j / m_dimension.x, i / m_dimension.y);
+				v1.TexCoord = glm::vec2(j / m_Dimension.x, i / m_Dimension.y);
 				terrainData.push_back(v1);
 
 				TerrainData v2;
 				v2.Position = glm::vec3(j + res, 0, i);
-				v2.TexCoord = glm::vec2(j / m_dimension.x + res / m_dimension.x, i / m_dimension.y);
+				v2.TexCoord = glm::vec2(j / m_Dimension.x + res / m_Dimension.x, i / m_Dimension.y);
 				terrainData.push_back(v2);
 
 				TerrainData v3;
 				v3.Position = glm::vec3(j, 0, i + res);
-				v3.TexCoord = glm::vec2(j / m_dimension.x, i / m_dimension.y + res / m_dimension.y);
+				v3.TexCoord = glm::vec2(j / m_Dimension.x, i / m_Dimension.y + res / m_Dimension.y);
 				terrainData.push_back(v3);
 
 				TerrainData v4;
 				v4.Position = glm::vec3(j + res, 0, i + res);
-				v4.TexCoord = glm::vec2(j / m_dimension.x + res / m_dimension.x, i / m_dimension.y + res / m_dimension.y);
+				v4.TexCoord = glm::vec2(j / m_Dimension.x + res / m_Dimension.x, i / m_Dimension.y + res / m_Dimension.y);
 				terrainData.push_back(v4);
 			}
 		}
 
 		Ref<VertexBuffer> vb = VertexBuffer::Create(&terrainData[0].Position.x, sizeof(TerrainData) * terrainData.size());
-		bl = MakeRef<BufferLayout>();
-		bl->push("Position", ShaderDataType::Float3);
-		bl->push("coord", ShaderDataType::Float2);
-		m_terrainVertexArray->AddBuffer(bl, vb);
+		m_BufferLayout = MakeRef<BufferLayout>();
+		m_BufferLayout->push("Position", ShaderDataType::Float3);
+		m_BufferLayout->push("coord", ShaderDataType::Float2);
+		m_terrainVertexArray->AddBuffer(m_BufferLayout, vb);
 		glPatchParameteri(GL_PATCH_VERTICES, 4);//will be present after all vertex array operations for tessellation
 
 		glm::mat4 terrain_transform = glm::mat4(1.0f);//glm::translate(glm::mat4(1.0f), { 0,0,0 }) * glm::rotate(glm::mat4(1.0), glm::radians(180.0f), { 0,0,1 });
@@ -198,14 +198,22 @@ namespace Crimson
 		min_height = std::numeric_limits<float>::max();
 
 		for (int j = 0; j < m_Width; j++)
+		{
 			for (int i = 0; i < m_Height; i++)
+			{
 				if (max_height < Height_data[j * m_Width + i + m_Channels])
 					max_height = Height_data[j * m_Width + i + m_Channels];
+			}
+		}
 
 		for (int j = 0; j < m_Width; j++)
+		{
 			for (int i = 0; i < m_Height; i++)
+			{
 				if (min_height > Height_data[j * m_Width + i + m_Channels])
 					min_height = Height_data[j * m_Width + i + m_Channels];
+			}
+		}
 
 		std::uniform_real_distribution<float> RandomFloat(-1.0f, 1.0f);
 		std::normal_distribution<float> NormalDist(0.0f, 1.0f);
@@ -235,14 +243,14 @@ namespace Crimson
 		
 		++frame_counter;
 		player_camera_pos = cam.GetCameraPosition();
-		if (qtree == nullptr)
-			qtree = MakeRef<QuadTree>(this);
-		if (rootNode == nullptr)
-			rootNode = NodePool::GetNode(Bounds(glm::vec3(0, 0, 0), glm::vec3(m_dimension.x, 0, m_dimension.y)));
+		if (m_Qtree == nullptr)
+			m_Qtree = MakeRef<QuadTree>(this);
+		if (m_RootNode == nullptr)
+			m_RootNode = NodePool::GetNode(Bounds(glm::vec3(0, 0, 0), glm::vec3(m_Dimension.x, 0, m_Dimension.y)));
 		
-		qtree->Insert(rootNode, cam);
+		m_Qtree->Insert(m_RootNode, cam);
 		if (frame_counter % 10 == 0) //check to delete after every 10th frame
-			qtree->DeleteNodesIfNotInScope(rootNode, cam);
+			m_Qtree->DeleteNodesIfNotInScope(m_RootNode, cam);
 
 		if (bShowTerrain) {
 
@@ -304,7 +312,7 @@ namespace Crimson
 			RenderCommand::DrawArrays(*m_terrainVertexArray, terrainData.size(), GL_PATCHES, 0);		
 	}
 
-	QuadTree::QuadTree(Terrain* _terrain) :  terrain(_terrain)
+	QuadTree::QuadTree(Terrain* _terrain) : terrain(_terrain)
 	{
 		//delete_NodeThread = std::thread([&]() {DeleteNodesIfNotInScope(); });
 		//delete_NodeThread.join();
@@ -320,7 +328,7 @@ namespace Crimson
 		if (chunk_size.x == 256)
 		{
 			//load the top level of foliage
-			for (auto topPlant : terrain->topFoliageLayer)
+			for (auto& topPlant : terrain->topFoliageLayer)
 			{
 				topPlant->bHasSpawnned = false;
 				topPlant->GenerateFoliagePositions(node->chunk_bounds);
@@ -329,7 +337,7 @@ namespace Crimson
 		if (chunk_size.x == 128)
 		{
 			//load the middle level of foliage
-			for (auto middlePlant : terrain->middleFoliageLayer)
+			for (auto& middlePlant : terrain->middleFoliageLayer)
 			{
 				middlePlant->bHasSpawnned = false;
 				middlePlant->GenerateFoliagePositions(node->chunk_bounds);
@@ -338,7 +346,7 @@ namespace Crimson
 		if (chunk_size.x == 64)
 		{
 			//load the bottom level of foliage			
-			for (auto bottomPlant : terrain->bottomFoliageLayer)
+			for (auto& bottomPlant : terrain->bottomFoliageLayer)
 			{
 				bottomPlant->bHasSpawnned = false;
 				bottomPlant->GenerateFoliagePositions(node->chunk_bounds);
@@ -383,11 +391,11 @@ namespace Crimson
 		glm::vec3 extent = node->chunk_bounds.aabbMax - node->chunk_bounds.aabbMin;
 		glm::vec3 mid_point = node->chunk_bounds.GetMidPoint();
 		glm::vec3 cam_pos = cam.GetCameraPosition();
-		float boxSize = 512;
-		Bounds player_bounds(cam_pos - glm::vec3(boxSize, 0.0, boxSize), cam_pos + glm::vec3(boxSize, 0.0, boxSize));
+		float boxSize = 512.f;
+		Bounds player_bounds(cam_pos - glm::vec3(boxSize, 0.0f, boxSize), cam_pos + glm::vec3(boxSize, 0.0f, boxSize));
 
 		//check if the size of the chunk is greater than the min size (64.0)
-		if(extent.x >= 64.0 && extent.z >= 64.0 && aabbIntersection(player_bounds, node->chunk_bounds))
+		if(extent.x >= 64.0f && extent.z >= 64.0f && aabbIntersection(player_bounds, node->chunk_bounds))
 		{
 			CreateChildren(node, cam);
 		}
