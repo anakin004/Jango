@@ -20,8 +20,8 @@ namespace Crimson {
 	{
 		glm::vec3 aabbMax, aabbMin;
 		Bounds() {
-			float minNum = std::numeric_limits<float>::lowest();
-			float maxNum = std::numeric_limits<float>::max();
+			constexpr float minNum = std::numeric_limits<float>::lowest();
+			constexpr float maxNum = std::numeric_limits<float>::max();
 			aabbMin = glm::vec3(maxNum, maxNum, maxNum);
 			aabbMax = glm::vec3(minNum, minNum, minNum);
 		}

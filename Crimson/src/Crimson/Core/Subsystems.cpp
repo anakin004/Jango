@@ -19,7 +19,7 @@ namespace Crimson {
 			// we may have multiple windows
 			int success = glfwInit();
 			CN_CORE_ASSERT(success, "GLFW Failed To Initalized!");
-			CN_CORE_INFO("GLFW Initialized!");
+			CN_CORE_INFO("GLFW Initialized");
 			glfwSetErrorCallback(GLFWErrorCallBack);
 
 			s_GLFWBooted = true;

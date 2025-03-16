@@ -85,6 +85,7 @@ namespace Crimson {
 		SetDarkThemeColors();
 
 		GLFWwindow* window = (GLFWwindow*)Application::Get().GetWindow().GetNativeWindow();
+		
 		// Setup Platform/Renderer backends
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 

@@ -20,7 +20,7 @@
 
 namespace Crimson {
 
-	// deltaTime and App are both singletons, refer to Application.h for more info on why ...
+	// deltaTime and App are both singletons, there is only going to be one instance of both
 
 	Application* Application::s_Instance;
 	TimeStep Application::s_TimeStep(0.0);
@@ -36,17 +36,16 @@ namespace Crimson {
 
 		m_Window = Scope<Window>(Window::Create()); // window is a unique ptr not shared since it is tied to the application instance not the program
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
-		m_Window->SetVSync(false); // might make vsync default to true 
+		m_Window->SetVSync(false); // vsync defaults to true for opengl setup, just setting to false for testing
 
 		Renderer::Init(); // this sets the renderer-api in reality ... does not initialize the 2d and 3d renderer
 
-		m_ImGuiLayer = new ImGuiLayer();
+		m_ImGuiLayer = new ImGuiLayer(); // layers get deleted in layer stack destructor
 		PushOverlay(m_ImGuiLayer);
 	}
 
 	Application::~Application()
 	{
-
 	} 
 
 
