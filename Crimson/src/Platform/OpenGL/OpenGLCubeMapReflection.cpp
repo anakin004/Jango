@@ -22,7 +22,7 @@ namespace Crimson {
 		CN_PROFILE_FUNCTION()
 
 		float* data = nullptr;
-		int width, height, channels;
+		int width = -1, height = -1, channels = -1;
 
 		glGenTextures(1, &tex_id);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, tex_id);
@@ -83,11 +83,10 @@ namespace Crimson {
 		for (int i = 0; i < 6; i++)
 		{
 			glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, tex_id, 0);//Render the scene in the corresponding face on the cube map and "GL_COLOR_ATTACHMENT0" Represents the Render target where the fragment shader should output the color
-			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-				CN_CORE_TRACE("FrameBuffer complete");
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+				CN_CORE_TRACE("FrameBuffer Creation Failed");
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//clear the buffers each time
-			//CN_CORE_ERROR(glGetError());
 
 			SwitchToFace(i);//rotate the camera
 			cam.RotateCamera(yaw, pitch);
@@ -123,14 +122,7 @@ namespace Crimson {
 				});
 			
 		}
-		
-		/*
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);//unbind the framebuffer for capturing process
-		glViewport(0, 0, size.x, size.y);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glBindTextureUnit(10, tex_id);
-		*/
-
+	
 	}
 
 	void OpenGLCubeMapReflection::Bind(int slot)

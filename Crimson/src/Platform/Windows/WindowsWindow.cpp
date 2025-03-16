@@ -53,12 +53,8 @@ namespace Crimson {
 		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
-
-		//vsync true default 
 		SetVSync(true);
 
-
-		//glfw callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);

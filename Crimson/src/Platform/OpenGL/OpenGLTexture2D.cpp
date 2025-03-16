@@ -16,12 +16,10 @@ namespace Crimson {
 		else
 			Create8BitsTexture(path);
 	}
-
-	//glDeleteTextures(1, &m_Renderid);
-	OpenGLTexture2D::OpenGLTexture2D(const unsigned int Width = 1, const  unsigned int Height = 1, unsigned int data = 0xffffffff)//for making a custom texture(white,black,red..)
-		:m_Height(Height), m_Width(Width)//default texture is white of height and width = 1
+																							//data is defaulted to a color, can be used as a texture or base color also
+	OpenGLTexture2D::OpenGLTexture2D(const unsigned int Width = 1, const unsigned int Height = 1, unsigned int data = 0xffffffff)
+		:m_Height(Height), m_Width(Width)
 	{
-		//uuid = UUID(data);
 
 		GLenum InternalFormat = GL_RGBA8, Format = GL_RGBA;
 
@@ -41,15 +39,14 @@ namespace Crimson {
 		stbi_set_flip_vertically_on_load(1);
 		pixel_data_16 = stbi_load_16(path.c_str(), &m_Width, &m_Height, &channels, 0);
 
-		//determine which format to use based on number of channels
 		GLenum InternalFormat = 0, Format = 0;
 		if (pixel_data_16 == nullptr) {
 			CN_CORE_ERROR("2D Image not found!!");
 			CreateWhiteTexture();
 		}
-		else //if the image is loaded
+		else 
 		{
-			//determine which format to use based on number of channels
+			
 			if (channels == 4)
 			{
 				InternalFormat = GL_RGBA16;
@@ -71,10 +68,12 @@ namespace Crimson {
 				Format = GL_RED;
 			}
 			else
+			{
 				CN_CORE_ERROR("Invalid Texture format");
+			}
 
 			glCreateTextures(GL_TEXTURE_2D, 1, &m_Renderid);
-			glTextureStorage2D(m_Renderid, 1, InternalFormat, m_Width, m_Height);//immutable texture storage
+			glTextureStorage2D(m_Renderid, 1, InternalFormat, m_Width, m_Height);
 
 			glGenerateTextureMipmap(m_Renderid);
 			glTextureParameteri(m_Renderid, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -107,9 +106,8 @@ namespace Crimson {
 			CN_CORE_ERROR("{}{}", path, "2D Image not found!!");
 			CreateWhiteTexture();
 		}
-		else //if the image is loaded
+		else 
 		{
-			//determine which format to use based on number of channels
 			if (channels == 4)
 			{
 				InternalFormat = GL_RGBA8;
@@ -134,8 +132,7 @@ namespace Crimson {
 				CN_CORE_ERROR("Invalid Texture format");
 
 			glCreateTextures(GL_TEXTURE_2D, 1, &m_Renderid);
-			//glGenTextures(1, &m_Renderid);
-			glTextureStorage2D(m_Renderid, 1, InternalFormat, m_Width, m_Height);//immutable texture storage
+			glTextureStorage2D(m_Renderid, 1, InternalFormat, m_Width, m_Height);
 
 			glGenerateTextureMipmap(m_Renderid);
 			glTextureParameteri(m_Renderid, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -175,8 +172,7 @@ namespace Crimson {
 			CN_CORE_ERROR("Image not found!!");
 		Resize_Image(16, 16);
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_Renderid);
-		//glGenTextures(1, &m_Renderid);
-		glTextureStorage2D(m_Renderid, 1, GL_RGB8, 16, 16);//immutable texture storage
+		glTextureStorage2D(m_Renderid, 1, GL_RGB8, 16, 16);
 
 		glGenerateTextureMipmap(m_Renderid);
 		glTextureParameteri(m_Renderid, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -200,9 +196,8 @@ namespace Crimson {
 	{
 		if (bUse16BitTexture)
 		{
-			if (m_Height > width && m_Width > height)//resize the 
+			if (m_Height > width && m_Width > height)
 			{
-				//float ar = m_Width / m_Height;
 				resized_image_16 = new unsigned short[width * height * channels];
 				stbir_resize_uint16_generic(pixel_data_16, m_Width, m_Height, 0, resized_image_16, width, height, 0, channels, 0, 0, STBIR_EDGE_REFLECT, STBIR_FILTER_BOX, STBIR_COLORSPACE_LINEAR, 0);
 				m_Height = height;
@@ -211,9 +206,8 @@ namespace Crimson {
 		}
 		else
 		{
-			if (m_Height > width && m_Width > height)//resize the 
+			if (m_Height > width && m_Width > height)
 			{
-				//float ar = m_Width / m_Height;
 				resized_image_8 = new unsigned char[width * height * channels];
 				stbir_resize_uint8(pixel_data_8, m_Width, m_Height, 0, resized_image_8, width, height, 0, channels);
 

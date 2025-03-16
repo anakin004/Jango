@@ -102,17 +102,17 @@ namespace Crimson
 				if (Entity.GetComponent<StaticMeshComponent>().isFoliage == false)
 				{					
 					auto& transform = Entity.GetComponent<TransformComponent>().GetTransform();
-					glm::vec4 color;
+					glm::vec4 color(1.0f);
 
-					auto mesh = Entity.GetComponent<StaticMeshComponent>();
+					auto& mesh = Entity.GetComponent<StaticMeshComponent>();
 					if (Entity.HasComponent<PhysicsComponent>())
 					{
-						auto physics_cmp = Entity.GetComponent<PhysicsComponent>();
+						auto& physics_cmp = Entity.GetComponent<PhysicsComponent>();
 						Physics3D::UpdateTransform(Entity.GetComponent<TransformComponent>(), physics_cmp);
 					}
 
 					if (Entity.HasComponent<SpriteRenderer>()) {
-						auto SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
+						auto& SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
 						Renderer3D::SetTransperancy(SpriteRendererComponent.Transperancy);
 						Renderer3D::DrawMesh(*mesh, transform, SpriteRendererComponent.Color * SpriteRendererComponent.Emission_Scale, SpriteRendererComponent.m_WireFrame, SpriteRendererComponent.m_Roughness, SpriteRendererComponent.m_Metallic, m_ForwardPassShader);
 					}

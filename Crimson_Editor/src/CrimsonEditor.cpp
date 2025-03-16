@@ -23,10 +23,10 @@ LoadMesh* mesh;
 		"lllmlllllllwwwwwllllllllllllll"
 		"lllmmllllwwwwwwwwwwlllllllllll"
 		"llllllwwwwwwwwwwwwwwwwwlllllll"
-		"llllwwwwwwwwwwwwwwwwwwmwwlllll"
+		"llllwwwwwwwwwwwwwwwwmwwlllllll"
 		"lllwwwwwwwwmmmmwwwwwwwwmwwllll"
 		"llllllwmwwwwwwwwwwwwwwwlllllll"
-		"llllwwwwwwwwwwwwwwwwllllllllll"
+		"lllwwwwwwwwwwwwwwlllllllllllll"
 		"lllllllllwwwwwwwwwwwllllllllll"
 		"llllllllmmmwwwwwllllllllllllll"
 		"llllllllllllllllllllllllllllll";
@@ -36,8 +36,8 @@ LoadMesh* mesh;
 		"ttt t     t     ttttttt tt ttt"
 		"ttt  tttt          ttttttttttt"
 		"tt  tt                 ttt   t"
-		"tttt                     ttttt"
-		"ttt                        ttt"
+		"tttt          t          ttttt"
+		"ttt        tt              ttt"
 		"tttttt                 ttt  tt"
 		"tttt                t tt    tt"
 		"     tttt           tt    tttt"
@@ -77,29 +77,27 @@ LoadMesh* mesh;
 	 CN_CORE_INFO("Scene Created!")
 
 	Square_entity = m_scene->CreateEntity("Square");
-	//
+
 	Square_entity->AddComponent<TransformComponent>(glm::vec3(5,-2,0));
 	Square_entity->AddComponent<CameraComponent>();
 	Square_entity->AddComponent<SpriteRenderer>(glm::vec4(1, 0.2, 0, 1));
-	//
+
 	 camera_entity = m_scene->CreateEntity("Camera");//create the camera entity
 	 camera_entity->AddComponent<TransformComponent>(glm::vec3(-6,-1,0));
 	 camera_entity->AddComponent<CameraComponent>();
-	//
+
 	 camera_entity->GetComponent<CameraComponent>().camera.bIsMainCamera = false;
 	 camera_entity->GetComponent<CameraComponent>().camera.SetOrthographic(50);
-	//
+
 	 Square2 = m_scene->CreateEntity("2ndSquare");
 	 Square2->AddComponent<TransformComponent>(glm::vec3(-1,0,5));
 	 Square2->AddComponent<CameraComponent>();
 	 Square2->AddComponent<SpriteRenderer>();
-	//
+
 	 Square3 = m_scene->CreateEntity("3rdSquare");
 	 Square3->AddComponent<TransformComponent>(glm::vec3(-2,0,-5));
 
-	//....................script......................................................................
 
-	 //.........................script.........................................................
 
 	//Square_entity->AddComponent<ScriptComponent>().Bind<(CustomScript)>();
 	// Square3->AddComponent<ScriptComponent>().Bind<CustomScript>();
@@ -272,19 +270,18 @@ void CrimsonEditor::OnImGuiRender()
 	ImGui::End();
 
 	ImGui::Begin("Benchmark");
-	ImGui::Text("FPS :  ");
+	ImGui::Text("FPS:  ");
 	ImGui::SameLine();
 	ImGui::TextColored({ 1,0.2,1,1 }, std::to_string(1.0f/frame_time).c_str());
-	//ImGui::NewLine();
-	ImGui::Text("frame time : ");
+	ImGui::Text("Frame Time: ");
 	ImGui::SameLine();
 	ImGui::TextColored({ 0,1,0,1 }, std::to_string(frame_time).c_str());
 	ImGui::Checkbox("Simulate Physics", &Physics3D::SimulatePhysics);
 	
-	ImGui::DragFloat("FOG DENSITY", &m_scene->fogDensity, 1);
-	ImGui::DragFloat("FOG END", &m_scene->fogEnd, 0.1);
-	ImGui::DragFloat("FOG TOP", &m_scene->fogTop, 0.1);
-	ImGui::ColorEdit3("FOG COLOR", glm::value_ptr(m_scene->fogColor));
+	ImGui::DragFloat("Fog Density", &m_scene->fogDensity, 1);
+	ImGui::DragFloat("Fog End", &m_scene->fogEnd, 0.1);
+	ImGui::DragFloat("Fog Max Height", &m_scene->fogTop, 0.1);
+	ImGui::ColorEdit3("Fog Color", glm::value_ptr(m_scene->fogColor));
 
 	ImGui::End();
 	m_Pannel.OnImGuiRender();

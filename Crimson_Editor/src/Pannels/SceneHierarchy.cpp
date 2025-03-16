@@ -86,7 +86,6 @@ void SceneHierarchyPannel::Context(const Ref<Scene>& context)
 }
 void SceneHierarchyPannel::OnImGuiRender()
 {
-	//static int 
 	bool isEntityDestroyed = false;
 	Ref<Entity> m_Entity;
 	ImGuiTreeNodeFlags flags = 0;
@@ -125,7 +124,7 @@ void SceneHierarchyPannel::OnImGuiRender()
 			bool opened = ImGui::TreeNodeEx((void*)(uint32_t)*m_Entity, flags, s.c_str());
 
 			if (ImGui::IsItemClicked())
-				m_selected_entity = m_Entity;//gets casted to uint32_t
+				m_selected_entity = m_Entity;
 			if (opened)
 			{
 				ImGui::TreePop();
@@ -134,14 +133,14 @@ void SceneHierarchyPannel::OnImGuiRender()
 		for (int i = 0; i < m_Context->m_PointLights.size(); i++)
 		{
 			std::string s = "Point Light_"+std::to_string(i);
-			//m_Context->m_PointLights[i]->SetLightTag(s);
+
 			if (m_selected_Light) {
-				flags = ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_OpenOnArrow;//| ((m_selected_Light->GetLightTag() == m_Context->m_PointLights[i]->GetLightTag()) ? ImGuiTreeNodeFlags_Selected : 0);
+				flags = ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_OpenOnArrow;
 			}
 			bool opened = ImGui::TreeNodeEx(s.c_str(), flags);
 
 			if (ImGui::IsItemClicked())
-				m_selected_Light = m_Context->m_PointLights[i];//gets casted to uint32_t
+				m_selected_Light = m_Context->m_PointLights[i];
 			if (opened)
 			{
 				ImGui::TreePop();
@@ -150,7 +149,7 @@ void SceneHierarchyPannel::OnImGuiRender()
 	if (ImGui::IsMouseClicked(0) && ImGui::IsWindowHovered())
 		m_selected_entity = nullptr;
 
-	if (m_selected_entity && ImGui::BeginPopupContextItem("Action"))//popup only appears when there is a selected entity
+	if (m_selected_entity && ImGui::BeginPopupContextItem("Action"))
 	{
 		if (ImGui::Button("Delete Entity", { 100,30 })) {
 			isEntityDestroyed = true;
@@ -168,7 +167,7 @@ void SceneHierarchyPannel::OnImGuiRender()
 	{
 		if (ImGui::Button("Create Transform Component", { 220,30 }))
 		{
-			m_selected_entity->AddComponent<TransformComponent>();//sets to default values
+			m_selected_entity->AddComponent<TransformComponent>();
 		}
 		
 		if (ImGui::Button("Create Sprite Renderer Component", { 220,30 }))
@@ -265,6 +264,7 @@ void SceneHierarchyPannel::DrawCameraUI()
 {
 	if (!m_selected_entity)
 		return;
+
 	bool open = ImGui::TreeNodeEx(" Camera Component", ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_DefaultOpen);
 	bool delete_component = false;
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 2,2 });
@@ -478,10 +478,10 @@ void SceneHierarchyPannel::DrawStaticMeshComponentUI()
 		}
 		if (ImGui::Checkbox("Is Foliage?", &m_selected_entity->GetComponent<StaticMeshComponent>().isFoliage))
 		{
-			//m_selected_entity->GetComponent<StaticMeshComponent>().isFoliage
+			m_selected_entity->GetComponent<StaticMeshComponent>().isFoliage = !m_selected_entity->GetComponent<StaticMeshComponent>().isFoliage;
 		}
 		LoadMesh* mesh = m_selected_entity->GetComponent<StaticMeshComponent>();
-		for (auto& sub_mesh : mesh->GetSubMeshes())
+		for (const auto& sub_mesh : mesh->GetSubMeshes())
 		{
 			Ref<Material> mat = ResourceManager::allMaterials[sub_mesh.MaterialID];
 			ImGui::Button(mat->m_MaterialName.c_str(), { 120,20 });
@@ -546,32 +546,22 @@ void SceneHierarchyPannel::DrawPhysicsComponentUI()
 			Physics3D::AddSphereCollider(physics_component);
 			physics_component.m_shapes = SPHERE_COLLIDER;
 		}
-// 		if (ImGui::Button("Add Mesh collider", { 200.f,30.f }))
-// 		{
-// 			if (m_selected_entity->HasComponent<StaticMeshComponent>())
-// 			{
-// 				auto& mesh = m_selected_entity->GetComponent<StaticMeshComponent>();
-// 				physics_component.m_transform = transform.GetTransform();
-// 				std::thread t([&]() {Physics3D::AddMeshCollider(mesh.static_mesh->Vertices, mesh.static_mesh->Vertex_Indices, transform.Scale, physics_component); });
-// 				t.detach();
-// 				physics_component.m_shapes = MESH_COLLIDER;
-// 			}
-// 		}
+
+		// need to work on
+		//if (ImGui::Button("Add Mesh collider", { 200.f,30.f }))
+
 		if (ImGui::Button("Add Force"))
 		{
 			Physics3D::AddForce(physics_component);
 		}
-		//ImGui::EndPopup();
-	//}
 
 		if (ImGui::Button("Reset Simulation", { 100,20 }))
 		{
-			//m_selected_entity->RemoveComponent<PhysicsComponent>();
 			Physics3D::RemoveActor(physics_component);
 			physics_component.ResetSimulation = true;
 			m_selected_entity->GetComponent<TransformComponent>().m_transform = glm::mat4(1.0f);
 		}
-			//CN_CORE_WARN(Physics3D::GetNbActors());
+
 		ImGui::TreePop();
 	}
 }
@@ -589,7 +579,7 @@ void SceneHierarchyPannel::DrawScriptComponentUI()
 
 		if (ImGui::Button("Add Custom Script", { 100,20 }))
 			m_selected_entity->AddComponent<ScriptComponent>().Bind(*m_Context->m_scriptsMap[typeid(CustomScript).hash_code()]);
-		//ImGui::TextColored({ 1,0,0,1 }, std::to_string(typeid(*m_selected_entity->GetComponent<ScriptComponent>().m_Script).hash_code()).c_str());
+
 		ImGui::TreePop();
 	}
 }

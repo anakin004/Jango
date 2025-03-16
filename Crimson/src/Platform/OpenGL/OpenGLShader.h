@@ -41,9 +41,11 @@ namespace Crimson {
 		void SetFloat(const std::string& str, const float& UniformFloat) override;
 		virtual void SetFloatArray(const std::string& str, float& UniformFloat, size_t count) override;
 		void SetFloat4(const std::string& str, const glm::vec4& UniformFloat4) override;
-		void SetFloat3(const std::string& str, const glm::vec3& UniformFloat4) override;
-		void SetFloat3Array(const std::string& str, const float* pointer, size_t count) override;
 		void SetFloat4Array(const std::string& str, const float* arr, size_t count) override;
+		void SetFloat3(const std::string& str, const glm::vec3& UniformFloat3) override;
+		void SetFloat3Array(const std::string& str, const float* pointer, size_t count) override;
+		//void SetFloat2(const std::string& str, const glm::vec2& UniformFloat2) override; need to make
+		//void SetFloat2Array(const std::string& str, const glm::vec2& UniformFloat2) override;
 
 	private://opengl specific
 		void UploadUniformMat4(const std::string& str, glm::mat4& UniformMat4, size_t count = 1);
@@ -55,6 +57,8 @@ namespace Crimson {
 		void UpladUniformFloat3(const std::string& str, const glm::vec3& UniformFloat3);
 		void UpladUniformFloat3Array(const std::string& str, const float* pointer, size_t count);
 		void UpladUniformFloat4Array(const std::string& str, const float* pointer, size_t count);
+		//void UpladUniformFloat2(const std::string& str, const glm::vec3& UniformFloat2); // need to make
+		//void UpladUniformFloat2Array(const std::string& str, const float* pointer, size_t count);
 
 		unsigned int m_ID;
 		Shaders m_Shaders;

@@ -84,7 +84,7 @@ namespace Crimson {
 			CN_CORE_ERROR("2D array Image not found!!");
 			CreateWhiteTextureArray(numMaterials);
 		}
-		else //if the image is loaded
+		else 
 		{
 			//determine which format to use based on number of channels
 			if (channels == 4)
@@ -108,7 +108,9 @@ namespace Crimson {
 				Format = GL_RED;
 			}
 			else
+			{
 				CN_CORE_ERROR("Invalid Texture format");
+			}
 
 			glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &m_Renderid);
 			glTextureStorage3D(m_Renderid, 1, InternalFormat, m_Width, m_Height, paths.size());
@@ -118,7 +120,6 @@ namespace Crimson {
 			glTextureParameteri(m_Renderid, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_R, GL_REPEAT);
-			//CN_CORE_TRACE(glGetError());
 
 			for (int i = 0; i < paths.size(); i++)
 			{
@@ -134,13 +135,11 @@ namespace Crimson {
 				if (resized_image_16)
 				{
 					glTextureSubImage3D(m_Renderid, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_SHORT, resized_image_16);
-					//CN_CORE_ERROR(glGetError());
 					stbi_image_free(resized_image_16);
 				}
 				else if (pixel_data_16) {
 
 					glTextureSubImage3D(m_Renderid, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_SHORT, pixel_data_16);
-					//glTextureSubImage3D(m_Renderid, 1, 0, 0, i, m_Width, m_Height, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel_data_8);
 					stbi_image_free(pixel_data_16);
 				}
 			}
@@ -159,9 +158,8 @@ namespace Crimson {
 			CN_CORE_ERROR("2D array Image not found!!");
 			CreateWhiteTextureArray(numMaterials);
 		}
-		else //if the image is loaded
+		else 
 		{
-			//determine which format to use based on number of channels
 			if (channels == 4)
 			{
 				InternalFormat = GL_RGBA8;
@@ -183,17 +181,18 @@ namespace Crimson {
 				Format = GL_RED;
 			}
 			else
+			{
 				CN_CORE_ERROR("Invalid Texture format");
+			}
 
 			glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &m_Renderid);
 			glTextureStorage3D(m_Renderid, 1, InternalFormat, m_Width, m_Height, paths.size());
 
-			//glGenerateTextureMipmap(m_Renderid);
+			glGenerateTextureMipmap(m_Renderid);
 			glTextureParameteri(m_Renderid, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 			glTextureParameteri(m_Renderid, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_R, GL_REPEAT);
-			//CN_CORE_TRACE(glGetError());
 
 			for (int i = 0; i < paths.size(); i++)
 			{
@@ -203,19 +202,15 @@ namespace Crimson {
 				if (pixel_data_8 == nullptr)
 					CN_CORE_ERROR("Image not found!!");
 
-				//Resize_Image(2048, 2048);//resize the image if width,height > 100 (for the #trading application this is necessary)
-									//otherwise not needed (i might resize the image if img dimension < 1080p or it will crash)
 
 				if (resized_image_8)
 				{
 					glTextureSubImage3D(m_Renderid, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_BYTE, resized_image_8);
-					//CN_CORE_ERROR(glGetError());
 					stbi_image_free(resized_image_16);
 				}
 				else if (pixel_data_8) {
 
 					glTextureSubImage3D(m_Renderid, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_BYTE, pixel_data_8);
-					//glTextureSubImage3D(m_Renderid, 1, 0, 0, i, m_Width, m_Height, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel_data_8);
 					stbi_image_free(pixel_data_8);
 				}
 			}
@@ -235,7 +230,6 @@ namespace Crimson {
 		glTextureParameteri(m_Renderid, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_R, GL_REPEAT);
-		//CN_CORE_WARN(glGetError());
 
 		for (int i = 0; i < numMaterials; i++) {
 			if (resized_image_8)

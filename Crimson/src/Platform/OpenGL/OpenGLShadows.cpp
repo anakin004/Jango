@@ -8,13 +8,13 @@ namespace Crimson {
 	int Shadows::Cascade_level = 0;
 	float Shadows::m_lamda = 0.1;
 	OpenGLShadows::OpenGLShadows()
-		:m_width(4096), m_height(4096)
+		:m_width(4096.f), m_height(4096.f)
 	{
 	}
 	OpenGLShadows::OpenGLShadows(const float& width, const float& height)
 		:m_width(width/ MAX_CASCADES),m_height(height/MAX_CASCADES)
 	{
-		shadow_shader = Shader::Create("Assets/Shaders/ShadowShader.glsl");//shadow shader
+		shadow_shader = Shader::Create("Assets/Shaders/ShadowShader.glsl");
 		terrain_shadowShader = Shader::Create("Assets/Shaders/TerrainShadowShader.glsl");
 		shadow_shaderInstanced = Shader::Create("Assets/Shaders/ShadowShaderInstanced.glsl");
 
@@ -33,7 +33,7 @@ namespace Crimson {
 		glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &OFb);
 		auto size = RenderCommand::GetViewportSize();
 
-		PrepareShadowProjectionMatrix(cam, LightPosition);//CREATE THE orthographic projection matrix
+		PrepareShadowProjectionMatrix(cam, LightPosition);
 
 		shadow_shader->Bind();
 		for (int i = 0; i < MAX_CASCADES; i++) 
@@ -46,7 +46,6 @@ namespace Crimson {
 
 				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer_id);
 				glViewport(0, 0, m_width, m_height);
-				//glClear(GL_DEPTH_BUFFER_BIT);
 
 				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_id[i], 0);
 				if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
@@ -54,8 +53,7 @@ namespace Crimson {
 			
 
 				glClear(GL_DEPTH_BUFFER_BIT);
-				//glCullFace(GL_FRONT);
-				scene.getRegistry().each([&](auto m_entity)//iterate through every entities and render them
+				scene.getRegistry().each([&](auto m_entity)
 					{
 						Entity Entity(&scene, m_entity);
 						if (Entity.GetComponent<StaticMeshComponent>().isFoliage == true)
@@ -67,10 +65,9 @@ namespace Crimson {
 
 						shadow_shader->SetMat4("u_Model", transform);
 
-						auto mesh = Entity.GetComponent<StaticMeshComponent>();
-						//if (camera.camera.bIsMainCamera) {
+						auto& mesh = Entity.GetComponent<StaticMeshComponent>();
 						if (Entity.HasComponent<SpriteRenderer>()) {
-							auto SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
+							const auto& SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
 							Renderer3D::DrawMesh(*mesh, transform, SpriteRendererComponent.Color);
 						}
 						else
@@ -100,12 +97,10 @@ namespace Crimson {
 
 			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer_id);
 			glViewport(0, 0, m_width*(i+1), m_height*(i+1));
-			//glClear(GL_DEPTH_BUFFER_BIT);
 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_id[i], 0);
-			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-				//CN_CORE_INFO("Shadow Map FrameBuffer Complete");
-				1;
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+				CN_CORE_INFO("Shadow Map FrameBuffer Creation Failed");
 
 			glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -139,13 +134,11 @@ namespace Crimson {
 						shadow_shader->SetInt("isFoliage", 0);
 
 					auto& transform = Entity.GetComponent<TransformComponent>().GetTransform();
-
 					shadow_shader->SetMat4("u_Model", transform);
+					auto& mesh = Entity.GetComponent<StaticMeshComponent>();
 
-					auto mesh = Entity.GetComponent<StaticMeshComponent>();
-					//if (camera.camera.bIsMainCamera) {
 					if (Entity.HasComponent<SpriteRenderer>()) {
-						auto SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
+						auto& SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
 						Renderer3D::DrawMesh(*mesh, transform, SpriteRendererComponent.Color);
 					}
 					else
@@ -186,16 +179,14 @@ namespace Crimson {
 
 			shadow_shaderInstanced->SetMat4("LightProjection", LightProjection);
 			shadow_shaderInstanced->SetMat4("u_Model", Terrain::m_terrainModelMat);
-			//shadow_shaderInstanced->SetMat4("u_View", cam.GetViewMatrix());
 
 			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer_id);
 			glViewport(0, 0, m_width, m_height);
-			//glClear(GL_DEPTH_BUFFER_BIT);
 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_id[i], 0);
-			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-				//CN_CORE_INFO("Shadowmap Frame Buffer Complete for Foliage");
-				1;
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+				CN_CORE_INFO("Shadowmap Frame Buffer Creation Failed For Folliage");
+
 
 			glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -256,9 +247,8 @@ namespace Crimson {
 			glDrawBuffer(GL_NONE);
 			glReadBuffer(GL_NONE);
 
-			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-				//CN_CORE_INFO("Shadow Map FrameBuffer Complete");
-				1;
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+				CN_CORE_INFO("Shadow Map FrameBuffer Creation Failed");
 		}
 
 		glBindTextureUnit(SHDOW_MAP1, depth_id[0]);

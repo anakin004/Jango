@@ -94,7 +94,7 @@ namespace Crimson {
 
 			glBindTextureUnit(SCENE_TEXTURE_SLOT, m_MipLevels[i].texture);
 			//m_DownSampleShader->SetInt("inputImage", SCENE_TEXTURE_SLOT);
-			m_DownSampleShader->SetFloat3("ImageRes", { m_MipLevels[i].dimension.x,m_MipLevels[i].dimension.y,0 }); // I have to Implement the SetFloat2 method ^_^ ;
+			m_DownSampleShader->SetFloat3("ImageRes", { m_MipLevels[i].dimension.x,m_MipLevels[i].dimension.y,0 }); // I have to Implement the SetFloat2 method
 		}
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 

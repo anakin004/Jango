@@ -20,7 +20,7 @@ void ContentBrowser::OnImGuiRender()
 		if (m_filePath.has_parent_path())
 			m_filePath = m_filePath.parent_path();
 	}
-	for (const FileSystem::directory_entry& p : FileSystem::directory_iterator(m_filePath))//iterate throughr all the files
+	for (const FileSystem::directory_entry& p : FileSystem::directory_iterator(m_filePath))
 	{
 		std::string filename = p.path().filename().string();
 		if (p.is_directory()) {
@@ -34,7 +34,7 @@ void ContentBrowser::OnImGuiRender()
 			if (extension == ".mat")
 			{
 				SceneSerializer ser;
-				uint64_t materialID = ser.DeSerializeAndGetMaterialID(p.path().string()); //Get material ID			
+				uint64_t materialID = ser.DeSerializeAndGetMaterialID(p.path().string()); 	
 				if (ImGui::Button(filename.c_str()))
 				{
 					MaterialEditor::cached_materialID = materialID;
@@ -47,7 +47,7 @@ void ContentBrowser::OnImGuiRender()
 				}
 				
 			}
-			if (extension == ".png" || extension == ".hdr" || extension == ".jpg")//only supported texture formats
+			if (extension == ".png" || extension == ".hdr" || extension == ".jpg")
 			{
 				ImGui::Button(filename.c_str());
 				if (ImGui::BeginDragDropSource())

@@ -19,6 +19,7 @@ namespace Crimson {
 		CreateSSAOTexture(width,height);
 		Init();
 	}
+
 	OpenGLSSAO::~OpenGLSSAO()
 	{
 	}
@@ -34,7 +35,7 @@ namespace Crimson {
 		auto viewport_size = RenderCommand::GetViewportSize();
 
 		//Generate Random samples
-		std::uniform_real_distribution<float> RandomFloats(0.0, 1.0);//generate random floats between [0.0,1.0)
+		std::uniform_real_distribution<float> RandomFloats(0.0f, 1.0f);//generate random floats between [0.0,1.0)
 		std::default_random_engine generator; // random number generator
 		for (int i = 0; i < RANDOM_SAMPLES_SIZE; i++)
 		{
@@ -57,9 +58,10 @@ namespace Crimson {
 
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, SSAOdepth_id);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, SSAOtexture_id, 0);
-		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-			//CN_CORE_TRACE("SSAO Framebuffer Complete"); 
-			1;
+
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+			CN_CORE_ERROR("SSAO Framebuffer Creation Failed"); 
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		SSAOShader->Bind();
@@ -83,9 +85,10 @@ namespace Crimson {
 		glViewport(0, 0, m_width, m_height);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, SSAOdepth_id);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, SSAOblur_id, 0);
-		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-			//CN_CORE_TRACE("SSAO Blur Frame Buffer Complete");
-			1;
+
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+			CN_CORE_ERROR("SSAO Blur Frame Buffer Creation Failed");
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		SSAOblurShader->Bind();
@@ -106,21 +109,20 @@ namespace Crimson {
 		m_width = width;
 		m_height = height;
 		auto size = RenderCommand::GetViewportSize();
-		//create framebuffer and texture to store Ambiant occlusion texture
-		glCreateFramebuffers(1, &SSAOframebuffer_id);
 
+		glCreateFramebuffers(1, &SSAOframebuffer_id);
 		glCreateTextures(GL_TEXTURE_2D, 1, &SSAOtexture_id);
 		glBindTexture(GL_TEXTURE_2D, SSAOtexture_id);
-
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_R8, m_width, m_height, 0, GL_RED, GL_UNSIGNED_BYTE, nullptr);
 
-		//glGenerateMipmap(GL_TEXTURE_2D);
+		glGenerateMipmap(GL_TEXTURE_2D);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		//////////////////
 		glCreateTextures(GL_TEXTURE_2D, 1, &SSAOblur_id);
 		glBindTexture(GL_TEXTURE_2D, SSAOblur_id);
 
@@ -137,14 +139,21 @@ namespace Crimson {
 
 		GLenum buffers[] = { GL_COLOR_ATTACHMENT0 };
 		glDrawBuffers(1, buffers);
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		std::uniform_real_distribution<float> RandomFloats(0.0, 1.0);//generate random floats between [0.0,1.0)
-		std::default_random_engine generator; // random number generator
+
+
+
+
+
+
+
+
+		std::uniform_real_distribution<float> RandomFloats(0.0f, 1.0f);
+		std::default_random_engine generator; 
 
 		std::vector<glm::vec3> noisetexture;
 		for (int i = 0; i < 16; i++)
 		{
-			noisetexture.push_back(glm::vec3(RandomFloats(generator) * 2.0 - 1.0, RandomFloats(generator) * 2.0 - 1.0, 0.0f));
+			noisetexture.push_back(glm::vec3(RandomFloats(generator) * 2.0f - 1.0f, RandomFloats(generator) * 2.0f - 1.0f, 0.0f));
 		}
 		glCreateTextures(GL_TEXTURE_2D, 1, &noisetex_id);
 		glBindTexture(GL_TEXTURE_2D, noisetex_id);
@@ -153,7 +162,6 @@ namespace Crimson {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		//CN_CORE_WARN(glGetError());
 
 		glBindTextureUnit(NOISE_SLOT, noisetex_id);
 		glBindTextureUnit(SSAO_BLUR_SLOT, SSAOblur_id);
@@ -169,9 +177,8 @@ namespace Crimson {
 
 		CN_PROFILE_FUNCTION()
 
-		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
-		glDepthMask(GL_FALSE);//disable depth testing
+		glDepthMask(GL_FALSE);
 
 		//auto inv = glm::inverse(proj * glm::mat4(glm::mat3(view)));//get inverse of projection view to convert cannonical view to world space
 		glm::vec4 data[] = {
@@ -196,7 +203,7 @@ namespace Crimson {
 
 		RenderCommand::DrawIndex(*vao);
 
-		glDepthMask(GL_TRUE);//again enable depth testing
+		glDepthMask(GL_TRUE);
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 	}
