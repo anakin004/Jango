@@ -51,7 +51,7 @@ namespace Crimson {
 		inline static void DrawLine(VertexArray& vertexarray, uint32_t& count) {
 			s_RendererAPI->DrawLine(vertexarray, count);
 		}
-		inline static glm::vec2& GetViewportSize()
+		inline static glm::vec2 GetViewportSize()
 		{
 			return s_RendererAPI->GetViewportSize();
 		}
