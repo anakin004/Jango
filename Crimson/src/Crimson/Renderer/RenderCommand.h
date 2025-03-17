@@ -8,17 +8,24 @@ namespace Crimson {
 
 	class RenderCommand {
 	public:
-		inline static void Init() { s_RendererAPI->Init(); }
-
-		static void SetViewport(unsigned int Width, unsigned int Height);
-
-		inline static void ClearColor(const glm::vec4& color) {
+		inline static void Init()
+		{
+			s_RendererAPI->Init(); 
+		}
+		inline static void SetViewport(unsigned int Width, unsigned int Height)
+		{
+			s_RendererAPI->SetViewPort(Width, Height);
+		}
+		inline static void ClearColor(const glm::vec4& color) 
+		{
 			s_RendererAPI->ClearColor(color);
 		}
-		inline static void Clear() {
+		inline static void Clear() 
+		{
 			s_RendererAPI->Clear();
 		}
-		inline static void DrawIndex(VertexArray& vertexarray) {
+		inline static void DrawIndex(VertexArray& vertexarray) 
+		{
 			s_RendererAPI->DrawIndex(vertexarray);
 		}
 		inline static void DrawArrays(VertexArray& vertexarray, size_t count, int first = 0)
@@ -48,7 +55,8 @@ namespace Crimson {
         {
                 s_RendererAPI->DrawElementsIndirect(vertexarray, indirectBufferID);
         }
-		inline static void DrawLine(VertexArray& vertexarray, uint32_t& count) {
+		inline static void DrawLine(VertexArray& vertexarray, uint32_t& count)
+		{
 			s_RendererAPI->DrawLine(vertexarray, count);
 		}
 		inline static glm::vec2 GetViewportSize()

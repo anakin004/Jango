@@ -9,7 +9,8 @@ namespace Crimson {
 
 
 
-	enum class BufferStorageType : uint8_t {
+	enum class BufferStorageType : uint8_t 
+	{
 		MUTABLE, IMMUTABLE
 	};
 
@@ -85,7 +86,7 @@ namespace Crimson {
 		virtual void SetData(size_t size, const void* data) = 0;
 		virtual void* MapBuffer(size_t size) = 0;
 
-		static Ref<VertexBuffer> Create(float* data, size_t size);
+		static Ref<VertexBuffer> Create(const float* data, size_t size);
 		static Ref<VertexBuffer> Create(size_t size, BufferStorageType Storage_Type = BufferStorageType::MUTABLE);
 	};
 
@@ -95,7 +96,7 @@ namespace Crimson {
 		virtual void Bind()const = 0;
 		virtual void UnBind()const = 0;
 		virtual size_t GetCount() = 0;
-		static Ref<IndexBuffer> Create(uint32_t* data, size_t count);
+		static Ref<IndexBuffer> Create(const uint32_t* data, size_t count);
 	};
 
 	class VertexArray {

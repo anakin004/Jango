@@ -14,6 +14,7 @@ namespace Crimson
 	Ref<Shader> OpenGLDeferredRenderer::m_ForwardPassShader;
 	Ref<Shader> OpenGLDeferredRenderer::m_DefferedPassShader;
 	static int m_width, m_height;
+
 	void OpenGLDeferredRenderer::Init(int width, int height)
 	{
 
@@ -87,7 +88,7 @@ namespace Crimson
 		CN_PROFILE_FUNCTION()
 
 
-		auto viewport_size = RenderCommand::GetViewportSize();
+		glm::vec2 viewport_size = RenderCommand::GetViewportSize();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferID);
 		glViewport(0, 0, m_width, m_height); //set the viewport resolution same as gbuffer texture resolution
@@ -155,17 +156,25 @@ namespace Crimson
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);//disable writing to depth buffer
 
-		glm::vec4 data[] = {
-		glm::vec4(-1,-1,0,1),glm::vec4(0,0,0,0),
-		glm::vec4(1,-1,0,1),glm::vec4(1,0,0,0),
-		glm::vec4(1,1,0,1),glm::vec4(1,1,0,0),
-		glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
+		const std::array<glm::vec4, 8> vb_data = 
+		{
+			{
+			glm::vec4(-1,-1,0,1),
+			glm::vec4(0,0,0,0),
+			glm::vec4(1,-1,0,1),
+			glm::vec4(1,0,0,0),
+			glm::vec4(1,1,0,1),
+			glm::vec4(1,1,0,0),
+			glm::vec4(-1,1,0,1),
+			glm::vec4(0,1,0,0)
+			}
 		};
 
 		Ref<VertexArray> vao = VertexArray::Create();
-		Ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
-		unsigned int i_data[] = { 0,1,2,0,2,3 };
-		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
+		Ref<VertexBuffer> vb = VertexBuffer::Create(&vb_data[0].x, sizeof(vb_data));
+
+		const std::array<uint32_t, 6> ib_data = { 0,1,2,0,2,3 };
+		Ref<IndexBuffer> ib = IndexBuffer::Create(&ib_data[0], sizeof(ib_data));
 
 		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
 
@@ -181,11 +190,15 @@ namespace Crimson
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 	}
-	uint32_t OpenGLDeferredRenderer::GetBuffers(int bufferInd)
+
+	uint32_t OpenGLDeferredRenderer::GetBuffers(uint32_t bufferInd)
 	{
-		if (bufferInd == 0)	return m_NormalBufferID;
-		if (bufferInd == 1)	return m_VelocityBufferID;
-		if (bufferInd == 2)	return m_AlbedoBufferID;
-		if (bufferInd == 3)	return m_RoughnessMetallicBufferID;
+		switch (bufferInd)
+		{
+			case  0:	return m_NormalBufferID;
+			case  1:	return m_VelocityBufferID;
+			case  2:	return m_AlbedoBufferID;
+			case  3:	return m_RoughnessMetallicBufferID;
+		}
 	}
 }

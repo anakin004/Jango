@@ -19,7 +19,8 @@ namespace Crimson {
 	private:
 		unsigned int tex_id, framebuffer_id,depth_id;
 		Ref<Shader> shader;
-		float cubemap_width=2048, cubemap_height=2048;
+		float cubemap_width;
+		float cubemap_height;
 		int slot = 10;
 		float yaw = 0, pitch = 0;
 	};

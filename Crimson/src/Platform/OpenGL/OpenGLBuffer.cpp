@@ -10,7 +10,7 @@ namespace Crimson {
 	// 	//							Vertex Buffer
 	// 	// --------------------------------------------------------------------
 
-	OpenGLVertexBuffer::OpenGLVertexBuffer(float* data, size_t size)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(const float* data, size_t size)
 	{
 		glGenBuffers(1, &m_RendererID);//set up vertex buffer
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
@@ -21,7 +21,12 @@ namespace Crimson {
 	{
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-		static const GLbitfield flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT;
+
+		constexpr GLbitfield flags = 
+			  GL_MAP_WRITE_BIT 
+			| GL_MAP_PERSISTENT_BIT
+			| GL_MAP_COHERENT_BIT;
+
 		switch (Storage_Type)
 		{
 		case BufferStorageType::MUTABLE:
@@ -69,9 +74,9 @@ namespace Crimson {
 	// 	// --------------------------------------------------------------------
 
 
-	OpenGLIndexBuffer::OpenGLIndexBuffer(unsigned int* data, size_t size)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* data, size_t size)
 	{
-		m_Elements = size / sizeof(unsigned int);
+		m_Elements = size / sizeof(uint32_t);
 		glGenBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
@@ -92,83 +97,4 @@ namespace Crimson {
 	{
 		return m_Elements;
 	}
-
-// 	// --------------------------------------------------------------------
-// 	//							Vertex Buffer
-// 	// --------------------------------------------------------------------
-// 
-// 	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
-// 	{
-// 		CN_PROFILE_FUNCTION();
-// 
-// 		glCreateBuffers(1, &m_RendererID);
-// 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-// 		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
-// 	}
-// 
-// 
-// 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
-// 	{
-// 		CN_PROFILE_FUNCTION();
-// 
-// 		glCreateBuffers(1, &m_RendererID);
-// 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-// 		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
-// 	}
-// 
-// 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
-// 	{
-// 		CN_PROFILE_FUNCTION();
-// 
-// 		glDeleteBuffers(1, &m_RendererID);
-// 	}
-// 
-// 	void OpenGLVertexBuffer::SetData(const void* data, uint32_t size)
-// 	{
-// 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-// 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
-// 	}
-// 
-// 	void OpenGLVertexBuffer::Bind() const
-// 	{
-// 		CN_PROFILE_FUNCTION();
-// 
-// 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-// 	}	
-// 
-// 	void OpenGLVertexBuffer::Unbind() const
-// 	{
-// 		CN_PROFILE_FUNCTION();
-// 
-// 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-// 	}
-// 
-// 
-// 	// --------------------------------------------------------------------
-// 	//							Index Buffer
-// 	// --------------------------------------------------------------------
-// 
-// 	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count)
-// 		: m_Count(count)
-// 	{
-// 		glCreateBuffers(1, &m_RendererID);
-// 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
-// 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
-// 	}
-// 
-// 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
-// 	{
-// 		glDeleteBuffers(1, &m_RendererID);
-// 	}
-// 
-// 	void OpenGLIndexBuffer::Bind() const
-// 	{
-// 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
-// 	}
-// 
-// 	void OpenGLIndexBuffer::Unbind() const
-// 	{
-// 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-// 	}
-
 }

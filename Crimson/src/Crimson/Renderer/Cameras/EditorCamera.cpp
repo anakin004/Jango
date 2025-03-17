@@ -114,7 +114,6 @@ namespace Crimson {
 	void EditorCamera::RecalculateProjectionView()
 	{
 		//moving the camera is nothing but transforming the world
-		//glm::vec3 up = glm::normalize(glm::cross(RightVector, glm::normalize(m_ViewDirection)));
 		m_View = glm::lookAt(m_Position - glm::normalize(m_ViewDirection), m_Position, Up);//this gives the view matrix
 		m_ProjectionView = m_Projection * m_View;
 	}

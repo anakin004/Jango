@@ -27,7 +27,7 @@ namespace Crimson {
 	bool Scene::TOGGLE_SHADOWS = true;
 	bool Scene::TOGGLE_SSAO = true;
 	float Scene::foliage_dist = 3000.f;
-	float Scene::num_foliage = 10000.f;
+	float Scene::num_foliage = 100.f;
 	EditorCamera editor_cam;
 
 	LoadMesh* Scene::Sphere = nullptr, * Scene::Sphere_simple = nullptr, * Scene::Cube = nullptr, * Scene::Plane = nullptr
@@ -59,24 +59,15 @@ namespace Crimson {
 		CN_CORE_INFO("----SkyRender Initialized!----");
 
 		CN_CORE_TRACE("Initializng 2D and 3D Renderer");
-		Renderer3D::Init(1920,1080); //set up the renderer
+		Renderer3D::Init(1920,1080);
 		Renderer2D::Init();
 		CN_CORE_INFO("----Renderers Initialized!----");
-
-		auto viewportSize = { 1920,1080 };// RenderCommand::GetViewportSize();
 
 		CN_CORE_TRACE("< Loading Materials...>");
 		Material::DeserializeMaterial();// load all materials from the disc
 		CN_CORE_TRACE("---- Materials Loaded! ----");
 
-		GroundPlant = new LoadMesh("Assets/Meshes/forest_grass1.fbx");
-		GroundPlant->CreateLOD("Assets/Meshes/flower_LOD1.fbx");
 
-
-		Sphere = new LoadMesh("Assets/Meshes/Sphere.fbx");
-		Sphere_simple = new LoadMesh("Assets/Meshes/sphere_simple.fbx");
-		Plane = new LoadMesh("Assets/Meshes/Plane.fbx");
-		Cube = new LoadMesh("Assets/Meshes/Cube.fbx");
 		//Trees
 		Tree1 = new LoadMesh("Assets/Meshes/forest_PineTree1.fbx");
 		Tree1->CreateLOD("Assets/Meshes/forest_PineTree1_LOD1.fbx");
@@ -100,34 +91,50 @@ namespace Crimson {
 		Rock2 = new LoadMesh("Assets/Meshes/forest_rock2.fbx");
 		Rock2->CreateLOD("Assets/Meshes/forest_rock2_LOD1.fbx");
 		
+		//Folliage
 		Grass = new LoadMesh("Assets/Meshes/forest_grass.fbx");
 		Grass2 = new LoadMesh("Assets/Meshes/forest_grass2.fbx");
 		Grass2->CreateLOD("Assets/Meshes/forest_grass2_LOD1.fbx");
 		Grass3 = new LoadMesh("Assets/Meshes/forest_grass3.fbx");
 		Flower1 = new LoadMesh("Assets/Meshes/forest_flower1.fbx");
 		Flower2 = new LoadMesh("Assets/Meshes/forest_flower2.fbx");
-		
 		Grass->CreateLOD("Assets/Meshes/grass3_LOD1.fbx");
 		plant = new LoadMesh("Assets/Meshes/dragon.fbx");
-		House = new LoadMesh("Assets/Meshes/house.fbx");
 		Fern = new LoadMesh("Assets/Meshes/forest_Fern.fbx");
 		Fern->CreateLOD("Assets/Meshes/Fern_LOD1.fbx");
+		GroundPlant = new LoadMesh("Assets/Meshes/forest_grass1.fbx");
+		GroundPlant->CreateLOD("Assets/Meshes/flower_LOD1.fbx");
 
+		// Objects
+		Sphere = new LoadMesh("Assets/Meshes/Sphere.fbx");
+		Sphere_simple = new LoadMesh("Assets/Meshes/sphere_simple.fbx");
+		Plane = new LoadMesh("Assets/Meshes/Plane.fbx");
+		Cube = new LoadMesh("Assets/Meshes/Cube.fbx");
 		Freddy = new LoadMesh("Assets/Meshes/steve.fbx");
-		
+		House = new LoadMesh("Assets/Meshes/house.fbx");
 		Windmill = new LoadMesh("Assets/Meshes/Windmill.fbx");
 		Sponza = new LoadMesh("Assets/Meshes/Sponza.fbx");
+
+		// Cube map setup
 		Renderer3D::SetUpCubeMapReflections(*this);
+
+		// camera settings
 		editor_cam.SetVerticalFOV(45.f);
 		editor_cam.SetPerspectiveFar(10000.f);
 		editor_cam.SetViewportSize(1920.f/1080.f);
+
+		// terrain creation
 		m_Terrain = std::make_shared<Terrain>(2048.f,2048.f);
+
 		//initilize Bloom
 		m_Bloom = Bloom::Create();
 		m_Bloom->GetFinalImage(0, { 1920.f,1080.f });
 		m_Bloom->InitBloom();
 
+		// creating fog
 		m_Fog = Fog::Create(fogDensity,30.f, 5000.f, 100.f,10.f, { 1920.f,1080.f });
+
+		// making ray tracer
 		m_rayTracer = std::make_shared<RayTracer>();
 	}
 
@@ -163,8 +170,8 @@ namespace Crimson {
 		m_Fog->SetFogParameters(fogDensity, fogTop, fogEnd, fogColor);
 
 		//update camera , Mesh Forward vectors....
-		auto view = m_registry.view<CameraComponent>();
-		for (auto entt : view) {
+		auto& view = m_registry.view<CameraComponent>();
+		for (auto& entt : view) {
 			auto& camera = m_registry.get<CameraComponent>(entt);
 			if (camera.camera.bIsMainCamera) {
 				MainCamera = (&camera.camera);
@@ -191,10 +198,10 @@ namespace Crimson {
 		if (!MainCamera)
 		{
 			MainCamera = &editor_cam;
-			//editcam = editor_cam;
 		}
 
 		MainCamera->OnUpdate(ts);
+
 		//run scripts
 		m_registry.view<ScriptComponent>().each([=](entt::entity entity, ScriptComponent& nsc) 
 		{
@@ -215,7 +222,9 @@ namespace Crimson {
 			Renderer3D::SetPointLightPosition(m_PointLights);
 
 		/*
-		////debug physics
+		* Physx debugging
+		* 
+		* 
 		Renderer2D::BeginScene(*MainCamera);
 		for (int i = 0; i < Physics3D::DebugPoints.size(); i++)
 		{
@@ -244,7 +253,8 @@ namespace Crimson {
 	{
 		MainCamera->OnEvent(e);
 
-		for (auto s : m_scriptsMap)
+		// auto deduces to std::pair of type {size_t, ScriptableEntity*}
+		for (auto& s : m_scriptsMap)
 		{
 			s.second->OnEvent(e);
 		}

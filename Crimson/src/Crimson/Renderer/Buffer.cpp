@@ -11,7 +11,7 @@
 namespace Crimson {
 
 
-	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, size_t size)
+	Ref<VertexBuffer> VertexBuffer::Create(const float* vertices, size_t size)
 	{
 		// I will not be seperating
 		switch (RendererAPI::GetAPI())
@@ -37,7 +37,7 @@ namespace Crimson {
 		return nullptr;
 	}
 
-	Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indices, size_t size)
+	Ref<IndexBuffer> IndexBuffer::Create(const uint32_t* indices, size_t size)
 	{
 		switch (RendererAPI::GetAPI())
 		{

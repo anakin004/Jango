@@ -60,7 +60,7 @@ namespace Crimson {
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, SSAOtexture_id, 0);
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			CN_CORE_ERROR("SSAO Framebuffer Creation Failed"); 
+			CN_CORE_ERROR("SSAO Framebuffer Failed"); 
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
@@ -87,7 +87,7 @@ namespace Crimson {
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, SSAOblur_id, 0);
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			CN_CORE_ERROR("SSAO Blur Frame Buffer Creation Failed");
+			CN_CORE_ERROR("SSAO Blur Frame Buffer Failed");
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		

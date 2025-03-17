@@ -6,16 +6,19 @@
 #include "Crimson/Scene/Scene.h"
 
 namespace Crimson {
+
 	OpenGLCubeMapReflection::OpenGLCubeMapReflection()
-		:cubemap_width(2048),cubemap_height(2048)
+		:cubemap_width(2048.0f),cubemap_height(2048.0f)
 	{
 		RenderCommand::Init();
 		shader = Shader::Create("Assets/Shaders/ReflectionCubeMap.glsl");//texture shader
 		CreateCubeMapTexture();
 	}
+
 	OpenGLCubeMapReflection::~OpenGLCubeMapReflection()
 	{
 	}
+
 	void OpenGLCubeMapReflection::CreateCubeMapTexture()
 	{
 
@@ -54,7 +57,6 @@ namespace Crimson {
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-		//glBindTextureUnit(IRR_ENV_SLOT, tex_id);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, tex_id);
 
 	}
@@ -65,20 +67,20 @@ namespace Crimson {
 		CN_PROFILE_FUNCTION()
 		
 		shader->Bind();
-		auto size = RenderCommand::GetViewportSize();
+		glm::vec2 size = RenderCommand::GetViewportSize();
 		
 		EditorCamera cam = EditorCamera();
 		cam.SetPerspctive(90.00f, -10.0f, 1000.0f);
-		cam.SetUPVector({ 0,-1,0 });
-		cam.SetCameraPosition({ 0,-5,0 });
+		cam.SetUPVector({ 0.f, 1.f ,0.f });
+		cam.SetCameraPosition({ 0.f ,-5.f ,0.f });
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer_id);
 		glViewport(0, 0, cubemap_width , cubemap_height);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		std::vector<glm::vec3> dir = { {1,0,0},{-1,0,0},{0,-1,0},{0,1,0},{0,0,1},{0,0,-1} };
-		glm::vec3 pos = {2,3,6};
-		shader->SetFloat3("LightPosition", pos); //world position
+
+
+		shader->SetFloat3("LightPosition", { 2.f, 3.f, 6.f }); //world position
 		shader->SetInt("env", GL_TEXTURE_CUBE_MAP);
 		for (int i = 0; i < 6; i++)
 		{
@@ -118,7 +120,6 @@ namespace Crimson {
 						}
 
 					}
-					//Renderer3D::DrawMesh(*Plane, { 0,0,0 }, { 100,100,100 }, { 0,0,0 });
 				});
 			
 		}
@@ -151,28 +152,28 @@ namespace Crimson {
 		{
 			//pitch , yaw
 		case 0:
-			pitch = 0;
-			yaw = -90;
+			pitch = 0.f;
+			yaw = -90.f;
 			break;
 		case 1:
-			pitch = 0;
-			yaw = 90;
+			pitch = 0.f;
+			yaw = 90.f;
 			break;
 		case 2:
 			pitch = 90.0f;
-			yaw = 180;
+			yaw = 180.f;
 			break;
 		case 3:
-			pitch = -90;
-			yaw = 180;
+			pitch = -90.f;
+			yaw = 180.f;
 			break;
 		case 4:
-			pitch = 0;
-			yaw = 0;
+			pitch = 0.f;
+			yaw = 0.f;
 			break;
 		case 5:
-			pitch = 0;
-			yaw = 180;
+			pitch = 0.f;
+			yaw = 180.f;
 			break;
 		}
 	}

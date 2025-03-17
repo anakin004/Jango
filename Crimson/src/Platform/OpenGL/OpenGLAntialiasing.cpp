@@ -65,17 +65,22 @@ namespace Crimson
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);
 
-		glm::vec4 data[] = {
-			glm::vec4(-1,-1,0,1),glm::vec4(0,0,0,0),
-			glm::vec4(1,-1,0,1), glm::vec4(1,0,0,0),
-			glm::vec4(1,1,0,1),  glm::vec4(1,1,0,0),
-			glm::vec4(-1,1,0,1), glm::vec4(0,1,0,0)
+		const std::array<glm::vec4, 8> data = 
+		{
+			glm::vec4(-1,-1,0,1),
+			glm::vec4(0,0,0,0),
+			glm::vec4(1,-1,0,1), 
+			glm::vec4(1,0,0,0),
+			glm::vec4(1,1,0,1),  
+			glm::vec4(1,1,0,0),
+			glm::vec4(-1,1,0,1), 
+			glm::vec4(0,1,0,0)
 		};
 
 		Ref<VertexArray> vao = VertexArray::Create();
 		Ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
-		unsigned int i_data[] = { 0,1,2,0,2,3 };
-		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
+		const std::array<uint32_t, 6> i_data = { 0,1,2,0,2,3 };
+		Ref<IndexBuffer> ib = IndexBuffer::Create(&i_data[0], sizeof(i_data));
 
 		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
 

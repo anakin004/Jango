@@ -6,6 +6,12 @@ namespace Crimson
 	struct TextureMip {
 		glm::vec2 dimension;
 		unsigned int texture;
+
+		TextureMip::TextureMip()
+			: dimension(0.0f, 0.0f), texture(0)
+		{
+		}
+
 	};
 
 	class Bloom {

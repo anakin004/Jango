@@ -9,7 +9,7 @@ namespace Crimson
 		static void CreateBuffers(Scene* scene);
 		static void DeferredPass();
 		static Ref<Shader> GetDeferredShader() { return m_DefferedPassShader; }
-		static uint32_t GetBuffers(int bufferInd);
+		static uint32_t GetBuffers(uint32_t bufferInd);
 
 	private:
 		static uint32_t m_framebufferID, m_RenderBufferID, m_AlbedoBufferID,

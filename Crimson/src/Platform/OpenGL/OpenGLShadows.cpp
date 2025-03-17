@@ -29,9 +29,9 @@ namespace Crimson {
 
 		CN_PROFILE_FUNCTION()
 
-		GLint OFb;
+		GLint OFb = 0;
 		glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &OFb);
-		auto size = RenderCommand::GetViewportSize();
+		glm::vec2 size = RenderCommand::GetViewportSize();
 
 		PrepareShadowProjectionMatrix(cam, LightPosition);
 
@@ -48,8 +48,8 @@ namespace Crimson {
 				glViewport(0, 0, m_width, m_height);
 
 				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_id[i], 0);
-				if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-					CN_CORE_INFO("Shadow Map FrameBuffer Complete");
+				if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+					CN_CORE_INFO("Shadow Map FrameBuffer Failed");
 			
 
 				glClear(GL_DEPTH_BUFFER_BIT);
@@ -85,9 +85,9 @@ namespace Crimson {
 
 		CN_PROFILE_FUNCTION()
 
-		GLint OFb;
+		GLint OFb = 0;
 		glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &OFb);
-		auto size = RenderCommand::GetViewportSize();
+		glm::vec2 size = RenderCommand::GetViewportSize();
 
 		PrepareShadowProjectionMatrix(cam, LightPosition);//CREATE THE orthographic projection matrix
 
@@ -100,7 +100,7 @@ namespace Crimson {
 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth_id[i], 0);
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-				CN_CORE_INFO("Shadow Map FrameBuffer Creation Failed");
+				CN_CORE_INFO("Shadow Map FrameBuffer Failed");
 
 			glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -169,7 +169,7 @@ namespace Crimson {
 
 		CN_PROFILE_FUNCTION()
 
-		auto size = RenderCommand::GetViewportSize();
+		glm::vec2 size = RenderCommand::GetViewportSize();
 		PrepareShadowProjectionMatrix(cam, LightPosition);//CREATE THE orthographic projection matrix
 
 		shadow_shaderInstanced->Bind();
@@ -217,7 +217,7 @@ namespace Crimson {
 		for (int i = 0; i < MAX_CASCADES; i++)
 			LightProj_Matrices[i] = m_ShadowProjection[i] * LightView[i];
 		rendering_shader->SetMat4("MatrixShadow", LightProj_Matrices[0], MAX_CASCADES);
-		unsigned int arr[] = { SHDOW_MAP1,SHDOW_MAP2,SHDOW_MAP3,SHDOW_MAP4 };//these slots are explicitly used for all 4 seperate shadow maps
+		uint32_t arr[] = { SHDOW_MAP1,SHDOW_MAP2,SHDOW_MAP3,SHDOW_MAP4 };//these slots are explicitly used for all 4 seperate shadow maps
 		rendering_shader->SetIntArray("ShadowMap", MAX_CASCADES, arr);
 		rendering_shader->SetFloatArray("Ranges", Ranges[0], MAX_CASCADES);
 		rendering_shader->SetMat4("u_View", cam.GetViewMatrix());//we need the camera's view matrix so that we can compute the distance comparison in view space
@@ -289,14 +289,14 @@ namespace Crimson {
 			glm::vec3 centre = glm::vec3(0.0f);
 			glm::vec4 frustum_corners[8] = //cube coordinate in cannonical view volume
 			{
-			glm::vec4(-1.0f,  1.0f, -1.0f, 1.0f),
-			glm::vec4(1.0f,  1.0f, -1.0f, 1.0f),
-			glm::vec4(1.0f, -1.0f, -1.0f, 1.0f),
-			glm::vec4(-1.0f, -1.0f, -1.0f, 1.0f),
-			glm::vec4(-1.0f,  1.0f,  1.0f, 1.0f),
-			glm::vec4(1.0f,  1.0f,  1.0f, 1.0f),
-			glm::vec4(1.0f, -1.0f,  1.0f, 1.0f),
-			glm::vec4(-1.0f, -1.0f,  1.0f, 1.0f),
+				glm::vec4(-1.0f,  1.0f, -1.0f, 1.0f),
+				glm::vec4(1.0f,  1.0f, -1.0f, 1.0f),
+				glm::vec4(1.0f, -1.0f, -1.0f, 1.0f),
+				glm::vec4(-1.0f, -1.0f, -1.0f, 1.0f),
+				glm::vec4(-1.0f,  1.0f,  1.0f, 1.0f),
+				glm::vec4(1.0f,  1.0f,  1.0f, 1.0f),
+				glm::vec4(1.0f, -1.0f,  1.0f, 1.0f),
+				glm::vec4(-1.0f, -1.0f,  1.0f, 1.0f),
 			};
 
 			auto camera_view = camera.GetViewMatrix();
@@ -331,7 +331,8 @@ namespace Crimson {
 				min_z = std::min(min_z, corner.z);
 				max_z = std::max(max_z, corner.z);
 			}
-			constexpr float zMult = 100.0f;
+			
+			static constexpr float zMult = 100.0f;
 			if (min_z < 0)
 			{
 				min_z *= zMult;
