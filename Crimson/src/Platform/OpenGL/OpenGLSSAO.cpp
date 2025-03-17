@@ -32,7 +32,7 @@ namespace Crimson {
 
 		CN_PROFILE_FUNCTION()
 
-		auto viewport_size = RenderCommand::GetViewportSize();
+		glm::vec2 viewport_size = RenderCommand::GetViewportSize();
 
 		//Generate Random samples
 		std::uniform_real_distribution<float> RandomFloats(0.0f, 1.0f);//generate random floats between [0.0,1.0)
@@ -40,14 +40,14 @@ namespace Crimson {
 		for (int i = 0; i < RANDOM_SAMPLES_SIZE; i++)
 		{
 			samples[i] = glm::vec3(
-				RandomFloats(generator) * 2.0 - 1.0,
-				RandomFloats(generator) * 2.0 - 1.0,
+				RandomFloats(generator) * 2.0f - 1.0f,
+				RandomFloats(generator) * 2.0f - 1.0f,
 				RandomFloats(generator)
 			);
 			samples[i] = glm::normalize(samples[i]);
 			samples[i] *= RandomFloats(generator);
 
-			float scale = (float)i / RANDOM_SAMPLES_SIZE;
+			float scale = static_cast<float>(i) / RANDOM_SAMPLES_SIZE;
 			float val = 0.1 * scale * scale + (1.0 - 0.1) * scale * scale;
 			samples[i] *= val;
 		}
@@ -73,10 +73,10 @@ namespace Crimson {
 		SSAOShader->SetInt("noisetex", NOISE_SLOT);
 		SSAOShader->SetInt("depthBuffer", SCENE_DEPTH_SLOT);
 		SSAOShader->SetInt("gNormal", G_NORMAL_TEXTURE_SLOT);
-		//SSAOShader->SetInt("alpha_texture", G_ROUGHNESS_METALLIC_TEXTURE_SLOT);//for foliage if the isFoliage flag is set to 1 then render the foliage with the help of opacity texture
 		SSAOShader->SetFloat3("u_CamPos", cam.GetCameraPosition());
-		RenderQuad();
 
+		RenderQuad();
+		 
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glViewport(0, 0, viewport_size.x, viewport_size.y);
@@ -95,6 +95,7 @@ namespace Crimson {
 		SSAOblurShader->SetInt("SSAOtex", SSAO_SLOT);
 		SSAOblurShader->SetMat4("u_ProjectionView", cam.GetProjectionView());
 		SSAOblurShader->SetInt("alpha_texture", ROUGHNESS_SLOT);//for foliage if the isFoliage flag is set to 1 then render the foliage with the help of opacity texture
+		
 		RenderQuad();
 
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
@@ -108,8 +109,9 @@ namespace Crimson {
 
 		m_width = width;
 		m_height = height;
-		auto size = RenderCommand::GetViewportSize();
+		glm::vec2 size = RenderCommand::GetViewportSize();
 
+		// ssao frame buffer and texture creation
 		glCreateFramebuffers(1, &SSAOframebuffer_id);
 		glCreateTextures(GL_TEXTURE_2D, 1, &SSAOtexture_id);
 		glBindTexture(GL_TEXTURE_2D, SSAOtexture_id);
@@ -122,7 +124,8 @@ namespace Crimson {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-		//////////////////
+
+		// ssao blur creation
 		glCreateTextures(GL_TEXTURE_2D, 1, &SSAOblur_id);
 		glBindTexture(GL_TEXTURE_2D, SSAOblur_id);
 
@@ -133,6 +136,8 @@ namespace Crimson {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
+
+		// ssao depth buffer gen
 		glGenRenderbuffers(1, &SSAOdepth_id);
 		glBindRenderbuffer(GL_RENDERBUFFER, SSAOdepth_id);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, m_width, m_height);
@@ -141,12 +146,7 @@ namespace Crimson {
 		glDrawBuffers(1, buffers);
 
 
-
-
-
-
-
-
+		// noise texture creation
 		std::uniform_real_distribution<float> RandomFloats(0.0f, 1.0f);
 		std::default_random_engine generator; 
 
@@ -181,20 +181,21 @@ namespace Crimson {
 		glDepthMask(GL_FALSE);
 
 		//auto inv = glm::inverse(proj * glm::mat4(glm::mat3(view)));//get inverse of projection view to convert cannonical view to world space
-		glm::vec4 data[] = {
-		glm::vec4(-1,-1,0,1),glm::vec4(0,0,0,0),
-		glm::vec4(1,-1,0,1),glm::vec4(1,0,0,0),
-		glm::vec4(1,1,0,1),glm::vec4(1,1,0,0),
-		glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
+		static glm::vec4 data[] = 
+		{
+			glm::vec4(-1,-1,0,1),glm::vec4(0,0,0,0),
+			glm::vec4(1,-1,0,1),glm::vec4(1,0,0,0),
+			glm::vec4(1,1,0,1),glm::vec4(1,1,0,0),
+			glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
 		};
 
 		Ref<VertexArray> vao = VertexArray::Create();
 		Ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
-		unsigned int i_data[] = { 0,1,2,0,2,3 };
+
+		static uint32_t i_data[] = { 0,1,2,0,2,3 };
 		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
 
 		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
-
 		bl->push("position", ShaderDataType::Float4);
 		bl->push("coordinate", ShaderDataType::Float4);
 

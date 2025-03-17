@@ -11,12 +11,13 @@ namespace Crimson {
 		unsigned int GetHeight() override { return m_Height; }
 		virtual void Bind(int slot)const override;
 		virtual void UnBind()const override;
-		unsigned int GetID() override { return m_Renderid; }
+		unsigned int GetID() override { return m_RendererID; }
+	
 	private:
 		int m_Width;
 		int m_Height;
 		int channels;
-		unsigned int m_Renderid;
+		unsigned int m_RendererID;
 		unsigned short* resized_image_16 = nullptr;
 		unsigned short* pixel_data_16 = nullptr;
 		unsigned char* resized_image_8 = nullptr;

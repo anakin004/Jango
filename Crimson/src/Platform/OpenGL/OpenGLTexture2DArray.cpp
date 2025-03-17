@@ -11,7 +11,6 @@ namespace Crimson {
 	OpenGLTexture2DArray::OpenGLTexture2DArray(const std::vector<std::string>& paths, int numMaterials, int channels, bool bUse16BitTexture)
 		:m_Height(0), m_Width(0)
 	{
-		//no hash ID generation happening
 
 		if (paths.size() == 0)//if there are no texture paths then load a white texture and create a texture array with it
 		{
@@ -20,24 +19,26 @@ namespace Crimson {
 		else
 		{
 			if (bUse16BitTexture)
+			{
 				Create16BitTextures(paths, numMaterials);
+			}
 			else
+			{
 				Create8BitsTextures(paths, numMaterials);
+			}
 		}
 
-		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 	}
 
 	OpenGLTexture2DArray::~OpenGLTexture2DArray()
 	{
-		glDeleteTextures(1, &m_Renderid);
+		glDeleteTextures(1, &m_RendererID);
 	}
 
 	void OpenGLTexture2DArray::Bind(int slot) const
 	{
-		//glActiveTexture(GL_TEXTURE0 + slot);
-		//glBindTexture(GL_TEXTURE_2D_ARRAY, m_Renderid);
-		glBindTextureUnit(slot, m_Renderid);
+		// activates then binds tex and tex slot
+		glBindTextureUnit(slot, m_RendererID);
 	}
 
 	void OpenGLTexture2DArray::UnBind() const
@@ -112,14 +113,14 @@ namespace Crimson {
 				CN_CORE_ERROR("Invalid Texture format");
 			}
 
-			glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &m_Renderid);
-			glTextureStorage3D(m_Renderid, 1, InternalFormat, m_Width, m_Height, paths.size());
+			glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &m_RendererID);
+			glTextureStorage3D(m_RendererID, 1, InternalFormat, m_Width, m_Height, paths.size());
 
-			glGenerateTextureMipmap(m_Renderid);
-			glTextureParameteri(m_Renderid, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			glTextureParameteri(m_Renderid, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_R, GL_REPEAT);
+			glGenerateTextureMipmap(m_RendererID);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_R, GL_REPEAT);
 
 			for (int i = 0; i < paths.size(); i++)
 			{
@@ -127,19 +128,16 @@ namespace Crimson {
 				pixel_data_16 = stbi_load_16(paths[i].c_str(), &m_Width, &m_Height, &channels, 0);
 
 				if (pixel_data_16 == nullptr)
-					CN_CORE_ERROR("Image not found!!");
-
-				//Resize_Image(2048, 2048);//resize the image if width,height > 100 (for the #trading application this is necessary)
-									//otherwise not needed (i might resize the image if img dimension < 1080p or it will crash)
+					CN_CORE_ERROR("Image not found");
 
 				if (resized_image_16)
 				{
-					glTextureSubImage3D(m_Renderid, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_SHORT, resized_image_16);
+					glTextureSubImage3D(m_RendererID, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_SHORT, resized_image_16);
 					stbi_image_free(resized_image_16);
 				}
-				else if (pixel_data_16) {
-
-					glTextureSubImage3D(m_Renderid, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_SHORT, pixel_data_16);
+				else if (pixel_data_16) 
+				{
+					glTextureSubImage3D(m_RendererID, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_SHORT, pixel_data_16);
 					stbi_image_free(pixel_data_16);
 				}
 			}
@@ -155,7 +153,7 @@ namespace Crimson {
 		pixel_data_8 = stbi_load(paths[0].c_str(), &m_Width, &m_Height, &channels, 0);
 
 		if (pixel_data_8 == nullptr) {
-			CN_CORE_ERROR("2D array Image not found!!");
+			CN_CORE_ERROR("2D array Image not found, creating white texture array");
 			CreateWhiteTextureArray(numMaterials);
 		}
 		else 
@@ -185,14 +183,14 @@ namespace Crimson {
 				CN_CORE_ERROR("Invalid Texture format");
 			}
 
-			glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &m_Renderid);
-			glTextureStorage3D(m_Renderid, 1, InternalFormat, m_Width, m_Height, paths.size());
+			glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &m_RendererID);
+			glTextureStorage3D(m_RendererID, 1, InternalFormat, m_Width, m_Height, paths.size());
 
-			glGenerateTextureMipmap(m_Renderid);
-			glTextureParameteri(m_Renderid, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			glTextureParameteri(m_Renderid, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_R, GL_REPEAT);
+			glGenerateTextureMipmap(m_RendererID);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_R, GL_REPEAT);
 
 			for (int i = 0; i < paths.size(); i++)
 			{
@@ -200,17 +198,18 @@ namespace Crimson {
 				pixel_data_8 = stbi_load(paths[i].c_str(), &m_Width, &m_Height, &channels, 0);
 
 				if (pixel_data_8 == nullptr)
-					CN_CORE_ERROR("Image not found!!");
+					CN_CORE_ERROR("Image not found");
 
 
 				if (resized_image_8)
 				{
-					glTextureSubImage3D(m_Renderid, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_BYTE, resized_image_8);
+					glTextureSubImage3D(m_RendererID, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_BYTE, resized_image_8);
 					stbi_image_free(resized_image_16);
 				}
-				else if (pixel_data_8) {
+				else if (pixel_data_8) 
+				{
 
-					glTextureSubImage3D(m_Renderid, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_BYTE, pixel_data_8);
+					glTextureSubImage3D(m_RendererID, 0, 0, 0, i, m_Width, m_Height, 1, Format, GL_UNSIGNED_BYTE, pixel_data_8);
 					stbi_image_free(pixel_data_8);
 				}
 			}
@@ -220,22 +219,26 @@ namespace Crimson {
 	void OpenGLTexture2DArray::CreateWhiteTextureArray(int numMaterials)
 	{
 		pixel_data_8 = stbi_load("Assets/Textures/White.jpg", &m_Width, &m_Height, &channels, 0);
+		
 		if (pixel_data_8 == nullptr)
-			CN_CORE_ERROR("Image not found!!");
+			CN_CORE_ERROR("Image not found");
+
 		Resize_Image(16, 16);
-		glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &m_Renderid);
-		glTextureStorage3D(m_Renderid, 1, GL_RGB8, 16, 16, numMaterials);
 
-		glTextureParameteri(m_Renderid, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(m_Renderid, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTextureParameteri(m_Renderid, GL_TEXTURE_WRAP_R, GL_REPEAT);
+		glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &m_RendererID);
+		glTextureStorage3D(m_RendererID, 1, GL_RGB8, 16, 16, numMaterials);
 
-		for (int i = 0; i < numMaterials; i++) {
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_R, GL_REPEAT);
+
+		for (int i = 0; i < numMaterials; i++) 
+		{
 			if (resized_image_8)
-				glTextureSubImage3D(m_Renderid, 0, 0, 0, i, 16, 16, 1, GL_RGB, GL_UNSIGNED_BYTE, resized_image_8);
+				glTextureSubImage3D(m_RendererID, 0, 0, 0, i, 16, 16, 1, GL_RGB, GL_UNSIGNED_BYTE, resized_image_8);
 			else
-				glTextureSubImage3D(m_Renderid, 0, 0, 0, i, m_Width, m_Height, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel_data_8);
+				glTextureSubImage3D(m_RendererID, 0, 0, 0, i, m_Width, m_Height, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel_data_8);
 		}
 	}
 

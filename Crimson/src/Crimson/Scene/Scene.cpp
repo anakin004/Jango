@@ -28,7 +28,6 @@ namespace Crimson {
 	bool Scene::TOGGLE_SSAO = true;
 	float Scene::foliage_dist = 3000.f;
 	float Scene::num_foliage = 10000.f;
-	//std::vector<PointLight*> Scene::m_PointLights;
 	EditorCamera editor_cam;
 
 	LoadMesh* Scene::Sphere = nullptr, * Scene::Sphere_simple = nullptr, * Scene::Cube = nullptr, * Scene::Plane = nullptr

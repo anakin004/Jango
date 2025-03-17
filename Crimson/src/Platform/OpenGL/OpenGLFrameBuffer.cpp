@@ -29,7 +29,7 @@ namespace Crimson {
         invalidate(Specification);
         glViewport(0, 0, width, height);
     }
-    void OpenGLFrameBuffer::ClearFrameBuffer()//this does nothing
+    void OpenGLFrameBuffer::ClearFrameBuffer()\
     {
         float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
         glClearBufferfv(GL_COLOR, 0, clearColor);
@@ -83,10 +83,8 @@ namespace Crimson {
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_DepthTexture, 0);
 
 
-        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-            CN_CORE_TRACE("Scene FrameBuffer Status Complete")
-        else
-            CN_CORE_ERROR("Scene FrameBuffer Failed!")
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+            CN_CORE_ERROR("Scene FrameBuffer Failed")
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }

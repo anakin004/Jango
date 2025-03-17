@@ -8,7 +8,7 @@
 namespace Crimson {
 
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path, bool bUse16BitTexture)
-		:m_Height(0), m_Width(0)
+		:m_Height(0), m_Width(0), channels(0)
 	{
 		uuid = UUID(path);
 		if (bUse16BitTexture)
@@ -18,7 +18,7 @@ namespace Crimson {
 	}
 																							//data is defaulted to a color, can be used as a texture or base color also
 	OpenGLTexture2D::OpenGLTexture2D(const unsigned int Width = 1, const unsigned int Height = 1, unsigned int data = 0xffffffff)
-		:m_Height(Height), m_Width(Width)
+		:m_Height(Height), m_Width(Width), channels(0)
 	{
 
 		GLenum InternalFormat = GL_RGBA8, Format = GL_RGBA;
@@ -40,8 +40,9 @@ namespace Crimson {
 		pixel_data_16 = stbi_load_16(path.c_str(), &m_Width, &m_Height, &channels, 0);
 
 		GLenum InternalFormat = 0, Format = 0;
-		if (pixel_data_16 == nullptr) {
-			CN_CORE_ERROR("2D Image not found!!");
+		if (pixel_data_16 == nullptr) 
+		{
+			CN_CORE_ERROR("2D Image Not Found: ", path);
 			CreateWhiteTexture();
 		}
 		else 
@@ -86,7 +87,8 @@ namespace Crimson {
 				glTextureSubImage2D(m_Renderid, 0, 0, 0, m_Width, m_Height, Format, GL_UNSIGNED_SHORT, resized_image_16);
 				stbi_image_free(resized_image_16);
 			}
-			else if (pixel_data_16) {
+			else if (pixel_data_16) 
+			{
 				glTextureSubImage2D(m_Renderid, 0, 0, 0, m_Width, m_Height, Format, GL_UNSIGNED_SHORT, pixel_data_16);
 				stbi_image_free(pixel_data_16);
 			}
@@ -102,8 +104,9 @@ namespace Crimson {
 		stbi_set_flip_vertically_on_load(1);
 		pixel_data_8 = stbi_load(path.c_str(), &m_Width, &m_Height, &channels, 0);
 
-		if (pixel_data_8 == nullptr) {
-			CN_CORE_ERROR("{}{}", path, "2D Image not found!!");
+		if (pixel_data_8 == nullptr) 
+		{
+			CN_CORE_ERROR("2D Image not found: ", path);
 			CreateWhiteTexture();
 		}
 		else 
@@ -145,7 +148,8 @@ namespace Crimson {
 				glTextureSubImage2D(m_Renderid, 0, 0, 0, m_Width, m_Height, Format, GL_UNSIGNED_BYTE, resized_image_8);
 				stbi_image_free(resized_image_8);
 			}
-			else if (pixel_data_8) {
+			else if (pixel_data_8)
+			{
 				glTextureSubImage2D(m_Renderid, 0, 0, 0, m_Width, m_Height, Format, GL_UNSIGNED_BYTE, pixel_data_8);
 				stbi_image_free(pixel_data_8);
 			}
@@ -168,9 +172,12 @@ namespace Crimson {
 	void OpenGLTexture2D::CreateWhiteTexture()
 	{
 		pixel_data_8 = stbi_load("Assets/Textures/White.jpg", &m_Width, &m_Height, &channels, 0);
+		
 		if (pixel_data_8 == nullptr)
-			CN_CORE_ERROR("Image not found!!");
+			CN_CORE_ERROR("Image not found");
+
 		Resize_Image(16, 16);
+
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_Renderid);
 		glTextureStorage2D(m_Renderid, 1, GL_RGB8, 16, 16);
 
@@ -185,7 +192,8 @@ namespace Crimson {
 			glTextureSubImage2D(m_Renderid, 0, 0, 0, 16, 16, GL_RGB, GL_UNSIGNED_BYTE, resized_image_8);
 			stbi_image_free(resized_image_8);
 		}
-		else if (pixel_data_8) {
+		else if (pixel_data_8) 
+		{
 			glTextureSubImage2D(m_Renderid, 0, 0, 0, m_Width, m_Height, GL_RGB, GL_UNSIGNED_BYTE, pixel_data_8);
 			stbi_image_free(pixel_data_8);
 		}
@@ -210,7 +218,6 @@ namespace Crimson {
 			{
 				resized_image_8 = new unsigned char[width * height * channels];
 				stbir_resize_uint8(pixel_data_8, m_Width, m_Height, 0, resized_image_8, width, height, 0, channels);
-
 				m_Height = height;
 				m_Width = width;
 			}
