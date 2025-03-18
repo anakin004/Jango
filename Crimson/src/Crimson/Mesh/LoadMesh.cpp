@@ -44,7 +44,7 @@ namespace Crimson
 			SceneSerializer deserialize;
 			deserialize.DeSerializeMesh(m_Path, *this);
 			m_uuid = UUID(Path); //only create uuid for engine compatible mesh
-			//ResourceManager::allMeshes[uuid] = m_Mesh;
+			//ResourceManager::allMeshes[m_uuid] = this; // to fix, i dont think allmeshes needs to map to ref, just the mesh ptr
 			CreateStaticBuffers();
 		}
 	}
@@ -55,7 +55,7 @@ namespace Crimson
 	{
 		Assimp::Importer importer;
 
-		static const uint32_t s_MeshImportFlags =
+		static constexpr uint32_t s_MeshImportFlags =
 			aiProcess_CalcTangentSpace
 			| aiProcess_Triangulate
 			| aiProcess_JoinIdenticalVertices
@@ -71,7 +71,7 @@ namespace Crimson
 		const aiScene* scene = importer.ReadFile(Path, s_MeshImportFlags);
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
-			CN_CORE_ERROR("Assimp Error: ", importer.GetErrorString());
+			CN_CORE_ERROR("Assimp Error: {0}, from path: {1} ", importer.GetErrorString(), Path);
 		}
 
 		else
@@ -124,18 +124,18 @@ namespace Crimson
 		to[3][3] = from.d4;
 
 		return to;
-		};
+	};
 
 	void LoadMesh::ProcessNode(aiNode* Node, const aiScene* scene)
 	{
 		m_GlobalTransform *= AssimpToGlmMatrix(Node->mTransformation);
-		for (int i = 0; i < Node->mNumMeshes; i++)
+		for (unsigned int i = 0; i < Node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[Node->mMeshes[i]];
 			m_Mesh.push_back(mesh);
 		}
 
-		for (int i = 0; i < Node->mNumChildren; i++)
+		for (unsigned int i = 0; i < Node->mNumChildren; i++)
 		{
 			ProcessNode(Node->mChildren[i], scene);
 		}
@@ -144,7 +144,7 @@ namespace Crimson
 	}
 	void LoadMesh::ProcessMesh()
 	{
-		for (int i = 0; i < m_Mesh.size(); i++)
+		for (size_t i = 0; i < m_Mesh.size(); i++)
 		{
 			const uint32_t MaterialIdx = m_Mesh[i]->mMaterialIndex;
 			m_SubMeshes[MaterialIdx].NumVertices = m_Mesh[i]->mNumVertices;
@@ -158,7 +158,7 @@ namespace Crimson
 
 
 
-			for (int k = 0; k < m_Mesh[i]->mNumVertices; k++)
+			for (unsigned int k = 0; k < m_Mesh[i]->mNumVertices; k++)
 			{
 
 				const aiVector3D& aivertice = m_Mesh[i]->mVertices[k];
@@ -218,13 +218,13 @@ namespace Crimson
 	}
 	void LoadMesh::ProcessMaterials(const aiScene* scene)//get all the materials in a scene
 	{
-		const int NumMaterials = scene->mNumMaterials;
+		const unsigned int NumMaterials = scene->mNumMaterials;
 		m_SubMeshes.resize(NumMaterials);
 
 		const std::string relative_path = "Assets/Textures/MeshTextures/";
 		auto GetTexturePath = [&](const aiMaterial* material, aiTextureType type) -> const std::string
 		{
-			auto x = material->GetTextureCount(type);
+			unsigned int x = material->GetTextureCount(type);
 			if (x > 0)
 			{
 				aiString str;
@@ -235,7 +235,7 @@ namespace Crimson
 			}
 			return std::string("");
 		};
-		for (int i = 0; i < NumMaterials; i++)
+		for (unsigned int i = 0; i < NumMaterials; i++)
 		{
 			const aiMaterial* scene_material = scene->mMaterials[i];
 			const std::string& materialName = m_ObjectName + std::string("_") + std::string(scene_material->GetName().C_Str());
@@ -261,7 +261,7 @@ namespace Crimson
 	void LoadMesh::CreateStaticBuffers()
 	{
 
-		for (int k = 0; k < m_SubMeshes.size(); k++)
+		for (size_t k = 0; k < m_SubMeshes.size(); k++)
 		{
 			std::vector<VertexAttributes> buffer;
 			buffer.resize(m_SubMeshes[k].Vertices.size());
@@ -269,7 +269,7 @@ namespace Crimson
 			m_SubMeshes[k].VertexArray = VertexArray::Create();
 
 			// Populate vertex buffer
-			for (int i = 0; i < m_SubMeshes[k].Vertices.size(); i++)
+			for (size_t i = 0; i < m_SubMeshes[k].Vertices.size(); i++)
 			{
 				const glm::vec3& transformed_normals = m_SubMeshes[k].Normal[i];
 				const glm::vec3& transformed_tangents = m_SubMeshes[k].Tangent[i];

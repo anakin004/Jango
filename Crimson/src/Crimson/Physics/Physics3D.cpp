@@ -21,15 +21,13 @@ namespace Crimson {
 
 	Physics3D::Physics3D()
 	{
-		//cube = new LoadMesh("Assets/Meshes/Cube.fbx");
-		//Initilize();
+		SetUpPhysics();
 	}
 	Physics3D::~Physics3D()
 	{
-
-		//CleanUpPhysics();
+		CleanUpPhysics();
 	}
-	void Physics3D::Initilize()
+	void Physics3D::Initialize()
 	{
 		SetUpPhysics();
 	}
@@ -49,7 +47,8 @@ namespace Crimson {
 			physx::PxTransform kinematic_transform = physx::PxTransform(*(physx::PxMat44*)glm::value_ptr(trans));
 			physics_component.m_DynamicActor->setKinematicTarget(kinematic_transform);
 		}
-		else {
+		else
+		{
 			if (SimulatePhysics)//if simulate physics is on then update transform
 			{
 				physx::PxTransform pxtransform = physics_component.m_DynamicActor->getGlobalPose();

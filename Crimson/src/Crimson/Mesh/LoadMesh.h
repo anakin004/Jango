@@ -6,10 +6,10 @@
 #include <vector>
 
 //forward declarations
-
 struct aiMesh;
 struct aiNode;
 struct aiScene;
+
 
 namespace Crimson {
 
@@ -19,7 +19,9 @@ namespace Crimson {
 	struct Bounds
 	{
 		glm::vec3 aabbMax, aabbMin;
-		Bounds() {
+
+		Bounds() 
+		{
 			constexpr float minNum = std::numeric_limits<float>::lowest();
 			constexpr float maxNum = std::numeric_limits<float>::max();
 			aabbMin = glm::vec3(maxNum, maxNum, maxNum);
@@ -45,14 +47,16 @@ namespace Crimson {
 			aabbMax = glm::max(aabbMax, bounds.aabbMax);
 			aabbMin = glm::min(aabbMin, bounds.aabbMin);
 		}
-		float area() //get surface area of the box
+
+		float area() const //get surface area of the box
 		{
 			glm::vec3 e = aabbMax - aabbMin; // box extent
 			return e.x * e.y + e.y * e.z + e.z * e.x;
 		}
-		glm::vec3 GetMidPoint()
+
+		glm::vec3 GetMidPoint() const 
 		{
-			return (aabbMax + aabbMin) / glm::vec3(2.0);
+			return (aabbMax + aabbMin) / glm::vec3(2.0f);
 		}
 	};
 
@@ -96,9 +100,7 @@ namespace Crimson {
 		LoadMesh* GetLOD(int lodIndex);
 
 		// most of the time i want to make it clear that we shouldnt be modifying the
-		// submeshes once we create them unless we explicitly want to delete them
-		// i like the approach of being explicit in certain areas of my code where
-		// i know i dont want to be modifying something and like to make this const as much as i can
+		// submeshes once we create them unless we explicitly want to delete them during runtime
 		inline const std::vector<SubMesh>& GetSubMeshes() const
 		{
 			return m_SubMeshes;
@@ -123,7 +125,7 @@ namespace Crimson {
 
 		std::string m_Path;
 		std::vector<SubMesh> m_SubMeshes;
-		Bounds m_TotalBounds; //total mesh bounds
+		Bounds m_TotalBounds;
 		glm::mat4 m_GlobalTransform;
 		uint64_t m_uuid;
 
@@ -133,8 +135,9 @@ namespace Crimson {
 		Ref<VertexBuffer> m_VertexBuffer;
 		Ref<IndexBuffer> m_IndexBuffer;
 		std::vector<aiMesh*> m_Mesh;
-		struct VertexAttributes {
-			//glm::vec3 Position;
+
+		struct VertexAttributes 
+		{
 			glm::vec4 Position;
 			glm::vec2 TextureCoordinate;
 			glm::vec3 Normal;

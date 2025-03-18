@@ -30,13 +30,17 @@ namespace Crimson {
 	float Scene::num_foliage = 100.f;
 	EditorCamera editor_cam;
 
-	LoadMesh* Scene::Sphere = nullptr, * Scene::Sphere_simple = nullptr, * Scene::Cube = nullptr, * Scene::Plane = nullptr
-		, * Scene::plant, * Scene::House, * Scene::Windmill, * Scene::Fern,
-		* Scene::Sponza, * Scene::Grass, * Scene::Grass2, * Scene::Grass3, * Scene::GroundPlant,
-		* Scene::Tree1, * Scene::Tree2, * Scene::Tree3, * Scene::Tree4, * Scene::Tree5,
-		* Scene::Bush1, * Scene::Bush2, * Scene::Rock1, * Scene::Rock2, * Scene::Flower1, * Scene::Flower2,
-		* Scene::Freddy;
 
+	// i need to make these shared ptrs and make these specific to the scene not at the global scope, they
+	// are static as of now, but should allow the ability to reset scenes, change scenes, etc
+
+	LoadMesh* Scene::Sphere = nullptr,  * Scene::Sphere_simple = nullptr, * Scene::Cube     = nullptr, * Scene::Plane  = nullptr
+		,	* Scene::plant  = nullptr , * Scene::House         = nullptr, * Scene::Windmill = nullptr, * Scene::Fern   = nullptr,
+			* Scene::Sponza = nullptr,  * Scene::Grass         = nullptr, * Scene::Grass2   = nullptr, * Scene::Grass3 = nullptr, * Scene::GroundPlant = nullptr,
+			* Scene::Tree1  = nullptr,  * Scene::Tree2         = nullptr, * Scene::Tree3    = nullptr, * Scene::Tree4  = nullptr, * Scene::Tree5       = nullptr,
+			* Scene::Bush1  = nullptr,  * Scene::Bush2         = nullptr, * Scene::Rock1    = nullptr, * Scene::Rock2  = nullptr, * Scene::Flower1     = nullptr, * Scene::Flower2 = nullptr,
+			* Scene::Freddy = nullptr;
+		
 	 bool capture = false;
 	 glm::vec3 camloc = { 0.f,0.f,0.f }, camrot = {0.f,0.f,0.f};
 
@@ -49,7 +53,7 @@ namespace Crimson {
 		CN_CORE_INFO("----Scene Frame Buffer Created!----");
 
 		CN_CORE_TRACE("Initializng Physx");
-		Physics3D::Initilize();
+		Physics3D::Initialize();
 		CN_CORE_INFO("----Phsyx Initialized!----");
 
 		SkyRenderer::SetSkyType(SkyType::PROCEDURAL_SKY);
@@ -141,6 +145,35 @@ namespace Crimson {
 
 	Scene::~Scene()
 	{
+		delete Tree1;
+		delete Tree2;
+		delete Tree3;
+		delete Tree4;
+		delete Tree5;
+
+		delete Bush1;
+		delete Bush2;
+
+		delete Rock1;
+		delete Rock2;
+
+		delete Grass;
+		delete Grass2;
+		delete Grass3;
+		delete Flower1;
+		delete Flower2;
+		delete plant;
+		delete Fern;
+		delete GroundPlant;
+
+		delete Sphere;
+		delete Sphere_simple;
+		delete Plane;
+		delete Cube;
+		delete Freddy;
+		delete House;
+		delete Windmill;
+		delete Sponza;
 	}
 
 
@@ -241,9 +274,9 @@ namespace Crimson {
 	}
 	void Scene::Resize(float Width, float Height)
 	{
-		auto view = m_registry.view<CameraComponent>();
-		for (auto entity : view) {
-			auto camera = m_registry.get<CameraComponent>(entity).camera;
+		auto& view = m_registry.view<CameraComponent>();
+		for (auto& entity : view) {
+			auto& camera = m_registry.get<CameraComponent>(entity).camera;
 			if(camera.IsResiziable && camera.IsResiziable)
 				m_registry.get<CameraComponent>(entity).camera.SetViewportSize(Width/Height);
 		}
