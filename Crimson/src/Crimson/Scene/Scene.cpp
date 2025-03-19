@@ -181,7 +181,7 @@ namespace Crimson {
 	Entity* Scene::CreateEntity(const std::string& name)
 	{
 		m_entity = m_registry.create();
-		auto entity = new Entity( this,m_entity);
+		Entity* entity = new Entity( this,m_entity);
 		entity->AddComponent<TransformComponent>();
 		entity->AddComponent<StaticMeshComponent>(Cube);
 		if (name == "")//if no name is give to an entity just call it entity (i.e define tag with entity)
@@ -204,23 +204,28 @@ namespace Crimson {
 
 		//update camera , Mesh Forward vectors....
 		auto& view = m_registry.view<CameraComponent>();
+
 		for (auto& entt : view) {
+
 			auto& camera = m_registry.get<CameraComponent>(entt);
+
 			if (camera.camera.bIsMainCamera) {
+
 				MainCamera = (&camera.camera);
 				auto& tc = m_registry.get<TransformComponent>(entt);
-				auto& transform = tc.GetTransform();
+				glm::mat4&& transform = tc.GetTransform();
+
 				if (camera.bFollowPlayer)
 				{
-					auto& rotation = tc.Rotation;
-					auto& cam_pos = MainCamera->GetCameraPosition();
+					glm::vec3& rotation = tc.Rotation;
+					glm::vec3&& cam_pos = MainCamera->GetCameraPosition();
 
 					tc.RightVector = glm::cross(tc.ForwardVector, tc.UpVector);
 					tc.ForwardVector = glm::mat3(glm::rotate(glm::radians(rotation.y), tc.UpVector)) * glm::mat3(glm::rotate(glm::radians(rotation.x), tc.RightVector)) * glm::vec3(0, 0, 1);
 					MainCamera->SetViewDirection(tc.ForwardVector);// Make the view direction of the camera same as the mesh forward direction
 
 					float dist = glm::length(camera.camera_dist);//scale the -forward vector with the radius of the circle
-					auto& object_pos = glm::vec3(transform[3][0], transform[3][1], transform[3][2]);
+					glm::vec3 object_pos = glm::vec3(transform[3][0], transform[3][1], transform[3][2]);
 					tc.ForwardVector = -glm::normalize(tc.ForwardVector);
 					MainCamera->SetCameraPosition(tc.ForwardVector * dist + object_pos-camera.camera_dist);//align the camera with the mesh view vector
 				}
