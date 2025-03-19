@@ -72,8 +72,12 @@ namespace Crimson {
 		CN_CORE_TRACE("---- Materials Loaded! ----");
 
 
+		// intializing default camera to editor camera
+		MainCamera = &editor_cam;
+
 		//Trees
-		Tree1 = new LoadMesh("Assets/Meshes/forest_PineTree1.fbx");
+		Tree1 = new LoadMesh("Assets/Meshes/tree7.fbx");
+		//Tree1 = new LoadMesh("Assets/Meshes/forest_PineTree1.fbx");
 		Tree1->CreateLOD("Assets/Meshes/forest_PineTree1_LOD1.fbx");
 		Tree2 = new LoadMesh("Assets/Meshes/forest_PineTree2.fbx");
 		Tree2->CreateLOD("Assets/Meshes/forest_PineTree2_LOD1.fbx");
@@ -178,12 +182,15 @@ namespace Crimson {
 
 
 
-	Entity* Scene::CreateEntity(const std::string& name)
+	Entity* Scene::CreateEntity(const std::string& name, const glm::vec3& position)
 	{
 		m_entity = m_registry.create();
-		Entity* entity = new Entity( this,m_entity);
-		entity->AddComponent<TransformComponent>();
+		Entity* entity = new Entity(this, m_entity);
+
+		// spawn entity at player
+		entity->AddComponent<TransformComponent>(MainCamera->GetCameraPosition());
 		entity->AddComponent<StaticMeshComponent>(Cube);
+
 		if (name == "")//if no name is give to an entity just call it entity (i.e define tag with entity)
 			entity->AddComponent<TagComponent>("Entity");//automatically add a tag component when an entity is created
 		else
@@ -207,18 +214,18 @@ namespace Crimson {
 
 		for (auto& entt : view) {
 
-			auto& camera = m_registry.get<CameraComponent>(entt);
+			CameraComponent& camera = m_registry.get<CameraComponent>(entt);
 
 			if (camera.camera.bIsMainCamera) {
 
 				MainCamera = (&camera.camera);
-				auto& tc = m_registry.get<TransformComponent>(entt);
-				glm::mat4&& transform = tc.GetTransform();
+				TransformComponent& tc = m_registry.get<TransformComponent>(entt);
+				glm::mat4 transform = tc.GetTransform();
 
 				if (camera.bFollowPlayer)
 				{
 					glm::vec3& rotation = tc.Rotation;
-					glm::vec3&& cam_pos = MainCamera->GetCameraPosition();
+					glm::vec3 cam_pos = MainCamera->GetCameraPosition();
 
 					tc.RightVector = glm::cross(tc.ForwardVector, tc.UpVector);
 					tc.ForwardVector = glm::mat3(glm::rotate(glm::radians(rotation.y), tc.UpVector)) * glm::mat3(glm::rotate(glm::radians(rotation.x), tc.RightVector)) * glm::vec3(0, 0, 1);
@@ -281,7 +288,7 @@ namespace Crimson {
 	{
 		auto& view = m_registry.view<CameraComponent>();
 		for (auto& entity : view) {
-			auto& camera = m_registry.get<CameraComponent>(entity).camera;
+			SceneCamera& camera = m_registry.get<CameraComponent>(entity).camera;
 			if(camera.IsResiziable && camera.IsResiziable)
 				m_registry.get<CameraComponent>(entity).camera.SetViewportSize(Width/Height);
 		}

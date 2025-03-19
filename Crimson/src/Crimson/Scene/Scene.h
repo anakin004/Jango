@@ -29,7 +29,7 @@ namespace Crimson {
 			Scene();
 			~Scene();
 			entt::registry& getRegistry() { return m_registry; }
-			Entity* CreateEntity(const std::string& name = "Entity");
+			Entity* CreateEntity(const std::string& name = "Entity", const glm::vec3& position = { 0.0f, 0.0f, 0.0f });
 			void DestroyEntity(const Entity& delete_entity);
 			//const entt::registry& GetRegistry() { return m_registry; }
 			void OnUpdate(TimeStep ts);

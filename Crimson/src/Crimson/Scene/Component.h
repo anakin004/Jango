@@ -44,6 +44,7 @@ namespace Crimson {
 		TransformComponent(const glm::vec3& translation,const glm::vec3& rotatation=glm::vec3(0),const glm::vec3& scale=glm::vec3(1))
 			:Translation(translation),Rotation(rotatation),Scale(scale)
 		{}
+		
 		glm::mat4 GetTransform() {
 			glm::mat4 rotation = glm::rotate(glm::mat4(1.0), glm::radians(Rotation.x), { 1,0,0 }) *
 				glm::rotate(glm::mat4(1.0), glm::radians(Rotation.y), { 0,1,0 }) *
