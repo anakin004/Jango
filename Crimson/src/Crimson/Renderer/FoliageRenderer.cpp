@@ -455,11 +455,18 @@ namespace Crimson {
 	void Foliage::RemoveFoliagePositions(Bounds& bounds)
 	{
 		//delete positions which are not in between the bounds
-		auto newEnd = std::remove_if(std::execution::par, foliage_positions.begin(), foliage_positions.begin() + total_instanceCount,
-			[bounds](glm::vec2& cur_val) {return (cur_val.x >= bounds.aabbMin.x && cur_val.x <= bounds.aabbMax.x&&
-				cur_val.y >= bounds.aabbMin.z && cur_val.y <= bounds.aabbMax.z); });
 
-		total_instanceCount = newEnd - foliage_positions.begin(); // update the total instance count (true if PDD_values is constant size)
+		size_t valid_end = std::min(static_cast<size_t>(total_instanceCount), foliage_positions.size());
+
+		// new end
+		auto new_end = std::remove_if(std::execution::par, foliage_positions.begin(), foliage_positions.begin() + valid_end,
+			[bounds](glm::vec2& cur_val)
+			{
+				return (cur_val.x >= bounds.aabbMin.x && cur_val.x <= bounds.aabbMax.x&&
+						cur_val.y >= bounds.aabbMin.z && cur_val.y <= bounds.aabbMax.z); 
+			});
+
+		total_instanceCount = new_end - foliage_positions.begin(); // update the total instance count (true if PDD_values is constant size)
 		
 		//when a terrain chunk is deleted re-calculate the density map by drawing all foliage-objects again
 		for (Foliage*& foliage : foliageObjects) 

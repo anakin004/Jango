@@ -252,13 +252,13 @@ namespace Crimson
 		if (frame_counter % 10 == 0) //check to delete after every 10th frame
 			m_Qtree->DeleteNodesIfNotInScope(m_RootNode, cam);
 
-		if (bShowTerrain) {
-
-			for (auto topLayerFoliage : topFoliageLayer)
+		if (bShowTerrain) 
+		{
+			for (auto& topLayerFoliage : topFoliageLayer)
 				topLayerFoliage->RenderFoliage(cam);
-			for (auto middleLayerFoliage : middleFoliageLayer)
+			for (auto& middleLayerFoliage : middleFoliageLayer)
 				middleLayerFoliage->RenderFoliage(cam);
-			for (auto bottomLayerFoliage : bottomFoliageLayer)
+			for (auto& bottomLayerFoliage : bottomFoliageLayer)
 				bottomLayerFoliage->RenderFoliage(cam);
 		}
 
@@ -446,17 +446,17 @@ namespace Crimson
 			glm::vec3 chunk_size = bounds_max - bounds_min;
 			if (chunk_size.x == 256)
 			{
-				for (auto topPlant : terrain->topFoliageLayer)
+				for (auto& topPlant : terrain->topFoliageLayer)
 					topPlant->RemoveFoliagePositions(child->chunk_bounds);
 			}
 			if (chunk_size.x == 128)
 			{
-				for (auto middlePlant : terrain->middleFoliageLayer)
+				for (auto& middlePlant : terrain->middleFoliageLayer)
 					middlePlant->RemoveFoliagePositions(child->chunk_bounds);
 			}
 			if (chunk_size.x == 64)
 			{
-				for (auto bottoPlant : terrain->bottomFoliageLayer)
+				for (auto& bottoPlant : terrain->bottomFoliageLayer)
 					bottoPlant->RemoveFoliagePositions(child->chunk_bounds);
 			}
 			DeleteNode(child);

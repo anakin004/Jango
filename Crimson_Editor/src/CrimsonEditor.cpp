@@ -56,7 +56,7 @@ LoadMesh* mesh;
 	asset_map['t'] = tree;
 	asset_map['m'] = mud;
 
-	auto viewportSize = RenderCommand::GetViewportSize();
+	glm::vec2 viewportSize = RenderCommand::GetViewportSize();
 	m_FrameBuffer = FrameBuffer::Create({ (unsigned int)viewportSize.x,(unsigned int)viewportSize .y});//create a frame buffer object
 	m_FrameBuffer2 = FrameBuffer::Create({ (unsigned int)viewportSize.x,(unsigned int)viewportSize.y });
 	m_FrameBuffer3 = FrameBuffer::Create({ (unsigned int)viewportSize.x,(unsigned int)viewportSize.y });

@@ -266,7 +266,7 @@ void main()
 	}
 
 	//blend the textures based on masks using linear-Interpolate
-	for(int i=0;i<numMaskMaps;i++)
+	for(int i=0; i < numMaskMaps; i++)
 	{
 		float weight = texture(u_Masks, vec3(fs_data.TexCoord ,i)).r;
 		total_albedo = mix(total_albedo, albedo_maps[i], weight);

@@ -205,7 +205,9 @@ namespace Crimson {
 	}
 	void Scene::OnUpdate(TimeStep ts)
 	{
-		MainCamera = nullptr;//if there is no main camera Then dont render
+
+		// to see if main camera changed to entity, else we default back to editor camera
+		bool cam_changed = false;
 
 		m_Fog->SetFogParameters(fogDensity, fogTop, fogEnd, fogColor);
 
@@ -218,14 +220,16 @@ namespace Crimson {
 
 			if (camera.camera.bIsMainCamera) {
 
-				MainCamera = (&camera.camera);
+				MainCamera = &camera.camera;
+				cam_changed = true;
+
 				TransformComponent& tc = m_registry.get<TransformComponent>(entt);
-				glm::mat4 transform = tc.GetTransform();
+				glm::mat4&& transform = tc.GetTransform();
 
 				if (camera.bFollowPlayer)
 				{
 					glm::vec3& rotation = tc.Rotation;
-					glm::vec3 cam_pos = MainCamera->GetCameraPosition();
+					glm::vec3&& cam_pos = MainCamera->GetCameraPosition();
 
 					tc.RightVector = glm::cross(tc.ForwardVector, tc.UpVector);
 					tc.ForwardVector = glm::mat3(glm::rotate(glm::radians(rotation.y), tc.UpVector)) * glm::mat3(glm::rotate(glm::radians(rotation.x), tc.RightVector)) * glm::vec3(0, 0, 1);
@@ -240,7 +244,7 @@ namespace Crimson {
 			}
 		}
 
-		if (!MainCamera)
+		if (!cam_changed)
 		{
 			MainCamera = &editor_cam;
 		}
