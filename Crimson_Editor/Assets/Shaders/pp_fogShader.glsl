@@ -92,12 +92,11 @@ float GetFogDensity()
 void main()
 {
 	float fogDensity = pow(GetFogDensity(),u_density);
-	vec3 skyColor = u_fogColor;
 
 	vec3 pixelWorldPos = GetWorldPosition(tcord).xyz;
 	float sunAmount = max( dot(normalize(pixelWorldPos-u_CamPos), normalize(-u_sunDir)), 0.0 );
 	float scattering_gradient = exp(pow(sunAmount,64)*0.15); //controlls the amount of scattering in the sun direction
-    vec3  fogColor  = mix( skyColor,
+    vec3  fogColor  = mix( u_fogColor,
                            vec3(1.0,0.8,0.5), // yellow
                            pow(sunAmount,4.0) );
 	vec3 sceneColor = fogColor * (1.0 - exp(-fogDensity)) + texture(u_sceneColor,tcord).rgb * exp(-fogDensity);

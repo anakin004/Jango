@@ -101,6 +101,11 @@ namespace Crimson
 		m_maxTerrainHeight = std::numeric_limits<float>::min();
 		m_terrainShader = Shader::Create("Assets/Shaders/TerrainShader.glsl");
 		m_terrainWireframeShader = Shader::Create("Assets/Shaders/TerrainWireframeShader.glsl");
+
+
+		m_Water = Water::Create({ width, 5.0f, width }, { 0.0f, 0.0f, 1.0f, 1.0f }, { 2048.f, 2048.f });
+
+
 		InitilizeTerrain();
 	}
 	Terrain::~Terrain()
@@ -296,8 +301,8 @@ namespace Crimson
 		if (bShowTerrain)
 			RenderCommand::DrawArrays(*m_terrainVertexArray, terrainData.size(), GL_PATCHES, 0);
 
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
+
+		m_Water->RenderWater(cam, { 2048,2048 });
 
 
 		if (bShowWireframeTerrain)
@@ -314,6 +319,10 @@ namespace Crimson
 
 			RenderCommand::DrawArrays(*m_terrainVertexArray, terrainData.size(), GL_PATCHES, 0);
 		}
+
+
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
 	}
 
 	QuadTree::QuadTree(Terrain* _terrain) : terrain(_terrain)

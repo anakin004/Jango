@@ -180,6 +180,7 @@ namespace Crimson {
 
 			else
 			{
+				CN_CORE_ASSERT( (index >= 0 && index < 6) , "Invalid Shader");
 				Shader[index].append(ShaderCode + "\n");
 			}
 		}

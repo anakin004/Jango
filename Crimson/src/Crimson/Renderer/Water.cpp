@@ -6,7 +6,7 @@
 namespace Crimson {
 
 
-	Ref<Water> Water::Create(const glm::vec3& dims, const glm::vec3& water_color, const glm::vec2& screen_size)
+	Ref<Water> Water::Create(const glm::vec3& dims, const glm::vec4& water_color, const glm::vec2& screen_size)
 	{
 		switch (RendererAPI::GetAPI())
 		{

@@ -69,8 +69,8 @@ namespace Crimson {
 		BufferLayout() = default;
 		void push(std::string name, ShaderDataType type);
 
-		inline std::vector<BufferElements*> GetElements() { return m_Elements; }
-		inline uint32_t GetStride() { return Stride; }
+		inline std::vector<BufferElements*>& GetElements() { return m_Elements; }
+		inline uint32_t GetStride() const { return Stride; }
 
 	private:
 		uint32_t GetSize(ShaderDataType t);

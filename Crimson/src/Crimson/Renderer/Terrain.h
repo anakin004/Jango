@@ -1,4 +1,5 @@
 #include "Crimson.h"
+#include "Water.h"
 
 namespace Crimson
 {
@@ -15,7 +16,8 @@ namespace Crimson
 
 
 
-	class Terrain {
+	class Terrain 
+	{
 
 		friend class QuadTree;
 
@@ -49,14 +51,16 @@ namespace Crimson
 		Ref<Texture2DArray> TerrainTex_Albedo, TerrainTex_Roughness, TerratinTex_Normal;
 		Ref<Texture2DArray> TerrainTex_Masks;
 		int m_Height, m_Width, m_Channels,m_Channels1;
-		float m_maxTerrainHeight; // to put in a util file - should be const 
-		float max_height; // to put in a util file - should be const 
-		float min_height; // to put in a util file - should be const 
+		float m_maxTerrainHeight; 
+		float max_height;
+		float min_height; 
 		unsigned short* Height_data,*GrassSpawnArea;
 		std::chrono::steady_clock::time_point StartTime;
 		int CurrentChunkIndex = -1;
 		float ChunkSize = 128.0f;	// to put in a util file - should be const 
 		uint32_t foliageBufferIndex;
+
+
 
 	private:
 		uint32_t frame_counter = 0;
@@ -66,9 +70,14 @@ namespace Crimson
 		std::vector<Ref<Foliage>> topFoliageLayer;
 		std::vector<Ref<Foliage>> middleFoliageLayer;
 		std::vector<Ref<Foliage>> bottomFoliageLayer;
+		Ref<Water> m_Water;
+
 
 		int GetChunkIndex(int PosX,int PosZ);
 	};
+
+
+
 
 	struct QNode //quad tree node
 	{
@@ -83,6 +92,7 @@ namespace Crimson
 		~QNode();
 
 	};
+
 	struct NodePool
 	{
 		static std::stack<QNode*> node_memoryPool;
@@ -94,6 +104,12 @@ namespace Crimson
 		static float allocTime;
 
 	};
+
+
+
+
+
+
 	class QuadTree
 	{
 	public:
