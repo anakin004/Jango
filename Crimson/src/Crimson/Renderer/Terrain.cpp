@@ -295,21 +295,25 @@ namespace Crimson
 
 		if (bShowTerrain)
 			RenderCommand::DrawArrays(*m_terrainVertexArray, terrainData.size(), GL_PATCHES, 0);
+
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 
-		m_terrainWireframeShader->Bind();
-		m_terrainWireframeShader->SetFloat("HEIGHT_SCALE", HeightScale);
-		m_terrainWireframeShader->SetMat4("u_ProjectionView", cam.GetProjectionView());
-		m_terrainWireframeShader->SetMat4("u_Model", m_terrainModelMat);
-		m_terrainWireframeShader->SetMat4("u_View", cam.GetViewMatrix());
-		m_terrainWireframeShader->SetFloat3("camPos", cam.GetCameraPosition());
-		m_terrainWireframeShader->SetFloat("WaterLevel", WaterLevel);
-		m_terrainWireframeShader->SetFloat("HillLevel", HillLevel);
-		m_terrainWireframeShader->SetFloat("MountainLevel", MountainLevel);
 
 		if (bShowWireframeTerrain)
-			RenderCommand::DrawArrays(*m_terrainVertexArray, terrainData.size(), GL_PATCHES, 0);		
+		{
+			m_terrainWireframeShader->Bind();
+			m_terrainWireframeShader->SetFloat("HEIGHT_SCALE", HeightScale);
+			m_terrainWireframeShader->SetMat4("u_ProjectionView", cam.GetProjectionView());
+			m_terrainWireframeShader->SetMat4("u_Model", m_terrainModelMat);
+			m_terrainWireframeShader->SetMat4("u_View", cam.GetViewMatrix());
+			m_terrainWireframeShader->SetFloat3("camPos", cam.GetCameraPosition());
+			m_terrainWireframeShader->SetFloat("WaterLevel", WaterLevel);
+			m_terrainWireframeShader->SetFloat("HillLevel", HillLevel);
+			m_terrainWireframeShader->SetFloat("MountainLevel", MountainLevel);
+
+			RenderCommand::DrawArrays(*m_terrainVertexArray, terrainData.size(), GL_PATCHES, 0);
+		}
 	}
 
 	QuadTree::QuadTree(Terrain* _terrain) : terrain(_terrain)
@@ -373,7 +377,8 @@ namespace Crimson
 			//top right
 			QNode* tr = NodePool::GetNode(Bounds(glm::vec3(bounds_min.x, 0, mid_point.z), glm::vec3(mid_point.x, 0, bounds_max.z)));
 
-			if (bl && br && tl && tr) {
+			if (bl && br && tl && tr) 
+			{
 				SpawnFoliageAtTile(bl, cam);
 				SpawnFoliageAtTile(br, cam);
 				SpawnFoliageAtTile(tl, cam);
@@ -420,8 +425,8 @@ namespace Crimson
 		glm::vec3 extent = node->chunk_bounds.aabbMax - node->chunk_bounds.aabbMin;
 		glm::vec3 mid_point = node->chunk_bounds.GetMidPoint();
 		glm::vec3 cam_pos = cam.GetCameraPosition();
-		float boxSize = 512;
-		Bounds player_bounds(cam_pos - glm::vec3(boxSize, 0.0, boxSize), cam_pos + glm::vec3(boxSize, 0.0, boxSize));
+		float boxSize = 512.0f;
+		Bounds player_bounds(cam_pos - glm::vec3(boxSize, 0.0f, boxSize), cam_pos + glm::vec3(boxSize, 0.0f, boxSize));
 
 		if (!aabbIntersection(player_bounds,node->chunk_bounds))
 		{
@@ -429,7 +434,7 @@ namespace Crimson
 			node->childrens.clear();
 		}
 
-		for (QNode*& x : node->childrens)
+		for (QNode* x : node->childrens)
 		{
 			DeleteNodesIfNotInScope(x, cam);
 		}
@@ -468,9 +473,9 @@ namespace Crimson
 	bool QuadTree::aabbIntersection(Bounds& box1, Bounds& box2)
 	{
 		bool doesIntersect = box1.aabbMin.x <= box2.aabbMax.x &&
-							box1.aabbMax.x >= box2.aabbMin.x &&
-							box1.aabbMin.z <= box2.aabbMax.z &&
-							box1.aabbMax.z >= box2.aabbMin.z;
+							 box1.aabbMax.x >= box2.aabbMin.x &&
+							 box1.aabbMin.z <= box2.aabbMax.z &&
+							 box1.aabbMax.z >= box2.aabbMin.z;
 		return doesIntersect;
 	}
 	
@@ -479,7 +484,8 @@ namespace Crimson
 	}
 
 
-	float NodePool::allocTime = 0.6f;
+	// set higher than allocTime min time so we can start allocating immeditaly
+	float NodePool::allocTime = 1.1f;
 
 	QNode* NodePool::GetNode(Bounds bounds)
 	{
@@ -509,7 +515,8 @@ namespace Crimson
 		// even though its allocTime we also need to think about dealloc time, trying to constantly call delete with .clear
 		// since our vector is filled with dynamicly allocated memory it will be slow
 
-		if (allocTime > 0.5f) {
+		if (allocTime > 1.f) 
+		{
 			node->childrens.clear();
 			NodePool::node_memoryPool.push(node); //when we want to deallocate a node just recycle the memory to memory pool
 			node = nullptr; //delete the node
@@ -525,13 +532,13 @@ namespace Crimson
 		// allocTime is temp, just messing around with allocation timing to reduce screen tearing when we allocate nodes
 		if (allocTime > 0.5f) {
 
-			CN_CORE_TRACE("Allocating Memory, Initial Pool Size -> {}", NodePool::node_memoryPool.size());
+			//CN_CORE_TRACE("Allocating Memory, Initial Pool Size -> {}", NodePool::node_memoryPool.size());
 
 			for (int i = 0; i < 5; i++) //allocate 20 new nodes
 			{
 				NodePool::node_memoryPool.push(new QNode());
 			}
-			CN_CORE_TRACE("Allocated Memory!, Pool Size -> {}", NodePool::node_memoryPool.size());
+			//CN_CORE_TRACE("Allocated Memory!, Pool Size -> {}", NodePool::node_memoryPool.size());
 
 			allocTime = 0.0f;
 
@@ -547,7 +554,7 @@ namespace Crimson
 	{
 		while (!NodePool::node_memoryPool.empty())
 		{
-			delete(NodePool::node_memoryPool.top());
+			delete NodePool::node_memoryPool.top();
 			NodePool::node_memoryPool.pop();
 		}
 	}

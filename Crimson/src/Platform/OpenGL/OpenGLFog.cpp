@@ -4,11 +4,14 @@
 
 namespace Crimson
 {
+
 	OpenGLFog::OpenGLFog()
 		:m_density(0.005),m_gradient(1.3),m_fogStart(60.0f),m_fogEnd(5000)
 	{
 		m_fogShader = Shader::Create("Assets/Shaders/pp_fogShader.glsl");
 	}
+
+
 	OpenGLFog::OpenGLFog(float density, float fogStart, float fogEnd, float fogTop, float fogBottom, glm::vec2 ScreenSize)
 		: m_density(density), m_gradient(1), m_fogStart(fogStart), m_fogEnd(fogEnd), m_screenSize(ScreenSize)
 	{
@@ -30,11 +33,47 @@ namespace Crimson
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureID, 0);
 		GLenum buff[] = { GL_COLOR_ATTACHMENT0 };
 		glDrawBuffers(1, buff);
+
+
+
+		std::array<glm::vec4, 8> data =
+		{
+			{
+				glm::vec4(-1,-1,0,1),
+				glm::vec4(0,0,0,0),
+				glm::vec4(1,-1,0,1),
+				glm::vec4(1,0,0,0),
+				glm::vec4(1,1,0,1),
+				glm::vec4(1,1,0,0),
+				glm::vec4(-1,1,0,1),
+				glm::vec4(0,1,0,0)
+			}
+		};
+
+		m_VAO = VertexArray::Create();
+		m_VBO = VertexBuffer::Create(&data[0].x, sizeof(data));
+
+		std::array<uint32_t, 6> i_data = { 0,1,2,0,2,3 };
+		m_EBO = IndexBuffer::Create(&i_data[0], sizeof(i_data));
+
+		m_Bl = std::make_shared<BufferLayout>(); //buffer layout
+
+		m_Bl->push("position", ShaderDataType::Float4);
+		m_Bl->push("direction", ShaderDataType::Float4);
+
+		m_VAO->AddBuffer(m_Bl, m_VBO);
+		m_VAO->SetIndexBuffer(m_EBO);
+
+
+
+
 	}
+
 	OpenGLFog::~OpenGLFog()
 	{
 	}
-	void OpenGLFog::RenderFog(Camera& cam, glm::vec2 screenSize)
+
+	void OpenGLFog::RenderFog(Camera& cam, const glm::vec2& screenSize)
 	{
 
 		CN_PROFILE_FUNCTION()
@@ -77,28 +116,7 @@ namespace Crimson
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);
 
-		//auto inv = glm::inverse(proj * glm::mat4(glm::mat3(view)));//get inverse of projection view to convert cannonical view to world space
-		glm::vec4 data[] = {
-			glm::vec4(-1,-1,0,1),glm::vec4(0,0,0,0),
-			glm::vec4(1,-1,0,1),glm::vec4(1,0,0,0),
-			glm::vec4(1,1,0,1),glm::vec4(1,1,0,0),
-			glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
-		};
-
-		Ref<VertexArray> vao = VertexArray::Create();
-		Ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
-		unsigned int i_data[] = { 0,1,2,0,2,3 };
-		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
-
-		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
-
-		bl->push("position", ShaderDataType::Float4);
-		bl->push("direction", ShaderDataType::Float4);
-
-		vao->AddBuffer(bl, vb);
-		vao->SetIndexBuffer(ib);
-
-		RenderCommand::DrawIndex(*vao);
+		RenderCommand::DrawIndex(*m_VAO);
 
 		glDepthMask(GL_TRUE);
 		glEnable(GL_CULL_FACE);

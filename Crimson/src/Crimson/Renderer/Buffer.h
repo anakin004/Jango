@@ -70,12 +70,12 @@ namespace Crimson {
 		void push(std::string name, ShaderDataType type);
 
 		inline std::vector<BufferElements*> GetElements() { return m_Elements; }
-		inline unsigned int GetStride() { return Stride; }
+		inline uint32_t GetStride() { return Stride; }
 
 	private:
-		unsigned int GetSize(ShaderDataType t);
+		uint32_t GetSize(ShaderDataType t);
 		std::vector<BufferElements*> m_Elements;
-		unsigned int Stride = 0;
+		uint32_t Stride = 0;
 	};
 
 
@@ -83,11 +83,11 @@ namespace Crimson {
 	public:
 		virtual void Bind()const = 0;
 		virtual void UnBind()const = 0;
-		virtual void SetData(size_t size, const void* data) = 0;
-		virtual void* MapBuffer(size_t size) = 0;
+		virtual void SetData(uint32_t size, const void* data) = 0;
+		virtual void* MapBuffer(uint32_t size) = 0;
 
-		static Ref<VertexBuffer> Create(const float* data, size_t size);
-		static Ref<VertexBuffer> Create(size_t size, BufferStorageType Storage_Type = BufferStorageType::MUTABLE);
+		static Ref<VertexBuffer> Create(const float* data, uint32_t size);
+		static Ref<VertexBuffer> Create(uint32_t size, BufferStorageType Storage_Type = BufferStorageType::MUTABLE);
 	};
 
 
@@ -95,8 +95,8 @@ namespace Crimson {
 	public:
 		virtual void Bind()const = 0;
 		virtual void UnBind()const = 0;
-		virtual size_t GetCount() = 0;
-		static Ref<IndexBuffer> Create(const uint32_t* data, size_t count);
+		virtual uint32_t GetCount() = 0;
+		static Ref<IndexBuffer> Create(const uint32_t* data, uint32_t size);
 	};
 
 	class VertexArray {

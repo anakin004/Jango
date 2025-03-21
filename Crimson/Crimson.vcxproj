@@ -199,6 +199,7 @@
     <ClInclude Include="src\Crimson\Renderer\SubTexture.h" />
     <ClInclude Include="src\Crimson\Renderer\Terrain.h" />
     <ClInclude Include="src\Crimson\Renderer\Texture.h" />
+    <ClInclude Include="src\Crimson\Renderer\Water.h" />
     <ClInclude Include="src\Crimson\Scene\Component.h" />
     <ClInclude Include="src\Crimson\Scene\Entity.h" />
     <ClInclude Include="src\Crimson\Scene\PointLight.h" />
@@ -221,6 +222,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2D.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2DArray.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLWater.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\cnpch.h" />
@@ -783,6 +785,7 @@
     <ClCompile Include="src\Crimson\Renderer\SubTexture.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Terrain.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Crimson\Renderer\Water.cpp" />
     <ClCompile Include="src\Crimson\Scene\Entity.cpp" />
     <ClCompile Include="src\Crimson\Scene\PointLight.cpp" />
     <ClCompile Include="src\Crimson\Scene\Scene.cpp" />
@@ -803,6 +806,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2DArray.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLWater.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\cnpch.cpp">

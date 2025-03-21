@@ -8,6 +8,7 @@ namespace Crimson
 
 	struct TerrainData
 	{
+		TerrainData() = default;
 		glm::vec3 Position;
 		glm::vec2 TexCoord;
 	};

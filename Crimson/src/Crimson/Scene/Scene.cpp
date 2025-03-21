@@ -224,12 +224,12 @@ namespace Crimson {
 				cam_changed = true;
 
 				TransformComponent& tc = m_registry.get<TransformComponent>(entt);
-				glm::mat4&& transform = tc.GetTransform();
+				glm::mat4 transform = tc.GetTransform();
 
 				if (camera.bFollowPlayer)
 				{
 					glm::vec3& rotation = tc.Rotation;
-					glm::vec3&& cam_pos = MainCamera->GetCameraPosition();
+					glm::vec3 cam_pos = MainCamera->GetCameraPosition();
 
 					tc.RightVector = glm::cross(tc.ForwardVector, tc.UpVector);
 					tc.ForwardVector = glm::mat3(glm::rotate(glm::radians(rotation.y), tc.UpVector)) * glm::mat3(glm::rotate(glm::radians(rotation.x), tc.RightVector)) * glm::vec3(0, 0, 1);

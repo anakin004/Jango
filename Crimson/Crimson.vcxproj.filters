@@ -2019,6 +2019,8 @@
     <ClInclude Include="vendor\yaml-cpp\include\yaml-cpp\yaml.h">
       <Filter>vendor\yaml-cpp\include\yaml-cpp</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crimson\Renderer\Water.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLWater.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crimson\Controller\OrthographicCameraController.cpp">
@@ -2222,5 +2224,7 @@
     <ClCompile Include="vendor\stb\stb_impl.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crimson\Renderer\Water.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLWater.cpp" />
   </ItemGroup>
 </Project>
