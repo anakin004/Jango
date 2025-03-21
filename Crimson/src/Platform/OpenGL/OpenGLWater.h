@@ -37,6 +37,17 @@ namespace Crimson {
 
 	private:
 
+		Ref<Shader> m_waterShader;
+		uint32_t m_framebuffer1ID, m_framebuffer2ID, m_renderBufferID, m_texture1ID, m_texture2ID;
+
+		Ref<VertexArray> m_VAO;
+		Ref<VertexBuffer> m_VBO;
+		Ref<IndexBuffer> m_EBO;
+		Ref<BufferLayout> m_Bl;
+
+		glm::vec3 m_dims;
+		glm::vec4 m_waterColor = glm::vec4(0.f, 0.f, 1.f, 1.f);
+		glm::vec2 m_screenSize;
 
 
 

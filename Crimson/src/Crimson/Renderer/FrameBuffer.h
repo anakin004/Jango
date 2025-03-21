@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Crimson/Core/Core.h"
+
 namespace Crimson {
 		struct FrameBufferSpecification {
 			unsigned int Width, Height;
