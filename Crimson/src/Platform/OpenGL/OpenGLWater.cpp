@@ -12,41 +12,9 @@ namespace Crimson {
 
 		m_waterShader = Shader::Create("Assets/Shaders/WaterShader.glsl");
 
-
-		// making two fbos and textures for them
-		/*
-		glGenFramebuffers(1, &m_framebuffer1ID);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer1ID);
-
-		glGenTextures(1, &m_texture1ID);
-		glBindTexture(GL_TEXTURE_2D, m_texture1ID);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, m_screenSize.x, m_screenSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_texture1ID, 0);
-		GLenum buff[] = { GL_COLOR_ATTACHMENT0 };
-		glDrawBuffers(1, buff);
-
-
-		glGenFramebuffers(1, &m_framebuffer2ID);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer2ID);
-
-		glGenTextures(1, &m_texture2ID);
-		glBindTexture(GL_TEXTURE_2D, m_texture2ID);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, m_screenSize.x, m_screenSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_texture2ID, 0);
-		GLenum buff[] = { GL_COLOR_ATTACHMENT0 };
-		glDrawBuffers(1, buff);
-
-		*/
+		m_Fbo1 = FrameBuffer::Create({ 512, 512 });
+		m_Fbo2 = FrameBuffer::Create({ 512, 512 });
+		
 
 		// water quad
 

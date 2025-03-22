@@ -7,9 +7,9 @@ namespace Crimson {
 	public:
 		OpenGLFrameBuffer(const FrameBufferSpecification& spec);
 		~OpenGLFrameBuffer();
-		virtual unsigned int GetSceneTextureID() override { return m_SceneTexture; }
-		virtual unsigned int GetDepthTextureID() override { return m_DepthTexture; }
-		virtual FrameBufferSpecification GetSpecification() override { return Specification; }
+		inline virtual unsigned int GetSceneTextureID() override { return m_SceneTexture; }
+		inline virtual unsigned int GetDepthTextureID() override { return m_DepthTexture; }
+		inline virtual const FrameBufferSpecification& GetSpecification() override { return Specification; }
 		virtual void Bind() override;
 		virtual void UnBind() override;
 		virtual void Resize(unsigned int width, unsigned int height) override;

@@ -266,6 +266,9 @@ void CrimsonEditor::OnImGuiRender()
 	ImGui::Image(DefferedRenderer::GetBuffers(3), ImVec2(512, 512), { 0, 1 }, { 1,0 });
 	ImGui::Text("Density Map");
 	ImGui::Image(Foliage::m_DensityMapID, ImVec2(512, 512), { 0, 1 }, { 1,0 });
+	ImGui::Text("Water Reflection Map");
+	ImGui::Image(m_scene->m_Terrain->GetWaterReflectionFBO(), ImVec2(512, 512), { 0, 1 }, { 1,0 });
+
 
 	ImGui::End();
 

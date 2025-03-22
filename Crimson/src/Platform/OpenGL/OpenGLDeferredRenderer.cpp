@@ -81,6 +81,37 @@ namespace Crimson
 		glBindTextureUnit(G_ROUGHNESS_METALLIC_TEXTURE_SLOT, m_RoughnessMetallicBufferID);
 		glBindTextureUnit(SCENE_DEPTH_SLOT, m_RenderBufferID);
 	}
+
+	void OpenGLDeferredRenderer::RenderEntities(Scene* scene)
+	{
+		scene->getRegistry().each([&](auto m_entity)
+			{
+				Entity Entity(scene, m_entity);
+				if (Entity.GetComponent<StaticMeshComponent>().isFoliage == false)
+				{
+					auto& transform = Entity.GetComponent<TransformComponent>().GetTransform();
+
+					auto& mesh = Entity.GetComponent<StaticMeshComponent>();
+					if (Entity.HasComponent<PhysicsComponent>())
+					{
+						auto& physics_cmp = Entity.GetComponent<PhysicsComponent>();
+						Physics3D::UpdateTransform(Entity.GetComponent<TransformComponent>(), physics_cmp);
+					}
+
+					if (Entity.HasComponent<SpriteRenderer>()) {
+						auto& SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
+						Renderer3D::SetTransperancy(SpriteRendererComponent.Transperancy);
+						Renderer3D::DrawMesh(*mesh, transform, SpriteRendererComponent.Color * SpriteRendererComponent.Emission_Scale, SpriteRendererComponent.m_WireFrame, SpriteRendererComponent.m_Roughness, SpriteRendererComponent.m_Metallic, m_ForwardPassShader);
+					}
+					else
+					{
+
+						Renderer3D::SetTransperancy(1.0f);
+						Renderer3D::DrawMesh(*mesh, transform, Entity.m_DefaultColor, false, 1.0f, 0.0f, m_ForwardPassShader); // default color, roughness, metallic value
+					}
+				}
+			});
+	}
 	
 	void OpenGLDeferredRenderer::CreateBuffers(Scene* scene)
 	{
@@ -97,36 +128,22 @@ namespace Crimson
 		scene->m_Terrain->RenderTerrain(*scene->GetCamera());
 
 		Renderer3D::BeginScene(*scene->GetCamera(), m_ForwardPassShader);
-		scene->getRegistry().each([&](auto m_entity)
-			{
-				Entity Entity(scene, m_entity);
-				if (Entity.GetComponent<StaticMeshComponent>().isFoliage == false)
-				{					
-					auto& transform = Entity.GetComponent<TransformComponent>().GetTransform();
-					glm::vec4 color(1.0f);
+		RenderEntities(scene);
+		Renderer3D::EndScene();
 
-					auto& mesh = Entity.GetComponent<StaticMeshComponent>();
-					if (Entity.HasComponent<PhysicsComponent>())
-					{
-						auto& physics_cmp = Entity.GetComponent<PhysicsComponent>();
-						Physics3D::UpdateTransform(Entity.GetComponent<TransformComponent>(), physics_cmp);
-					}
 
-					if (Entity.HasComponent<SpriteRenderer>()) {
-						auto& SpriteRendererComponent = Entity.GetComponent<SpriteRenderer>();
-						Renderer3D::SetTransperancy(SpriteRendererComponent.Transperancy);
-						Renderer3D::DrawMesh(*mesh, transform, SpriteRendererComponent.Color * SpriteRendererComponent.Emission_Scale, SpriteRendererComponent.m_WireFrame, SpriteRendererComponent.m_Roughness, SpriteRendererComponent.m_Metallic, m_ForwardPassShader);
-					}
-					else {
+		scene->m_Terrain->BindWaterReflectionFBO();
+		glm::vec2 water_viewport = scene->m_Terrain->GetWaterReflectionViewport();
+		glViewport(0, 0, 512, 512);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-						Renderer3D::SetTransperancy(1.0f);
-						Renderer3D::DrawMesh(*mesh, transform, Entity.m_DefaultColor, false, 1.0f, 0.0f, m_ForwardPassShader); // default color, roughness, metallic value
-					}
-				}
-				Renderer3D::EndScene();
-			});
+		scene->m_Terrain->RenderTerrain(*scene->GetCamera());
+		Renderer3D::BeginScene(*scene->GetCamera(), m_ForwardPassShader);
+		RenderEntities(scene);
+		Renderer3D::EndScene();
 
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		scene->m_Terrain->UnBindWaterReflectionFBO();
+
 		glViewport(0, 0, viewport_size.x, viewport_size.y);
 
 		m_DefferedPassShader->Bind();

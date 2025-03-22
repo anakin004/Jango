@@ -103,7 +103,7 @@ namespace Crimson
 		m_terrainWireframeShader = Shader::Create("Assets/Shaders/TerrainWireframeShader.glsl");
 
 
-		m_Water = Water::Create({ width, 5.0f, width }, { 0.0f, 0.0f, 1.0f, 1.0f }, { 2048.f, 2048.f });
+		m_Water = Water::Create({ width, 20.0f, width }, { 0.0f, 0.0f, 1.0f, 1.0f }, { 512, 512 });
 
 
 		InitilizeTerrain();
@@ -243,6 +243,9 @@ namespace Crimson
 		//Physics3D::AddHeightFieldCollider(HeightValues, m_Width, m_Height, spacing, glm::mat4(1.0f));//transform is hard codded
 		//stbi_image_free(Height_data);
 	}
+
+
+
 	void Terrain::RenderTerrain(Camera& cam)
 	{
 		
@@ -299,11 +302,10 @@ namespace Crimson
 		m_terrainShader->SetFloat("Time", time);
 
 		if (bShowTerrain)
+		{
 			RenderCommand::DrawArrays(*m_terrainVertexArray, terrainData.size(), GL_PATCHES, 0);
-
-
-		m_Water->RenderWater(cam, { 2048,2048 });
-
+			m_Water->RenderWater(cam, {2048, 2048});
+		}
 
 		if (bShowWireframeTerrain)
 		{
@@ -319,6 +321,8 @@ namespace Crimson
 
 			RenderCommand::DrawArrays(*m_terrainVertexArray, terrainData.size(), GL_PATCHES, 0);
 		}
+
+		
 
 
 		glEnable(GL_CULL_FACE);
@@ -450,14 +454,14 @@ namespace Crimson
 	}
 	void QuadTree::DeleteNode(QNode*& node)
 	{
-		glm::vec3 extent = node->chunk_bounds.aabbMax - node->chunk_bounds.aabbMin;
+		glm::vec3& extent = node->chunk_bounds.aabbMax - node->chunk_bounds.aabbMin;
 		glm::vec3& player_pos = terrain->player_camera_pos;
 
 		for (QNode*& child : node->childrens)
 		{
-			glm::vec3 bounds_min = child->chunk_bounds.aabbMin;
-			glm::vec3 bounds_max = child->chunk_bounds.aabbMax;
-			glm::vec3 chunk_size = bounds_max - bounds_min;
+			glm::vec3& bounds_min = child->chunk_bounds.aabbMin;
+			glm::vec3& bounds_max = child->chunk_bounds.aabbMax;
+			glm::vec3& chunk_size = bounds_max - bounds_min;
 			if (chunk_size.x == 256)
 			{
 				for (auto& topPlant : terrain->topFoliageLayer)

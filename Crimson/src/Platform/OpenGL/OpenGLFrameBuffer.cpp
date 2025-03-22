@@ -24,12 +24,11 @@ namespace Crimson {
     }
     void OpenGLFrameBuffer::Resize(unsigned int width, unsigned int height)
     {
-        Specification.Width = width; 
-        Specification.Height = height;
+        Specification.viewport = { width, height };
         invalidate(Specification);
         glViewport(0, 0, width, height);
     }
-    void OpenGLFrameBuffer::ClearFrameBuffer()\
+    void OpenGLFrameBuffer::ClearFrameBuffer()
     {
         float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
         glClearBufferfv(GL_COLOR, 0, clearColor);
@@ -55,14 +54,15 @@ namespace Crimson {
             glDeleteTextures(1, &m_SceneTexture);
             glDeleteTextures(1, &m_DepthTexture);
         }
+
         Specification = spec;
 
         glGenFramebuffers(1, &m_RenderID);
         glBindFramebuffer(GL_FRAMEBUFFER, m_RenderID);
 
-        glGenTextures(1, &m_SceneTexture);//Create texture object
+        glGenTextures(1, &m_SceneTexture);
         glBindTexture(GL_TEXTURE_2D, m_SceneTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, spec.Width, spec.Height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, spec.viewport.x, spec.viewport.y, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -73,12 +73,12 @@ namespace Crimson {
 
         glGenTextures(1, &m_DepthTexture);
         glBindTexture(GL_TEXTURE_2D, m_DepthTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, spec.Width, spec.Height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, spec.viewport.x, spec.viewport.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glBindTexture(GL_TEXTURE_2D, 0);//unbind
+        glBindTexture(GL_TEXTURE_2D, 0);
 
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_DepthTexture, 0);
 

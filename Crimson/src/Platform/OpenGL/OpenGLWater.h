@@ -2,7 +2,7 @@
 
 
 #include "Crimson/Renderer/Water.h"
-
+#include "OpenGLFrameBuffer.h"
 
 namespace Crimson {
 
@@ -35,10 +35,18 @@ namespace Crimson {
 		virtual void SetWaterParameters(const glm::vec3& dims, const glm::vec4& water_color) override;
 		virtual void RenderWater(Camera& cam, const glm::vec2& screen_size) override;
 
+		inline virtual uint32_t GetReflectionFboID() const { return m_Fbo1->GetSceneTextureID(); }
+		inline virtual const glm::uvec2& GetReflectionViewport() const override { return m_Fbo1->GetSpecification().viewport; }
+
+		inline virtual void BindReflectionFBO() const override { m_Fbo1->Bind(); }
+		inline virtual void UnbindReflectionFBO() const override { m_Fbo1->UnBind(); }
+
+
 	private:
 
 		Ref<Shader> m_waterShader;
-		uint32_t m_framebuffer1ID, m_framebuffer2ID, m_renderBufferID, m_texture1ID, m_texture2ID;
+		Ref<FrameBuffer> m_Fbo1;
+		Ref<FrameBuffer> m_Fbo2;
 
 		Ref<VertexArray> m_VAO;
 		Ref<VertexBuffer> m_VBO;
