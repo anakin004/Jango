@@ -19,14 +19,14 @@ namespace Crimson {
 			return nullptr;
 		}
 	}
-	Ref<Shader>  Shader::Create(std::string& vertexshader, std::string& fragmentshader)
+	Ref<Shader>  Shader::Create(const std::string& vertexshader, const std::string& fragmentshader, const std::string& name)
 	{
 		switch (RendererAPI::GetAPI())
 		{
 		case GraphicsAPI::None:
 			return nullptr;
 		case GraphicsAPI::OpenGL:
-			return std::make_shared<OpenGLShader>(vertexshader, fragmentshader);
+			return std::make_shared<OpenGLShader>(vertexshader, fragmentshader, name);
 		default:
 			return nullptr;
 		}
@@ -34,9 +34,9 @@ namespace Crimson {
 
 	void ShaderLibrary::Add(const Ref<Shader>& shader)
 	{
-		//const std::string& name = shader->GetName();
-// 		CN_CORE_ASSERT(!Exists(name), "Shader Already Exists!");
-// 		m_Shaders[name] = shader;
+		const std::string& name = shader->GetName();
+ 		CN_CORE_ASSERT(!Exists(name), "Shader Already Exists!");
+ 		m_Shaders[name] = shader;
 	}
 
 	void ShaderLibrary::Add(const Ref<Shader>& shader, const std::string& name)

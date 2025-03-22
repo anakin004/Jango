@@ -25,7 +25,7 @@ namespace Crimson {
  			std::string FragmentSource;
 		};
 
-		OpenGLShader(std::string& vertexshader, std::string& fragmentshader);
+		OpenGLShader(const std::string& vertexshader, const std::string& fragmentshader, const std::string& name);
 		OpenGLShader(const std::string& path);
 		~OpenGLShader();
 
@@ -47,6 +47,8 @@ namespace Crimson {
 		//void SetFloat2(const std::string& str, const glm::vec2& UniformFloat2) override; need to make
 		//void SetFloat2Array(const std::string& str, const glm::vec2& UniformFloat2) override;
 
+		virtual const std::string& GetName() const override { return m_Name; }
+
 	private:
 		void UploadUniformMat4(const std::string& str, glm::mat4& UniformMat4, size_t count = 1) const;
 		void UploadUniformInt(const std::string& str, const int& UniformInt) const;
@@ -61,6 +63,7 @@ namespace Crimson {
 		//void UpladUniformFloat2Array(const std::string& str, const float* pointer, size_t count);
 
 		unsigned int m_ID;
-		Shaders m_Shaders;
+		std::string m_Name;
+		static Shaders m_Shaders;
 	};
 }

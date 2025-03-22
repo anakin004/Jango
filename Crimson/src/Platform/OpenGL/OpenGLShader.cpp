@@ -4,8 +4,13 @@
 #include "glm/gtc/type_ptr.hpp"
 
 namespace Crimson {
+
+
+	Shaders OpenGLShader::m_Shaders; 
+
 	//not adding geometry shader feature here as this different shader technique is not used for now
-	OpenGLShader::OpenGLShader(std::string& vertexshader, std::string& fragmentshader)
+	OpenGLShader::OpenGLShader(const std::string& vertexshader, const std::string& fragmentshader, const std::string& name)
+		: m_Name(name)
 	{
 
 		unsigned int vs = glCreateShader(GL_VERTEX_SHADER);
@@ -55,6 +60,9 @@ namespace Crimson {
 
 	OpenGLShader::OpenGLShader(const std::string& path)
 	{
+
+		m_Name = std::filesystem::path(path).stem().string();
+
 		m_ID = glCreateProgram();
 
 		m_Shaders = ParseFile(path);
