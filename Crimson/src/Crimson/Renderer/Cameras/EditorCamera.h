@@ -22,6 +22,7 @@ namespace Crimson {
 		void SetVerticalFOV(float fov) override { m_verticalFOV = fov; SetPerspctive(m_verticalFOV, m_PerspectiveNear, m_PerspectiveFar); }
 		void SetPerspectiveNear(float val) override { m_PerspectiveNear = val; SetPerspctive(m_verticalFOV, m_PerspectiveNear, m_PerspectiveFar);}
 		void SetPerspectiveFar(float val) override { m_PerspectiveFar = val; SetPerspctive(m_verticalFOV, m_PerspectiveNear, m_PerspectiveFar);}
+		virtual void Translate(const glm::vec3& translation) override { m_Position += translation; }
 
 		float GetPerspectiveNear() override { return m_PerspectiveNear; };
 		float GetPerspectiveFar() override { return m_PerspectiveFar; };
@@ -31,6 +32,7 @@ namespace Crimson {
 		inline glm::vec3 GetCameraPosition() override { return m_Position; }
 		inline glm::vec3 GetCameraRotation() override { return glm::vec3(m_pitch, m_yaw, m_roll); };
 		inline glm::vec3 GetViewDirection() override { return m_ViewDirection; }
+		inline virtual void InvertPitch() override { m_pitch = -m_pitch; }
 		inline float GetAspectRatio() override { return m_AspectRatio; }
 		inline float GetVerticalFOV() override { return m_verticalFOV; }
 

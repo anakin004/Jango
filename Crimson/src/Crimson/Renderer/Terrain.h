@@ -40,11 +40,19 @@ namespace Crimson
 		static float time;
 
 	public:
-
+		inline float GetWaterHeight() const { return m_Water->GetHeight(); }
 		inline void BindWaterReflectionFBO() const { m_Water->BindReflectionFBO(); }
-		inline uint32_t GetWaterReflectionFBO() const { return m_Water->GetReflectionFboID(); }
 		inline void UnBindWaterReflectionFBO() const { m_Water->UnbindReflectionFBO(); }
+		inline void BindWaterRefractionFBO() const { m_Water->BindRefractionFBO(); }
+		inline void UnBindWaterRefractionFBO() const { m_Water->UnbindRefractionFBO(); }
+
+		inline uint32_t GetWaterReflectionFBO() const { return m_Water->GetReflectionFboID(); }
 		inline const glm::uvec2& GetWaterReflectionViewport() const { return m_Water->GetReflectionViewport(); }
+		inline uint32_t GetWaterRefractionFBO() const { return m_Water->GetRefractionFboID(); }
+		inline const glm::uvec2& GetWaterRefractionViewport() const { return m_Water->GetRefractionViewport(); }
+
+
+
 		void RenderTerrain(Camera& cam, bool withWater);
 		void RenderWater(Camera& cam);
 		void SetWaterFBOs(Bloom* bloom);

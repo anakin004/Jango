@@ -159,6 +159,7 @@ namespace Crimson {
 					glCullFace(GL_BACK);
 				}
 			}
+
 			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 			glViewport(0, 0, size.x, size.y);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

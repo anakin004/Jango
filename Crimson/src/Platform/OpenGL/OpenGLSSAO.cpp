@@ -77,14 +77,15 @@ namespace Crimson {
 
 		RenderQuad();
 		 
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glViewport(0, 0, viewport_size.x, viewport_size.y);
+		//glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//glViewport(0, 0, viewport_size.x, viewport_size.y);
 
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, SSAOframebuffer_id);
-		glViewport(0, 0, m_width, m_height);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, SSAOdepth_id);
+		//glBindFramebuffer(GL_DRAW_FRAMEBUFFER, SSAOframebuffer_id);
+		//glViewport(0, 0, m_width, m_height);
+		//glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, SSAOdepth_id);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, SSAOblur_id, 0);
+
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 			CN_CORE_ERROR("SSAO Blur Frame Buffer Failed");

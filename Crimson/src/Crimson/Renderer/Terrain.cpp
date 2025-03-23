@@ -301,10 +301,6 @@ namespace Crimson
 		time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - StartTime).count() / 1000.0;
 		m_terrainShader->SetFloat("Time", time);
 
-		if (withWater && bShowTerrain)
-		{
-			m_Water->RenderWater(cam, { 512,512 });
-		}
 
 
 		if (bShowTerrain)
@@ -328,7 +324,10 @@ namespace Crimson
 		}
 
 		// render water after since we change shaders
-
+		if (withWater && bShowTerrain)
+		{
+			m_Water->RenderWater(cam, { 512,512 });
+		}
 		
 
 
@@ -350,14 +349,14 @@ namespace Crimson
 		const glm::uvec2& water_viewport = GetWaterReflectionViewport();
 		glViewport(0, 0, water_viewport.x, water_viewport.y);
 
-
 		BindWaterReflectionFBO();
+
 		RenderCommand::ClearColor({ 0,0,0,1 });
 		RenderCommand::Clear();
 		bloom->RenderForFBO();
-		// Render water reflection or any other water-related effects
-		UnBindWaterReflectionFBO();
 
+		UnBindWaterReflectionFBO();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glViewport(previousViewport[0], previousViewport[1], previousViewport[2], previousViewport[3]);
 
 	}

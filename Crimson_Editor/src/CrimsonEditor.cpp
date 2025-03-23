@@ -114,6 +114,9 @@ void CrimsonEditor::OnDetach()
 void CrimsonEditor::OnUpdate(TimeStep ts)
 {
 
+	RenderCommand::ClearColor({ 0,0,0,1 });
+	RenderCommand::Clear();
+
 	/*
 	
 	
@@ -123,17 +126,18 @@ void CrimsonEditor::OnUpdate(TimeStep ts)
 	*/
 
 	CN_PROFILE_FUNCTION()
-
 	frame_time = ts;
-
 	numFrame++;
 
 	m_scene->OnUpdate(ts);
 
 
+	//cam->Translate({ 0.0f, 2 * 15.f, 0.0f });
+	//cam->InvertPitch();
+
+
 	// we need to do a pass with water and one without
 	Renderer3D::ForwardRenderPass(m_scene.get(), false);//forward pass for later deferred stage
-
 	
 	m_FrameBuffer2->Bind();//Bind the frame buffer so that it can store the pixel data to a texture
 	RenderCommand::ClearColor({ 0,0,0,1 });
@@ -150,13 +154,12 @@ void CrimsonEditor::OnUpdate(TimeStep ts)
 	Renderer3D::RenderWithAntialiasing();
 
 	m_scene->m_Fog->RenderFog(*m_scene->GetCamera(), RenderCommand::GetViewportSize());
+
 	m_scene->m_Bloom->GetFinalImage(m_FrameBuffer2->GetSceneTextureID(), RenderCommand::GetViewportSize());
 	m_scene->m_Bloom->RenderBloomTexture();
 	m_scene->m_Bloom->Update(ts);
-
-	m_scene->m_Terrain->SetWaterFBOs(m_scene->m_Bloom.get());
-
-
+	
+	
 	m_FrameBuffer->Bind();
 	RenderCommand::ClearColor({ 0,0,0,1 });
 	RenderCommand::Clear();
@@ -164,6 +167,13 @@ void CrimsonEditor::OnUpdate(TimeStep ts)
 	m_scene->m_Bloom->RenderRotatedForFBO();
 
 	m_FrameBuffer->UnBind();
+
+
+
+	m_scene->m_Terrain->SetWaterFBOs(m_scene->m_Bloom.get());
+
+
+	
 }
 
 void CrimsonEditor::OnImGuiRender()
@@ -285,7 +295,8 @@ void CrimsonEditor::OnImGuiRender()
 	ImGui::Image(Foliage::m_DensityMapID, ImVec2(512, 512), { 0, 1 }, { 1,0 });
 	ImGui::Text("Water Reflection Map");
 	ImGui::Image(m_scene->m_Terrain->GetWaterReflectionFBO(), ImVec2(512, 512), { 0, 1 }, { 1,0 });
-
+	ImGui::Text("Water Refraction Map");
+	ImGui::Image(m_scene->m_Terrain->GetWaterRefractionFBO(), ImVec2(512, 512), { 0, 1 }, { 1,0 });
 
 	ImGui::End();
 

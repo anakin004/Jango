@@ -23,11 +23,17 @@ namespace Crimson{
 		virtual void SetWaterParameters(const glm::vec3& dims, const glm::vec4& water_color) = 0;
 		virtual void RenderWater(Camera& cam, const glm::vec2& screen_size) = 0;
 
+		virtual float GetHeight() const = 0;
+
 		inline virtual uint32_t GetReflectionFboID() const = 0;
 		inline virtual const glm::uvec2& GetReflectionViewport() const = 0;
-
 		inline virtual void BindReflectionFBO() const = 0;
 		inline virtual void UnbindReflectionFBO() const = 0;
+
+		inline virtual uint32_t GetRefractionFboID() const = 0;
+		inline virtual const glm::uvec2& GetRefractionViewport() const = 0;
+		inline virtual void BindRefractionFBO() const = 0;
+		inline virtual void UnbindRefractionFBO() const = 0;
 
 
 	};

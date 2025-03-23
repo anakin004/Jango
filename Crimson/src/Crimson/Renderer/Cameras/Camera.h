@@ -25,6 +25,7 @@ namespace Crimson {
 		virtual void SetPerspectiveNear(float val) = 0;
 		virtual void SetPerspectiveFar(float val) = 0;
 		virtual void SetViewMatrix(const glm::mat4&) {}
+		virtual void Translate(const glm::vec3& translation) = 0;
 
 		virtual float GetPerspectiveNear() = 0;
 		virtual float GetPerspectiveFar() = 0;
@@ -34,6 +35,7 @@ namespace Crimson {
 		virtual inline glm::vec3 GetCameraPosition() = 0;
 		virtual inline glm::vec3 GetCameraRotation() = 0;
 		virtual inline glm::vec3 GetViewDirection() = 0;
+		virtual inline void InvertPitch() = 0;
 		virtual inline float GetAspectRatio() = 0;
 		virtual inline float GetVerticalFOV() = 0;
 

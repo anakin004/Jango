@@ -95,7 +95,6 @@ namespace Crimson {
 		if (otherShader == nullptr) {
 			m_data->shader->Bind();//bind the textureShader
 			m_data->shader->SetMat4("u_ProjectionView", camera.GetProjectionView());//here the projection is ProjectionView
-			//m_data->shader->
 			m_data->shader->SetFloat3("EyePosition", camera.GetCameraPosition());//get the eye position for specular lighting calculation
 		}
 		else

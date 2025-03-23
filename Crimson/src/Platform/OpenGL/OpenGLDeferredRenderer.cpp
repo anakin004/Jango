@@ -105,7 +105,6 @@ namespace Crimson
 					}
 					else
 					{
-
 						Renderer3D::SetTransperancy(1.0f);
 						Renderer3D::DrawMesh(*mesh, transform, Entity.m_DefaultColor, false, 1.0f, 0.0f, m_ForwardPassShader); // default color, roughness, metallic value
 					}

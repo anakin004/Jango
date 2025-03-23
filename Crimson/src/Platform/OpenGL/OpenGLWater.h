@@ -35,11 +35,17 @@ namespace Crimson {
 		virtual void SetWaterParameters(const glm::vec3& dims, const glm::vec4& water_color) override;
 		virtual void RenderWater(Camera& cam, const glm::vec2& screen_size) override;
 
+		virtual float GetHeight() const override { return m_dims.y; };
+
 		inline virtual uint32_t GetReflectionFboID() const { return m_Fbo1->GetSceneTextureID(); }
 		inline virtual const glm::uvec2& GetReflectionViewport() const override { return m_Fbo1->GetSpecification().viewport; }
-
 		inline virtual void BindReflectionFBO() const override { m_Fbo1->Bind(); }
 		inline virtual void UnbindReflectionFBO() const override { m_Fbo1->UnBind(); }
+
+		inline virtual uint32_t GetRefractionFboID() const { return m_Fbo2->GetSceneTextureID(); }
+		inline virtual const glm::uvec2& GetRefractionViewport() const override { return m_Fbo2->GetSpecification().viewport; }
+		inline virtual void BindRefractionFBO() const override { m_Fbo2->Bind(); }
+		inline virtual void UnbindRefractionFBO() const override { m_Fbo2->UnBind(); }
 
 
 	private:

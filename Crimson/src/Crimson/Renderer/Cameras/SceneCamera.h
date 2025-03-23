@@ -39,6 +39,8 @@ namespace Crimson {
 		virtual inline glm::mat4 GetProjectionMatrix() override;
 		virtual inline glm::vec3 GetCameraPosition() override;
 		inline glm::vec3 GetCameraRotation() override { return glm::vec3(m_pitch, m_yaw, m_roll); };
+		virtual inline void InvertPitch() override { m_pitch = -m_pitch; }
+		virtual inline void Translate(const glm::vec3& translation) override { m_Position += m_Position; }
 		virtual inline glm::vec3 GetViewDirection() override;
 		virtual inline float GetAspectRatio() override;
 		virtual inline float GetVerticalFOV() override;
