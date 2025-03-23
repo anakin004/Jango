@@ -1,5 +1,6 @@
 #include "Crimson.h"
 #include "Water.h"
+#include "Bloom.h"
 
 namespace Crimson
 {
@@ -39,11 +40,14 @@ namespace Crimson
 		static float time;
 
 	public:
+
 		inline void BindWaterReflectionFBO() const { m_Water->BindReflectionFBO(); }
 		inline uint32_t GetWaterReflectionFBO() const { return m_Water->GetReflectionFboID(); }
 		inline void UnBindWaterReflectionFBO() const { m_Water->UnbindReflectionFBO(); }
 		inline const glm::uvec2& GetWaterReflectionViewport() const { return m_Water->GetReflectionViewport(); }
-		void RenderTerrain(Camera& cam);
+		void RenderTerrain(Camera& cam, bool withWater);
+		void RenderWater(Camera& cam);
+		void SetWaterFBOs(Bloom* bloom);
 
 	private:
 

@@ -113,7 +113,8 @@ namespace Crimson
 			});
 	}
 	
-	void OpenGLDeferredRenderer::CreateBuffers(Scene* scene)
+	
+	void OpenGLDeferredRenderer::CreateBuffers(Scene* scene, bool withWater)
 	{
 
 		CN_PROFILE_FUNCTION()
@@ -125,24 +126,11 @@ namespace Crimson
 		glViewport(0, 0, m_width, m_height); //set the viewport resolution same as gbuffer texture resolution
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		scene->m_Terrain->RenderTerrain(*scene->GetCamera());
 
+		scene->m_Terrain->RenderTerrain(*scene->GetCamera(), withWater);
 		Renderer3D::BeginScene(*scene->GetCamera(), m_ForwardPassShader);
 		RenderEntities(scene);
 		Renderer3D::EndScene();
-
-
-		scene->m_Terrain->BindWaterReflectionFBO();
-		glm::vec2 water_viewport = scene->m_Terrain->GetWaterReflectionViewport();
-		glViewport(0, 0, 512, 512);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		scene->m_Terrain->RenderTerrain(*scene->GetCamera());
-		Renderer3D::BeginScene(*scene->GetCamera(), m_ForwardPassShader);
-		RenderEntities(scene);
-		Renderer3D::EndScene();
-
-		scene->m_Terrain->UnBindWaterReflectionFBO();
 
 		glViewport(0, 0, viewport_size.x, viewport_size.y);
 

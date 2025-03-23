@@ -44,7 +44,7 @@ namespace Crimson {
 		static Ref<Shader>& GetFoliageInstancedShader();
 		static Ref<Shadows>& GetShadowObj();
 		static void RenderScene_Deferred(Scene* scene);
-		static void ForwardRenderPass(Scene* scene);
+		static void ForwardRenderPass(Scene* scene, bool withWater);
 
 	public:
 		static unsigned int depth_id[4];

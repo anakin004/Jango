@@ -415,9 +415,9 @@ namespace Crimson {
 		m_oldProjectionView = scene->GetCamera()->GetProjectionView(); //update the old projection-view matrix after every thing is rendered
 	}
 
-	void Renderer3D::ForwardRenderPass(Scene* scene)
+	void Renderer3D::ForwardRenderPass(Scene* scene, bool withWater)
 	{
-		DefferedRenderer::GenerateGBuffers(scene);
+		DefferedRenderer::GenerateGBuffers(scene, withWater);
 		RenderShadows(*scene, *scene->GetCamera());
 		AmbiantOcclusion(*scene, *scene->GetCamera());
 	}

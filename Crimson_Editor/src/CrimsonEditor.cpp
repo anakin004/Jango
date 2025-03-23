@@ -114,6 +114,14 @@ void CrimsonEditor::OnDetach()
 void CrimsonEditor::OnUpdate(TimeStep ts)
 {
 
+	/*
+	
+	
+	I NEED TO OPTIMIZE THIS <-0-----------------------------------
+	
+	
+	*/
+
 	CN_PROFILE_FUNCTION()
 
 	frame_time = ts;
@@ -122,9 +130,11 @@ void CrimsonEditor::OnUpdate(TimeStep ts)
 
 	m_scene->OnUpdate(ts);
 
-	Renderer3D::ForwardRenderPass(m_scene.get());//forward pass for later deferred stage
 
+	// we need to do a pass with water and one without
+	Renderer3D::ForwardRenderPass(m_scene.get(), false);//forward pass for later deferred stage
 
+	
 	m_FrameBuffer2->Bind();//Bind the frame buffer so that it can store the pixel data to a texture
 	RenderCommand::ClearColor({ 0,0,0,1 });
 	RenderCommand::Clear();
@@ -142,13 +152,16 @@ void CrimsonEditor::OnUpdate(TimeStep ts)
 	m_scene->m_Fog->RenderFog(*m_scene->GetCamera(), RenderCommand::GetViewportSize());
 	m_scene->m_Bloom->GetFinalImage(m_FrameBuffer2->GetSceneTextureID(), RenderCommand::GetViewportSize());
 	m_scene->m_Bloom->RenderBloomTexture();
+	m_scene->m_Bloom->Update(ts);
 
-	
+	m_scene->m_Terrain->SetWaterFBOs(m_scene->m_Bloom.get());
+
+
 	m_FrameBuffer->Bind();
 	RenderCommand::ClearColor({ 0,0,0,1 });
 	RenderCommand::Clear();
 
-	m_scene->m_Bloom->Update(ts);
+	m_scene->m_Bloom->RenderRotatedForFBO();
 
 	m_FrameBuffer->UnBind();
 }
@@ -164,6 +177,9 @@ void CrimsonEditor::OnImGuiRender()
 	ImVec2 Size = ImGui::GetContentRegionAvail();
 	if (m_ViewportSize != *(glm::vec2*)&Size)
 	{
+		// viewport size can be 0,0 so this is a quick fix
+		if (Size.y == 0)
+			Size.y = 1;
 		m_ViewportSize = { Size.x,Size.y };
 		m_FrameBuffer2->Resize(m_ViewportSize.x, m_ViewportSize.y);
 		m_FrameBuffer3->Resize(m_ViewportSize.x, m_ViewportSize.y);
@@ -171,6 +187,7 @@ void CrimsonEditor::OnImGuiRender()
 		numFrame = 0;
 		m_camera.OnResize(Size.x, Size.y);
 	}
+
 	ImGui::Image((m_FrameBuffer->GetSceneTextureID()), *(ImVec2*)&m_ViewportSize);
 
 	if (SceneHierarchyPannel::m_selected_entity) //gizmo logics

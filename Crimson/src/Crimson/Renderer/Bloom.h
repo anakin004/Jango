@@ -23,6 +23,8 @@ namespace Crimson
 		virtual void Update(TimeStep ts)= 0;
 		virtual void GetFinalImage(const unsigned int& img, const glm::vec2& dimension) = 0;
 		virtual void RenderBloomTexture() = 0;
+		virtual void RenderForFBO() = 0;
+		virtual void RenderRotatedForFBO() = 0;
 
 		static Ref<Bloom> Create();
 		static int NUMBER_OF_MIPS;

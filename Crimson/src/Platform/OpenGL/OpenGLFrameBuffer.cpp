@@ -30,7 +30,7 @@ namespace Crimson {
     }
     void OpenGLFrameBuffer::ClearFrameBuffer()
     {
-        float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+        const float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
         glClearBufferfv(GL_COLOR, 0, clearColor);
         glFlush();
     }
@@ -68,7 +68,7 @@ namespace Crimson {
         glBindTexture(GL_TEXTURE_2D, 0);
 
         glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_SceneTexture, 0);
-        GLenum buffers[1] = { GL_COLOR_ATTACHMENT0 };
+        const GLenum buffers[1] = { GL_COLOR_ATTACHMENT0 };
         glDrawBuffers(1, buffers);
 
         glGenTextures(1, &m_DepthTexture);

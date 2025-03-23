@@ -12,6 +12,8 @@ namespace Crimson {
 		void Update(TimeStep ts) override;
 		void GetFinalImage(const unsigned int& img, const glm::vec2& dimension) override { m_Dimension = dimension; }
 		void RenderBloomTexture() override { DownSample(); UpSample(); };
+		void RenderForFBO() override { RenderQuad(); }
+		void RenderRotatedForFBO() override { RenderRotatedQuad(); }
 
 	protected:
 		void DownSample() override;

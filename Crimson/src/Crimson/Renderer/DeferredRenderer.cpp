@@ -8,9 +8,9 @@ namespace Crimson
 	{
 		OpenGLDeferredRenderer::Init(width,height);
 	}
-	void DefferedRenderer::GenerateGBuffers(Scene* scene)
+	void DefferedRenderer::GenerateGBuffers(Scene* scene, bool withWater)
 	{
-		OpenGLDeferredRenderer::CreateBuffers(scene);
+		OpenGLDeferredRenderer::CreateBuffers(scene, withWater);
 	}
 	void DefferedRenderer::DeferredRenderPass()
 	{
