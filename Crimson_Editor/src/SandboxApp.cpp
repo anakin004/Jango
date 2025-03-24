@@ -4,7 +4,7 @@
 #include "CrimsonEditor.h"
 
 
-class Sandbox :public Crimson::Application
+class Sandbox : public Crimson::Application
 {
 public:
 	Sandbox(){
