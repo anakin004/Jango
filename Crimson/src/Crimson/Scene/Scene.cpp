@@ -178,6 +178,23 @@ namespace Crimson {
 		delete House;
 		delete Windmill;
 		delete Sponza;
+
+		while (!m_PointLights.empty())
+		{
+			delete m_PointLights.back();
+			m_PointLights.pop_back();
+		}
+
+		while (!entity_ptrs.empty())
+		{
+
+			// i also need to go through the components of the entites and delete those
+			entt::entity& reg_entity = entity_ptrs.back()->GetEntity();
+			m_registry.destroy(reg_entity);
+
+			delete entity_ptrs.back();
+			entity_ptrs.pop_back();
+		}
 	}
 
 
@@ -186,6 +203,7 @@ namespace Crimson {
 	{
 		m_entity = m_registry.create();
 		Entity* entity = new Entity(this, m_entity);
+		entity_ptrs.push_back(entity);
 
 		// spawn entity at player
 		entity->AddComponent<TransformComponent>(MainCamera->GetCameraPosition());
@@ -262,6 +280,7 @@ namespace Crimson {
 						if (entity == m_entity)
 						{
 							nsc.m_Script->m_Entity = new Entity(this, m_entity);//the Entity in the script class is made equal to the created scene entity
+							entity_ptrs.push_back(nsc.m_Script->m_Entity);
 						}
 					});
 			nsc.m_Script->OnUpdate(ts);//update to get the script values

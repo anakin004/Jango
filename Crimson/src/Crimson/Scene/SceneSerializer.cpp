@@ -302,22 +302,22 @@ namespace Crimson {
 			}
 		}
 
-		auto entities = data["Entities"];
+		auto& entities = data["Entities"];
 		if (entities)
 		{
-			for (auto entity : entities)
+			for (auto& entity : entities)
 			{
 				uint64_t uuid = entity["Entity"].as<uint64_t>(); // TODO
 
 				std::string entity_name;
-				auto tagcmp = entity["TagComponent"];
+				auto& tagcmp = entity["TagComponent"];
 				if (tagcmp)
 				{
 					entity_name = tagcmp["tag"].as<std::string>();
 				}
 				Entity* DeserializedEntity = m_scene->CreateEntity(entity_name);
 
-				auto TransformComp = entity["TransformComponent"];
+				auto& TransformComp = entity["TransformComponent"];
 				if (TransformComp)
 				{
 					glm::vec3 translation = TransformComp["Translation"].as<glm::vec3>();
@@ -326,7 +326,7 @@ namespace Crimson {
 					DeserializedEntity->AddComponent<TransformComponent>(translation, rotation, scale);
 				}
 
-				auto StaticMeshComp = entity["StaticMeshComponent"];
+				auto& StaticMeshComp = entity["StaticMeshComponent"];
 				if (StaticMeshComp)
 				{
 					std::string mesh_path = StaticMeshComp["MeshPath"].as<std::string>();
@@ -339,7 +339,7 @@ namespace Crimson {
 						DeserializedEntity->AddComponent<StaticMeshComponent>(mesh);
 				}
 
-				auto SpriteRenderComp = entity["SpriteRenderer"];
+				auto& SpriteRenderComp = entity["SpriteRenderer"];
 				if (SpriteRenderComp)
 				{
 					glm::vec4 color = SpriteRenderComp["Color"].as<glm::vec4>();
@@ -349,16 +349,16 @@ namespace Crimson {
 
 					DeserializedEntity->AddComponent<SpriteRenderer>(color, wire, roughness, metallic);
 				}
-				auto ScriptComp = entity["ScriptComponent"];
+				auto& ScriptComp = entity["ScriptComponent"];
 				if (ScriptComp)
 				{
 					if (ScriptComp["id"]) {
-						auto script = m_scene->m_scriptsMap[ScriptComp["id"].as<size_t>()];
+						auto& script = m_scene->m_scriptsMap[ScriptComp["id"].as<size_t>()];
 						DeserializedEntity->AddComponent<ScriptComponent>().Bind(*script);
 					}
 				}
 
-				auto CameraComp = entity["CameraComponent"];
+				auto& CameraComp = entity["CameraComponent"];
 				if (CameraComp)
 				{
 					auto& cc = DeserializedEntity->AddComponent<CameraComponent>();
@@ -380,7 +380,7 @@ namespace Crimson {
 						cc.camera.bIsMainCamera = (bool)CameraComp["Is Main Camera"].as<int>();
 				}
 
-				auto PhysicsComp = entity["PhysicsComponent"];
+				auto& PhysicsComp = entity["PhysicsComponent"];
 				if (PhysicsComp)
 				{
 					auto& physics_component = DeserializedEntity->AddComponent<PhysicsComponent>();

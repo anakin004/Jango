@@ -64,6 +64,7 @@ namespace Crimson {
 			entt::registry m_registry;
 			entt::entity m_entity{entt::null};
 			std::thread shadow_thread;
+			std::vector<Entity*> entity_ptrs;
 			//friend class Entity;
 
 	};

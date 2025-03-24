@@ -31,14 +31,43 @@ namespace Crimson
 		m_LinearBVHNodes.resize(m_LinearBVHNodes.size() * 2 + 1);
 		CN_CORE_TRACE("BVH Creation started")
 		BuildBVH(m_Head, 0, m_RTTriangles.size());
-		CleanBVH(m_Head);//identify child nodes by making their triangle count = 0
+		CleanBVH(m_Head); //identify child nodes by making their triangle count = 0
 		FlattenBVH(m_Head, &m_NumNodes);
 		m_LinearBVHNodes.resize(m_NumNodes);
 
 		CN_CORE_INFO("BVH Initialized!")
 
-		CN_CORE_INFO("Number of triangles before BVH construction: {0}", m_RTTriangles.size());
-		CN_CORE_INFO("Number of triangles after BVH construction: {0}", m_NumNodes);
+		CN_CORE_TRACE("Number of from BVH construction: {0}", m_RTTriangles.size());
+	}
+
+	BVH::~BVH()
+	{
+		DestroyBVH(m_Head);
+	}
+
+	void BVH::DestroyBVH(BVHNode*& node)
+	{
+		CN_PROFILE_FUNCTION()
+		
+		if (node == nullptr)
+		{
+				return;
+		}
+
+		if (node->LeftChild == nullptr && node->RightChild == nullptr)
+		{
+			delete node;
+			node = nullptr;
+			return;
+		}
+		else
+		{
+			node->TriangleCount = 0;
+			if (node->LeftChild)
+				CleanBVH(node->LeftChild);
+			if (node->RightChild)
+				CleanBVH(node->RightChild);
+		}
 	}
 
 
@@ -254,7 +283,7 @@ namespace Crimson
 		return myOffset;
 	}
 
-	void BVH::CleanBVH(BVHNode* node)
+	void BVH::CleanBVH(BVHNode*& node)
 	{
 
 		CN_PROFILE_FUNCTION()
@@ -272,6 +301,7 @@ namespace Crimson
 				CleanBVH(node->RightChild);
 		}
 	}
+
 
 	//recursively building the bvh tree and storing it as dfs format
 	void BVH::BuildBVH(BVHNode*& node, uint32_t triStartID, uint32_t triCount)

@@ -16,6 +16,7 @@ SceneHierarchyPannel::SceneHierarchyPannel() = default;
 SceneHierarchyPannel::~SceneHierarchyPannel()
 {
 	delete m_selected_Light;
+	delete m_Context->m_scriptsMap[typeid(CustomScript).hash_code()];
 }
 
 static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f ,char *x ="X",char *y="Y",char *z="Z")
@@ -82,7 +83,6 @@ void SceneHierarchyPannel::Context(const Ref<Scene>& context)
 	* for now I have to mannually include all the scripts then manually bind them here (one by one)
 	*/
 	m_Context->m_scriptsMap[typeid(CustomScript).hash_code()] = new CustomScript();
-	CN_CORE_WARN(typeid(CustomScript).hash_code());
 }
 void SceneHierarchyPannel::OnImGuiRender()
 {
