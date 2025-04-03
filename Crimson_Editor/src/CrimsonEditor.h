@@ -44,5 +44,5 @@ private:
 	Ref<FrameBuffer> m_FrameBuffer,m_FrameBuffer2, m_FrameBuffer3, m_FrameBuffer4;
 
 	float frame_time = 0;//capture the delta time
-	int numFrame =0;
+	uint32_t numFrame =0;
 };

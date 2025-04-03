@@ -52,23 +52,22 @@ namespace Crimson {
 		{
 			if (m_Height > width && m_Width > height)//resize the 
 			{
-				//float ar = m_Width / m_Height;
 				resized_image_16 = new unsigned short[width * height * channels];
 				stbir_resize_uint16_generic(pixel_data_16, m_Width, m_Height, 0, resized_image_16, width, height, 0, channels, 0, 0, STBIR_EDGE_REFLECT, STBIR_FILTER_BOX, STBIR_COLORSPACE_LINEAR, 0);
 				m_Height = height;
 				m_Width = width;
+				delete[] resized_image_16;
 			}
 		}
 		else
 		{
 			if (m_Height > width && m_Width > height)//resize the 
 			{
-				//float ar = m_Width / m_Height;
 				resized_image_8 = new unsigned char[width * height * channels];
 				stbir_resize_uint8(pixel_data_8, m_Width, m_Height, 0, resized_image_8, width, height, 0, channels);
-
 				m_Height = height;
 				m_Width = width;
+				delete[] resized_image_8;
 			}
 
 		}
