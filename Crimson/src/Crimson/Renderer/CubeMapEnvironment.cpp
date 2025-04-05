@@ -190,7 +190,7 @@ namespace Crimson {
 		CreateSpecularMap(camera.GetProjectionMatrix(), &captureViews[0]);
 	}
 
-	void CubeMapEnvironment::RenderCubeMap( glm::mat4& view, glm::mat4& proj, const glm::vec3& view_dir)
+	void CubeMapEnvironment::RenderCubeMap( const glm::mat4& view, const glm::mat4& proj, const glm::vec3& view_dir)
 	{
 
 		CN_PROFILE_FUNCTION()
@@ -200,7 +200,7 @@ namespace Crimson {
 
 		RenderQuad(view, proj);
 	}
-	void CubeMapEnvironment::ConstructIrradianceMap(glm::mat4 proj)
+	void CubeMapEnvironment::ConstructIrradianceMap(const glm::mat4& proj)
 	{		
 
 		CN_PROFILE_FUNCTION()
@@ -285,7 +285,7 @@ namespace Crimson {
 	}
 
 
-	void CubeMapEnvironment::CreateSpecularMap(glm::mat4& proj, glm::mat4* viewDirs)
+	void CubeMapEnvironment::CreateSpecularMap(const glm::mat4& proj, glm::mat4* viewDirs)
 	{
 
 

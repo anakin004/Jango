@@ -218,7 +218,7 @@ namespace Crimson {
 		for (int i = 0; i < MAX_CASCADES; i++)
 			LightProj_Matrices[i] = m_ShadowProjection[i] * LightView[i];
 		rendering_shader->SetMat4("MatrixShadow", LightProj_Matrices[0], MAX_CASCADES);
-		uint32_t arr[] = { SHDOW_MAP1,SHDOW_MAP2,SHDOW_MAP3,SHDOW_MAP4 };//these slots are explicitly used for all 4 seperate shadow maps
+		const uint32_t arr[] = { SHDOW_MAP1,SHDOW_MAP2,SHDOW_MAP3,SHDOW_MAP4 };//these slots are explicitly used for all 4 seperate shadow maps
 		rendering_shader->SetIntArray("ShadowMap", MAX_CASCADES, arr);
 		rendering_shader->SetFloatArray("Ranges", Ranges[0], MAX_CASCADES);
 		rendering_shader->SetMat4("u_View", cam.GetViewMatrix());//we need the camera's view matrix so that we can compute the distance comparison in view space
@@ -264,8 +264,8 @@ namespace Crimson {
 
 		m_ShadowProjection.clear();
 
-		float NearPlane = 1.0f;
-		float FarPlane = 800.0f;
+		constexpr float NearPlane = 1.0f;
+		constexpr float FarPlane = 800.0f;
 		Ranges.resize(MAX_CASCADES+1);//send this in the fragment shader for determining which cascade to use
 		Ranges[0] = NearPlane;
 		Ranges[MAX_CASCADES] = FarPlane;
@@ -287,7 +287,7 @@ namespace Crimson {
 			// create the view camera projection matrix based on the near and far plane
 			m_Camera_Projection = glm::perspective(glm::radians(camera.GetVerticalFOV()), camera.GetAspectRatio(), NearPlane, m_FarPlane );
 			
-			glm::vec3 centre = glm::vec3(0.0f);
+			glm::vec3 center = glm::vec3(0.0f);
 			glm::vec4 frustum_corners[8] = //cube coordinate in cannonical view volume
 			{
 				glm::vec4(-1.0f,  1.0f, -1.0f, 1.0f),
@@ -300,17 +300,17 @@ namespace Crimson {
 				glm::vec4(-1.0f, -1.0f,  1.0f, 1.0f),
 			};
 
-			auto camera_view = camera.GetViewMatrix();
+			const glm::mat4& camera_view = camera.GetViewMatrix();
 			glm::mat4 pv_inverse = glm::inverse(camera_view) * glm::inverse(m_Camera_Projection);
 			for (int j = 0; j < 8; j++)
 			{
 				glm::vec4 p = pv_inverse * frustum_corners[j];//get the world space coordinate of frustum cube from cannonical-view-volume
 				frustum_corners[j] = p/p.w;
-				centre += glm::vec3(frustum_corners[j]);
+				center += glm::vec3(frustum_corners[j]);
 			}
-			centre /= 8.0f;//calculate the centroid of the frustum cube and this will be the position for the light view matrix
+			center /= 8.0f;//calculate the centroid of the frustum cube and this will be the position for the light view matrix
 
-			LightView[i-1] = glm::lookAt(centre , centre + glm::normalize(LightPosition), { 0.0,1.0,0.0 }); //move the camera to the centroid of each frustum
+			LightView[i-1] = glm::lookAt(center, center + glm::normalize(LightPosition), { 0.0,1.0,0.0 }); //move the camera to the centroid of each frustum
 
 			glm::mat4 matrix_lv = LightView[i - 1];
 			float min_x = std::numeric_limits<float>::max();

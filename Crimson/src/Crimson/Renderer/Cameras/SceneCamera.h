@@ -16,9 +16,9 @@ namespace Crimson {
 		//no support for orthographic projection these are just place holders for future
 		void SetProjectionType(ProjectionTypes type) { m_projection_type = type; RecalculateProjection(); }
 		void SetOrthographic(float Size, float Near = -1.0f, float Far = 1.0f);
-		inline float GetOrthographicSize() { return m_OrthographicSize; }
-		inline float GetOrthographicNear() { return m_OrthographicNear; }
-		inline float GetOrthographicFar() { return m_OrthographicFar; }
+		inline float GetOrthographicSize() const { return m_OrthographicSize; }
+		inline float GetOrthographicNear() const { return m_OrthographicNear; }
+		inline float GetOrthographicFar() const { return m_OrthographicFar; }
 		void SetOrthographicSize(float size) { m_OrthographicSize = size; }
 		void SetOrthographicNear(float Near) { m_OrthographicNear = Near; RecalculateProjection(); }
 		void SetOrthographicFar(float Far) { m_OrthographicFar = Far; RecalculateProjection(); }
@@ -34,16 +34,20 @@ namespace Crimson {
 
 		float GetPerspectiveNear() override { return m_PerspectiveNear; };
 		float GetPerspectiveFar() override { return m_PerspectiveFar; };
-		virtual glm::mat4 GetProjectionView() override;
-		virtual inline glm::mat4 GetViewMatrix() override;
-		virtual inline glm::mat4 GetProjectionMatrix() override;
-		virtual inline glm::vec3 GetCameraPosition() override;
+		virtual inline const glm::mat4& GetProjectionMatrix() override { return m_Projection; }
+		virtual inline const glm::vec3& GetCameraPosition() override { return m_Position; }
+
+		virtual inline const glm::mat4& GetProjectionView() override { return m_ProjectionView; }
+		virtual inline const glm::mat4& GetViewMatrix() override { return m_View; }
+
+		virtual inline const glm::vec3& GetViewDirection() override { return m_ViewDirection; }
+		virtual inline float GetAspectRatio() override { return m_AspectRatio;}
+		inline float GetVerticalFOV() override { return m_verticalFOV; }
+	
+
 		inline glm::vec3 GetCameraRotation() override { return glm::vec3(m_pitch, m_yaw, m_roll); };
 		virtual inline void InvertPitch() override { m_pitch = -m_pitch; }
 		virtual inline void Translate(const glm::vec3& translation) override { m_Position += m_Position; }
-		virtual inline glm::vec3 GetViewDirection() override;
-		virtual inline float GetAspectRatio() override;
-		virtual inline float GetVerticalFOV() override;
 
 		virtual void OnEvent(Event& e) override;
 		virtual void OnUpdate(TimeStep ts) override;

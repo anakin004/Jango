@@ -4,14 +4,17 @@
 namespace Crimson {
 	class OpenGLSSAO
 	{
+
 	public:
+
 		OpenGLSSAO(int width, int height);
 		~OpenGLSSAO();
-		void Init();
+
 		inline void SetSSAO_TextureDimension(int width, int height) { m_width = width, m_height = height; }
 		void CaptureScene(Scene& scene , Camera& cam);
 		unsigned int GetSSAOid() { return SSAOblur_id; }
 		void CreateSSAOTexture(int width, int height);
+
 	private:
 		void RenderScene(Scene& scene , Ref<Shader>& current_shader);// This will be changed later
 		void RenderTerrain(Scene& scene, Ref<Shader>& current_shader1, Ref<Shader>& current_shader2);// This will be changed later

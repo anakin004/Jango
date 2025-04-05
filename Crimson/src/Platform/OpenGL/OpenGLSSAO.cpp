@@ -17,13 +17,9 @@ namespace Crimson {
 		SSAOShader_Instanced = Shader::Create("Assets/Shaders/SSAOShader_Instanced.glsl");
 
 		CreateSSAOTexture(width,height);
-		Init();
 	}
 
 	OpenGLSSAO::~OpenGLSSAO()
-	{
-	}
-	void OpenGLSSAO::Init()
 	{
 	}
 
@@ -34,9 +30,11 @@ namespace Crimson {
 
 		glm::vec2 viewport_size = RenderCommand::GetViewportSize();
 
-		//Generate Random samples
-		std::uniform_real_distribution<float> RandomFloats(0.0f, 1.0f);//generate random floats between [0.0,1.0)
-		std::default_random_engine generator; // random number generator
+		//generating random samples, random floats will be [0, 1)
+		std::uniform_real_distribution<float> RandomFloats(0.0f, 1.0f);
+		std::random_device rd;
+		std::default_random_engine generator(rd());
+
 		for (int i = 0; i < RANDOM_SAMPLES_SIZE; i++)
 		{
 			samples[i] = glm::vec3(
@@ -76,17 +74,8 @@ namespace Crimson {
 		SSAOShader->SetFloat3("u_CamPos", cam.GetCameraPosition());
 
 		RenderQuad();
-		 
-		//glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-	//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//glViewport(0, 0, viewport_size.x, viewport_size.y);
-
-		//glBindFramebuffer(GL_DRAW_FRAMEBUFFER, SSAOframebuffer_id);
-		//glViewport(0, 0, m_width, m_height);
-		//glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, SSAOdepth_id);
+	
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, SSAOblur_id, 0);
-
-
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 			CN_CORE_ERROR("SSAO Blur Frame Buffer Failed");
 

@@ -35,7 +35,7 @@ namespace Crimson {
 		virtual void Bind() const override;
 		virtual void UnBind() const override;
 
-		virtual void SetMat4(const std::string& str, glm::mat4& UniformMat4, size_t count = 1) const override;
+		virtual void SetMat4(const std::string& str, const glm::mat4& UniformMat4, size_t count = 1) const override;
 		virtual void SetInt(const std::string& str, const int& UniformInt) const override;
 		virtual void SetIntArray(const std::string& str, const size_t size, const void* pointer) const override;
 		virtual void SetFloat(const std::string& str, const float& UniformFloat) const override;
@@ -50,7 +50,7 @@ namespace Crimson {
 		virtual const std::string& GetName() const override { return m_Name; }
 
 	private:
-		void UploadUniformMat4(const std::string& str, glm::mat4& UniformMat4, size_t count = 1) const;
+		void UploadUniformMat4(const std::string& str, const glm::mat4& UniformMat4, size_t count = 1) const;
 		void UploadUniformInt(const std::string& str, const int& UniformInt) const;
 		void UploadIntArray(const std::string& str, const size_t size, const void* pointer) const;
 		void UpladUniformFloat(const std::string& str, const float& UniformFloat) const;

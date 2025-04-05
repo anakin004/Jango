@@ -12,7 +12,8 @@ namespace Crimson {
 		:m_Height(0), m_Width(0)
 	{
 
-		if (paths.size() == 0)//if there are no texture paths then load a white texture and create a texture array with it
+		// If there are no texture paths, then a white texture is created along with a texture array
+		if (paths.size() == 0)
 		{
 			CreateWhiteTextureArray(numMaterials);
 		}
@@ -46,11 +47,11 @@ namespace Crimson {
 		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 	}
 
-	void OpenGLTexture2DArray::Resize_Image(const float& width, const float& height, bool bUse16BitTexture)
+	void OpenGLTexture2DArray::ResizeImage(const float width, const float height, bool bUse16BitTexture)
 	{
 		if (bUse16BitTexture)
 		{
-			if (m_Height > width && m_Width > height)//resize the 
+			if (m_Height > width && m_Width > height)
 			{
 				resized_image_16 = new unsigned short[width * height * channels];
 				stbir_resize_uint16_generic(pixel_data_16, m_Width, m_Height, 0, resized_image_16, width, height, 0, channels, 0, 0, STBIR_EDGE_REFLECT, STBIR_FILTER_BOX, STBIR_COLORSPACE_LINEAR, 0);
@@ -61,7 +62,7 @@ namespace Crimson {
 		}
 		else
 		{
-			if (m_Height > width && m_Width > height)//resize the 
+			if (m_Height > width && m_Width > height)
 			{
 				resized_image_8 = new unsigned char[width * height * channels];
 				stbir_resize_uint8(pixel_data_8, m_Width, m_Height, 0, resized_image_8, width, height, 0, channels);
@@ -146,7 +147,8 @@ namespace Crimson {
 
 	void OpenGLTexture2DArray::Create8BitsTextures(const std::vector<std::string>& paths, int numMaterials)
 	{
-		GLenum InternalFormat = 0, Format = 0;
+		GLenum InternalFormat = 0;
+		GLenum Format = 0;
 
 		stbi_set_flip_vertically_on_load(1);
 		pixel_data_8 = stbi_load(paths[0].c_str(), &m_Width, &m_Height, &channels, 0);
@@ -222,7 +224,7 @@ namespace Crimson {
 		if (pixel_data_8 == nullptr)
 			CN_CORE_ERROR("Image not found");
 
-		Resize_Image(16, 16);
+		ResizeImage(16, 16);
 
 		glCreateTextures(GL_TEXTURE_2D_ARRAY, 1, &m_RendererID);
 		glTextureStorage3D(m_RendererID, 1, GL_RGB8, 16, 16, numMaterials);

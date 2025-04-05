@@ -26,12 +26,12 @@ namespace Crimson {
 
 		float GetPerspectiveNear() override { return m_PerspectiveNear; };
 		float GetPerspectiveFar() override { return m_PerspectiveFar; };
-		glm::mat4 GetProjectionView() override { return m_ProjectionView; }
-		inline glm::mat4 GetViewMatrix() override { return m_View; }
-		inline glm::mat4 GetProjectionMatrix() override { return m_Projection; }
-		inline glm::vec3 GetCameraPosition() override { return m_Position; }
+		inline const glm::mat4& GetProjectionView() override { return m_ProjectionView; }
+		inline const glm::mat4& GetViewMatrix() override { return m_View; }
+		inline const glm::mat4& GetProjectionMatrix() override { return m_Projection; }
+		inline const glm::vec3& GetCameraPosition() override { return m_Position; }
 		inline glm::vec3 GetCameraRotation() override { return glm::vec3(m_pitch, m_yaw, m_roll); };
-		inline glm::vec3 GetViewDirection() override { return m_ViewDirection; }
+		inline const glm::vec3& GetViewDirection() override { return m_ViewDirection; }
 		inline virtual void InvertPitch() override { m_pitch = -m_pitch; }
 		inline float GetAspectRatio() override { return m_AspectRatio; }
 		inline float GetVerticalFOV() override { return m_verticalFOV; }

@@ -15,7 +15,7 @@ namespace Crimson {
 		virtual void Bind() const = 0;
 		virtual void UnBind() const = 0;
 
-		virtual void SetMat4(const std::string& str, glm::mat4& UniformMat4, size_t count = 1) const = 0;
+		virtual void SetMat4(const std::string& str, const glm::mat4& UniformMat4, size_t count = 1) const = 0;
 		virtual void SetInt(const std::string& str, const int& UniformInt) const = 0;
 		virtual void SetIntArray(const std::string& str, const size_t size, const void* pointer) const = 0;
 		virtual void SetFloat(const std::string& str, const float& UniformFloat) const = 0;

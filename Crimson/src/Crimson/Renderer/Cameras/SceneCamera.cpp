@@ -26,50 +26,25 @@ namespace Crimson {
 	}
 	void SceneCamera::SetCameraPosition(const glm::vec3& pos)
 	{
-		m_Position = pos; RecalculateProjectionView();
+		m_Position = pos; 
+		RecalculateProjectionView();
 	}
 	void SceneCamera::SetViewDirection(const glm::vec3& dir)
 	{
-		m_ViewDirection = dir; RecalculateProjectionView();
+		m_ViewDirection = dir; 
+		RecalculateProjectionView();
 	}
 
 	void SceneCamera::SetUPVector(const glm::vec3& up)
 	{
-		Up = up; RecalculateProjectionView();
+		Up = up; 
+		RecalculateProjectionView();
 	}
 	void SceneCamera::SetViewportSize(float aspectratio)
 	{
 		m_AspectRatio = aspectratio;
 		RecalculateProjection();
 		RecalculateProjectionView();
-	}
-	glm::mat4 SceneCamera::GetProjectionView()
-	{
-		return m_ProjectionView;
-	}
-	inline glm::mat4 SceneCamera::GetViewMatrix()
-	{
-		return m_View;
-	}
-	inline glm::mat4 SceneCamera::GetProjectionMatrix()
-	{
-		return m_Projection;
-	}
-	inline glm::vec3 SceneCamera::GetCameraPosition()
-	{
-		return m_Position;
-	}
-	inline glm::vec3 SceneCamera::GetViewDirection()
-	{
-		return m_ViewDirection;
-	}
-	inline float SceneCamera::GetAspectRatio()
-	{
-		return m_AspectRatio;
-	}
-	inline float SceneCamera::GetVerticalFOV()
-	{
-		return m_verticalFOV;
 	}
 	void SceneCamera::OnEvent(Event& e)
 	{

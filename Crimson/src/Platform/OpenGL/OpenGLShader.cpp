@@ -206,7 +206,7 @@ namespace Crimson {
 		glUseProgram(0);
 	}
 
-	void OpenGLShader::SetMat4(const std::string& str, glm::mat4& UniformMat4, size_t count) const
+	void OpenGLShader::SetMat4(const std::string& str, const glm::mat4& UniformMat4, size_t count) const
 	{
 		UploadUniformMat4(str, UniformMat4, count);
 	}
@@ -251,7 +251,7 @@ namespace Crimson {
 		UploadIntArray(str, size, pointer);
 	}
 
-	void OpenGLShader::UploadUniformMat4(const std::string& str, glm::mat4& UniformMat4, size_t count) const
+	void OpenGLShader::UploadUniformMat4(const std::string& str, const glm::mat4& UniformMat4, size_t count) const
 	{
 		uint32_t location = glGetUniformLocation(m_ID, str.c_str());
 		glUniformMatrix4fv(location, count, false, glm::value_ptr(UniformMat4));
