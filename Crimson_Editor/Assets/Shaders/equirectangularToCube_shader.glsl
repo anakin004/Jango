@@ -1,37 +1,58 @@
 #shader vertex
 #version 410 core
-layout (location = 0)in vec3 pos;
 
-out vec3 locPos;
-uniform mat4 u_ProjectionView;
+// Input attribute for vertex position
+layout (location = 0) in vec3 a_Position;
+
+// Output variable for the fragment shader
+out vec3 v_Position;
+
+// Uniforms
+uniform mat4 u_ProjectionView; 
+
 void main()
 {
-	locPos = pos;
-	gl_Position = u_ProjectionView * vec4(pos,1);
+    // Pass vertex position to fragment shader
+    v_Position = a_Position;
+
+    // Apply the projection-view transformation to the vertex position
+    gl_Position = u_ProjectionView * vec4(a_Position, 1.0);
 }
 
 #shader fragment
 #version 410 core
-layout (location = 0)out vec4 color;
 
-in vec3 locPos;
-uniform sampler2D hdrTexture;
+// Output color for the fragment shader
+layout (location = 0) out vec4 fragColor;
 
-const vec2 invAtan = vec2(0.1591, 0.3183);
+// Input variable from the vertex shader
+in vec3 v_Position;
+
+uniform sampler2D hdrTexture;  // High dynamic range texture
+
+// Constants for spherical mapping
+const vec2 invAtan = vec2(0.1591, 0.3183);  // Pre-calculated inverse atan for mapping
+
+// Function to convert spherical coordinates to UV space
 vec2 SampleSphericalMap(vec3 v)
 {
-    vec2 uv = vec2(atan(v.z, v.x), asin(v.y));
-    uv *= invAtan;
-    uv += 0.5;
+    vec2 uv = vec2(atan(v.z, v.x), asin(v.y));  // Convert to spherical coordinates
+    uv *= invAtan;  // Scale the coordinates
+    uv += 0.5;  // Offset to map to [0, 1] range
     return uv;
 }
 
 void main()
-{		
-    vec2 uv = SampleSphericalMap(normalize(locPos));
+{
+    // Convert the position to spherical UV coordinates
+    vec2 uv = SampleSphericalMap(normalize(v_Position));
+
+    // Sample the environment map texture at the spherical coordinates
     vec3 envColor = texture(hdrTexture, uv).rgb;
-    vec3 mapped = vec3(1.0) - exp(-envColor * 1.0);//exposure
-	//mapped = pow(mapped, vec3(1.0/2.2)); 
-	//mapped = clamp(mapped,0.0,1.0);
-    color = vec4(mapped,1.0);
+
+    // Apply exposure correction to the environment color
+    vec3 mapped = vec3(1.0) - exp(-envColor * 1.0);  // Exposure adjustment
+
+    // Set the final color output
+    fragColor = vec4(mapped, 1.0);  // Set the final color with full alpha
 }

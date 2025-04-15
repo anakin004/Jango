@@ -1,23 +1,25 @@
-//#shader compute
+#shader compute
 #version 460 core
 layout (local_size_x = 1) in;
 
-layout (std430, binding = 0) buffer layoutBinding0
+layout (std430, binding = 0) buffer u_indirectBufferLOD0
 {
-	unsigned int  count;
-	unsigned int  instanceCount;
-	unsigned int  first;
-	unsigned int  baseInstance;
-}outIndirectBufferLOD0;
+    unsigned int u_count;
+    unsigned int u_instanceCount;
+    unsigned int u_first;
+    unsigned int u_baseInstance;
+} outIndirectBufferLOD0;
 
-layout (std430, binding = 1) buffer layoutBinding1
+layout (std430, binding = 1) buffer u_lodCountBuffer
 {
-	int lodCount;
-}inLodCount;
+    int u_lodCount;
+} inLodCount;
 
-uniform int VertexBufferSize;
+uniform int u_vertexBufferSize;
+
 void main()
 {
-	outIndirectBufferLOD0.count = VertexBufferSize;
-	outIndirectBufferLOD0.instanceCount = inLodCount.lodCount;
+    // Set the count and instance count based on the inputs
+    outIndirectBufferLOD0.u_count = u_vertexBufferSize;
+    outIndirectBufferLOD0.u_instanceCount = inLodCount.u_lodCount;
 }

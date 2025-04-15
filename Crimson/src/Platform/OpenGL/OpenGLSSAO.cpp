@@ -14,8 +14,6 @@ namespace Crimson {
 		GbufferPositionInstanced = Shader::Create("Assets/Shaders/gBufferShaderInstanced.glsl");
 		SSAOShader_Terrain = Shader::Create("Assets/Shaders/SSAOShader_Terrain.glsl");
 		SSAOblurShader = Shader::Create("Assets/Shaders/SSAOblurShader.glsl");
-		SSAOShader_Instanced = Shader::Create("Assets/Shaders/SSAOShader_Instanced.glsl");
-
 		CreateSSAOTexture(width,height);
 	}
 

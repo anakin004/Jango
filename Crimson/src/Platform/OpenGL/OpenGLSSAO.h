@@ -23,7 +23,7 @@ namespace Crimson {
 		unsigned int SSAOframebuffer_id,SSAOtexture_id,GBufferPos_id , SSAOdepth_id , SSAOblur_id, depth_id;
 		unsigned int noisetex_id;
 		Ref<Shader> SSAOShader,GbufferPosition, GbufferPosition_Terrain, GbufferPositionInstanced, SSAOblurShader;//temporary
-		Ref<Shader> SSAOShader_Terrain, SSAOShader_Instanced;
+		Ref<Shader> SSAOShader_Terrain;
 		Ref<FrameBuffer> framebuffer;
 		glm::vec3 samples[RANDOM_SAMPLES_SIZE];
 		//Camera cam;

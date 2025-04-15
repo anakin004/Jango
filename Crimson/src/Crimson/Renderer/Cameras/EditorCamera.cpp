@@ -67,7 +67,7 @@ namespace Crimson {
 		EventDispatcher dis(e);
 
 		dis.Dispatch<MouseScrolledEvent>([&](MouseScrolledEvent& event) {
-			m_verticalFOV += event.GetYOffset() * 0.1;//change the fov (idk how to implement zoom in camera so I change the FOV :) )
+			m_verticalFOV += event.GetYOffset() * 0.1;
 			RecalculateProjection();
 			RecalculateProjectionView();
 			return true; });
@@ -113,7 +113,6 @@ namespace Crimson {
 
 	void EditorCamera::RecalculateProjectionView()
 	{
-		//moving the camera is nothing but transforming the world
 		m_View = glm::lookAt(m_Position - glm::normalize(m_ViewDirection), m_Position, Up);//this gives the view matrix
 		m_ProjectionView = m_Projection * m_View;
 	}

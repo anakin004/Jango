@@ -1,70 +1,79 @@
 #shader vertex
 #version 410 core
-layout (location = 0) in vec4 pos;
-layout (location = 1) in vec4 cord;
 
-out vec2 tcord;
-out vec4 m_pos;
+// Input attributes
+layout (location = 0) in vec4 a_Position;  // Vertex position
+layout (location = 1) in vec4 a_TexCoord;  // Texture coordinates
+
+// Output variables
+out vec2 v_TexCoord;  // Pass texture coordinates to fragment shader
+out vec4 v_Position;  // Pass vertex position to fragment shader
 
 void main()
 {
-	gl_Position = pos;
-	tcord = cord.xy;
-	m_pos = pos;
+    // Set the final position of the vertex
+    gl_Position = a_Position;
+
+    // Pass texture coordinates and position to the fragment shader
+    v_TexCoord = a_TexCoord.xy;
+    v_Position = a_Position;
 }
 
 #shader fragment
 #version 410 core
-layout (location = 0) out vec4 color;
 
-in vec2 tcord;
-in vec4 m_pos;
+layout (location = 0) out vec4 fragColor;  // Final color output
 
-uniform sampler2D inputImage;
-uniform vec3 ImageRes;
+// Input variables from the vertex shader
+in vec2 v_TexCoord;  // Texture coordinates
+in vec4 v_Position;  // Vertex position
+
+// Uniforms 
+uniform sampler2D inputImage;  // Input texture (image)
+uniform vec3 ImageRes;  // Resolution of the image
 
 void main()
 {
-	vec2 pixelSize = 1.0/ImageRes.xy;
-	float x = pixelSize.x;
-	float y = pixelSize.y;
+    // Calculate pixel size based on image resolution
+    vec2 pixelSize = 1.0 / ImageRes.xy;
+    float x = pixelSize.x;
+    float y = pixelSize.y;
 
-	vec4 a = texture(inputImage, vec2(tcord.x - 2*x,tcord.y + 2*y));
-	vec4 b = texture(inputImage, vec2(tcord.x, tcord.y + 2*y));
-    vec4 c = texture(inputImage, vec2(tcord.x + 2*x, tcord.y + 2*y));
+    // Sample the surrounding pixels from the texture
+    vec4 a = texture(inputImage, vec2(v_TexCoord.x - 2.0 * x, v_TexCoord.y + 2.0 * y));
+    vec4 b = texture(inputImage, vec2(v_TexCoord.x, v_TexCoord.y + 2.0 * y));
+    vec4 c = texture(inputImage, vec2(v_TexCoord.x + 2.0 * x, v_TexCoord.y + 2.0 * y));
        
-    vec4 d = texture(inputImage, vec2(tcord.x - 2*x, tcord.y));
-    vec4 e = texture(inputImage, vec2(tcord.x,       tcord.y));
-    vec4 f = texture(inputImage, vec2(tcord.x + 2*x, tcord.y));
+    vec4 d = texture(inputImage, vec2(v_TexCoord.x - 2.0 * x, v_TexCoord.y));
+    vec4 e = texture(inputImage, vec2(v_TexCoord.x, v_TexCoord.y));
+    vec4 f = texture(inputImage, vec2(v_TexCoord.x + 2.0 * x, v_TexCoord.y));
        
-    vec4 g = texture(inputImage, vec2(tcord.x - 2*x, tcord.y - 2*y));
-    vec4 h = texture(inputImage, vec2(tcord.x,       tcord.y - 2*y));
-    vec4 i = texture(inputImage, vec2(tcord.x + 2*x, tcord.y - 2*y));
+    vec4 g = texture(inputImage, vec2(v_TexCoord.x - 2.0 * x, v_TexCoord.y - 2.0 * y));
+    vec4 h = texture(inputImage, vec2(v_TexCoord.x, v_TexCoord.y - 2.0 * y));
+    vec4 i = texture(inputImage, vec2(v_TexCoord.x + 2.0 * x, v_TexCoord.y - 2.0 * y));
        
-    vec4 j = texture(inputImage, vec2(tcord.x - x, tcord.y + y));
-    vec4 k = texture(inputImage, vec2(tcord.x + x, tcord.y + y));
-    vec4 l = texture(inputImage, vec2(tcord.x - x, tcord.y - y));
-    vec4 m = texture(inputImage, vec2(tcord.x + x, tcord.y - y));
+    vec4 j = texture(inputImage, vec2(v_TexCoord.x - x, v_TexCoord.y + y));
+    vec4 k = texture(inputImage, vec2(v_TexCoord.x + x, v_TexCoord.y + y));
+    vec4 l = texture(inputImage, vec2(v_TexCoord.x - x, v_TexCoord.y - y));
+    vec4 m = texture(inputImage, vec2(v_TexCoord.x + x, v_TexCoord.y - y));
 
-    // Apply weighted distribution:
+    // Apply weighted distribution for downsampling:
+    // The weights add up to 1, with more influence given to the surrounding pixels.
+    // This weighted combination smooths the image and reduces aliasing.
     // 0.5 + 0.125 + 0.125 + 0.125 + 0.125 = 1
+    // The following is the calculation:
     // a,b,d,e * 0.125
     // b,c,e,f * 0.125
     // d,e,g,h * 0.125
     // e,f,h,i * 0.125
     // j,k,l,m * 0.5
-    // This shows 5 square areas that are being sampled. But some of them overlap,
-    // so to have an energy preserving downsample we need to make some adjustments.
-    // The weights are the distributed, so that the sum of j,k,l,m (e.g.)
-    // contribute 0.5 to the final color output. The code below is written
-    // to effectively yield this sum. We get:
-    // 0.125*5 + 0.03125*4 + 0.0625*4 = 1
 
-    vec4 calculated_color = vec4(0);
-    calculated_color = e*0.125;
-    calculated_color += (a+c+g+i)*0.03125;//0.125
-    calculated_color += (b+d+f+h)*0.0625;//0.25
-    calculated_color += (j+k+l+m)*0.125;//0.5
+    vec4 calculatedColor = vec4(0.0);
+    calculatedColor = e * 0.125;
+    calculatedColor += (a + c + g + i) * 0.03125;  // 0.125
+    calculatedColor += (b + d + f + h) * 0.0625;  // 0.25
+    calculatedColor += (j + k + l + m) * 0.125;  // 0.5
 
-    color = vec4(calculated_color.xyz,1.0);
+    // Set the final color (ignoring the alpha channel for simplicity)
+    fragColor = vec4(calculatedColor.xyz, 1.0);
 }

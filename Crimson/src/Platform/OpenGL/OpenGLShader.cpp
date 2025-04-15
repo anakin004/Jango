@@ -147,7 +147,7 @@ namespace Crimson {
 		std::ifstream stream(path);
 		if (!stream)
 		{
-			CN_CORE_ERROR("Shader File Not Found");
+			CN_CORE_ERROR("Shader File Not Found: ", path);
 		}
 
 		std::string ShaderCode("");
