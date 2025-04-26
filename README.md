@@ -64,7 +64,7 @@ imported tools used are found in the Crimson/vendor directory
 Before building Jango, ensure your system meets the following requirements:
 
 - **C++ Compiler**: Supports C++17 or higher (GCC or MSVC recommended)
-- **CMake**: Version 3.15 or higher
+- **Premake**: Included in vendor folder
 - **Git**: For cloning the repository and managing submodules
 
 ---
