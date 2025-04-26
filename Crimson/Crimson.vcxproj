@@ -185,7 +185,6 @@
     <ClInclude Include="src\Crimson\Renderer\Fog.h" />
     <ClInclude Include="src\Crimson\Renderer\FoliageRenderer.h" />
     <ClInclude Include="src\Crimson\Renderer\FrameBuffer.h" />
-    <ClInclude Include="src\Crimson\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Crimson\Renderer\Material.h" />
     <ClInclude Include="src\Crimson\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Crimson\Renderer\RenderCommand.h" />
@@ -771,7 +770,6 @@
     <ClCompile Include="src\Crimson\Renderer\Fog.cpp" />
     <ClCompile Include="src\Crimson\Renderer\FoliageRenderer.cpp" />
     <ClCompile Include="src\Crimson\Renderer\FrameBuffer.cpp" />
-    <ClCompile Include="src\Crimson\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Crimson\Renderer\Material.cpp" />
     <ClCompile Include="src\Crimson\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Crimson\Renderer\RenderCommand.cpp" />

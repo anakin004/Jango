@@ -18,7 +18,7 @@ namespace Crimson {
 		glDisable(GL_CULL_FACE);
 		//glDepthMask(GL_FALSE);
 		if (cubeVBO == 0) {
-			float vertices[] = {
+			const float vertices[] = {
 				// back face
 				-1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
 				 1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
@@ -224,7 +224,7 @@ namespace Crimson {
 		glBindRenderbuffer(GL_RENDERBUFFER, renderBuffer_id);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, irrMapWidth, irrMapWidth);//resize the render-buffer
 
-		glm::mat4 captureViews[] =
+		const glm::mat4 captureViews[] =
 		{
 		   glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
 		   glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
@@ -403,13 +403,13 @@ namespace Crimson {
 
 		CN_PROFILE_FUNCTION()
 
-		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
-		glDepthMask(GL_FALSE);//disable writing to depth buffer
+		glDepthMask(GL_FALSE);
 
 		glm::mat4 inv = glm::inverse(glm::mat4(glm::mat3(view))) * glm::inverse(proj);
 
-		glm::vec4 data[] = {
+		glm::vec4 data[] = 
+		{
 		glm::vec4(-1,-1,0,1),inv * glm::vec4(-1,-1,0,1),
 		glm::vec4(1,-1,0,1),inv * glm::vec4(1,-1,0,1),
 		glm::vec4(1,1,0,1),	inv * glm::vec4(1,1,0,1),
@@ -418,11 +418,11 @@ namespace Crimson {
 
 		Ref<VertexArray> vao = VertexArray::Create();
 		Ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
-		unsigned int i_data[] = { 0,1,2,0,2,3 };
-		//unsigned int i_data[] = { 2,1,0,3,2,0};
-		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
 
-		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
+		std::array<uint32_t, 6> i_data = { 0,1,2,0,2,3 };
+		Ref<IndexBuffer> ib = IndexBuffer::Create(&i_data[0], sizeof(uint32_t) * i_data.size());
+
+		Ref<BufferLayout> bl = std::make_shared<BufferLayout>();
 
 		bl->push("position", ShaderDataType::Float4);
 		bl->push("direction", ShaderDataType::Float4);
@@ -432,7 +432,7 @@ namespace Crimson {
 
 		RenderCommand::DrawIndex(*vao);
 
-		glDepthMask(GL_TRUE);//again enable writing to depth buffer
+		glDepthMask(GL_TRUE);
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 	}

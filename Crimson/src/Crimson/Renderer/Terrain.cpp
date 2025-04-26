@@ -115,11 +115,11 @@ namespace Crimson
 	void Terrain::InitilizeTerrain()
 	{
 		stbi_set_flip_vertically_on_load(1);//need to abstract
-		Height_data = stbi_load_16("Assets/Textures/Terrain_Height_Map.png", &m_Width, &m_Height, &m_Channels, 0);
+		Height_data = stbi_load_16("Assets/Textures/heightmap.png", &m_Width, &m_Height, &m_Channels, 0);
 		//needs to have different width,height,channels
 		GrassSpawnArea = stbi_load_16("Assets/Textures/grass_mask.png", &m_Width, &m_Height, &m_Channels1, 0);
 
-		m_HeightMap = Texture2D::Create("Assets/Textures/Terrain_Height_Map2.png", true);
+		m_HeightMap = Texture2D::Create("Assets/Textures/heightmap.png", true);
 		m_perlinNoise = Texture2D::Create("Assets/Textures/PerlinTexture2.jpg");
 
 		/*
@@ -135,7 +135,6 @@ namespace Crimson
 		std::vector<std::string> albedo_paths = {"Assets/Textures/xiboddsr_1K_Albedo.jpg", "Assets/Textures/xiboab2r_2K_Albedo.jpg", "Assets/Textures/oeeb7_1K_Albedo.jpg", "Assets/Textures/xccibbi_2K_Albedo.jpg" };
 		std::vector<std::string> roughness_paths = { "Assets/Textures/xiboddsr_1K_Roughness.jpg", "Assets/Textures/xiboab2r_2K_Roughness.jpg", "Assets/Textures/oeeb7_1K_Roughness.jpg", "Assets/Textures/xccibbi_2K_Roughness.jpg" };
 		std::vector<std::string> normal_paths = {"Assets/Textures/xiboddsr_1K_Normal.jpg", "Assets/Textures/xiboab2r_2K_Normal.jpg", "Assets/Textures/oeeb7_1K_Normal.jpg", "Assets/Textures/xccibbi_2K_Normal.jpg"};
-		
 		std::vector<std::string> mask_paths = { "Assets/Textures/Fern_Mask.png", "Assets/Textures/ValleyMask.png"};
 
 		TerrainTex_Albedo = Texture2DArray::Create(albedo_paths);

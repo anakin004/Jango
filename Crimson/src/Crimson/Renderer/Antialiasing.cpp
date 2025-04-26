@@ -6,13 +6,16 @@
 
 namespace Crimson
 {
+
 	int Antialiasing::frameCount = 0;
+
 	Antialiasing::Antialiasing()
 	{
 	}
 	Antialiasing::~Antialiasing()
 	{
 	}
+
 	Ref<Antialiasing> Antialiasing::Create(int width, int height)
 	{
 		CN_PROFILE_FUNCTION()
@@ -39,7 +42,6 @@ namespace Crimson
 				f = f / float(base);
 				result += f * float(index % base);
 				index = index / base;
-				//index = int(floor(float(index) / float(base)));
 			}
 			return result;
 		};

@@ -39,16 +39,12 @@ namespace Crimson {
 		m_pitch = pitch;
 		m_yaw = yaw;
 		m_roll = roll;
-		//glm::quat rotation = glm::angleAxis(glm::radians(yaw), Up) * glm::angleAxis(glm::radians(pitch),RightVector) ;
-		//m_ViewDirection = glm::rotate(rotation, m_ViewDirection);
 		m_ViewDirection = glm::mat3(glm::rotate(glm::radians(yaw), Up)) * glm::mat3(glm::rotate(glm::radians(pitch), RightVector)) * glm::mat3(glm::rotate(glm::radians(roll), m_ViewDirection)) * m_ViewDirection;
-		//m_ViewDirection = rotation * glm::vec3(0, 0, 1);
 		RecalculateProjectionView();
 	}
 
 	void EditorCamera::RecalculateProjection()
 	{
-		// ** Take Vertical Fov in radians
 		m_Projection = glm::perspective(glm::radians(m_verticalFOV), m_AspectRatio, m_PerspectiveNear, m_PerspectiveFar);
 	}
 
@@ -100,7 +96,7 @@ namespace Crimson {
 		glm::vec2 NewMousePos = { Input::GetMousePos().first,Input::GetMousePos().second };
 		if (Input::IsMouseButtonPressed(CRIMSON_MOUSE_BUTTON_2))//camera pan
 		{
-			auto delta = NewMousePos - OldMousePos;//get change in mouse position
+			auto& delta = NewMousePos - OldMousePos;//get change in mouse position
 
 			m_ViewDirection = glm::mat3(glm::rotate(glm::radians(-delta.x) * 0.1f, Up)) * m_ViewDirection;//invert it
 			m_ViewDirection = glm::mat3(glm::rotate(glm::radians(-delta.y) * 0.1f, RightVector)) * m_ViewDirection;//rotate along right vector

@@ -42,28 +42,29 @@ namespace Crimson {
 		std::vector<std::string> gradientTex_paths = {"Assets/Textures/Sky_Gradient_Textures/SunZenith_Gradient.png",
 			"Assets/Textures/Sky_Gradient_Textures/ViewZenith_Gradient.png", "Assets/Textures/Sky_Gradient_Textures/SunView_Gradient.png"};
 		skyGradients = Texture2DArray::Create(gradientTex_paths);
+
 	}
 	void Atmosphere::RenderQuad(const glm::mat4& view, const glm::mat4& proj)
 	{
 
 		CN_PROFILE_FUNCTION()
 
-		//this function renders a quad infront of the camera
 		glDepthMask(GL_FALSE);//disable writing to depth buffer
 
 		glm::mat4 inv = glm::inverse(proj * glm::mat4(glm::mat3(view)));//get inverse of projection view to convert cannonical view to world space
-		glm::vec4 data[] = {
-		glm::vec4(-1,-1,0,1),inv * glm::vec4(-1,-1,0,1),
-		glm::vec4(1,-1,0,1),inv * glm::vec4(1,-1,0,1),
-		glm::vec4(1,1,0,1),	inv * glm::vec4(1,1,0,1),
-		glm::vec4(-1,1,0,1),inv * glm::vec4(-1,1,0,1),
+		glm::vec4 data[] = 
+		{
+			glm::vec4(-1,-1,0,1),inv * glm::vec4(-1,-1,0,1),
+			glm::vec4(1,-1,0,1),inv * glm::vec4(1,-1,0,1),
+			glm::vec4(1,1,0,1),	inv * glm::vec4(1,1,0,1),
+			glm::vec4(-1,1,0,1),inv * glm::vec4(-1,1,0,1),
 		};
 
 		Ref<VertexArray> vao = VertexArray::Create();
 		Ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
-		unsigned int i_data[] = { 0,1,2,0,2,3 };
-		//unsigned int i_data[] = { 2,1,0,3,2,0};
-		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
+		
+		const std::array<uint32_t,6> i_data = { 0,1,2,0,2,3 };
+		Ref<IndexBuffer> ib = IndexBuffer::Create(&i_data[0], sizeof(uint32_t) * i_data.size());
 
 		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
 
@@ -75,6 +76,6 @@ namespace Crimson {
 
 		RenderCommand::DrawIndex(*vao);
 
-		glDepthMask(GL_TRUE);//again enable depth buffer write
+		glDepthMask(GL_TRUE);
 	}
 }

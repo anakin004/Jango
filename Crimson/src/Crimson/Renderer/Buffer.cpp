@@ -13,7 +13,6 @@ namespace Crimson {
 
 	Ref<VertexBuffer> VertexBuffer::Create(const float* vertices, uint32_t size)
 	{
-		// I will not be seperating
 		switch (RendererAPI::GetAPI())
 		{
 		case GraphicsAPI::None:			CN_CORE_ASSERT(false, "RendererAPI: None not supported currently!"); return nullptr;
@@ -37,6 +36,10 @@ namespace Crimson {
 		return nullptr;
 	}
 
+
+	/// ////////////////////////////////////////////////////////////////////////
+
+
 	Ref<IndexBuffer> IndexBuffer::Create(const uint32_t* indices, uint32_t size)
 	{
 		switch (RendererAPI::GetAPI())
@@ -50,7 +53,7 @@ namespace Crimson {
 	}
 
 
-	/// ////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
 
 	void BufferLayout::push(std::string name, ShaderDataType type)
 	{
@@ -85,10 +88,10 @@ namespace Crimson {
 		case GraphicsAPI::OpenGL:
 			return MakeRef<OpenGLVertexArray>();
 		case GraphicsAPI::None:
-			CN_CORE_ERROR("NOT A VALID GRAPHICS API");
+			CN_CORE_ERROR("Graphics API is of type None");
 			break;
 		default:
-			CN_CORE_ERROR("GRAPHICS API DOESNOT MATCHES THE GIVEN API LIST");
+			CN_CORE_ERROR("No Such Graphics Api");
 		}
 		return nullptr;
 	}

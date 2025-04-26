@@ -6,82 +6,103 @@ using namespace Crimson;
 
 uint64_t MaterialEditor::cached_materialID;
 std::string MaterialEditor::cached_texturePath;
+
 MaterialEditor::MaterialEditor()
 {
-	cached_materialID = 0;
+    cached_materialID = 0;
 	cached_texturePath = "";
 }
 
+static auto ShowTooltipOnHover = [](const std::string& text)
+    {
+    if (ImGui::IsItemHovered()) {
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", text.c_str());
+        ImGui::EndTooltip();
+    }
+    };
+
 void MaterialEditor::OnImGuiRender()
 {
-	Ref<Material>& cached_material = ResourceManager::allMaterials[cached_materialID];//get reference to the particular material of chached_materialID
+    // Early out if no material is selected
+    Ref<Material>& materialRef = ResourceManager::allMaterials[cached_materialID];
+    if (!materialRef) return;
 
-	auto HoverName = [](const std::string& name) 
-	{
-		if (ImGui::IsItemHovered())
-	{
-		ImGui::BeginTooltip();
-		ImGui::Text(name.c_str());
-		ImGui::EndTooltip();
-	}};
+    ImGui::Begin("Material Editor");
 
-	ImGui::Begin("Material Editor");
-	if (cached_material)
-	{
-		ImGui::Text(cached_material->m_MaterialName.c_str());
-		std::string albedo_path = cached_material->GetAlbedoPath(), normal_path = cached_material->GetNormalPath(), roughness_path = cached_material->GetRoughnessPath();
-		ImGui::PushID(1); //to assign unique ids as texture paths can be blank all at the same time;
-		ImGui::Button(cached_material->GetAlbedoPath().c_str(), { 120,60 });
-		HoverName(cached_material->GetAlbedoPath()); //hover the path of the asset over the screen
-		if (ImGui::BeginDragDropTarget())//drag drop diffuse texture from content browser
-		{
-			if (const ImGuiPayload* val = ImGui::AcceptDragDropPayload("Texture payload"))
-			{
-				albedo_path = *(std::string*)val->Data;//get the texture path which ImGui owns
-			}
-			ImGui::EndDragDropTarget();
-		}
-		ImGui::PopID();
-		ImGui::PushID(2);
-		ImGui::Button(cached_material->GetNormalPath().c_str(), { 120,60 });
-		HoverName(cached_material->GetNormalPath());//hover the path of the asset over the screen
-		if (ImGui::BeginDragDropTarget())//drag drop texture from content browser
-		{
-			if (const ImGuiPayload* val = ImGui::AcceptDragDropPayload("Texture payload"))
-			{
-				normal_path = *(std::string*)val->Data;
-			}
-			ImGui::EndDragDropTarget();
-		}
-		ImGui::PopID();
-		ImGui::PushID(3);
-		ImGui::Button(cached_material->GetRoughnessPath().c_str(), { 120,60 });
-		HoverName(cached_material->GetRoughnessPath());
-		if (ImGui::BeginDragDropTarget())//drag drop texture from content browser
-		{
-			if (const ImGuiPayload* val = ImGui::AcceptDragDropPayload("Texture payload"))
-			{
-				roughness_path = *(std::string*)val->Data;
-			}
-			ImGui::EndDragDropTarget();
-		}
-		ImGui::PopID();
-		cached_material->SetTexturePaths(albedo_path, normal_path, roughness_path); //problem area should not be hapenning every frame
+    // Display material name
+    ImGui::Text("%s", materialRef->m_MaterialName.c_str());
 
-		glm::vec4 color = cached_material->GetColor();
-		float roughness = cached_material->GetRoughness();
-		float metalness = cached_material->GetMetalness();
-		float normal = cached_material->GetNormalStrength();
-		ImGui::ColorEdit4("Color", glm::value_ptr(color));
-		ImGui::DragFloat("Roughness", &roughness, 0.1f, 0.0f, 1.0f);
-		ImGui::DragFloat("Metallic", &metalness, 0.1f, 0.0f, 1.0f);
-		ImGui::DragFloat("Normal Strength", &normal, 0.1f, 0.0f, 1.0f);
-		cached_material->SetMaterialAttributes(color, roughness, metalness, normal);
-		if (ImGui::Button("Save Material"))
-		{
-			//save the material at the default location
-			ResourceManager::allMaterials[cached_materialID]->SerializeMaterial("", ResourceManager::allMaterials[cached_materialID]->m_MaterialName);
-		}
-	}
-	ImGui::End();
+    // Fetch current texture paths
+    std::string albedoPath = materialRef->GetAlbedoPath();
+    std::string normalPath = materialRef->GetNormalPath();
+    std::string roughnessPath = materialRef->GetRoughnessPath();
+
+    // Albedo texture slot
+    ImGui::PushID(1);
+    if (ImGui::Button(albedoPath.c_str(), { 120.0f, 60.0f })) {
+        /* Optional: handle click */
+    }
+    ShowTooltipOnHover(albedoPath);
+    if (ImGui::BeginDragDropTarget()) 
+    {
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Texture payload")) {
+            albedoPath = *static_cast<const std::string*>(payload->Data);
+        }
+        ImGui::EndDragDropTarget();
+    }
+    ImGui::PopID();
+
+    // Normal map slot
+    ImGui::PushID(2);
+
+    if (ImGui::Button(normalPath.c_str(), { 120.0f, 60.0f })) {}
+
+    ShowTooltipOnHover(normalPath);
+    if (ImGui::BeginDragDropTarget()) 
+    {
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Texture payload")) 
+        {
+            normalPath = *static_cast<const std::string*>(payload->Data);
+        }
+        ImGui::EndDragDropTarget();
+    }
+    ImGui::PopID();
+
+    // Roughness map slot
+    ImGui::PushID(3);
+    if (ImGui::Button(roughnessPath.c_str(), { 120.0f, 60.0f })) {}
+    ShowTooltipOnHover(roughnessPath);
+    if (ImGui::BeginDragDropTarget()) 
+    {
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Texture payload")) 
+        {
+            roughnessPath = *static_cast<const std::string*>(payload->Data);
+        }
+        ImGui::EndDragDropTarget();
+    }
+    ImGui::PopID();
+
+    // Apply any changed texture paths
+    materialRef->SetTexturePaths(albedoPath, normalPath, roughnessPath);
+
+    // Material attribute editors
+    glm::vec4  baseColor = materialRef->GetColor();
+    float      roughnessVal = materialRef->GetRoughness();
+    float      metallicVal = materialRef->GetMetalness();
+    float      normalStrength = materialRef->GetNormalStrength();
+
+    ImGui::ColorEdit4("Color", glm::value_ptr(baseColor));
+    ImGui::DragFloat("Roughness", &roughnessVal, 0.01f, 0.0f, 1.0f);
+    ImGui::DragFloat("Metallic", &metallicVal, 0.01f, 0.0f, 1.0f);
+    ImGui::DragFloat("Normal Strength", &normalStrength, 0.01f, 0.0f, 1.0f);
+
+    materialRef->SetMaterialAttributes(baseColor, roughnessVal, metallicVal, normalStrength);
+
+    // Save button
+    if (ImGui::Button("Save Material")) {
+        materialRef->SerializeMaterial("", materialRef->m_MaterialName);
+    }
+
+    ImGui::End();
 }

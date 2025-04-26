@@ -18,31 +18,6 @@ LoadMesh* mesh;
 	:Layer("Renderer2D layer"), m_camera(1920.0 / 1080.0)
 {
 	CN_PROFILE_SCOPE("CrimsonEditor()");
-	level_map =
-		"llllllllllllllllllllllllllllll"
-		"lllmlllllllwwwwwllllllllllllll"
-		"lllmmllllwwwwwwwwwwlllllllllll"
-		"llllllwwwwwwwwwwwwwwwwwlllllll"
-		"llllwwwwwwwwwwwwwwwwmwwlllllll"
-		"lllwwwwwwwwmmmmwwwwwwwwmwwllll"
-		"llllllwmwwwwwwwwwwwwwwwlllllll"
-		"lllwwwwwwwwwwwwwwlllllllllllll"
-		"lllllllllwwwwwwwwwwwllllllllll"
-		"llllllllmmmwwwwwllllllllllllll"
-		"llllllllllllllllllllllllllllll";
-
-	tree_map = 
-		"ttttt  ttttt  tttt  ttttt  ttt"
-		"ttt t     t     ttttttt tt ttt"
-		"ttt  tttt          ttttttttttt"
-		"tt  tt                 ttt   t"
-		"tttt          t          ttttt"
-		"ttt        tt              ttt"
-		"tttttt                 ttt  tt"
-		"tttt                t tt    tt"
-		"     tttt           tt    tttt"
-		"tttt ttt        tttt   tttt tt"
-		"tttt     ttt   ttt          tt";
 
 
 	texture = Texture2D::Create(std::string("Assets/Textures/RPGpack_sheet_2X.png"));
@@ -51,10 +26,8 @@ LoadMesh* mesh;
 	land = SubTexture2D::CreateFromCoordinate(texture, { 2560.f,1664.f }, { 3,10 }, { 128.f,128.f });
 	water = SubTexture2D::CreateFromCoordinate(texture, { 2560.f,1664.f }, { 11,11 }, { 128.f,128.f });
 
-	asset_map['l'] = land;
-	asset_map['w'] = water;
-	asset_map['t'] = tree;
-	asset_map['m'] = mud;
+	asset_map = { {'l', land}, {'w', water}, {'t', tree}, {'m', mud} };
+
 
 	glm::vec2 viewportSize = RenderCommand::GetViewportSize();
 	m_FrameBuffer = FrameBuffer::Create({ (unsigned int)viewportSize.x,(unsigned int)viewportSize .y});//create a frame buffer object
@@ -62,6 +35,32 @@ LoadMesh* mesh;
 	m_FrameBuffer3 = FrameBuffer::Create({ (unsigned int)viewportSize.x,(unsigned int)viewportSize.y });
 
 	CN_CORE_INFO("Frame Buffers and SubTextures Created : CrimsonEditor()")
+
+	level_map =
+	"llllllllllllllllllllllllllllll"
+	"lllmlllllllwwwwwllllllllllllll"
+	"lllmmllllwwwwwwwwwwlllllllllll"
+	"llllllwwwwwwwwwwwwwwwwwlllllll"
+	"llllwwwwwwwwwwwwwwwwmwwlllllll"
+	"lllwwwwwwwwmmmmwwwwwwwwmwwllll"
+	"llllllwmwwwwwwwwwwwwwwwlllllll"
+	"lllwwwwwwwwwwwwwwlllllllllllll"
+	"lllllllllwwwwwwwwwwwllllllllll"
+	"llllllllmmmwwwwwllllllllllllll"
+	"llllllllllllllllllllllllllllll";
+
+	tree_map =
+	"ttttt  ttttt  tttt  ttttt  ttt"
+	"ttt t     t     ttttttt tt ttt"
+	"ttt  tttt          ttttttttttt"
+	"tt  tt                 ttt   t"
+	"tttt          t   t       tttt"
+	"ttt        tt              ttt"
+	"tttttt                 ttt  tt"
+	"tttt                t tt    tt"
+	"     tttt           tt    tttt"
+	"tttt ttt        tttt   tttt tt"
+	"tttt     ttt   ttt          tt";
 
 }
 
@@ -226,7 +225,7 @@ void CrimsonEditor::OnImGuiRender()
 	}
 	ImGui::End();
 
-	ImGui::Begin("Viewport_RayTracer");
+	ImGui::Begin("RayTracer Viewport");
 	isWindowFocused = ImGui::IsWindowFocused();
 	RayTracer::isViewportFocused = isWindowFocused;
 	ImVec2 Size2 = ImGui::GetContentRegionAvail();
@@ -276,7 +275,7 @@ void CrimsonEditor::OnImGuiRender()
 	ImGui::End();
 
 	ImGui::Begin("Buffers");
-	ImGui::Text("SHADOW MAP");
+	ImGui::Text("Shadow Map");
 	ImGui::DragInt("Index", &Renderer3D::index, 1.0, 0, 3);
 	ImGui::Image(Renderer3D::depth_id[Renderer3D::index], ImVec2(512, 512), { 0,1 }, { 1,0 });
 	ImGui::DragInt("Cascade Level", &Shadows::Cascade_level, 1, 0, 100);
@@ -322,7 +321,8 @@ void CrimsonEditor::OnImGuiRender()
 
 void CrimsonEditor::OnEvent(Event& e)
 {
-	if (isWindowFocused) {
+	if (isWindowFocused) 
+	{
 		m_camera.OnEvent(e);
 		m_scene->OnEvent(e);
 	}

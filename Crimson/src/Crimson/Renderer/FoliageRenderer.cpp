@@ -8,11 +8,12 @@
 #include <glm/glm.hpp>
 
 namespace Crimson {
+
 	float data[2048 * 2048] = { 0.0f };
 	bool resetDensityMap = true;
 	glm::vec3 Foliage::Showcase_camPosition = { 300,10,300 };
 	glm::vec3 Foliage::Showcase_camRotation = { 0,0,0 };
-	uint32_t Foliage::m_DensityMapID; //
+	uint32_t Foliage::m_DensityMapID; 
 	uint32_t Foliage::class_ID = 0;
 	std::vector<Foliage*> Foliage::foliageObjects;
 

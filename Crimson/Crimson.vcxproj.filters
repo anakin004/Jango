@@ -351,9 +351,6 @@
     <ClInclude Include="src\Crimson\Renderer\FrameBuffer.h">
       <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crimson\Renderer\GraphicsContext.h">
-      <Filter>src\Crimson\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Crimson\Renderer\Material.h">
       <Filter>src\Crimson\Renderer</Filter>
     </ClInclude>
@@ -2099,9 +2096,6 @@
       <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\FrameBuffer.cpp">
-      <Filter>src\Crimson\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crimson\Renderer\GraphicsContext.cpp">
       <Filter>src\Crimson\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crimson\Renderer\Material.cpp">

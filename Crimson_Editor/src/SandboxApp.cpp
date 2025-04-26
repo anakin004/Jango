@@ -7,8 +7,8 @@
 class Sandbox : public Crimson::Application
 {
 public:
-	Sandbox(){
-		//PushLayer(new GameLayer());
+	Sandbox()
+	{
 		PushLayer(new CrimsonEditor());
 	}
 	~Sandbox(){}

@@ -53,9 +53,8 @@ namespace Crimson {
 
 	void SceneCamera::OnUpdate(TimeStep ts)
 	{
-		RightVector = glm::cross(m_ViewDirection, Up);//we get the right vector (as it is always perpendicular to up and m_ViewDirection)
-
-		//RecalculateProjectionView();
+		RightVector = glm::cross(m_ViewDirection, Up);
+		RecalculateProjectionView();
 	}
 
 	void SceneCamera::RotateCamera(float pitch , float yaw, float roll)
