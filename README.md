@@ -1,5 +1,3 @@
-# Jango
-
 
 # Jango Engine 
 
