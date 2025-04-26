@@ -1,13 +1,27 @@
 # Jango
 
 
-<img src="https://github.com/user-attachments/assets/94f709bb-4abf-4543-8ba8-9663fa66020d" alt="Jango pxArt" width="800">
-
-
-
 # Jango Engine 
 
-# IMPORTANT: I decided to work in a development repository apart from this. There is going to be doing a big release of Jango in the upcomming weeks! It will be including a full 3D renderer, 3D renderer will likely come first and then the 2D renderer, libraries like Box2D, Physx, yaml-cpp, assimp, and some networking multiplayer stuff soon after! If you are seeing this watch my repository! I am very excited for this upcomming release! I changed the game engine's name to Jango, was previously Crimson, so that is why in the files you will see Crimson, not Jango
+## What's New
+- **Full 3D Renderer** (coming first!)
+- **2D Renderer** (following the 3D release)
+- **Physics Libraries Integration**:
+  - [Box2D](https://box2d.org/)
+  - [PhysX](https://github.com/NVIDIAGameWorks/PhysX)
+- **Asset Importing**:
+  - [Assimp](https://github.com/assimp/assimp)
+- **Configuration/Serialization**:
+  - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
+- **Multiplayer Networking Support** (planned soon after)
+
+> **Note:**  
+> Some files may still reference the old engine name (**Crimson**). This will be updated as development continues.
+
+---
+
+## 📢 Stay Tuned
+Follow the repository for updates —  
 
 Jango is an open-source game engine currently under development including 2D and 3D environments
 imported tools used are found in the Crimson/vendor directory
@@ -26,7 +40,6 @@ imported tools used are found in the Crimson/vendor directory
   - **Compiler Support (Work in Progress)**: 
   - GCC, Cmake, MSVC support SIMD operations
   - working on including more
-## In Unreleased Jango
 - **Physx**: Physx Library with optional nvidia gpu acceleration
 - **yaml-cpp**: config files and assets managment
 - **assimp**: model loader
@@ -34,10 +47,8 @@ imported tools used are found in the Crimson/vendor directory
 - **entt**: used for entity management
 
 
-## Sneak Peak of Jango(Not Released Yet) ( Demo as of January 21st 2025 )
-https://github.com/user-attachments/assets/0956fbeb-b1f8-4321-8566-b559aefaa198
 
-//
+https://github.com/user-attachments/assets/0956fbeb-b1f8-4321-8566-b559aefaa198
 ![image](https://github.com/user-attachments/assets/3523a365-1b1e-43f7-8b20-472e7b069025)
 
 
