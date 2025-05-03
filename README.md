@@ -1,16 +1,12 @@
 
 # Jango Engine 
 
-## What's Included
+## What's Being Worked On
 - **Full 3D Renderer** 
 - **2D Renderer**
-- **Physics Libraries Integration (In Progress)**:
+- **Physics Libraries Integration**:
   - [Box2D](https://box2d.org/)
   - [PhysX](https://github.com/NVIDIAGameWorks/PhysX)
-- **Asset Importing**:
-  - [Assimp](https://github.com/assimp/assimp)
-- **Configuration/Serialization**:
-  - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - **Multiplayer Networking Support** (planned after)
 
 > **Note:**  
