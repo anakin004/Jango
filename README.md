@@ -1,17 +1,17 @@
 
 # Jango Engine 
 
-## What's New
-- **Full 3D Renderer** (coming first!)
-- **2D Renderer** (following the 3D release)
-- **Physics Libraries Integration**:
+## What's Included
+- **Full 3D Renderer** 
+- **2D Renderer**
+- **Physics Libraries Integration (In Progress)**:
   - [Box2D](https://box2d.org/)
   - [PhysX](https://github.com/NVIDIAGameWorks/PhysX)
 - **Asset Importing**:
   - [Assimp](https://github.com/assimp/assimp)
 - **Configuration/Serialization**:
   - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
-- **Multiplayer Networking Support** (planned soon after)
+- **Multiplayer Networking Support** (planned after)
 
 > **Note:**  
 > Some files may still reference the old engine name (**Crimson**). This will be updated as development continues.
