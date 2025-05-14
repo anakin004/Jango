@@ -13,6 +13,8 @@
 
 #include "Crimson/Renderer/OrthographicCamera.h"
 
+#include "Crimson/Renderer/util/Time.h"
+
 #include <GLFW/glfw3.h>
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x,this,std::placeholders::_1)
@@ -113,7 +115,7 @@ namespace Crimson {
 		while (m_Running) 
 		{
 
-			float time = (float)glfwGetTime(); // platform::gettime()
+			float time = GetTime(); 
 			s_TimeStep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
