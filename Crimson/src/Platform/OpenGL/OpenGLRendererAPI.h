@@ -12,7 +12,7 @@ namespace Crimson {
 		~OpenGLRendererAPI();
 		void ClearColor(const glm::vec4&)override;
 		void Clear()override;
-		void DrawIndex(VertexArray& vertexarray)override;
+		void DrawIndex(VertexArray& vertexarray, unsigned int renderingMode)override;
 		void DrawArrays(VertexArray& vertexarray, size_t count, int first = 0) override;
 		void DrawArrays(VertexArray& vertexarray, size_t count, unsigned int renderingMode, int first) override;
 		void DrawInstancedArrays(VertexArray& vertexarray, size_t count, size_t instance_count, int first = 0) override;

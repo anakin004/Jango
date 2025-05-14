@@ -22,8 +22,12 @@ namespace Crimson {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	}
 
-	void OpenGLRendererAPI::DrawIndex(VertexArray& vertexarray)
+	void OpenGLRendererAPI::DrawIndex(VertexArray& vertexarray, unsigned int renderingMode)
 	{
+
+		renderingMode == GL_LINE ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+
 		vertexarray.Bind();
 		glDrawElements(GL_TRIANGLES, vertexarray.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, (const void*)0);
 	}
@@ -38,6 +42,8 @@ namespace Crimson {
 	{
 		renderingMode == GL_LINE ? glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ) : glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
 
+
+		// remove, the check for draw elements or arrays, need to defer calls with index buffers to draw index
 		vertexarray.Bind();
 		if (vertexarray.GetIndexBuffer())
 		{

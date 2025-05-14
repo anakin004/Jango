@@ -24,9 +24,20 @@ namespace Crimson {
 		{
 			s_RendererAPI->Clear();
 		}
-		inline static void DrawIndex(VertexArray& vertexarray) 
+		inline static void Draw(VertexArray& vertexarray, unsigned int renderingMode = 0, size_t count = 0, int first = 0)
 		{
-			s_RendererAPI->DrawIndex(vertexarray);
+			if (vertexarray.GetIndexBuffer())
+			{
+				s_RendererAPI->DrawIndex(vertexarray, renderingMode);
+			}
+			else
+			{
+				s_RendererAPI->DrawArrays(vertexarray, count, renderingMode, first);
+			}
+		}
+		inline static void DrawIndex(VertexArray& vertexarray, unsigned int renderingMode) 
+		{
+			s_RendererAPI->DrawIndex(vertexarray, renderingMode);
 		}
 		inline static void DrawArrays(VertexArray& vertexarray, size_t count, int first = 0)
 		{

@@ -76,7 +76,7 @@ namespace Crimson
 	{
 		CN_PROFILE_FUNCTION()
 
-		m_focalLength = 10.f;
+			m_focalLength = 10.f;
 		image_width = width;
 		image_height = height;
 
@@ -107,6 +107,33 @@ namespace Crimson
 		glGenTextures(1, &m_Denoised_TextureID);
 		glBindTexture(GL_TEXTURE_2D, m_Denoised_TextureID);
 		glBindTexture(GL_TEXTURE_2D, 0);
+
+
+
+
+		const std::array<glm::vec4, 8> quad =
+		{ 
+			{
+			   glm::vec4(-1,-1,0,1), glm::vec4(0,0,0,0),
+			   glm::vec4(1,-1,0,1), glm::vec4(1,0,0,0),
+			   glm::vec4(1,1,0,1), glm::vec4(1,1,0,0),
+			   glm::vec4(-1,1,0,1), glm::vec4(0,1,0,0)
+			}
+		};
+
+		Ref<VertexArray> vao = VertexArray::Create();
+		Ref<VertexBuffer> vb = VertexBuffer::Create(quad.data(), sizeof(glm::vec4) * 8);
+		const std::array<uint32_t, 6> i_data = { 0,1,2,0,2,3 };
+		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data.data(), sizeof(uint32_t) * 6);
+
+		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
+
+		bl->push("position", ShaderDataType::Float4);
+		bl->push("direction", ShaderDataType::Float4);
+
+		vao->AddBuffer(bl, vb);
+		vao->SetIndexBuffer(ib);
+
 	}
 
 	void RayTracer::draw(Camera& cam, uint32_t& outputTextureID)
@@ -254,29 +281,8 @@ namespace Crimson
 
 		CN_PROFILE_FUNCTION()
 
-		//this function renders a quad infront of the camera
 		glDisable(GL_CULL_FACE);
 		glDepthMask(GL_FALSE);//disable depth testing
-
-		glm::vec4 data[] = {
-		glm::vec4(-1,-1,0,1),glm::vec4(0,0,0,0),
-		glm::vec4(1,-1,0,1),glm::vec4(1,0,0,0),
-		glm::vec4(1,1,0,1),glm::vec4(1,1,0,0),
-		glm::vec4(-1,1,0,1),glm::vec4(0,1,0,0)
-		};
-
-		Ref<VertexArray> vao = VertexArray::Create();
-		Ref<VertexBuffer> vb = VertexBuffer::Create(&data[0].x, sizeof(data));
-		unsigned int i_data[] = { 0,1,2,0,2,3 };
-		Ref<IndexBuffer> ib = IndexBuffer::Create(i_data, sizeof(i_data));
-
-		Ref<BufferLayout> bl = std::make_shared<BufferLayout>(); //buffer layout
-
-		bl->push("position", ShaderDataType::Float4);
-		bl->push("direction", ShaderDataType::Float4);
-
-		vao->AddBuffer(bl, vb);
-		vao->SetIndexBuffer(ib);
 
 		RenderCommand::DrawIndex(*vao);
 

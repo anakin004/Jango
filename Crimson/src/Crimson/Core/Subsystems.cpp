@@ -4,6 +4,12 @@
 #include "Crimson/Core/Log.h"
 #include <GLFW/glfw3.h>
 
+/*
+
+TO REMOVE <-----------------
+
+*/
+
 namespace Crimson {
 
 	bool Subsystems::s_GLFWBooted = false;
