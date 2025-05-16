@@ -76,6 +76,9 @@ Follow these steps to set up the project:
 
 ### Generate Project Files
 
+Download Cmake:
+  [Cmake](https://cmake.org/download/)
+
 Navigate to the repository directory and execute the provided script:  
 ```bash
 cd Jango
