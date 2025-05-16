@@ -3,15 +3,15 @@
 	url = https://github.com/gabime/spdlog
 [submodule "Crimson/vendor/GLFW"]
 	path = Crimson/vendor/GLFW
-	url = https://github.com/anakin004/glfw
+	url = https://github.com/ryan-mangeno/glfw
 	branch = master
 [submodule "Crimson/vendor/imgui"]
 	path = Crimson/vendor/imgui
-	url = https://github.com/anakin004/imgui
+	url = https://github.com/ryan-mangeno/imgui
 	branch = docking
 [submodule "Crimson/vendor/Chroma"]
 	path = Crimson/vendor/Chroma
-	url = https://github.com/anakin004/Chroma
+	url = https://github.com/ryan-mangeno/Chroma
 	branch = main
 [submodule "Crimson/vendor/glm"]
 	path = Crimson/vendor/glm
@@ -27,4 +27,4 @@
 	url = https://github.com/assimp/assimp
 [submodule "Crimson/vendor/mimalloc"]
 	path = Crimson/vendor/mimalloc
-	url = https://github.com/anakin004/mimalloc
+	url = https://github.com/ryan-mangeno/mimalloc
